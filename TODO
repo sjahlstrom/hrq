@@ -1,0 +1,12 @@
+Test that you can resume questions at the correct point
+
+If TestCompleted === true, do not retake the test
+
+
+Today's issues ...
+     Sample questions ... when at end of questions, clicking next attempts to execute
+     Test questions ... do not attempt to display questions if testCompleted === true
+
+
+Eventually, remove all unnecessary console.log statements
+Consider using Pino as a logger
