@@ -37,6 +37,9 @@ interface QuestionSectionProps {
     questionNumber: number
 }
 
+let answers: number[] = []
+
+
 const QuestionSection: React.FC<QuestionSectionProps> = ({
     questionData,
     fireworksIndex,
@@ -87,17 +90,28 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 // Test questions
                 await updateTestResponse(response)
             } else {
+
+                // TODO: Add test response value to array
+
                 const id = await getSampleResponseId()
                 if (id) {
                     // if on the first question, zero out the answers array
                     if (questionIndex === 0) {
                         await clearAnswersArray(id)
+                        localStorage.clear()
                     }
                     await updateSampleQuestion({ testResponse, id })
-
-                    if (questionIndex === NUMBER_OF_QUESTIONS) {
+                    answers.push(...testResponse)
+                    console.log("answers", answers)
+console.log("questionIndex", questionIndex)
+                    if (questionIndex === NUMBER_OF_QUESTIONS - 2) {
                         // length of Sample questions
-                        await updateSampleQuestion({ testResponse, id })
+                        // await updateSampleQuestion({ testResponse, id })
+                        //  answers.push(...testResponse)
+                        console.log("answers", answers)
+                        const jsonArray = JSON.stringify(answers)
+                        console.log(jsonArray)
+                        localStorage.setItem('array', jsonArray);
                     }
                 } else {
                     throw new Error('No SampleResponse row exists')
