@@ -14,9 +14,14 @@ export const updateTestResponse = async ({
 }: UpdateTestUserProps): Promise<void> => {
     const user = await currentUser()
 
+    if (!user) {
+        console.error('No user found')
+        return
+    }
+
     try {
         await db.user.update({
-            where: { externalUserId: user?.id },
+            where: { externalUserId: user.id },
             data: {
                 testResponse: {
                     push: testResponse, // Push values to testResponse array
@@ -31,63 +36,34 @@ export const updateTestResponse = async ({
     }
 }
 
-export const deleteUserTestResponsesAndAssociatedScales = async () => {
-    const user = await currentUser()
+// Used for testing and eventually as an admin
+export const deleteUserTestResponsesAndAssociatedScales =
+    async (): Promise<void> => {
+        const user = await currentUser()
 
-    try {
-        // Update the user to clear the testResponse and associatedScale fields
-        await db.user.update({
-            where: { id: user?.id },
-            data: {
-                testResponse: { set: [] },
-                associatedScale: { set: [] },
-            },
-        })
-        console.log(
-            'User test responses and associated scales deleted successfully'
-        )
-    } catch (error) {
-        console.error(
-            'Error deleting user test responses and associated scales:',
-            error
-        )
-    }
-}
-
-export const clearAnswersArray = async (id) => {
-    try {
-        const updatedResponse = await prisma.sampleResponse.update({
-            where: { id: id },
-            data: { answers: [] },
-        })
-        console.log('Answers array cleared:', updatedResponse)
-        return updatedResponse
-    } catch (error) {
-        console.error('Error clearing answers array:', error)
-    }
-}
-
-export const getSampleResponseId = async () => {
-    try {
-        let sampleResponse = await prisma.sampleResponse.findFirst()
-
-        if (sampleResponse) {
-            console.log('SampleResponse ID:', sampleResponse.id)
-            return sampleResponse.id
-        } else {
-            console.log('No SampleResponse found, creating a new one')
-            sampleResponse = await prisma.sampleResponse.create({
+        if (!user) {
+            console.error('No user found')
+            return
+        }
+        try {
+            await db.user.update({
+                where: { externalUserId: user.id },
                 data: {
-                    // Provide any required fields for creation here
+                    testResponse: { set: [] },
+                    associatedScale: { set: [] },
+                    testCompleted: false,
                 },
             })
-            console.log('Created SampleResponse ID:', sampleResponse.id)
-            return sampleResponse.id
+            console.log(
+                'User test responses and associated scales deleted successfully'
+            )
+        } catch (error) {
+            console.error(
+                'Error deleting user test responses and associated scales:',
+                error
+            )
         }
-    } catch (error) {
-        console.error('Error fetching or creating SampleResponse:', error)
     }
-}
 
 export const setTestCompleted = async (): Promise<boolean> => {
     const user = await currentUser()
@@ -100,9 +76,7 @@ export const setTestCompleted = async (): Promise<boolean> => {
     try {
         await db.user.update({
             where: { externalUserId: user.id },
-            data: {
-                testCompleted: true,
-            },
+            data: { testCompleted: true },
         })
         return true
     } catch (error) {
@@ -111,92 +85,47 @@ export const setTestCompleted = async (): Promise<boolean> => {
     }
 }
 
-export const isTestCompleted = async (): Promise<boolean> => {
-    const user = await currentUser();
-
-    if (!user) {
-        console.error('No user found');
-        return false;
-    }
-
-    try {
-        const foundUser = await db.user.findUnique({
-            where: { externalUserId: user.id },
-            select: { testCompleted: true },
-        });
-
-        return foundUser?.testCompleted ?? false;
-    } catch (error) {
-        console.error('Error checking test completed flag:', error);
-        return false;
-    }
-};
-
-
-interface GetTestResponseLength {
-    (userId: string): Promise<number | null>
-}
-export const getTestResponseLength: GetTestResponseLength = async (
+export const getTestResponseLength = async (
     userId: string
 ): Promise<number | null> => {
     try {
-        const user = await prisma.user.findUnique({
+        const user = await db.user.findUnique({
             where: { externalUserId: userId },
             select: {
-                testCompleted: false,
                 testResponse: true,
             },
         })
 
-        if (user) {
-            return user.testResponse.length
-        }
-
-        return null
+        return user?.testResponse.length ?? null
     } catch (error) {
         console.error('Error fetching user:', error)
         return null
     }
 }
 
-export interface UpdateSampleQuestionProps {
-    testResponse: number[]
-    id: string
-}
-
-export const updateSampleQuestion = async ({
-    testResponse,
-    id,
-}: UpdateSampleQuestionProps): Promise<void> => {
+export const getTestResponses = async (): Promise<number[]> => {
     try {
-        const updatedResponse = await prisma.sampleResponse.update({
-            where: { id: id },
-            data: {
-                answers: {
-                    push: testResponse,
-                },
-            },
-        })
-    } catch (error) {
-        console.error('Error adding value to answers array:', error)
-    }
-}
+        const user = await currentUser();
 
-export const getSampleResponseAnswers = async (): Promise<number[] | null> => {
-    try {
-        const sampleResponse = await db.sampleResponse.findFirst({
-            select: { answers: true },
-        });
-
-        if (sampleResponse) {
-            return sampleResponse.answers;
+        if (!user) {
+            console.error("No user is currently logged in.");
+            throw new Error("No user is currently logged in.");
         }
 
-        console.log('No SampleResponse found');
-        return null;
+        console.log('Fetching test responses for user:', user.id);
+
+        const responses = await db.user.findUnique({
+            where: { externalUserId: user.id },  // Assuming 'externalUserId' is the key in the DB
+            select: { testResponse: true },
+        });
+
+        // console.log('Retrieved Test Responses:', testResponses);
+
+        return responses?.testResponse || [];
     } catch (error) {
-        console.error('Error retrieving SampleResponse answers:', error);
-        return null;
+        console.error("Error retrieving test responses:", error);
+        throw error;
     }
 };
+
 

@@ -15,7 +15,7 @@ const questions = [
       options: { left: 'Wrong', middle: "Don't Know", right: 'Right' },
    },
    {
-      question: ' I usually put others first',
+      question: 'I usually put others first',
       scale: 2,
       position: 3,
       reverse: false,
@@ -216,7 +216,7 @@ const questions = [
       position: 23,
       reverse: false,
       options: {
-         left: 'Fully Disgree',
+         left: 'Fully Disagree',
          middle: 'Neutral',
          right: 'Fully Agree',
       },
@@ -228,7 +228,7 @@ const questions = [
       position: 24,
       reverse: true,
       options: {
-         left: 'Fully Disgree',
+         left: 'Fully Disagree',
          middle: 'Neutral',
          right: 'Fully Agree',
       },
@@ -286,7 +286,7 @@ const questions = [
       position: 30,
       reverse: false,
       options: {
-         left: 'Fully Disgree',
+         left: 'Fully Disagree',
          middle: 'Depends',
          right: 'Fully Agree',
       },
@@ -922,9 +922,9 @@ const questions = [
       position: 96,
       reverse: false,
       options: {
-         left: 'Fully Disgree',
+         left: 'Fully Disagree',
          middle: 'Neutral',
-         right: 'Fully Aagree',
+         right: 'Fully Agree',
       },
    },
 
@@ -977,7 +977,7 @@ const questions = [
       question: 'Nothing bothers me',
       scale: 64,
       position: 102,
-      reverse: false,
+      reverse: true,
       options: { left: 'True', middle: 'Neutral', right: 'False' },
    },
 

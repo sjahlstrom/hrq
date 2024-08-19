@@ -14,7 +14,6 @@ const TheTest: React.FC = async () => {
         const responseLength = await getTestResponseLength(userId)
         length = responseLength ?? 0
     }
-
     return (
         <>
             <Breadcrumb

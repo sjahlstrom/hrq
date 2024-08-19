@@ -51,3 +51,7 @@ body,
     @apply opacity-100;
   }
 }
+.slider-disabled {
+  pointer-events: none;  /* Prevent interaction */
+  opacity: 0.5;  /* Visual indication of being disabled */
+}
