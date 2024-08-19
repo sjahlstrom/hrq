@@ -4009,3 +4009,5 @@ export const testQuestions = [
             '3 - You have the ability to accurately assess how much time things will take, or to equate time and distance phenomena.   For example, you are good at estimating how long it will take to complete a project or arrive at a specific location or what materials it will take and the time it will take to gather them for a project.   This ability negatively correlates with: impulsivity, some psychiatric states (ADHD, bi-polar illness, high anxiety states, etc.).',
     },
 ]
+
+export default testQuestions
