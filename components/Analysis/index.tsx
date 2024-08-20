@@ -13,13 +13,15 @@ const fetchSampleAnswers = async (setAnswers, setMatchedQuestions) => {
             const answers = JSON.parse(fetchedAnswers)
             setAnswers(answers)
             const questions = answers
-                .map((answer, index) =>
-                    sampleQuestions.find(
-                        (q) =>
-                            q.answer === index &&
-                            q.low <= answer &&
-                            q.high >= answer
-                    ) || null
+                .map(
+                    (answer, index) =>
+                        sampleQuestions.find(
+                            (q) =>
+                                q.answer === index &&
+                                q.low <= answer &&
+                                q.high >= answer &&
+                                q.scale
+                        ) || null
                 )
                 .filter((q) => q !== null)
             setMatchedQuestions(questions)
@@ -38,13 +40,15 @@ const fetchTestAnswers = async (setAnswers, setMatchedQuestions) => {
         if (testResponses) {
             setAnswers(testResponses)
             const questions = testResponses
-                .map((answer, index) =>
-                    testQuestions.find(
-                        (q) =>
-                            q.answer === index &&
-                            q.low <= answer &&
-                            q.high >= answer
-                    ) || null
+                .map(
+                    (answer, index) =>
+                        testQuestions.find(
+                            (q) =>
+                                q.answer === index &&
+                                q.low <= answer &&
+                                q.high >= answer &&
+                                q.scale
+                        ) || null
                 )
                 .filter((q) => q !== null)
             setMatchedQuestions(questions)
@@ -60,14 +64,14 @@ const fetchTestAnswers = async (setAnswers, setMatchedQuestions) => {
 const Analysis = () => {
     const [answers, setAnswers] = useState<number[]>([])
     const [matchedQuestions, setMatchedQuestions] = useState<
-        { question: string; answer: number; analysis: string }[]
+        { question: string; answer: number; scale: string; analysis: string }[]
     >([])
     const [loading, setLoading] = useState<boolean>(true)
 
     const searchParams = useSearchParams()
     const mode = searchParams.get('mode')
 
-    const lies = [38 ,45, 52, 57, 69, 79, 91, 102, 109, 125]
+    const lies = [38, 45, 52, 57, 69, 79, 91, 102, 109, 125]
 
     useEffect(() => {
         const fetchAnswers = async () => {
@@ -86,13 +90,15 @@ const Analysis = () => {
     }, [mode])
     return (
         <div className="p-6 bg-gray-100 min-h-screen">
-            <h1 className="text-3xl font-bold text-gray-800 mb-6">Analysis...</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-6">
+                Analysis...
+            </h1>
             {loading ? (
                 <p className="text-gray-600">Loading...</p>
             ) : matchedQuestions.length > 0 ? (
                 <div className="space-y-4">
                     {matchedQuestions
-                        .filter(question => !lies.includes(question.answer))
+                        .filter((question) => !lies.includes(question.answer))
                         .map((question, index) => (
                             <div
                                 key={index}
@@ -101,24 +107,37 @@ const Analysis = () => {
                                 <h2 className="text-2xl font-semibold text-gray-900 mb-2">
                                     {question.question}
                                 </h2>
-                                <p className="text-gray-700">{question.analysis}</p>
+                                <p className="text-gray-500">
+                                    Scale: {question.scale}
+                                </p>
+                                <p className="text-gray-700">
+                                    {question.analysis}
+                                </p>
+                                {/*<br />*/}
+                                {/*<p className="text-gray-500">*/}
+                                {/*    Scale: {question.scale}*/}
+                                {/*</p>*/}
                             </div>
                         ))}
 
                     {/*// now need to get the scores of the lie scale questions and add them up*/}
                     <div>
-                        {matchedQuestions
-                            .filter(question => lies.includes(question.answer)) // Filter questions based on the lie scale
+                    {matchedQuestions
+                            .filter((question) =>
+                                lies.includes(question.answer)
+                            ) // Filter questions based on the lie scale
                             .map((question, index) => (
-                                <div key={index} className="p-4 bg-white shadow-md rounded-lg border border-gray-200">
+                                <div
+                                    key={index}
+                                    className="p-4 bg-white shadow-md rounded-lg border border-gray-200"
+                                >
                                     <p className="text-xl font-medium text-gray-900 mb-2">
-                                        {question.question} {/* Render the question text inside a <p> tag */}
+                                        {question.question}{' '}
+                                        {/* Render the question text inside a <p> tag */}
                                     </p>
                                 </div>
-                            ))
-                        }
+                            ))}
                     </div>
-
                 </div>
             ) : (
                 <p className="text-gray-600">No matching questions found.</p>

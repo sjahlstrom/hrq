@@ -1,6 +1,7 @@
 const sampleQuestions = [
     {
         question: 'I can read a person like a book',
+        scale: "Sample Scale",
         answer: 0,
         position: 0,
         low: 0,
@@ -10,6 +11,7 @@ const sampleQuestions = [
     },
     {
         question: 'I can read a person like a book',
+        scale: "Sample Scale",
         answer: 0,
         position: 1,
         low: 11,
@@ -19,6 +21,7 @@ const sampleQuestions = [
     },
     {
         question: 'I can read a person like a book',
+        scale: "Sample Scale",
         answer: 0,
         position: 2,
         low: 21,
@@ -29,6 +32,7 @@ const sampleQuestions = [
 
     {
         question: "I'm not a self-starter",
+        scale: "Sample Scale",
         answer: 1,
         position: 0,
         low: 0,
@@ -39,6 +43,7 @@ const sampleQuestions = [
 
     {
         question: "I'm not a self-starter",
+        scale: "Sample Scale",
         answer: 1,
         position: 1,
         low: 11,
@@ -49,6 +54,7 @@ const sampleQuestions = [
 
     {
         question: "I'm not a self-starter",
+        scale: "Sample Scale",
         answer: 1,
         position: 2,
         low: 21,
@@ -59,6 +65,7 @@ const sampleQuestions = [
 
     {
         question: "I generally know what emotional state I'm in",
+        scale: "Sample Scale",
         answer: 2,
         position: 0,
         low: 0,
@@ -69,6 +76,7 @@ const sampleQuestions = [
 
     {
         question: "I generally know what emotional state I'm in",
+        scale: "Sample Scale",
         answer: 2,
         position: 1,
         low: 11,
@@ -79,6 +87,7 @@ const sampleQuestions = [
 
     {
         question: "I generally know what emotional state I'm in",
+        scale: "Sample Scale",
         answer: 2,
         position: 2,
         low: 21,
@@ -89,6 +98,7 @@ const sampleQuestions = [
 
     {
         question: "I don't feel sorry for others who aren't doing so well",
+        scale: "Sample Scale",
         answer: 3,
         position: 0,
         low: 0,
@@ -99,6 +109,7 @@ const sampleQuestions = [
 
     {
         question: "I don't feel sorry for others who aren't doing so well",
+        scale: "Sample Scale",
         answer: 3,
         position: 1,
         low: 11,
@@ -109,6 +120,7 @@ const sampleQuestions = [
 
     {
         question: "I don't feel sorry for others who aren't doing so well",
+        scale: "Sample Scale",
         answer: 3,
         position: 2,
         low: 21,
