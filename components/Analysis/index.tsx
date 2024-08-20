@@ -113,10 +113,11 @@ const Analysis = () => {
                                 <p className="text-gray-700">
                                     {question.analysis}
                                 </p>
-                                {/*<br />*/}
-                                {/*<p className="text-gray-500">*/}
-                                {/*    Scale: {question.scale}*/}
-                                {/*</p>*/}
+                                {/* For testing only*/}
+                                <br />
+                                <p className="text-gray-500">
+                                    Question: {question.answer} - For testing only
+                                </p>
                             </div>
                         ))}
 
@@ -133,7 +134,6 @@ const Analysis = () => {
                                 >
                                     <p className="text-xl font-medium text-gray-900 mb-2">
                                         {question.question}{' '}
-                                        {/* Render the question text inside a <p> tag */}
                                     </p>
                                 </div>
                             ))}
