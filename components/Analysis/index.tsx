@@ -107,7 +107,7 @@ const Analysis = () => {
                                 <h2 className="text-2xl font-semibold text-gray-900 mb-2">
                                     {question.question}
                                 </h2>
-                                <p className="text-gray-500">
+                                <p className="text-logo-green -mt-3 mb-2">
                                     Scale: {question.scale}
                                 </p>
                                 <p className="text-gray-700">

@@ -11,6 +11,7 @@ const sampleQuestions = [
     },
     {
         question: 'I can read a person like a book',
+
         scale: "Sample Scale",
         answer: 0,
         position: 1,
