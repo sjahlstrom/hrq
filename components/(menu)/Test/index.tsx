@@ -34,26 +34,27 @@ interface QuestionSectionProps {
 }
 
 const QuestionSection: React.FC<QuestionSectionProps> = ({
-    questionData,
-    fireworksIndex,
-    questionNumber,
-}) => {
+                                                             questionData,
+                                                             fireworksIndex,
+                                                             questionNumber,
+                                                         }) => {
     const [questionIndex, setQuestionIndex] = useState(questionNumber)
     const [sliderValue, setSliderValue] = useState(0)
     const [reverseSliderValue, setReverseSliderValue] = useState(30)
     const [answers, setAnswers] = useState<number[]>([])
+    const [isSliderUsed, setIsSliderUsed] = useState(false) // New state
 
     const router = useRouter()
 
-    const currentQuestion = questionData[questionIndex]
+    let currentQuestion = questionData[questionIndex]
     const isLastQuestion = questionIndex === questionData.length
     const testMode = questionData.length < 6 ? 'sample' : 'test'
-    const halfwayIndex = Math.floor(questionData.length / 2);
-    const sliderClass = isLastQuestion ? 'slider-disabled' : '';
+    const halfwayIndex = Math.floor(questionData.length / 2)
 
     useEffect(() => {
         const checkAndRedirect = async () => {
             if (isLastQuestion && testMode === 'test') {
+                // Perform any redirection or test completion logic here
             }
         }
 
@@ -107,6 +108,9 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
             if (questionData[questionIndex + 1]?.reverse) {
                 setReverseSliderValue(30)
             }
+
+            // Reset slider interaction state
+            setIsSliderUsed(false)
         }
     }, [
         isLastQuestion,
@@ -120,18 +124,25 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
 
     const updateSliderValue = useCallback((value: number | number[]) => {
         setSliderValue(Array.isArray(value) ? value[0] : value)
+        setIsSliderUsed(true) // Slider has been interacted with
     }, [])
 
     const handleReverseSliderChange = useCallback((value: number) => {
         setReverseSliderValue(value)
+        setIsSliderUsed(true) // Reverse slider has been interacted with
     }, [])
 
-    const widthPercentage = `${(questionIndex / (fireworksIndex === 64 ? 128 : questionData.length-1)) * 100}%`
+    const widthPercentage = `${(questionIndex / (fireworksIndex === 64 ? 128 : questionData.length - 1)) * 100}%`
 
-    const handleDeleteUserTestResponsesAndAssociatedScales =
-        useCallback(async () => {
+    // TODO: Remove this test
+    const handleDeleteUserTestResponsesAndAssociatedScales = useCallback(
+        async () => {
             await deleteUserTestResponsesAndAssociatedScales()
-        }, [])
+            setQuestionIndex(0)
+            router.push(`/`)
+        },
+        []
+    )
 
     return (
         <div className="bg-gray-700">
@@ -142,8 +153,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 ></div>
             </div>
             <div className="bg-gray-700">
-                <div
-                    className="px-4 py-4 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-0 md:mb-10 min-h-24">
+                <div className="px-4 py-4 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-0 md:mb-10 min-h-24">
                     <h2 className="text-base md:text-2xl font-medium text-black dark:text-white">
                         {currentQuestion.question}
                     </h2>
@@ -169,8 +179,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 )}
             </div>
 
-            <div
-                className="flex px-12 p-2 -mt-4 justify-between w-full md:w-3/4 lg:w-2/3 items-center text-black dark:text-white mx-auto mb-4 md:mb-10">
+            <div className="flex px-12 p-2 -mt-4 justify-between w-full md:w-3/4 lg:w-2/3 items-center text-black dark:text-white mx-auto mb-4 md:mb-10">
                 <div>{currentQuestion.options.left}</div>
                 <div>{currentQuestion.options.middle}</div>
                 <div>{currentQuestion.options.right}</div>
@@ -180,6 +189,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     <Button
                         className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700 w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"
                         onClick={advanceToNextQuestion}
+                        disabled={!isSliderUsed} // Disable button until slider is used
                     >
                         Next Question
                     </Button>
@@ -196,9 +206,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700 w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"
                     onClick={handleDeleteUserTestResponsesAndAssociatedScales}
                 >
-                    <div>
-                        For Testing only ... Delete answers
-                    </div>
+                    <div>For Testing only ... Delete answers</div>
                 </Button>
             </div>
 
@@ -218,7 +226,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 </>
             )}
         </div>
-)
+    )
 }
 
 export default QuestionSection
