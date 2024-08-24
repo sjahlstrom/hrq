@@ -1,4 +1,4 @@
-export const testQuestions = [
+const testQuestions = [
     {
         question: "If a clerk gave me too much change back, I wouldn't tell",
         scale: 'Honesty',
