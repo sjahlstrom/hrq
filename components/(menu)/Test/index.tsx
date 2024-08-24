@@ -141,7 +141,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
             setQuestionIndex(0)
             router.push(`/`)
         },
-        []
+        [router]
     )
 
     return (
