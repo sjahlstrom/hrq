@@ -206,6 +206,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700 w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"
                     onClick={handleDeleteUserTestResponsesAndAssociatedScales}
                 >
+                    {/*TODO: Testing only -- remove*/}
                     <div>For Testing only ... Delete answers</div>
                 </Button>
             </div>
