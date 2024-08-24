@@ -34,10 +34,10 @@ interface QuestionSectionProps {
 }
 
 const QuestionSection: React.FC<QuestionSectionProps> = ({
-                                                             questionData,
-                                                             fireworksIndex,
-                                                             questionNumber,
-                                                         }) => {
+    questionData,
+    fireworksIndex,
+    questionNumber,
+}) => {
     const [questionIndex, setQuestionIndex] = useState(questionNumber)
     const [sliderValue, setSliderValue] = useState(0)
     const [reverseSliderValue, setReverseSliderValue] = useState(30)
@@ -135,14 +135,12 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
     const widthPercentage = `${(questionIndex / (fireworksIndex === 64 ? 128 : questionData.length - 1)) * 100}%`
 
     // TODO: Remove this test
-    const handleDeleteUserTestResponsesAndAssociatedScales = useCallback(
-        async () => {
+    const handleDeleteUserTestResponsesAndAssociatedScales =
+        useCallback(async () => {
             await deleteUserTestResponsesAndAssociatedScales()
             setQuestionIndex(0)
             router.push(`/`)
-        },
-        [router]
-    )
+        }, [router])
 
     return (
         <div className="bg-gray-700">
@@ -202,13 +200,17 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     </Button>
                 )}
 
-                <Button
-                    className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700 w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"
-                    onClick={handleDeleteUserTestResponsesAndAssociatedScales}
-                >
-                    {/*TODO: Testing only -- remove*/}
-                    <div>For Testing only ... Delete answers</div>
-                </Button>
+                {/*TODO: Testing only -- remove*/}
+                {testMode === 'test' && (
+                    <Button
+                        className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700 w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"
+                        onClick={
+                            handleDeleteUserTestResponsesAndAssociatedScales
+                        }
+                    >
+                        <div>For Testing only ... Delete answers</div>
+                    </Button>
+                )}
             </div>
 
             {questionIndex === fireworksIndex && (

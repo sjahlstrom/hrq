@@ -14,13 +14,20 @@ const TheTest: React.FC = async () => {
         const responseLength = await getTestResponseLength(userId)
         length = responseLength ?? 0
     }
+
     return (
         <>
-            <Breadcrumb
-                pageName="Test Page"
-                description="The test is designed for you to learn more than you knew about yourself, how you related to others, and how others can relate to you.  It's not a short 10 question quiz.  Take your time, thing about each question.  You cannot go back and change your answers."
-            />
-
+            {user ? (
+                <Breadcrumb
+                    pageName="Test Page"
+                    description="The test is designed for you to learn more than you knew about yourself, how you related to others, and how others can relate to you.  It's not a short 10 question quiz.  Take your time, think about each question.  You cannot go back and change your answers, but you can quit before finishing and restart where you left off at a later time."
+                />
+            ) : (
+                <Breadcrumb
+                    pageName="Test Page"
+                    description="This is a short 4 question sample test that gives an example of the types of questons asked and the analysis of your responses."
+                />
+            )}
             {!user ? (
                 <QuestionSection
                     questionData={sampleQuestions}
