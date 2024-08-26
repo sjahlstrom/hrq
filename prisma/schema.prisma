@@ -19,7 +19,6 @@ model User {
   username        String?   @unique
   testResponse    Int[]
   associatedScale Int[]
-  scaleValue      Int[]
   testCompleted   Boolean   @default(false)
   paid_rq         Boolean   @default(false)
   paid_cq         Boolean   @default(false)
@@ -34,11 +33,6 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model SampleResponse {
-  id      String @id @default(cuid())
-  answers Int[]
 }
 
 model Account {

@@ -73,9 +73,6 @@ const Analysis = () => {
             )?.analysis || "No analysis available.";
 
             setLieAnalysis(analysis);
-
-            console.log('Lie scale values:', lieValues);
-            console.log('Total Lie scale value:', totalLieValue);
         }
     }, [answers]);
 
@@ -114,14 +111,14 @@ const Analysis = () => {
                                 className="p-4 bg-white shadow-md rounded-lg border border-gray-200"
                             >
                                 <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-                                    {question.question}
+                                    {/*{question.question}*/}
                                 </h2>
-                                <p className="text-gray-500">Scale: {question.scale}</p>
+                                {/*<p className="text-gray-500">Scale: {question.scale}</p>*/}
                                 <p className="text-gray-700">{question.analysis}</p>
                                 {/* For testing only */}
                                 <br />
                                 <p className="text-gray-500">
-                                    Question: {question.answer} - For testing only
+                                    {/*Question: {question.answer} - For testing only*/}
                                 </p>
                             </div>
                         ))}

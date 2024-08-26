@@ -164,7 +164,6 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                             value={reverseSliderValue}
                             onChange={handleReverseSliderChange}
                         />
-                        <p>Current Value: {reverseSliderValue}</p>
                     </div>
                 ) : (
                     <div className="w-full mt-4 mx-auto md:mt-5">
@@ -172,7 +171,6 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                             value={sliderValue}
                             onChange={updateSliderValue}
                         />
-                        <p>Current Value: {sliderValue}</p>
                     </div>
                 )}
             </div>
@@ -218,11 +216,11 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     <Confetti />
                     <div
                         role="alert"
-                        className="rounded-xl border border-blue-800 bg-blue-500 p-4 mt-10 text-center"
+                        className="rounded-xl border border-blue-800 bg-yellow-300 p-4 mt-10 text-center"
                     >
                         <strong className="block font-medium text-black">
                             {fireworksIndex === halfwayIndex
-                                ? "You're halfway there!"
+                                ? "Congratulations!  You're halfway there!"
                                 : 'End of test questions'}
                         </strong>
                     </div>
