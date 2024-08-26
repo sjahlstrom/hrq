@@ -4,7 +4,8 @@ export const isPublicRoute = createRouteMatcher(
     [
         '/', '/sign-in(.*)',
         '/sign-up(.*)',
-        '/components/Analysis(.*)'
+        '/components/Analysis(.*)',
+        "/api/webhook/clerk(.*)",
     ]
 );
 
