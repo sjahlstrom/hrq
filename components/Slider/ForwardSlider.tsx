@@ -15,11 +15,11 @@ const sliderStyles = {
       borderRadius: 5,
    },
    track: {
-      backgroundColor: 'shadow-blue',
+      backgroundColor: 'darkblue',
       height: 10,
    },
    handle: {
-      borderColor: 'yellow',
+      borderColor: 'orange',
       height: 24,
       width: 24,
       marginLeft: -8,
@@ -36,11 +36,12 @@ const ForwardSlider: React.FC<CreateSliderProps> = ({
    return (
       <div className="w-fill m-30 mb-2 ml-10 flex">
          <Slider
-            step={1}
-            min={1}
+            range
+            min={0}
             max={30}
             value={value}
             onChange={onChange}
+            onChangeComplete={() => onChange(value)} // Ensure state is updated on interaction end
             styles={sliderStyles}
          />
       </div>

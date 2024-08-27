@@ -39,8 +39,8 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
     questionNumber,
 }) => {
     const [questionIndex, setQuestionIndex] = useState(questionNumber)
-    const [sliderValue, setSliderValue] = useState(0)
-    const [reverseSliderValue, setReverseSliderValue] = useState(30)
+    const [sliderValue, setSliderValue] = useState(15)
+    const [reverseSliderValue, setReverseSliderValue] = useState(15)
     const [answers, setAnswers] = useState<number[]>([])
     const [isSliderUsed, setIsSliderUsed] = useState(false) // New state
 
@@ -104,9 +104,9 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
             }
 
             setQuestionIndex((prev) => prev + 1)
-            setSliderValue(0)
+            setSliderValue(15)
             if (questionData[questionIndex + 1]?.reverse) {
-                setReverseSliderValue(30)
+                setReverseSliderValue(15)
             }
 
             // Reset slider interaction state
@@ -164,6 +164,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                             value={reverseSliderValue}
                             onChange={handleReverseSliderChange}
                         />
+                        <p>Current Value: {reverseSliderValue}</p>
                     </div>
                 ) : (
                     <div className="w-full mt-4 mx-auto md:mt-5">
@@ -171,6 +172,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                             value={sliderValue}
                             onChange={updateSliderValue}
                         />
+                        <p>Current Value: {sliderValue}</p>
                     </div>
                 )}
             </div>
