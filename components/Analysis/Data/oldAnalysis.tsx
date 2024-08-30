@@ -1,7 +1,7 @@
 const testQuestions = [
     {
         question: "If a clerk gave me too much change back, I wouldn't tell",
-        scale: 13,
+        scale: 'Honesty',
         answer: 0,
         position: 0,
         low: 0,
@@ -11,7 +11,7 @@ const testQuestions = [
     },
     {
         question: "If a clerk gave me too much change back, I wouldn't tell",
-        scale: 13,
+        scale: 'Honesty',
         answer: 0,
         position: 1,
         low: 11,
@@ -21,7 +21,7 @@ const testQuestions = [
     },
     {
         question: "If a clerk gave me too much change back, I wouldn't tell",
-        scale: 13,
+        scale: 'Honesty',
         answer: 0,
         position: 2,
         low: 21,
@@ -33,7 +33,7 @@ const testQuestions = [
     {
         question:
             "I'm not very good at seeing the world through someone else's eyes",
-        scale: 9,
+        scale: 'Empathy',
         answer: 1,
         position: 0,
         low: 0,
@@ -44,7 +44,7 @@ const testQuestions = [
     {
         question:
             "I'm not very good at seeing the world through someone else's eyes",
-        scale: 9,
+        scale: 'Empathy',
         answer: 1,
         position: 1,
         low: 11,
@@ -55,7 +55,7 @@ const testQuestions = [
     {
         question:
             "I'm not very good at seeing the world through someone else's eyes",
-        scale: 9,
+        scale: 'Empathy',
         answer: 1,
         position: 2,
         low: 21,
@@ -66,7 +66,7 @@ const testQuestions = [
 
     {
         question: 'I usually put others first',
-        scale: 2,
+        scale: 'Altruism',
         answer: 2,
         position: 0,
         low: 0,
@@ -76,7 +76,7 @@ const testQuestions = [
     },
     {
         question: 'I usually put others first',
-        scale: 2,
+        scale: 'Altruism',
         answer: 2,
         position: 1,
         low: 11,
@@ -86,7 +86,7 @@ const testQuestions = [
     },
     {
         question: 'I usually put others first',
-        scale: 2,
+        scale: 'Altruism',
         answer: 2,
         position: 2,
         low: 21,
@@ -97,7 +97,7 @@ const testQuestions = [
 
     {
         question: 'I tend to not be dedicated and/or dependable',
-        scale: 5,
+        scale: 'Conscientious',
         answer: 3,
         position: 0,
         low: 0,
@@ -107,7 +107,7 @@ const testQuestions = [
     },
     {
         question: 'I tend to not be dedicated and/or dependable',
-        scale: 5,
+        scale: 'Conscientious',
         answer: 3,
         position: 1,
         low: 11,
@@ -117,7 +117,7 @@ const testQuestions = [
     },
     {
         question: 'I tend to not be dedicated and/or dependable',
-        scale: 5,
+        scale: 'Conscientious',
         answer: 3,
         position: 2,
         low: 21,
@@ -128,7 +128,7 @@ const testQuestions = [
 
     {
         question: 'People describe me as "difficult"',
-        scale: 1,
+        scale: 'Agreeableness',
         answer: 4,
         position: 0,
         low: 0,
@@ -138,7 +138,7 @@ const testQuestions = [
     },
     {
         question: 'People describe me as "difficult"',
-        scale: 1,
+        scale: 'Agreeableness',
         answer: 4,
         position: 1,
         low: 11,
@@ -148,7 +148,7 @@ const testQuestions = [
     },
     {
         question: 'People describe me as "difficult"',
-        scale: 1,
+        scale: 'Agreeableness',
         answer: 4,
         position: 2,
         low: 21,
@@ -159,7 +159,7 @@ const testQuestions = [
 
     {
         question: 'My mood is even and stable most of the time',
-        scale: 45,
+        scale: 'Health-Mental',
         answer: 5,
         position: 0,
         low: 0,
@@ -169,7 +169,7 @@ const testQuestions = [
     },
     {
         question: 'My mood is even and stable most of the time',
-        scale: 45,
+        scale: 'Health-Mental',
         answer: 5,
         position: 1,
         low: 11,
@@ -179,7 +179,7 @@ const testQuestions = [
     },
     {
         question: 'My mood is even and stable most of the time',
-        scale: 45,
+        scale: 'Health-Mental',
         answer: 5,
         position: 2,
         low: 21,
@@ -189,7 +189,7 @@ const testQuestions = [
     },
     {
         question: "I'm not a very good team player",
-        scale: 6,
+        scale: 'Cooperative',
         answer: 6,
         position: 0,
         low: 0,
@@ -199,7 +199,7 @@ const testQuestions = [
     },
     {
         question: "I'm not a very good team player",
-        scale: 6,
+        scale: 'Cooperative',
         answer: 6,
         position: 1,
         low: 11,
@@ -209,7 +209,7 @@ const testQuestions = [
     },
     {
         question: "I'm not a very good team player",
-        scale: 6,
+        scale: 'Cooperative',
         answer: 6,
         position: 2,
         low: 21,
@@ -220,7 +220,7 @@ const testQuestions = [
 
     {
         question: 'Women should be paid the same as men for the same work',
-        scale: 7,
+        scale: 'Gender Equality',
         answer: 7,
         position: 0,
         low: 0,
@@ -230,7 +230,7 @@ const testQuestions = [
     },
     {
         question: 'Women should be paid the same as men for the same work',
-        scale: 7,
+        scale: 'Gender Equality',
         answer: 7,
         position: 1,
         low: 11,
@@ -240,7 +240,7 @@ const testQuestions = [
     },
     {
         question: 'Women should be paid the same as men for the same work',
-        scale: 7,
+        scale: 'Gender Equality',
         answer: 7,
         position: 2,
         low: 21,
@@ -251,7 +251,7 @@ const testQuestions = [
 
     {
         question: 'These days, a woman can ask a man out on a date',
-        scale: 62,
+        scale: 'Traditional Values',
         answer: 8,
         position: 0,
         low: 0,
@@ -261,7 +261,7 @@ const testQuestions = [
     },
     {
         question: 'These days, a woman can ask a man out on a date',
-        scale: 62,
+        scale: 'Traditional Values',
         answer: 8,
         position: 1,
         low: 11,
@@ -271,7 +271,7 @@ const testQuestions = [
     },
     {
         question: 'These days, a woman can ask a man out on a date',
-        scale: 62,
+        scale: 'Traditional Values',
         answer: 8,
         position: 2,
         low: 21,
@@ -282,7 +282,7 @@ const testQuestions = [
 
     {
         question: 'In me, what you see is what you get',
-        scale: 3,
+        scale: 'Authenticity',
         answer: 9,
         position: 0,
         low: 0,
@@ -292,7 +292,7 @@ const testQuestions = [
     },
     {
         question: 'In me, what you see is what you get',
-        scale: 3,
+        scale: 'Authenticity',
         answer: 9,
         position: 1,
         low: 11,
@@ -302,7 +302,7 @@ const testQuestions = [
     },
     {
         question: 'In me, what you see is what you get',
-        scale: 3,
+        scale: 'Authenticity',
         answer: 9,
         position: 2,
         low: 21,
@@ -313,7 +313,7 @@ const testQuestions = [
 
     {
         question: "I'm usually not the first one to suggest living together",
-        scale: 53,
+        scale: 'Needy',
         answer: 10,
         position: 0,
         low: 0,
@@ -323,7 +323,7 @@ const testQuestions = [
     },
     {
         question: "I'm usually not the first one to suggest living together",
-        scale: 53,
+        scale: 'Needy',
         answer: 10,
         position: 1,
         low: 11,
@@ -333,7 +333,7 @@ const testQuestions = [
     },
     {
         question: "I'm usually not the first one to suggest living together",
-        scale: 53,
+        scale: 'Needy',
         answer: 10,
         position: 2,
         low: 21,
@@ -345,7 +345,7 @@ const testQuestions = [
     {
         question:
             "I prefer to compliment people's strengths more than to criticize their weaknesses",
-        scale: 57,
+        scale: 'Positive Reinforcement Style',
         answer: 11,
         position: 0,
         low: 0,
@@ -356,7 +356,7 @@ const testQuestions = [
     {
         question:
             "I prefer to compliment people's strengths more than to criticize their weaknesses",
-        scale: 57,
+        scale: 'Positive Reinforcement Style',
         answer: 11,
         position: 1,
         low: 11,
@@ -367,7 +367,7 @@ const testQuestions = [
     {
         question:
             "I prefer to compliment people's strengths more than to criticize their weaknesses",
-        scale: 57,
+        scale: 'Positive Reinforcement Style',
         answer: 11,
         position: 2,
         low: 21,
@@ -378,7 +378,7 @@ const testQuestions = [
 
     {
         question: "I don't necessarily respect people's time or physical space",
-        scale: 4,
+        scale: 'Boundaries',
         answer: 12,
         position: 0,
         low: 0,
@@ -388,7 +388,7 @@ const testQuestions = [
     },
     {
         question: "I don't necessarily respect people's time or physical space",
-        scale: 4,
+        scale: 'Boundaries',
         answer: 12,
         position: 1,
         low: 11,
@@ -398,7 +398,7 @@ const testQuestions = [
     },
     {
         question: "I don't necessarily respect people's time or physical space",
-        scale: 4,
+        scale: 'Boundaries',
         answer: 12,
         position: 2,
         low: 21,
@@ -409,7 +409,7 @@ const testQuestions = [
 
     {
         question: "I don't think about sex more than anyone else",
-        scale: 60,
+        scale: 'Sex',
         answer: 13,
         position: 0,
         low: 0,
@@ -419,7 +419,7 @@ const testQuestions = [
     },
     {
         question: "I don't think about sex more than anyone else",
-        scale: 60,
+        scale: 'Sex',
         answer: 13,
         position: 1,
         low: 11,
@@ -429,7 +429,7 @@ const testQuestions = [
     },
     {
         question: "I don't think about sex more than anyone else",
-        scale: 60,
+        scale: 'Sex',
         answer: 13,
         position: 2,
         low: 21,
@@ -440,7 +440,7 @@ const testQuestions = [
 
     {
         question: 'I live to work, not work to live',
-        scale: 12,
+        scale: 'Fun Capability',
         answer: 14,
         position: 0,
         low: 0,
@@ -450,7 +450,7 @@ const testQuestions = [
     },
     {
         question: 'I live to work, not work to live',
-        scale: 12,
+        scale: 'Fun Capability',
         answer: 14,
         position: 1,
         low: 11,
@@ -460,7 +460,7 @@ const testQuestions = [
     },
     {
         question: 'I live to work, not work to live',
-        scale: 12,
+        scale: 'Fun Capability',
         answer: 14,
         position: 2,
         low: 21,
@@ -472,7 +472,7 @@ const testQuestions = [
     {
         question:
             "I don't normally seek revenge, but when I do, I'll tell you first",
-        scale: 54,
+        scale: 'Passive Aggressiveness',
         answer: 15,
         position: 0,
         low: 0,
@@ -483,7 +483,7 @@ const testQuestions = [
     {
         question:
             "I don't normally seek revenge, but when I do, I'll tell you first",
-        scale: 54,
+        scale: 'Passive Aggressiveness',
         answer: 15,
         position: 1,
         low: 11,
@@ -494,7 +494,7 @@ const testQuestions = [
     {
         question:
             "I don't normally seek revenge, but when I do, I'll tell you first",
-        scale: 54,
+        scale: 'Passive Aggressiveness',
         answer: 15,
         position: 2,
         low: 21,
@@ -506,7 +506,7 @@ const testQuestions = [
     {
         question:
             "I try to understand the cause of someone's behavior Later, it helps me to let it go",
-        scale: 11,
+        scale: 'Forgiveness',
         answer: 16,
         position: 0,
         low: 0,
@@ -517,7 +517,7 @@ const testQuestions = [
     {
         question:
             "I try to understand the cause of someone's behavior Later, it helps me to let it go",
-        scale: 11,
+        scale: 'Forgiveness',
         answer: 16,
         position: 1,
         low: 11,
@@ -528,7 +528,7 @@ const testQuestions = [
     {
         question:
             "I try to understand the cause of someone's behavior Later, it helps me to let it go",
-        scale: 11,
+        scale: 'Forgiveness',
         answer: 16,
         position: 2,
         low: 21,
@@ -539,7 +539,7 @@ const testQuestions = [
 
     {
         question: 'I use my feelings when thinking about something',
-        scale: 8,
+        scale: 'Emotional Intelligence',
         answer: 17,
         position: 0,
         low: 0,
@@ -550,7 +550,7 @@ const testQuestions = [
 
     {
         question: 'I use my feelings when thinking about something',
-        scale: 8,
+        scale: 'Emotional Intelligence',
         answer: 17,
         position: 1,
         low: 11,
@@ -560,7 +560,7 @@ const testQuestions = [
     },
     {
         question: 'I use my feelings when thinking about something',
-        scale: 8,
+        scale: 'Emotional Intelligence',
         answer: 17,
         position: 2,
         low: 21,
@@ -571,7 +571,7 @@ const testQuestions = [
 
     {
         question: 'I am at least one of these: reliable and/or devoted',
-        scale: 5,
+        scale: 'Conscientious',
         answer: 18,
         position: 0,
         low: 0,
@@ -581,7 +581,7 @@ const testQuestions = [
     },
     {
         question: 'I am at least one of these: reliable and/or devoted',
-        scale: 5,
+        scale: 'Conscientious',
         answer: 18,
         position: 1,
         low: 11,
@@ -591,7 +591,7 @@ const testQuestions = [
     },
     {
         question: 'I am at least one of these: reliable and/or devoted',
-        scale: 5,
+        scale: 'Conscientious',
         answer: 18,
         position: 2,
         low: 21,
@@ -602,7 +602,7 @@ const testQuestions = [
 
     {
         question: 'People find me pleasing to be around',
-        scale: 1,
+        scale: 'Agreeableness',
         answer: 20,
         position: 0,
         low: 0,
@@ -612,7 +612,7 @@ const testQuestions = [
     },
     {
         question: 'People find me pleasing to be around',
-        scale: 1,
+        scale: 'Agreeableness',
         answer: 20,
         position: 1,
         low: 11,
@@ -622,7 +622,7 @@ const testQuestions = [
     },
     {
         question: 'People find me pleasing to be around',
-        scale: 1,
+        scale: 'Agreeableness',
         answer: 20,
         position: 2,
         low: 21,
@@ -633,7 +633,7 @@ const testQuestions = [
 
     {
         question: 'I enjoy just being in the moment',
-        scale: 20,
+        scale: 'Mindfulness',
         answer: 21,
         position: 0,
         low: 0,
@@ -643,7 +643,7 @@ const testQuestions = [
     },
     {
         question: 'I enjoy just being in the moment',
-        scale: 20,
+        scale: 'Mindfulness',
         answer: 21,
         position: 1,
         low: 11,
@@ -653,7 +653,7 @@ const testQuestions = [
     },
     {
         question: 'I enjoy just being in the moment',
-        scale: 20,
+        scale: 'Mindfulness',
         answer: 21,
         position: 2,
         low: 21,
@@ -665,7 +665,7 @@ const testQuestions = [
     {
         question:
             "I can read a person's feelings, even sometimes their thoughts from far away",
-        scale: 9,
+        scale: 'Empathy',
         answer: 22,
         position: 0,
         low: 0,
@@ -676,7 +676,7 @@ const testQuestions = [
     {
         question:
             "I can read a person's feelings, even sometimes their thoughts from far away",
-        scale: 9,
+        scale: 'Empathy',
         answer: 22,
         position: 1,
         low: 11,
@@ -687,7 +687,7 @@ const testQuestions = [
     {
         question:
             "I can read a person's feelings, even sometimes their thoughts from far away",
-        scale: 9,
+        scale: 'Empathy',
         answer: 22,
         position: 2,
         low: 21,
@@ -699,7 +699,7 @@ const testQuestions = [
     {
         question:
             "I don't always care one way or another about all the little details",
-        scale: 55,
+        scale: 'Perfectionism',
         answer: 23,
         position: 0,
         low: 0,
@@ -710,7 +710,7 @@ const testQuestions = [
     {
         question:
             "I don't always care one way or another about all the little details",
-        scale: 55,
+        scale: 'Perfectionism',
         answer: 23,
         position: 1,
         low: 11,
@@ -721,7 +721,7 @@ const testQuestions = [
     {
         question:
             "I don't always care one way or another about all the little details",
-        scale: 55,
+        scale: 'Perfectionism',
         answer: 23,
         position: 2,
         low: 21,
@@ -732,7 +732,7 @@ const testQuestions = [
 
     {
         question: 'I think my religion is the best religion',
-        scale: 59,
+        scale: 'Religiosity',
         answer: 24,
         position: 0,
         low: 0,
@@ -742,7 +742,7 @@ const testQuestions = [
     },
     {
         question: 'I think my religion is the best religion',
-        scale: 59,
+        scale: 'Religiosity',
         answer: 24,
         position: 1,
         low: 11,
@@ -752,7 +752,7 @@ const testQuestions = [
     },
     {
         question: 'I think my religion is the best religion',
-        scale: 59,
+        scale: 'Religiosity',
         answer: 24,
         position: 2,
         low: 21,
@@ -764,7 +764,7 @@ const testQuestions = [
     {
         question:
             'When someone hurts me, I harbor negative feelings for quite a while',
-        scale: 11,
+        scale: 'Forgiveness',
         answer: 25,
         position: 0,
         low: 0,
@@ -775,7 +775,7 @@ const testQuestions = [
     {
         question:
             'When someone hurts me, I harbor negative feelings for quite a while',
-        scale: 11,
+        scale: 'Forgiveness',
         answer: 25,
         position: 1,
         low: 11,
@@ -786,7 +786,7 @@ const testQuestions = [
     {
         question:
             'When someone hurts me, I harbor negative feelings for quite a while',
-        scale: 11,
+        scale: 'Forgiveness',
         answer: 25,
         position: 2,
         low: 21,
@@ -798,7 +798,7 @@ const testQuestions = [
     {
         question:
             "I'm more 'into' getting what I want, even if it is at the expense of others",
-        scale: 2,
+        scale: 'Altruism',
         answer: 26,
         position: 0,
         low: 0,
@@ -809,7 +809,7 @@ const testQuestions = [
     {
         question:
             "I'm more 'into' getting what I want, even if it is at the expense of others",
-        scale: 2,
+        scale: 'Altruism',
         answer: 26,
         position: 1,
         low: 11,
@@ -820,7 +820,7 @@ const testQuestions = [
     {
         question:
             "I'm more 'into' getting what I want, even if it is at the expense of others",
-        scale: 2,
+        scale: 'Altruism',
         answer: 26,
         position: 3,
         low: 21,
@@ -831,7 +831,7 @@ const testQuestions = [
 
     {
         question: 'I like things to get personal',
-        scale: 16,
+        scale: 'Intimacy',
         answer: 27,
         position: 0,
         low: 0,
@@ -841,7 +841,7 @@ const testQuestions = [
     },
     {
         question: 'I like things to get personal',
-        scale: 16,
+        scale: 'Intimacy',
         answer: 27,
         position: 1,
         low: 11,
@@ -851,7 +851,7 @@ const testQuestions = [
     },
     {
         question: 'I like things to get personal',
-        scale: 16,
+        scale: 'Intimacy',
         answer: 27,
         position: 2,
         low: 21,
@@ -862,7 +862,7 @@ const testQuestions = [
 
     {
         question: "I'm capable of having a really good time",
-        scale: 12,
+        scale: 'Fun Capability',
         answer: 28,
         position: 0,
         low: 0,
@@ -872,7 +872,7 @@ const testQuestions = [
     },
     {
         question: "I'm capable of having a really good time",
-        scale: 12,
+        scale: 'Fun Capability',
         answer: 28,
         position: 1,
         low: 11,
@@ -882,7 +882,7 @@ const testQuestions = [
     },
     {
         question: "I'm capable of having a really good time",
-        scale: 12,
+        scale: 'Fun Capability',
         answer: 28,
         position: 2,
         low: 21,
@@ -893,7 +893,7 @@ const testQuestions = [
 
     {
         question: 'I have some chronic health problems',
-        scale: 46,
+        scale: 'Health-Physical',
         answer: 29,
         position: 0,
         low: 0,
@@ -903,7 +903,7 @@ const testQuestions = [
     },
     {
         question: 'I have some chronic health problems',
-        scale: 46,
+        scale: 'Health-Physical',
         answer: 29,
         position: 1,
         low: 11,
@@ -913,7 +913,7 @@ const testQuestions = [
     },
     {
         question: 'I have some chronic health problems',
-        scale: 46,
+        scale: 'Health-Physical',
         answer: 29,
         position: 2,
         low: 21,
@@ -924,7 +924,7 @@ const testQuestions = [
 
     {
         question: 'If someone says "No" to something, then "No" is OK',
-        scale: 4,
+        scale: 'Boundaries',
         answer: 30,
         position: 0,
         low: 0,
@@ -934,7 +934,7 @@ const testQuestions = [
     },
     {
         question: 'If someone says "No" to something, then "No" is OK',
-        scale: 4,
+        scale: 'Boundaries',
         answer: 30,
         position: 1,
         low: 11,
@@ -944,7 +944,7 @@ const testQuestions = [
     },
     {
         question: 'If someone says "No" to something, then "No" is OK',
-        scale: 4,
+        scale: 'Boundaries',
         answer: 30,
         position: 2,
         low: 21,
@@ -955,7 +955,7 @@ const testQuestions = [
 
     {
         question: 'People are basically more good than bad',
-        scale: 24,
+        scale: 'Positive/Life Affirming',
         answer: 31,
         position: 0,
         low: 0,
@@ -965,7 +965,7 @@ const testQuestions = [
     },
     {
         question: 'People are basically more good than bad',
-        scale: 24,
+        scale: 'Positive/Life Affirming',
         answer: 31,
         position: 1,
         low: 11,
@@ -975,7 +975,7 @@ const testQuestions = [
     },
     {
         question: 'People are basically more good than bad',
-        scale: 24,
+        scale: 'Positive/Life Affirming',
         answer: 31,
         position: 2,
         low: 21,
@@ -986,7 +986,7 @@ const testQuestions = [
 
     {
         question: "I can accommodate other's suggestions",
-        scale: 6,
+        scale: 'Cooperative',
         answer: 32,
         position: 0,
         low: 0,
@@ -996,7 +996,7 @@ const testQuestions = [
     },
     {
         question: "I can accommodate other's suggestions",
-        scale: 6,
+        scale: 'Cooperative',
         answer: 32,
         position: 1,
         low: 11,
@@ -1006,7 +1006,7 @@ const testQuestions = [
     },
     {
         question: "I can accommodate other's suggestions",
-        scale: 6,
+        scale: 'Cooperative',
         answer: 32,
         position: 2,
         low: 21,
@@ -1018,7 +1018,7 @@ const testQuestions = [
     {
         question:
             'Women and men are just different.  Neither one is better than the other',
-        scale: 7,
+        scale: 'Gender Equality',
         answer: 33,
         position: 0,
         low: 0,
@@ -1029,7 +1029,7 @@ const testQuestions = [
     {
         question:
             'Women and men are just different.  Neither one is better than the other',
-        scale: 7,
+        scale: 'Gender Equality',
         answer: 33,
         position: 1,
         low: 11,
@@ -1040,7 +1040,7 @@ const testQuestions = [
     {
         question:
             'Women and men are just different.  Neither one is better than the other',
-        scale: 7,
+        scale: 'Gender Equality',
         answer: 33,
         position: 2,
         low: 21,
@@ -1051,36 +1051,38 @@ const testQuestions = [
 
     {
         question: "I don't take myself that seriously",
-        scale: 14,
+        scale: 'Humility',
         answer: 34,
         position: 0,
         low: 0,
         high: 10,
         analysis:
-        'You do not emphasize humility in your daily behavior.   You are slightly more likely to be arrogant, but your first priority really is more about not feeling small, or insignificant when interacting with others.'
+            'Being honest via spoken word or deed is not high on you priority list.   This does not necessarily mean you are prone to lie, only that honesty is not your first level of focus.',
     },
     {
         question: "I don't take myself that seriously",
-        scale: 14,
+        scale: 'Humility',
         answer: 34,
         position: 1,
         low: 11,
         high: 20,
-        analysis: 'You are neither humble nor arrogant.   You fall somewhere in the middle and may or may not think of yourself in simple, insignificant terms in the overall scheme of things.'
+        analysis:
+            'You are not concerned any more than the average person about being honest, though this does not mean you are dishonest.   You are somewhere in the middle range for this trait.',
     },
     {
         question: "I don't take myself that seriously",
-        scale: 14,
+        scale: 'Humility',
         answer: 34,
         position: 2,
         low: 21,
         high: 30,
-        analysis: 'You tend to not exaggerate your own sense of importance, to feel relatively small in the scheme of things.   You perceive yourself as more simple, or insignificant, who probably spends time taking care of others.   You have traits that are the opposite of arrogance.    This trait positively correlates with success in relationships'
+        analysis:
+            'You are more honest than not--faithfully representing the truth as you see it via spoken word or deed.  This quality correlates with successful relationships.',
     },
 
     {
         question: 'I tell people what they want to hear',
-        scale: 3,
+        scale: 'Authenticity',
         answer: 35,
         position: 0,
         low: 0,
@@ -1090,7 +1092,7 @@ const testQuestions = [
     },
     {
         question: 'I tell people what they want to hear',
-        scale: 3,
+        scale: 'Authenticity',
         answer: 35,
         position: 1,
         low: 11,
@@ -1100,7 +1102,7 @@ const testQuestions = [
     },
     {
         question: 'I tell people what they want to hear',
-        scale: 3,
+        scale: 'Authenticity',
         answer: 35,
         position: 2,
         low: 21,
@@ -1111,7 +1113,7 @@ const testQuestions = [
 
     {
         question: 'I relate to funny people',
-        scale: 15,
+        scale: 'Humor',
         answer: 36,
         position: 0,
         low: 0,
@@ -1121,7 +1123,7 @@ const testQuestions = [
     },
     {
         question: 'I relate to funny people',
-        scale: 15,
+        scale: 'Humor',
         answer: 36,
         position: 1,
         low: 11,
@@ -1131,7 +1133,7 @@ const testQuestions = [
     },
     {
         question: 'I relate to funny people',
-        scale: 15,
+        scale: 'Humor',
         answer: 36,
         position: 2,
         low: 21,
@@ -1142,7 +1144,7 @@ const testQuestions = [
 
     {
         question: "I'm not a big fan of change",
-        scale: 22,
+        scale: 'Openness',
         answer: 37,
         position: 0,
         low: 0,
@@ -1152,7 +1154,7 @@ const testQuestions = [
     },
     {
         question: "I'm not a big fan of change",
-        scale: 22,
+        scale: 'Openness',
         answer: 37,
         position: 1,
         low: 11,
@@ -1162,7 +1164,7 @@ const testQuestions = [
     },
     {
         question: "I'm not a big fan of change",
-        scale: 22,
+        scale: 'Openness',
         answer: 37,
         position: 2,
         low: 21,
@@ -1205,7 +1207,7 @@ const testQuestions = [
     {
         question:
             'I tend to judge people by what kind of car they drive, or the clothing or jewelry they wear',
-        scale: 44,
+        scale: 'Gold Digging',
         answer: 39,
         position: 0,
         low: 0,
@@ -1216,7 +1218,7 @@ const testQuestions = [
     {
         question:
             'I tend to judge people by what kind of car they drive, or the clothing or jewelry they wear',
-        scale: 44,
+        scale: 'Gold Digging',
         answer: 39,
         position: 1,
         low: 11,
@@ -1227,7 +1229,7 @@ const testQuestions = [
     {
         question:
             'I tend to judge people by what kind of car they drive, or the clothing or jewelry they wear',
-        scale: 44,
+        scale: 'Gold Digging',
         answer: 39,
         position: 2,
         low: 21,
@@ -1238,7 +1240,7 @@ const testQuestions = [
 
     {
         question: 'My first impulse is to tell the truth',
-        scale: 13,
+        scale: 'Honesty',
         answer: 40,
         position: 0,
         low: 0,
@@ -1248,7 +1250,7 @@ const testQuestions = [
     },
     {
         question: 'My first impulse is to tell the truth',
-        scale: 13,
+        scale: 'Honesty',
         answer: 40,
         position: 1,
         low: 11,
@@ -1258,7 +1260,7 @@ const testQuestions = [
     },
     {
         question: 'My first impulse is to tell the truth',
-        scale: 13,
+        scale: 'Honesty',
         answer: 40,
         position: 2,
         low: 21,
@@ -1269,7 +1271,7 @@ const testQuestions = [
 
     {
         question: 'People sometimes think of me as haughty or snobbish',
-        scale: 14,
+        scale: 'Humility',
         answer: 41,
         position: 0,
         low: 0,
@@ -1279,7 +1281,7 @@ const testQuestions = [
     },
     {
         question: 'People sometimes think of me as haughty or snobbish',
-        scale: 14,
+        scale: 'Humility',
         answer: 41,
         position: 1,
         low: 11,
@@ -1289,7 +1291,7 @@ const testQuestions = [
     },
     {
         question: 'People sometimes think of me as haughty or snobbish',
-        scale: 14,
+        scale: 'Humility',
         answer: 41,
         position: 2,
         low: 21,
@@ -1300,7 +1302,7 @@ const testQuestions = [
 
     {
         question: "I'm not comfortable giving and receiving love",
-        scale: 19,
+        scale: 'Love Capable',
         answer: 42,
         position: 0,
         low: 0,
@@ -1310,7 +1312,7 @@ const testQuestions = [
     },
     {
         question: "I'm not comfortable giving and receiving love",
-        scale: 19,
+        scale: 'Love Capable',
         answer: 42,
         position: 1,
         low: 11,
@@ -1321,7 +1323,7 @@ const testQuestions = [
 
     {
         question: "I'm not comfortable giving and receiving love",
-        scale: 19,
+        scale: 'Love Capable',
         answer: 42,
         position: 2,
         low: 21,
@@ -1333,7 +1335,7 @@ const testQuestions = [
     {
         question:
             "Thoughts should dominate, so I don't consider my feelings much",
-        scale: 8,
+        scale: 'Emotional Intelligence',
         answer: 43,
         position: 0,
         low: 0,
@@ -1344,7 +1346,7 @@ const testQuestions = [
     {
         question:
             "Thoughts should dominate, so I don't consider my feelings much",
-        scale: 8,
+        scale: 'Emotional Intelligence',
         answer: 43,
         position: 1,
         low: 11,
@@ -1355,7 +1357,7 @@ const testQuestions = [
     {
         question:
             "Thoughts should dominate, so I don't consider my feelings much",
-        scale: 8,
+        scale: 'Emotional Intelligence',
         answer: 43,
         position: 2,
         low: 21,
@@ -1366,7 +1368,7 @@ const testQuestions = [
 
     {
         question: "I'm prone to 'get in someone's face'",
-        scale: 34,
+        scale: 'Aggression',
         answer: 44,
         position: 0,
         low: 0,
@@ -1376,7 +1378,7 @@ const testQuestions = [
     },
     {
         question: "I'm prone to 'get in someone's face'",
-        scale: 34,
+        scale: 'Aggression',
         answer: 44,
         position: 1,
         low: 11,
@@ -1386,7 +1388,7 @@ const testQuestions = [
     },
     {
         question: "I'm prone to 'get in someone's face'",
-        scale: 34,
+        scale: 'Aggression',
         answer: 44,
         position: 2,
         low: 21,
@@ -1425,7 +1427,7 @@ const testQuestions = [
     {
         question:
             "I've had trouble with gambling, alcohol, drugs or too much sex",
-        scale: 33,
+        scale: 'Addictions',
         answer: 46,
         position: 0,
         low: 0,
@@ -1436,7 +1438,7 @@ const testQuestions = [
     {
         question:
             "I've had trouble with gambling, alcohol, drugs or too much sex",
-        scale: 33,
+        scale: 'Addictions',
         answer: 46,
         position: 1,
         low: 11,
@@ -1447,7 +1449,7 @@ const testQuestions = [
     {
         question:
             "I've had trouble with gambling, alcohol, drugs or too much sex",
-        scale: 33,
+        scale: 'Addictions',
         answer: 46,
         position: 2,
         low: 21,
@@ -1458,7 +1460,7 @@ const testQuestions = [
 
     {
         question: "I make jokes but they don't go over well",
-        scale: 15,
+        scale: 'Humor',
         answer: 47,
         position: 0,
         low: 0,
@@ -1468,7 +1470,7 @@ const testQuestions = [
     },
     {
         question: "I make jokes but they don't go over well",
-        scale: 15,
+        scale: 'Humor',
         answer: 47,
         position: 1,
         low: 11,
@@ -1479,7 +1481,7 @@ const testQuestions = [
 
     {
         question: "I make jokes but they don't go over well",
-        scale: 15,
+        scale: 'Humor',
         answer: 47,
         position: 2,
         low: 21,
@@ -1490,7 +1492,7 @@ const testQuestions = [
 
     {
         question: 'Persistence and determination alone are omnipotent',
-        scale: 23,
+        scale: 'Persistence',
         answer: 48,
         position: 0,
         low: 0,
@@ -1500,7 +1502,7 @@ const testQuestions = [
     },
     {
         question: 'Persistence and determination alone are omnipotent',
-        scale: 23,
+        scale: 'Persistence',
         answer: 48,
         position: 1,
         low: 11,
@@ -1510,7 +1512,7 @@ const testQuestions = [
     },
     {
         question: 'Persistence and determination alone are omnipotent',
-        scale: 23,
+        scale: 'Persistence',
         answer: 48,
         position: 2,
         low: 21,
@@ -1521,7 +1523,7 @@ const testQuestions = [
 
     {
         question: "I'm not suspicious",
-        scale: 30,
+        scale: 'Trust',
         answer: 49,
         position: 0,
         low: 0,
@@ -1531,7 +1533,7 @@ const testQuestions = [
     },
     {
         question: "I'm not suspicious",
-        scale: 30,
+        scale: 'Trust',
         answer: 49,
         position: 1,
         low: 11,
@@ -1541,7 +1543,7 @@ const testQuestions = [
     },
     {
         question: "I'm not suspicious",
-        scale: 30,
+        scale: 'Trust',
         answer: 49,
         position: 2,
         low: 21,
@@ -1552,7 +1554,7 @@ const testQuestions = [
 
     {
         question: 'I have values and principles. They work for me',
-        scale: 31,
+        scale: 'Values',
         answer: 50,
         position: 0,
         low: 0,
@@ -1562,7 +1564,7 @@ const testQuestions = [
     },
     {
         question: 'I have values and principles. They work for me',
-        scale: 31,
+        scale: 'Values',
         answer: 50,
         position: 1,
         low: 11,
@@ -1572,7 +1574,7 @@ const testQuestions = [
     },
     {
         question: 'I have values and principles. They work for me',
-        scale: 31,
+        scale: 'Values',
         answer: 50,
         position: 2,
         low: 21,
@@ -1583,7 +1585,7 @@ const testQuestions = [
 
     {
         question: "I'm not very affectionate",
-        scale: 17,
+        scale: 'Affection',
         answer: 51,
         position: 0,
         low: 0,
@@ -1593,7 +1595,7 @@ const testQuestions = [
     },
     {
         question: "I'm not very affectionate",
-        scale: 17,
+        scale: 'Affection',
         answer: 51,
         position: 1,
         low: 11,
@@ -1603,7 +1605,7 @@ const testQuestions = [
     },
     {
         question: "I'm not very affectionate",
-        scale: 17,
+        scale: 'Affection',
         answer: 51,
         position: 2,
         low: 21,
@@ -1642,7 +1644,7 @@ const testQuestions = [
 
     {
         question: "I can't take criticism",
-        scale: 26,
+        scale: 'Self-esteem',
         answer: 53,
         position: 0,
         low: 0,
@@ -1652,7 +1654,7 @@ const testQuestions = [
     },
     {
         question: "I can't take criticism",
-        scale: 26,
+        scale: 'Self-esteem',
         answer: 53,
         position: 1,
         low: 11,
@@ -1662,7 +1664,7 @@ const testQuestions = [
     },
     {
         question: "I can't take criticism",
-        scale: 26,
+        scale: 'Self-esteem',
         answer: 53,
         position: 2,
         low: 21,
@@ -1672,7 +1674,7 @@ const testQuestions = [
     },
     {
         question: "I don't push myself to extremes.  I take care of myself",
-        scale: 27,
+        scale: 'Self-maintenance',
         answer: 54,
         position: 0,
         low: 0,
@@ -1682,7 +1684,7 @@ const testQuestions = [
     },
     {
         question: "I don't push myself to extremes.  I take care of myself",
-        scale: 27,
+        scale: 'Self-maintenance',
         answer: 54,
         position: 1,
         low: 11,
@@ -1692,7 +1694,7 @@ const testQuestions = [
     },
     {
         question: "I don't push myself to extremes.  I take care of myself",
-        scale: 27,
+        scale: 'Self-maintenance',
         answer: 54,
         position: 2,
         low: 21,
@@ -1702,7 +1704,7 @@ const testQuestions = [
     },
     {
         question: "I'm a 'control freak'",
-        scale: 39,
+        scale: 'Controlling',
         answer: 55,
         position: 0,
         low: 0,
@@ -1712,7 +1714,7 @@ const testQuestions = [
     },
     {
         question: "I'm a 'control freak'",
-        scale: 39,
+        scale: 'Controlling',
         answer: 55,
         position: 1,
         low: 11,
@@ -1721,7 +1723,7 @@ const testQuestions = [
     },
     {
         question: "I'm a 'control freak'",
-        scale: 39,
+        scale: 'Controlling',
         answer: 55,
         position: 2,
         low: 21,
@@ -1732,7 +1734,7 @@ const testQuestions = [
 
     {
         question: 'I have more anxiety than most',
-        scale: 45,
+        scale: 'Health-Mental',
         answer: 56,
         position: 0,
         low: 0,
@@ -1742,7 +1744,7 @@ const testQuestions = [
     },
     {
         question: 'I have more anxiety than most',
-        scale: 45,
+        scale: 'Health-Mental',
         answer: 56,
         position: 1,
         low: 11,
@@ -1752,7 +1754,7 @@ const testQuestions = [
     },
     {
         question: 'I have more anxiety than most',
-        scale: 45,
+        scale: 'Health-Mental',
         answer: 56,
         position: 2,
         low: 21,
@@ -1791,7 +1793,7 @@ const testQuestions = [
 
     {
         question: "I'm open to new ideas and experiences",
-        scale: 22,
+        scale: 'Openness',
         answer: 58,
         position: 0,
         low: 0,
@@ -1801,7 +1803,7 @@ const testQuestions = [
     },
     {
         question: "I'm open to new ideas and experiences",
-        scale: 22,
+        scale: 'Openness',
         answer: 58,
         position: 1,
         low: 11,
@@ -1811,7 +1813,7 @@ const testQuestions = [
     },
     {
         question: "I'm open to new ideas and experiences",
-        scale: 22,
+        scale: 'Openness',
         answer: 58,
         position: 2,
         low: 21,
@@ -1822,7 +1824,7 @@ const testQuestions = [
 
     {
         question: 'I tend to give up if something is too difficult',
-        scale: 23,
+        scale: 'Persistence',
         answer: 59,
         position: 0,
         low: 0,
@@ -1832,7 +1834,7 @@ const testQuestions = [
     },
     {
         question: 'I tend to give up if something is too difficult',
-        scale: 23,
+        scale: 'Persistence',
         answer: 59,
         position: 1,
         low: 11,
@@ -1842,7 +1844,7 @@ const testQuestions = [
     },
     {
         question: 'I tend to give up if something is too difficult',
-        scale: 23,
+        scale: 'Persistence',
         answer: 59,
         position: 2,
         low: 21,
@@ -1853,7 +1855,7 @@ const testQuestions = [
 
     {
         question: "When someone says 'I love you', I can say it back",
-        scale: 19,
+        scale: 'Love Capable',
         answer: 60,
         position: 0,
         low: 0,
@@ -1863,7 +1865,7 @@ const testQuestions = [
     },
     {
         question: "When someone says 'I love you', I can say it back",
-        scale: 19,
+        scale: 'Love Capable',
         answer: 60,
         position: 1,
         low: 11,
@@ -1873,7 +1875,7 @@ const testQuestions = [
     },
     {
         question: "When someone says 'I love you', I can say it back",
-        scale: 19,
+        scale: 'Love Capable',
         answer: 60,
         position: 2,
         low: 21,
@@ -1884,7 +1886,7 @@ const testQuestions = [
 
     {
         question: 'Neither of my parents was an addict of any kind',
-        scale: 33,
+        scale: 'Addictions',
         answer: 61,
         position: 0,
         low: 0,
@@ -1894,7 +1896,7 @@ const testQuestions = [
     },
     {
         question: 'Neither of my parents was an addict of any kind',
-        scale: 33,
+        scale: 'Addictions',
         answer: 61,
         position: 1,
         low: 11,
@@ -1904,7 +1906,7 @@ const testQuestions = [
     },
     {
         question: 'Neither of my parents was an addict of any kind',
-        scale: 33,
+        scale: 'Addictions',
         answer: 61,
         position: 2,
         low: 21,
@@ -1915,7 +1917,7 @@ const testQuestions = [
 
     {
         question: "I can't tell you my feelings without embarrassment",
-        scale: 16,
+        scale: 'Intimacy',
         answer: 62,
         position: 0,
         low: 0,
@@ -1925,7 +1927,7 @@ const testQuestions = [
     },
     {
         question: "I can't tell you my feelings without embarrassment",
-        scale: 16,
+        scale: 'Intimacy',
         answer: 62,
         position: 1,
         low: 11,
@@ -1935,7 +1937,7 @@ const testQuestions = [
     },
     {
         question: "I can't tell you my feelings without embarrassment",
-        scale: 16,
+        scale: 'Intimacy',
         answer: 62,
         position: 2,
         low: 21,
@@ -1946,7 +1948,7 @@ const testQuestions = [
 
     {
         question: 'I think about morals and try to abide by them',
-        scale: 31,
+        scale: 'Values',
         answer: 63,
         position: 0,
         low: 0,
@@ -1956,7 +1958,7 @@ const testQuestions = [
     },
     {
         question: 'I think about morals and try to abide by them',
-        scale: 31,
+        scale: 'Values',
         answer: 63,
         position: 1,
         low: 11,
@@ -1966,7 +1968,7 @@ const testQuestions = [
     },
     {
         question: 'I think about morals and try to abide by them',
-        scale: 31,
+        scale: 'Values',
         answer: 63,
         position: 2,
         low: 21,
@@ -1977,7 +1979,7 @@ const testQuestions = [
 
     {
         question: 'Life is a good experience',
-        scale: 24,
+        scale: 'Positive/Life Affirming',
         answer: 64,
         position: 0,
         low: 0,
@@ -1987,7 +1989,7 @@ const testQuestions = [
     },
     {
         question: 'Life is a good experience',
-        scale: 24,
+        scale: 'Positive/Life Affirming',
         answer: 64,
         position: 1,
         low: 11,
@@ -1997,7 +1999,7 @@ const testQuestions = [
     },
     {
         question: 'Life is a good experience',
-        scale: 24,
+        scale: 'Positive/Life Affirming',
         answer: 64,
         position: 2,
         low: 21,
@@ -2008,7 +2010,7 @@ const testQuestions = [
 
     {
         question: 'I like physical contact when I talk with people',
-        scale: 17,
+        scale: 'Affection',
         answer: 65,
         position: 0,
         low: 0,
@@ -2018,7 +2020,7 @@ const testQuestions = [
     },
     {
         question: 'I like physical contact when I talk with people',
-        scale: 17,
+        scale: 'Affection',
         answer: 65,
         position: 1,
         low: 11,
@@ -2028,7 +2030,7 @@ const testQuestions = [
     },
     {
         question: 'I like physical contact when I talk with people',
-        scale: 17,
+        scale: 'Affection',
         answer: 65,
         position: 2,
         low: 21,
@@ -2038,7 +2040,7 @@ const testQuestions = [
     },
     {
         question: "I sometimes 'act out' my anger",
-        scale: 35,
+        scale: 'Anger Management',
         answer: 66,
         position: 0,
         low: 0,
@@ -2048,7 +2050,7 @@ const testQuestions = [
     },
     {
         question: "I sometimes 'act out' my anger",
-        scale: 35,
+        scale: 'Anger Management',
         answer: 66,
         position: 1,
         low: 11,
@@ -2058,7 +2060,7 @@ const testQuestions = [
     },
     {
         question: "I sometimes 'act out' my anger",
-        scale: 35,
+        scale: 'Anger Management',
         answer: 66,
         position: 2,
         low: 21,
@@ -2069,7 +2071,7 @@ const testQuestions = [
 
     {
         question: "I've had affairs",
-        scale: 38,
+        scale: 'Commitment Capable',
         answer: 67,
         position: 0,
         low: 0,
@@ -2079,7 +2081,7 @@ const testQuestions = [
     },
     {
         question: "I've had affairs",
-        scale: 38,
+        scale: 'Commitment Capable',
         answer: 67,
         position: 1,
         low: 11,
@@ -2089,7 +2091,7 @@ const testQuestions = [
     },
     {
         question: "I've had affairs",
-        scale: 38,
+        scale: 'Commitment Capable',
         answer: 67,
         position: 2,
         low: 21,
@@ -2101,7 +2103,7 @@ const testQuestions = [
     {
         question:
             'I usually plan things out, at least a little, before I do something',
-        scale: 49,
+        scale: 'Impulsivity',
         answer: 68,
         position: 0,
         low: 0,
@@ -2112,7 +2114,7 @@ const testQuestions = [
     {
         question:
             'I usually plan things out, at least a little, before I do something',
-        scale: 49,
+        scale: 'Impulsivity',
         answer: 68,
         position: 1,
         low: 11,
@@ -2123,7 +2125,7 @@ const testQuestions = [
     {
         question:
             'I usually plan things out, at least a little, before I do something',
-        scale: 49,
+        scale: 'Impulsivity',
         answer: 68,
         position: 2,
         low: 21,
@@ -2162,7 +2164,7 @@ const testQuestions = [
 
     {
         question: "I don't necessarily eat or sleep well",
-        scale: 27,
+        scale: 'Self-maintenance',
         answer: 70,
         position: 0,
         low: 0,
@@ -2172,7 +2174,7 @@ const testQuestions = [
     },
     {
         question: "I don't necessarily eat or sleep well",
-        scale: 27,
+        scale: 'Self-maintenance',
         answer: 70,
         position: 1,
         low: 11,
@@ -2182,7 +2184,7 @@ const testQuestions = [
     },
     {
         question: "I don't necessarily eat or sleep well",
-        scale: 27,
+        scale: 'Self-maintenance',
         answer: 70,
         position: 2,
         low: 21,
@@ -2193,7 +2195,7 @@ const testQuestions = [
     {
         question:
             "I'm more comfortable if I can become a part of my date's social circles",
-        scale: 28,
+        scale: 'Social Autonomy',
         answer: 71,
         position: 0,
         low: 0,
@@ -2204,7 +2206,7 @@ const testQuestions = [
     {
         question:
             "I'm more comfortable if I can become a part of my date's social circles",
-        scale: 28,
+        scale: 'Social Autonomy',
         answer: 71,
         position: 1,
         low: 11,
@@ -2215,7 +2217,7 @@ const testQuestions = [
     {
         question:
             "I'm more comfortable if I can become a part of my date's social circles",
-        scale: 28,
+        scale: 'Social Autonomy',
         answer: 71,
         position: 2,
         low: 21,
@@ -2226,7 +2228,7 @@ const testQuestions = [
 
     {
         question: 'My family was/is free of domestic violence',
-        scale: 32,
+        scale: 'Abuse Victim',
         answer: 72,
         position: 0,
         low: 0,
@@ -2236,7 +2238,7 @@ const testQuestions = [
     },
     {
         question: 'My family was/is free of domestic violence',
-        scale: 32,
+        scale: 'Abuse Victim',
         answer: 72,
         position: 1,
         low: 11,
@@ -2246,7 +2248,7 @@ const testQuestions = [
     },
     {
         question: 'My family was/is free of domestic violence',
-        scale: 32,
+        scale: 'Abuse Victim',
         answer: 72,
         position: 2,
         low: 21,
@@ -2257,7 +2259,7 @@ const testQuestions = [
 
     {
         question: 'I tend to bounce around from thing to thing',
-        scale: 43,
+        scale: 'Focus',
         answer: 73,
         position: 0,
         low: 0,
@@ -2267,7 +2269,7 @@ const testQuestions = [
     },
     {
         question: 'I tend to bounce around from thing to thing',
-        scale: 43,
+        scale: 'Focus',
         answer: 73,
         position: 1,
         low: 11,
@@ -2277,7 +2279,7 @@ const testQuestions = [
     },
     {
         question: 'I tend to bounce around from thing to thing',
-        scale: 43,
+        scale: 'Focus',
         answer: 73,
         position: 2,
         low: 21,
@@ -2289,7 +2291,7 @@ const testQuestions = [
     {
         question:
             "When someone says they will do something, I don't necessarily believe them",
-        scale: 30,
+        scale: 'Trust',
         answer: 74,
         position: 0,
         low: 0,
@@ -2300,7 +2302,7 @@ const testQuestions = [
     {
         question:
             "When someone says they will do something, I don't necessarily believe them",
-        scale: 30,
+        scale: 'Trust',
         answer: 74,
         position: 1,
         low: 11,
@@ -2311,7 +2313,7 @@ const testQuestions = [
     {
         question:
             "When someone says they will do something, I don't necessarily believe them",
-        scale: 30,
+        scale: 'Trust',
         answer: 74,
         position: 2,
         low: 21,
@@ -2322,7 +2324,7 @@ const testQuestions = [
 
     {
         question: "I'm fine with others having their way",
-        scale: 39,
+        scale: 'Controlling',
         answer: 75,
         position: 0,
         low: 0,
@@ -2332,7 +2334,7 @@ const testQuestions = [
     },
     {
         question: "I'm fine with others having their way",
-        scale: 39,
+        scale: 'Controlling',
         answer: 75,
         position: 1,
         low: 11,
@@ -2341,7 +2343,7 @@ const testQuestions = [
     },
     {
         question: "I'm fine with others having their way",
-        scale: 39,
+        scale: 'Controlling',
         answer: 75,
         position: 2,
         low: 21,
@@ -2352,7 +2354,7 @@ const testQuestions = [
 
     {
         question: "I don't yell",
-        scale: 34,
+        scale: 'Aggression',
         answer: 76,
         position: 0,
         low: 0,
@@ -2362,7 +2364,7 @@ const testQuestions = [
     },
     {
         question: "I don't yell",
-        scale: 34,
+        scale: 'Aggression',
         answer: 76,
         position: 1,
         low: 11,
@@ -2372,7 +2374,7 @@ const testQuestions = [
     },
     {
         question: "I don't yell",
-        scale: 34,
+        scale: 'Aggression',
         answer: 76,
         position: 2,
         low: 21,
@@ -2382,7 +2384,7 @@ const testQuestions = [
     },
     {
         question: "I seldom use phrases like 'you should' or 'you need to'",
-        scale: 40,
+        scale: 'Critical Style',
         answer: 77,
         position: 0,
         low: 0,
@@ -2392,7 +2394,7 @@ const testQuestions = [
     },
     {
         question: "I seldom use phrases like 'you should' or 'you need to'",
-        scale: 40,
+        scale: 'Critical Style',
         answer: 77,
         position: 1,
         low: 11,
@@ -2402,7 +2404,7 @@ const testQuestions = [
     },
     {
         question: "I seldom use phrases like 'you should' or 'you need to'",
-        scale: 40,
+        scale: 'Critical Style',
         answer: 77,
         position: 2,
         low: 21,
@@ -2413,7 +2415,7 @@ const testQuestions = [
 
     {
         question: "I'm told I live in a fantasy world",
-        scale: 25,
+        scale: 'Realistic',
         answer: 78,
         position: 0,
         low: 0,
@@ -2423,7 +2425,7 @@ const testQuestions = [
     },
     {
         question: "I'm told I live in a fantasy world",
-        scale: 25,
+        scale: 'Realistic',
         answer: 78,
         position: 1,
         low: 11,
@@ -2433,7 +2435,7 @@ const testQuestions = [
     },
     {
         question: "I'm told I live in a fantasy world",
-        scale: 25,
+        scale: 'Realistic',
         answer: 78,
         position: 2,
         low: 21,
@@ -2473,7 +2475,7 @@ const testQuestions = [
     {
         question:
             'I like to do my half of the work, but I also let others do theirs',
-        scale: 41,
+        scale: 'Dominance',
         answer: 80,
         position: 0,
         low: 0,
@@ -2484,7 +2486,7 @@ const testQuestions = [
     {
         question:
             'I like to do my half of the work, but I also let others do theirs',
-        scale: 41,
+        scale: 'Dominance',
         answer: 80,
         position: 1,
         low: 11,
@@ -2495,7 +2497,7 @@ const testQuestions = [
     {
         question:
             'I like to do my half of the work, but I also let others do theirs',
-        scale: 41,
+        scale: 'Dominance',
         answer: 80,
         position: 2,
         low: 21,
@@ -2506,7 +2508,7 @@ const testQuestions = [
 
     {
         question: 'I calm things down; whereas, others ramp things up',
-        scale: 36,
+        scale: 'Anxiety Dampener',
         answer: 81,
         position: 0,
         low: 0,
@@ -2516,7 +2518,7 @@ const testQuestions = [
     },
     {
         question: 'I calm things down; whereas, others ramp things up',
-        scale: 36,
+        scale: 'Anxiety Dampener',
         answer: 81,
         position: 1,
         low: 11,
@@ -2526,7 +2528,7 @@ const testQuestions = [
     },
     {
         question: 'I calm things down; whereas, others ramp things up',
-        scale: 36,
+        scale: 'Anxiety Dampener',
         answer: 81,
         position: 2,
         low: 21,
@@ -2537,7 +2539,7 @@ const testQuestions = [
 
     {
         question: "People say I'm mature, relative to others",
-        scale: 48,
+        scale: 'Immaturity',
         answer: 82,
         position: 0,
         low: 0,
@@ -2547,7 +2549,7 @@ const testQuestions = [
     },
     {
         question: "People say I'm mature, relative to others",
-        scale: 48,
+        scale: 'Immaturity',
         answer: 82,
         position: 1,
         low: 11,
@@ -2557,7 +2559,7 @@ const testQuestions = [
     },
     {
         question: "People say I'm mature, relative to others",
-        scale: 48,
+        scale: 'Immaturity',
         answer: 82,
         position: 2,
         low: 21,
@@ -2569,7 +2571,7 @@ const testQuestions = [
     {
         question:
             'I have just gotten out of a long-term relationship within the last six months',
-        scale: 58,
+        scale: 'Rebound',
         answer: 83,
         position: 0,
         low: 0,
@@ -2580,7 +2582,7 @@ const testQuestions = [
     {
         question:
             'I have just gotten out of a long-term relationship within the last six months',
-        scale: 58,
+        scale: 'Rebound',
         answer: 83,
         position: 1,
         low: 11,
@@ -2591,7 +2593,7 @@ const testQuestions = [
     {
         question:
             'I have just gotten out of a long-term relationship within the last six months',
-        scale: 58,
+        scale: 'Rebound',
         answer: 83,
         position: 2,
         low: 21,
@@ -2603,7 +2605,7 @@ const testQuestions = [
     {
         question:
             'Once I get focused on something, I usually stay that way until I finish',
-        scale: 43,
+        scale: 'Focus',
         answer: 84,
         position: 0,
         low: 0,
@@ -2614,7 +2616,7 @@ const testQuestions = [
     {
         question:
             'Once I get focused on something, I usually stay that way until I finish',
-        scale: 43,
+        scale: 'Focus',
         answer: 84,
         position: 1,
         low: 11,
@@ -2625,7 +2627,7 @@ const testQuestions = [
     {
         question:
             'Once I get focused on something, I usually stay that way until I finish',
-        scale: 43,
+        scale: 'Focus',
         answer: 84,
         position: 2,
         low: 21,
@@ -2636,7 +2638,7 @@ const testQuestions = [
 
     {
         question: "I'm competent",
-        scale: 26,
+        scale: 'Self-esteem',
         answer: 85,
         position: 0,
         low: 0,
@@ -2646,7 +2648,7 @@ const testQuestions = [
     },
     {
         question: "I'm competent",
-        scale: 26,
+        scale: 'Self-esteem',
         answer: 85,
         position: 1,
         low: 11,
@@ -2656,7 +2658,7 @@ const testQuestions = [
     },
     {
         question: "I'm competent",
-        scale: 26,
+        scale: 'Self-esteem',
         answer: 85,
         position: 2,
         low: 21,
@@ -2667,7 +2669,7 @@ const testQuestions = [
 
     {
         question: 'I speak up and share my feelings',
-        scale: 37,
+        scale: 'Assertiveness',
         answer: 86,
         position: 0,
         low: 0,
@@ -2677,7 +2679,7 @@ const testQuestions = [
     },
     {
         question: 'I speak up and share my feelings',
-        scale: 37,
+        scale: 'Assertiveness',
         answer: 86,
         position: 1,
         low: 11,
@@ -2687,7 +2689,7 @@ const testQuestions = [
     },
     {
         question: 'I speak up and share my feelings',
-        scale: 37,
+        scale: 'Assertiveness',
         answer: 86,
         position: 2,
         low: 21,
@@ -2698,7 +2700,7 @@ const testQuestions = [
 
     {
         question: 'There was abuse in my family-of-origin',
-        scale: 32,
+        scale: 'Abuse Victim',
         answer: 87,
         position: 0,
         low: 0,
@@ -2708,7 +2710,7 @@ const testQuestions = [
     },
     {
         question: 'There was abuse in my family-of-origin',
-        scale: 32,
+        scale: 'Abuse Victim',
         answer: 87,
         position: 1,
         low: 11,
@@ -2718,7 +2720,7 @@ const testQuestions = [
     },
     {
         question: 'There was abuse in my family-of-origin',
-        scale: 32,
+        scale: 'Abuse Victim',
         answer: 87,
         position: 2,
         low: 21,
@@ -2730,7 +2732,7 @@ const testQuestions = [
     {
         question:
             "I'm OK with my partner having friends, interests and activities separate from mine",
-        scale: 28,
+        scale: 'Social Autonomy',
         answer: 88,
         position: 0,
         low: 0,
@@ -2741,7 +2743,7 @@ const testQuestions = [
     {
         question:
             "I'm OK with my partner having friends, interests and activities separate from mine",
-        scale: 28,
+        scale: 'Social Autonomy',
         answer: 88,
         position: 1,
         low: 11,
@@ -2752,7 +2754,7 @@ const testQuestions = [
     {
         question:
             "I'm OK with my partner having friends, interests and activities separate from mine",
-        scale: 28,
+        scale: 'Social Autonomy',
         answer: 88,
         position: 2,
         low: 21,
@@ -2763,7 +2765,7 @@ const testQuestions = [
 
     {
         question: "I'm comfortable with the idea of 'exclusivity'",
-        scale: 38,
+        scale: 'Commitment Capable',
         answer: 89,
         position: 0,
         low: 0,
@@ -2773,7 +2775,7 @@ const testQuestions = [
     },
     {
         question: "I'm comfortable with the idea of 'exclusivity'",
-        scale: 38,
+        scale: 'Commitment Capable',
         answer: 89,
         position: 1,
         low: 11,
@@ -2783,7 +2785,7 @@ const testQuestions = [
     },
     {
         question: "I'm comfortable with the idea of 'exclusivity'",
-        scale: 38,
+        scale: 'Commitment Capable',
         answer: 89,
         position: 2,
         low: 21,
@@ -2793,7 +2795,7 @@ const testQuestions = [
     },
     {
         question: "I don't think any one race is better than any other race",
-        scale: 56,
+        scale: 'Racism/Prejudice',
         answer: 90,
         position: 0,
         low: 0,
@@ -2803,7 +2805,7 @@ const testQuestions = [
     },
     {
         question: "I don't think any one race is better than any other race",
-        scale: 56,
+        scale: 'Racism/Prejudice',
         answer: 90,
         position: 1,
         low: 11,
@@ -2813,7 +2815,7 @@ const testQuestions = [
     },
     {
         question: "I don't think any one race is better than any other race",
-        scale: 56,
+        scale: 'Racism/Prejudice',
         answer: 90,
         position: 2,
         low: 21,
@@ -2852,7 +2854,7 @@ const testQuestions = [
 
     {
         question: 'I frequently correct others',
-        scale: 40,
+        scale: 'Critical Style',
         answer: 92,
         position: 0,
         low: 0,
@@ -2863,7 +2865,7 @@ const testQuestions = [
 
     {
         question: 'I frequently correct others',
-        scale: 40,
+        scale: 'Critical Style',
         answer: 92,
         position: 1,
         low: 11,
@@ -2873,7 +2875,7 @@ const testQuestions = [
     },
     {
         question: 'I frequently correct others',
-        scale: 40,
+        scale: 'Critical Style',
         answer: 92,
         position: 2,
         low: 21,
@@ -2884,7 +2886,7 @@ const testQuestions = [
 
     {
         question: "I usually don't get that 'hot under the collar'",
-        scale: 35,
+        scale: 'Anger Management',
         answer: 93,
         position: 0,
         low: 0,
@@ -2894,7 +2896,7 @@ const testQuestions = [
     },
     {
         question: "I usually don't get that 'hot under the collar'",
-        scale: 35,
+        scale: 'Anger Management',
         answer: 93,
         position: 1,
         low: 11,
@@ -2904,7 +2906,7 @@ const testQuestions = [
     },
     {
         question: "I usually don't get that 'hot under the collar'",
-        scale: 35,
+        scale: 'Anger Management',
         answer: 93,
         position: 2,
         low: 21,
@@ -2915,7 +2917,7 @@ const testQuestions = [
 
     {
         question: 'I tend to overpower others',
-        scale: 41,
+        scale: 'Dominance',
         answer: 94,
         position: 0,
         low: 0,
@@ -2925,7 +2927,7 @@ const testQuestions = [
     },
     {
         question: 'I tend to overpower others',
-        scale: 41,
+        scale: 'Dominance',
         answer: 94,
         position: 1,
         low: 11,
@@ -2935,7 +2937,7 @@ const testQuestions = [
     },
     {
         question: 'I tend to overpower others',
-        scale: 41,
+        scale: 'Dominance',
         answer: 94,
         position: 2,
         low: 21,
@@ -2947,7 +2949,7 @@ const testQuestions = [
     {
         question:
             "I tend to think more about what's coming up or what already happened in the past rather than what's going on now",
-        scale: 20,
+        scale: 'Mindfulness',
         answer: 95,
         position: 0,
         low: 0,
@@ -2958,7 +2960,7 @@ const testQuestions = [
     {
         question:
             "I tend to think more about what's coming up or what already happened in the past rather than what's going on now",
-        scale: 20,
+        scale: 'Mindfulness',
         answer: 95,
         position: 1,
         low: 11,
@@ -2969,7 +2971,7 @@ const testQuestions = [
     {
         question:
             "I tend to think more about what's coming up or what already happened in the past rather than what's going on now",
-        scale: 20,
+        scale: 'Mindfulness',
         answer: 95,
         position: 2,
         low: 21,
@@ -2979,7 +2981,7 @@ const testQuestions = [
     },
     {
         question: 'I gave up my rose-colored glasses',
-        scale: 25,
+        scale: 'Realistic',
         answer: 96,
         position: 0,
         low: 0,
@@ -2989,7 +2991,7 @@ const testQuestions = [
     },
     {
         question: 'I gave up my rose-colored glasses',
-        scale: 25,
+        scale: 'Realistic',
         answer: 96,
         position: 1,
         low: 11,
@@ -2999,7 +3001,7 @@ const testQuestions = [
     },
     {
         question: 'I gave up my rose-colored glasses',
-        scale: 25,
+        scale: 'Realistic',
         answer: 96,
         position: 2,
         low: 21,
@@ -3010,7 +3012,7 @@ const testQuestions = [
 
     {
         question: "I'm not very good at asking for what I want",
-        scale: 37,
+        scale: 'Assertiveness',
         answer: 97,
         position: 0,
         low: 0,
@@ -3020,7 +3022,7 @@ const testQuestions = [
     },
     {
         question: "I'm not very good at asking for what I want",
-        scale: 37,
+        scale: 'Assertiveness',
         answer: 97,
         position: 1,
         low: 11,
@@ -3030,7 +3032,7 @@ const testQuestions = [
     },
     {
         question: "I'm not very good at asking for what I want",
-        scale: 37,
+        scale: 'Assertiveness',
         answer: 97,
         position: 1,
         low: 11,
@@ -3041,7 +3043,7 @@ const testQuestions = [
     {
         question:
             'In relationships, one person should make most of the decisions',
-        scale: 42,
+        scale: 'Egalitarian',
         answer: 98,
         position: 0,
         low: 0,
@@ -3052,7 +3054,7 @@ const testQuestions = [
     {
         question:
             'In relationships, one person should make most of the decisions',
-        scale: 42,
+        scale: 'Egalitarian',
         answer: 98,
         position: 1,
         low: 11,
@@ -3063,7 +3065,7 @@ const testQuestions = [
     {
         question:
             'In relationships, one person should make most of the decisions',
-        scale: 42,
+        scale: 'Egalitarian',
         answer: 98,
         position: 2,
         low: 21,
@@ -3074,7 +3076,7 @@ const testQuestions = [
 
     {
         question: 'Sometimes, I stir up trouble unnecessarily',
-        scale: 36,
+        scale: 'Anxiety Dampeners',
         answer: 99,
         position: 0,
         low: 0,
@@ -3084,7 +3086,7 @@ const testQuestions = [
     },
     {
         question: 'Sometimes, I stir up trouble unnecessarily',
-        scale: 36,
+        scale: 'Anxiety Dampeners',
         answer: 99,
         position: 1,
         low: 11,
@@ -3094,7 +3096,7 @@ const testQuestions = [
     },
     {
         question: 'Sometimes, I stir up trouble unnecessarily',
-        scale: 36,
+        scale: 'Anxiety Dampeners',
         answer: 99,
         position: 2,
         low: 21,
@@ -3105,7 +3107,7 @@ const testQuestions = [
 
     {
         question: "I've gone through bankruptcy",
-        scale: 52,
+        scale: 'Money',
         answer: 100,
         position: 0,
         low: 0,
@@ -3115,7 +3117,7 @@ const testQuestions = [
     },
     {
         question: "I've gone through bankruptcy",
-        scale: 52,
+        scale: 'Money',
         answer: 100,
         position: 1,
         low: 11,
@@ -3125,7 +3127,7 @@ const testQuestions = [
     },
     {
         question: "I've gone through bankruptcy",
-        scale: 52,
+        scale: 'Money',
         answer: 100,
         position: 2,
         low: 121,
@@ -3136,7 +3138,7 @@ const testQuestions = [
 
     {
         question: 'My date has to be well off',
-        scale: 44,
+        scale: 'Gold Digging',
         answer: 101,
         position: 0,
         low: 0,
@@ -3146,7 +3148,7 @@ const testQuestions = [
     },
     {
         question: 'My date has to be well off',
-        scale: 44,
+        scale: 'Gold Digging',
         answer: 101,
         position: 1,
         low: 11,
@@ -3156,7 +3158,7 @@ const testQuestions = [
     },
     {
         question: 'My date has to be well off',
-        scale: 44,
+        scale: 'Gold Digging',
         answer: 101,
         position: 2,
         low: 21,
@@ -3195,7 +3197,7 @@ const testQuestions = [
 
     {
         question: 'I feel well most of the time',
-        scale: 46,
+        scale: 'Health-Physical',
         answer: 103,
         position: 0,
         low: 0,
@@ -3205,7 +3207,7 @@ const testQuestions = [
     },
     {
         question: 'I feel well most of the time',
-        scale: 46,
+        scale: 'Health-Physical',
         answer: 103,
         position: 1,
         low: 11,
@@ -3215,7 +3217,7 @@ const testQuestions = [
     },
     {
         question: 'I feel well most of the time',
-        scale: 46,
+        scale: 'Health-Physical',
         answer: 103,
         position: 2,
         low: 21,
@@ -3226,7 +3228,7 @@ const testQuestions = [
 
     {
         question: "I'm pretty open-minded about different religions",
-        scale: 59,
+        scale: 'Religiosity',
         answer: 104,
         position: 0,
         low: 0,
@@ -3236,7 +3238,7 @@ const testQuestions = [
     },
     {
         question: "I'm pretty open-minded about different religions",
-        scale: 59,
+        scale: 'Religiosity',
         answer: 104,
         position: 1,
         low: 11,
@@ -3246,7 +3248,7 @@ const testQuestions = [
     },
     {
         question: "I'm pretty open-minded about different religions",
-        scale: 59,
+        scale: 'Religiosity',
         answer: 104,
         position: 2,
         low: 21,
@@ -3257,7 +3259,7 @@ const testQuestions = [
     {
         question:
             "My hair, makeup or clothing have to look 'just right' before I go out",
-        scale: 47,
+        scale: 'High Maintenance',
         answer: 105,
         position: 0,
         low: 0,
@@ -3268,7 +3270,7 @@ const testQuestions = [
     {
         question:
             "My hair, makeup or clothing have to look 'just right' before I go out",
-        scale: 47,
+        scale: 'High Maintenance',
         answer: 105,
         position: 1,
         low: 11,
@@ -3279,7 +3281,7 @@ const testQuestions = [
     {
         question:
             "My hair, makeup or clothing have to look 'just right' before I go out",
-        scale: 47,
+        scale: 'High Maintenance',
         answer: 105,
         position: 2,
         low: 21,
@@ -3290,7 +3292,7 @@ const testQuestions = [
 
     {
         question: 'I tend to submit to others',
-        scale: 41,
+        scale: 'Dominance',
         answer: 106,
         position: 0,
         low: 0,
@@ -3300,7 +3302,7 @@ const testQuestions = [
     },
     {
         question: 'I tend to submit to others',
-        scale: 41,
+        scale: 'Dominance',
         answer: 106,
         position: 1,
         low: 11,
@@ -3310,7 +3312,7 @@ const testQuestions = [
     },
     {
         question: 'I tend to submit to others',
-        scale: 41,
+        scale: 'Dominance',
         answer: 106,
         position: 2,
         low: 21,
@@ -3321,7 +3323,7 @@ const testQuestions = [
 
     {
         question: 'I usually hang out with people who are younger than me',
-        scale: 48,
+        scale: 'Immaturity',
         answer: 107,
         position: 0,
         low: 0,
@@ -3331,7 +3333,7 @@ const testQuestions = [
     },
     {
         question: 'I usually hang out with people who are younger than me',
-        scale: 48,
+        scale: 'Immaturity',
         answer: 107,
         position: 1,
         low: 11,
@@ -3341,7 +3343,7 @@ const testQuestions = [
     },
     {
         question: 'I usually hang out with people who are younger than me',
-        scale: 48,
+        scale: 'Immaturity',
         answer: 107,
         position: 2,
         low: 21,
@@ -3353,7 +3355,7 @@ const testQuestions = [
     {
         question:
             "I'm not comfortable hanging out with people of a different color",
-        scale: 56,
+        scale: 'Racism/Prejudice',
         answer: 108,
         position: 0,
         low: 0,
@@ -3364,7 +3366,7 @@ const testQuestions = [
     {
         question:
             "I'm not comfortable hanging out with people of a different color",
-        scale: 56,
+        scale: 'Racism/Prejudice',
         answer: 108,
         position: 1,
         low: 11,
@@ -3375,7 +3377,7 @@ const testQuestions = [
     {
         question:
             "I'm not comfortable hanging out with people of a different color",
-        scale: 56,
+        scale: 'Racism/Prejudice',
         answer: 108,
         position: 2,
         low: 21,
@@ -3414,7 +3416,7 @@ const testQuestions = [
 
     {
         question: "I can't do without sex for long",
-        scale: 60,
+        scale: 'Sex',
         answer: 110,
         position: 0,
         low: 0,
@@ -3424,7 +3426,7 @@ const testQuestions = [
     },
     {
         question: "I can't do without sex for long",
-        scale: 60,
+        scale: 'Sex',
         answer: 110,
         position: 1,
         low: 11,
@@ -3434,7 +3436,7 @@ const testQuestions = [
     },
     {
         question: "I can't do without sex for long",
-        scale: 60,
+        scale: 'Sex',
         answer: 110,
         position: 2,
         low: 21,
@@ -3445,7 +3447,7 @@ const testQuestions = [
 
     {
         question: 'I tend to act without thinking',
-        scale: 49,
+        scale: 'Impulsivity',
         answer: 111,
         position: 0,
         low: 0,
@@ -3456,7 +3458,7 @@ const testQuestions = [
 
     {
         question: 'I tend to act without thinking',
-        scale: 49,
+        scale: 'Impulsivity',
         answer: 111,
         position: 1,
         low: 11,
@@ -3466,7 +3468,7 @@ const testQuestions = [
     },
     {
         question: 'I tend to act without thinking',
-        scale: 49,
+        scale: 'Impulsivity',
         answer: 111,
         position: 2,
         low: 21,
@@ -3477,7 +3479,7 @@ const testQuestions = [
 
     {
         question: "I can't do a lot without having help from others",
-        scale: 50,
+        scale: 'Independence',
         answer: 112,
         position: 0,
         low: 0,
@@ -3487,7 +3489,7 @@ const testQuestions = [
     },
     {
         question: "I can't do a lot without having help from others",
-        scale: 50,
+        scale: 'Independence',
         answer: 112,
         position: 1,
         low: 11,
@@ -3497,7 +3499,7 @@ const testQuestions = [
     },
     {
         question: "I can't do a lot without having help from others",
-        scale: 50,
+        scale: 'Independence',
         answer: 112,
         position: 2,
         low: 21,
@@ -3508,7 +3510,7 @@ const testQuestions = [
 
     {
         question: "I'm still feeling a little tender from my last relationship",
-        scale: 58,
+        scale: 'Rebound',
         answer: 113,
         position: 0,
         low: 0,
@@ -3518,7 +3520,7 @@ const testQuestions = [
     },
     {
         question: "I'm still feeling a little tender from my last relationship",
-        scale: 58,
+        scale: 'Rebound',
         answer: 113,
         position: 1,
         low: 11,
@@ -3528,7 +3530,7 @@ const testQuestions = [
     },
     {
         question: "I'm still feeling a little tender from my last relationship",
-        scale: 58,
+        scale: 'Rebound',
         answer: 113,
         position: 2,
         low: 21,
@@ -3539,7 +3541,7 @@ const testQuestions = [
 
     {
         question: "You won't see it coming if I'm mad at you",
-        scale: 54,
+        scale: 'Passive Aggressiveness',
         answer: 114,
         position: 0,
         low: 0,
@@ -3549,7 +3551,7 @@ const testQuestions = [
     },
     {
         question: "You won't see it coming if I'm mad at you",
-        scale: 54,
+        scale: 'Passive Aggressiveness',
         answer: 114,
         position: 1,
         low: 11,
@@ -3559,7 +3561,7 @@ const testQuestions = [
     },
     {
         question: "You won't see it coming if I'm mad at you",
-        scale: 54,
+        scale: 'Passive Aggressiveness',
         answer: 114,
         position: 2,
         low: 21,
@@ -3571,7 +3573,7 @@ const testQuestions = [
     {
         question:
             'I have been in trouble with the law (excluding traffic citations)',
-        scale: 51,
+        scale: 'Legal',
         answer: 115,
         position: 0,
         low: 0,
@@ -3582,7 +3584,7 @@ const testQuestions = [
     {
         question:
             'I have been in trouble with the law (excluding traffic citations)',
-        scale: 51,
+        scale: 'Legal',
         answer: 115,
         position: 1,
         low: 11,
@@ -3593,7 +3595,7 @@ const testQuestions = [
     {
         question:
             'I have been in trouble with the law (excluding traffic citations)',
-        scale: 51,
+        scale: 'Legal',
         answer: 115,
         position: 2,
         low: 21,
@@ -3604,7 +3606,7 @@ const testQuestions = [
 
     {
         question: "I don't spend more than I can repay",
-        scale: 52,
+        scale: 'Money',
         answer: 116,
         position: 0,
         low: 0,
@@ -3614,7 +3616,7 @@ const testQuestions = [
     },
     {
         question: "I don't spend more than I can repay",
-        scale: 52,
+        scale: 'Money',
         answer: 116,
         position: 1,
         low: 11,
@@ -3624,7 +3626,7 @@ const testQuestions = [
     },
     {
         question: "I don't spend more than I can repay",
-        scale: 52,
+        scale: 'Money',
         answer: 116,
         position: 2,
         low: 21,
@@ -3635,7 +3637,7 @@ const testQuestions = [
 
     {
         question: "I'm not very good at estimating how long things will take",
-        scale: 61,
+        scale: 'Time Competence',
         answer: 117,
         position: 0,
         low: 0,
@@ -3645,7 +3647,7 @@ const testQuestions = [
     },
     {
         question: "I'm not very good at estimating how long things will take",
-        scale: 61,
+        scale: 'Time Competence',
         answer: 117,
         position: 1,
         low: 11,
@@ -3655,7 +3657,7 @@ const testQuestions = [
     },
     {
         question: "I'm not very good at estimating how long things will take",
-        scale: 61,
+        scale: 'Time Competence',
         answer: 117,
         position: 2,
         low: 21,
@@ -3666,7 +3668,7 @@ const testQuestions = [
 
     {
         question: "I'm usually the first one to bring up being 'exclusive'",
-        scale: 53,
+        scale: 'Needy',
         answer: 118,
         position: 0,
         low: 0,
@@ -3676,7 +3678,7 @@ const testQuestions = [
     },
     {
         question: "I'm usually the first one to bring up being 'exclusive'",
-        scale: 53,
+        scale: 'Needy',
         answer: 118,
         position: 1,
         low: 11,
@@ -3686,7 +3688,7 @@ const testQuestions = [
     },
     {
         question: "I'm usually the first one to bring up being 'exclusive'",
-        scale: 53,
+        scale: 'Needy',
         answer: 118,
         position: 2,
         low: 21,
@@ -3696,7 +3698,7 @@ const testQuestions = [
     },
     {
         question: 'I have been fired from a job',
-        scale: 63,
+        scale: 'Work',
         answer: 119,
         position: 0,
         low: 0,
@@ -3706,7 +3708,7 @@ const testQuestions = [
     },
     {
         question: 'I have been fired from a job',
-        scale: 63,
+        scale: 'Work',
         answer: 119,
         position: 1,
         low: 11,
@@ -3716,7 +3718,7 @@ const testQuestions = [
     },
     {
         question: 'I have been fired from a job',
-        scale: 63,
+        scale: 'Work',
         answer: 119,
         position: 2,
         low: 21,
@@ -3727,7 +3729,7 @@ const testQuestions = [
 
     {
         question: "I'm fussy and/or picky",
-        scale: 47,
+        scale: 'High Maintenance',
         answer: 120,
         position: 0,
         low: 0,
@@ -3737,7 +3739,7 @@ const testQuestions = [
     },
     {
         question: "I'm fussy and/or picky",
-        scale: 47,
+        scale: 'High Maintenance',
         answer: 120,
         position: 1,
         low: 11,
@@ -3747,7 +3749,7 @@ const testQuestions = [
     },
     {
         question: "I'm fussy and/or picky",
-        scale: 47,
+        scale: 'High Maintenance',
         answer: 120,
         position: 2,
         low: 21,
@@ -3758,7 +3760,7 @@ const testQuestions = [
 
     {
         question: "I'm a perfectionist",
-        scale: 55,
+        scale: 'Perfectionism',
         answer: 121,
         position: 0,
         low: 0,
@@ -3768,7 +3770,7 @@ const testQuestions = [
     },
     {
         question: "I'm a perfectionist",
-        scale: 55,
+        scale: 'Perfectionism',
         answer: 121,
         position: 1,
         low: 11,
@@ -3778,7 +3780,7 @@ const testQuestions = [
     },
     {
         question: "I'm a perfectionist",
-        scale: 55,
+        scale: 'Perfectionism',
         answer: 121,
         position: 2,
         low: 21,
@@ -3789,7 +3791,7 @@ const testQuestions = [
 
     {
         question: 'I have served jail time',
-        scale: 51,
+        scale: 'Legal',
         answer: 122,
         position: 0,
         low: 0,
@@ -3799,7 +3801,7 @@ const testQuestions = [
     },
     {
         question: 'I have served jail time',
-        scale: 51,
+        scale: 'Legal',
         answer: 122,
         position: 1,
         low: 11,
@@ -3809,7 +3811,7 @@ const testQuestions = [
     },
     {
         question: 'I have served jail time',
-        scale: 51,
+        scale: 'Legal',
         answer: 122,
         position: 2,
         low: 21,
@@ -3820,7 +3822,7 @@ const testQuestions = [
 
     {
         question: 'I make my own decisions',
-        scale: 50,
+        scale: 'Independence',
         answer: 123,
         position: 0,
         low: 0,
@@ -3830,7 +3832,7 @@ const testQuestions = [
     },
     {
         question: 'I make my own decisions',
-        scale: 50,
+        scale: 'Independence',
         answer: 123,
         position: 1,
         low: 11,
@@ -3840,7 +3842,7 @@ const testQuestions = [
     },
     {
         question: 'I make my own decisions',
-        scale: 50,
+        scale: 'Independence',
         answer: 123,
         position: 2,
         low: 21,
@@ -3852,7 +3854,7 @@ const testQuestions = [
     {
         question:
             'When it comes to influencing people, punishment is better than praise',
-        scale: 57,
+        scale: 'Positive Reinforcement Style',
         answer: 124,
         position: 0,
         low: 0,
@@ -3863,7 +3865,7 @@ const testQuestions = [
     {
         question:
             'When it comes to influencing people, punishment is better than praise',
-        scale: 57,
+        scale: 'Positive Reinforcement Style',
         answer: 124,
         position: 1,
         low: 11,
@@ -3874,7 +3876,7 @@ const testQuestions = [
     {
         question:
             'When it comes to influencing people, punishment is better than praise',
-        scale: 57,
+        scale: 'Positive Reinforcement Style',
         answer: 124,
         position: 2,
         low: 21,
@@ -3914,7 +3916,7 @@ const testQuestions = [
     {
         question:
             'The man (or more dominant partner) should always make the first move',
-        scale: 62,
+        scale: 'Traditional Values',
         answer: 126,
         position: 0,
         low: 0,
@@ -3925,7 +3927,7 @@ const testQuestions = [
     {
         question:
             'The man (or more dominant partner) should always make the first move',
-        scale: 62,
+        scale: 'Traditional Values',
         answer: 126,
         position: 1,
         low: 11,
@@ -3936,7 +3938,7 @@ const testQuestions = [
     {
         question:
             'The man (or more dominant partner) should always make the first move',
-        scale: 62,
+        scale: 'Traditional Values',
         answer: 126,
         position: 2,
         low: 21,
@@ -3947,7 +3949,7 @@ const testQuestions = [
 
     {
         question: 'I have no history of jumping from job to job',
-        scale: 63,
+        scale: 'Work',
         answer: 127,
         position: 0,
         low: 0,
@@ -3957,7 +3959,7 @@ const testQuestions = [
     },
     {
         question: 'I have no history of jumping from job to job',
-        scale: 63,
+        scale: 'Work',
         answer: 127,
         position: 1,
         low: 11,
@@ -3967,7 +3969,7 @@ const testQuestions = [
     },
     {
         question: 'I have no history of jumping from job to job',
-        scale: 63,
+        scale: 'Work',
         answer: 127,
         position: 2,
         low: 21,
@@ -3978,7 +3980,7 @@ const testQuestions = [
 
     {
         question: 'I usually get things done on time',
-        scale: 61,
+        scale: 'Time Competence',
         answer: 128,
         position: 0,
         low: 0,
@@ -3988,7 +3990,7 @@ const testQuestions = [
     },
     {
         question: 'I usually get things done on time',
-        scale: 61,
+        scale: 'Time Competence',
         answer: 128,
         position: 1,
         low: 11,
@@ -3998,7 +4000,7 @@ const testQuestions = [
     },
     {
         question: 'I usually get things done on time',
-        scale: 61,
+        scale: 'Time Competence',
         answer: 128,
         position: 2,
         low: 21,
