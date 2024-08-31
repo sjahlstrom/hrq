@@ -166,17 +166,20 @@ const Analysis = () => {
             })
 
             // Filter unique scales
-            const uniqueResultsMap = new Map(results.map(item => [item.scale, item]))
+            const uniqueResultsMap = new Map(
+                results.map((item) => [item.scale, item])
+            )
             const uniqueResults = Array.from(uniqueResultsMap.values())
 
             // Map summed results to analysis
-            const resultsWithAnalysis = uniqueResults.map(result => {
-                const analysis = testQuestions.find(
-                    (q) =>
-                        q.scale === result.scale &&
-                        result.summedResult >= q.low &&
-                        result.summedResult <= q.high
-                )?.analysis || 'No analysis available.'
+            const resultsWithAnalysis = uniqueResults.map((result) => {
+                const analysis =
+                    testQuestions.find(
+                        (q) =>
+                            q.scale === result.scale &&
+                            result.summedResult >= q.low &&
+                            result.summedResult <= q.high
+                    )?.analysis || 'No analysis available.'
 
                 return {
                     ...result,
@@ -207,7 +210,10 @@ const Analysis = () => {
                                 <h2 className="text-2xl font-semibold text-gray-900 mb-2">
                                     {/*{question.question}*/}
                                 </h2>
-                                <p className="text-gray-500">Scale: {question.scale} - {question.summedResult}</p>
+                                <p className="text-gray-500">
+                                    Scale: {question.scale} -{' '}
+                                    {question.summedResult}
+                                </p>
                                 <p className="text-gray-700">
                                     {question.analysis}
                                 </p>
@@ -280,7 +286,8 @@ const Analysis = () => {
                                     Scale: {result.scale}
                                 </h3>
                                 <p className="text-gray-700">
-                                    Answer Positions: {result.positions.join(', ')}
+                                    Answer Positions:{' '}
+                                    {result.positions.join(', ')}
                                 </p>
                                 <p className="text-gray-700">
                                     Answers: {result.answers.join(', ')}
