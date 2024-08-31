@@ -165,7 +165,7 @@ const Analysis = () => {
             <div className="flex justify-center mt-6 space-x-4">
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
-                    className={`px-3 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white'}`}
+                    className={`px-3 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed ' : 'bg-logo-green text-white hover:bg-green-500'}`}
                     disabled={currentPage === 1}
                 >
                     Previous
@@ -175,7 +175,8 @@ const Analysis = () => {
                     <button
                         key={pageNumber}
                         onClick={() => handlePageChange(pageNumber)}
-                        className={`px-3 py-2 rounded ${currentPage === pageNumber ? 'bg-green-200 text-white' : 'bg-green-200 text-gray-700'}`}
+                           className={`px-3 py-2 rounded ${currentPage === pageNumber ? 'bg-green-300 text-green-600' : 'bg-green-200 text-gray-700 hover:bg-green-500 hover:text-white'}`}
+
                     >
                         {pageNumber}
                     </button>
@@ -183,7 +184,7 @@ const Analysis = () => {
 
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
-                    className={`px-3 py-2 rounded ${currentPage === totalUniquePages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white'}`}
+                    className={`px-3 py-2 rounded ${currentPage === totalUniquePages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-green-500'}`}
                     disabled={currentPage === totalUniquePages}
                 >
                     Next
