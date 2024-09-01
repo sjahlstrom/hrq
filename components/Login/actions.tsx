@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Bell } from "lucide-react";
+
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 
@@ -30,9 +30,9 @@ export const Actions = async () => {
             className="text-muted-foreground hover:text-primary"
             asChild
           >
-            <Link href={`/u/${user.username}`}>
-              <Bell className="h-5 w-5 lg:mr-2" />
-            </Link>
+            {/*<Link href={`/u/${user.username}`}>*/}
+            {/*  <Bell className="h-5 w-5 lg:mr-2" />*/}
+            {/*</Link>*/}
           </Button>
           <UserButton />
         </div>
