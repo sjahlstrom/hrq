@@ -85,6 +85,10 @@ const Analysis = () => {
         }
     }
 
+    const getResultBackgroundColor = (index) => {
+        return index % 2 === 0 ? 'bg-pantone621' : 'bg-pantone622'
+    }
+
     useEffect(() => {
         if (questions.length > 0 && answers.length > 0) {
             questions.forEach((q, i) => {
@@ -139,7 +143,7 @@ const Analysis = () => {
     const totalUniquePages = Math.ceil(uniqueResults.length / itemsPerPage)
 
     return (
-        <section className="p-6 bg-gray-300 min-h-screen">
+        <section className="p-6 min-h-screen bg-gray-100">
             <h1 className="text-3xl font-bold text-gray-800 mb-6">Analysis</h1>
 
             {loading ? (
@@ -147,13 +151,7 @@ const Analysis = () => {
             ) : currentUniqueResults.length > 0 ? (
                 <div className="space-y-4">
                     {currentUniqueResults.map((result, index) => (
-                        <div key={index} className="p-4 bg-gray-200 shadow-md rounded-lg border border-gray-200">
-                            {/*<h2 className="text-2xl font-semibold text-gray-900 mb-2">*/}
-                            {/*    Scale: {result.scale}*/}
-                            {/*</h2>*/}
-                            {/*<p className="text-gray-700">Question Positions: {result.positions.join(', ')}</p>*/}
-                            {/*<p className="text-gray-700">Answers: {result.answers.join(', ')}</p>*/}
-                            {/*<p className="text-gray-700">Summed Result: {result.summedResult}</p>*/}
+                        <div key={index} className={`p-4 shadow-md rounded-lg border border-gray-200 ${getResultBackgroundColor(index)}`}>
                             <p className="text-gray-700">Analysis: {result.analysis}</p>
                         </div>
                     ))}
@@ -165,7 +163,7 @@ const Analysis = () => {
             <div className="flex justify-center mt-6 space-x-4">
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
-                    className={`px-3 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed ' : 'bg-logo-green text-white hover:bg-green-500'}`}
+                    className={`px-3 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-[#4F7164]'}`}
                     disabled={currentPage === 1}
                 >
                     Previous
@@ -175,8 +173,7 @@ const Analysis = () => {
                     <button
                         key={pageNumber}
                         onClick={() => handlePageChange(pageNumber)}
-                           className={`px-3 py-2 rounded ${currentPage === pageNumber ? 'bg-green-300 text-green-600' : 'bg-green-200 text-gray-700 hover:bg-green-500 hover:text-white'}`}
-
+                        className={`px-3 py-2 rounded ${currentPage === pageNumber ? 'bg-[#9BB7A4] text-gray-800' : 'bg-gray-200 text-[#9BB7A4] hover:bg-[#4F7164] hover:text-white'}`}
                     >
                         {pageNumber}
                     </button>
@@ -184,7 +181,7 @@ const Analysis = () => {
 
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
-                    className={`px-3 py-2 rounded ${currentPage === totalUniquePages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-green-500'}`}
+                    className={`px-3 py-2 rounded ${currentPage === totalUniquePages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-[#4F7164]'}`}
                     disabled={currentPage === totalUniquePages}
                 >
                     Next
@@ -194,8 +191,6 @@ const Analysis = () => {
             {currentPage === totalUniquePages && (
                 <div className="mt-8">
                     <div className="bg-green-300 shadow-md rounded-lg border border-gray-200 p-6">
-                        {/*<h2 className="text-2xl font-bold text-gray-900 mb-4">Lie Scale Analysis</h2>*/}
-                        {/*<p className="text-gray-700">Total Lie Value: {totalLieValue}</p>*/}
                         <p className="text-gray-700 mt-2">{lieAnalysis}</p>
                     </div>
                 </div>
@@ -205,3 +200,4 @@ const Analysis = () => {
 }
 
 export default Analysis
+
