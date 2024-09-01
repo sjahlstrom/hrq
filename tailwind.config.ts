@@ -41,6 +41,11 @@ const config = {
         dark: '#1D2144',
         'logo-green': '#4d9582',
 
+        pantone5635: '#98b7b2',
+        pantone5655: '#b3cdc2',
+        pantone621: '#d0ddd7',
+        pantone622: '#b7c9c1',
+
         steel: {
           100: '#D2E0F0',
           200: '#AEBED0',

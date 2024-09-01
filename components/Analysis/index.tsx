@@ -147,13 +147,10 @@ const Analysis = () => {
             ) : currentUniqueResults.length > 0 ? (
                 <div className="space-y-4">
                     {currentUniqueResults.map((result, index) => (
-                        <div key={index} className="p-4 bg-gray-200 shadow-md rounded-lg border border-gray-200">
-                            {/*<h2 className="text-2xl font-semibold text-gray-900 mb-2">*/}
-                            {/*    Scale: {result.scale}*/}
-                            {/*</h2>*/}
-                            {/*<p className="text-gray-700">Question Positions: {result.positions.join(', ')}</p>*/}
-                            {/*<p className="text-gray-700">Answers: {result.answers.join(', ')}</p>*/}
-                            {/*<p className="text-gray-700">Summed Result: {result.summedResult}</p>*/}
+                        <div
+                            key={index}
+                            className={`p-4 shadow-md rounded-lg border border-gray-200 ${index % 2 === 0 ? 'bg-pantone621' : 'bg-pantone622'}`}
+                        >
                             <p className="text-gray-700">Analysis: {result.analysis}</p>
                         </div>
                     ))}
@@ -175,8 +172,7 @@ const Analysis = () => {
                     <button
                         key={pageNumber}
                         onClick={() => handlePageChange(pageNumber)}
-                           className={`px-3 py-2 rounded ${currentPage === pageNumber ? 'bg-green-300 text-green-600' : 'bg-green-200 text-gray-700 hover:bg-green-500 hover:text-white'}`}
-
+                        className={`px-3 py-2 rounded ${currentPage === pageNumber ? 'bg-green-300 text-green-600' : 'bg-green-200 text-gray-700 hover:bg-green-500 hover:text-white'}`}
                     >
                         {pageNumber}
                     </button>
@@ -194,8 +190,6 @@ const Analysis = () => {
             {currentPage === totalUniquePages && (
                 <div className="mt-8">
                     <div className="bg-green-300 shadow-md rounded-lg border border-gray-200 p-6">
-                        {/*<h2 className="text-2xl font-bold text-gray-900 mb-4">Lie Scale Analysis</h2>*/}
-                        {/*<p className="text-gray-700">Total Lie Value: {totalLieValue}</p>*/}
                         <p className="text-gray-700 mt-2">{lieAnalysis}</p>
                     </div>
                 </div>
