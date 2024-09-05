@@ -2,7 +2,7 @@ import React from 'react'
 import QuestionSection from '@/components/(menu)/Test'
 import Breadcrumb from '@/components/Common/Breadcrumb'
 import sampleQuestions from '@/components/(menu)/Test/Data/sampleQuestions'
-import questions from '@/components/(menu)/Test/Data/questions'
+import testQuestions from '@/components/(menu)/Test/Data/testQuestions'
 import { currentUser } from '@clerk/nextjs/server'
 import { getTestResponseLength } from '@/app/api/answers'
 
@@ -36,7 +36,7 @@ const TheTest: React.FC = async () => {
                 />
             ) : (
                 <QuestionSection
-                    questionData={questions}
+                    questionData={testQuestions}
                     fireworksIndex={64} // I hate magic numbers
                     questionNumber={length}
                 />

@@ -7,7 +7,7 @@ const SampleReportPage = () => {
       <>
          <Breadcrumb
             pageName="Sample Report Page"
-            description="A Sample report, based on several questions in each of a sample of four areas.   This is one page of probably ten or fifteen…and assumes you randomly score higher on some scales, lower on others."
+            description="A Sample report, based on several testQuestions in each of a sample of four areas.   This is one page of probably ten or fifteen…and assumes you randomly score higher on some scales, lower on others."
          />
          <SampleReport />
       </>

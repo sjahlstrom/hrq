@@ -199,7 +199,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                         Show Analysis
                     </Button>
                 )}
-
+                <br /><br />
                 {/*TODO: Testing only -- remove*/}
                 {testMode === 'test' && (
                     <Button
@@ -222,10 +222,11 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     >
                         <strong className="block font-medium text-black">
                             {fireworksIndex === halfwayIndex
-                                ? "Congratulations!  You're halfway there!"
-                                : 'End of test questions'}
+                                ? 'Congratulations!  You\'re halfway there!'
+                                : 'End of test testQuestions'}
                         </strong>
                     </div>
+                    <br />
                 </>
             )}
         </div>

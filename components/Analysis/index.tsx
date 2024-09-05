@@ -1,17 +1,29 @@
 'use client'
 import React, { useCallback, useEffect, useState } from 'react'
-import sampleQuestions from '@/components/Analysis/Data/SampleAnalysis'
-import testQuestions from '@/components/Analysis/Data/Analysis'
+import testAnalysisData from '@/components/Analysis/Data/TestAnalysisData'
 import lieScale from '@/components/Analysis/Data/LieScale'
 import { useSearchParams } from 'next/navigation'
 import { getTestResponses } from '@/app/api/answers'
-import questions from '@/components/(menu)/Test/Data/questions'
+import testQuestions from '@/components/(menu)/Test/Data/testQuestions'
+import SampleAnalysis from '@/components/Analysis/SampleAnalysis'
 
 const lies = [38, 45, 52, 57, 69, 79, 91, 102, 109, 125]
 const evaluatedPositions = new Set()
 const results = []
 
-const Analysis = () => {
+export const Analysis = () => {
+    const searchParams = useSearchParams()
+    const mode = searchParams.get('mode')
+
+    if (mode === "test") {
+        return <TestAnalysis />  // Render the TestAnalysis component
+    } else {
+        return <SampleAnalysis />  // Render the SampleAnalysis component
+    }
+}
+
+
+const TestAnalysis = () => {
     const [answers, setAnswers] = useState<number[]>([])
     const [matchedQuestions, setMatchedQuestions] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
@@ -21,42 +33,29 @@ const Analysis = () => {
     const [uniqueResults, setUniqueResults] = useState<any[]>([])
     const itemsPerPage = 6
 
-    const searchParams = useSearchParams()
-    const mode = searchParams.get('mode')
-
     const fetchAnswers = useCallback(async () => {
         setLoading(true)
         try {
-            let fetchedAnswers = []
-            let questionsList = []
-
-            if (mode === 'sample') {
-                const storedAnswers = localStorage.getItem('array')
-                if (storedAnswers) {
-                    fetchedAnswers = JSON.parse(storedAnswers)
-                }
-            } else if (mode === 'test') {
-                fetchedAnswers = await getTestResponses()
-            }
+            let fetchedAnswers = await getTestResponses()
 
             if (fetchedAnswers.length > 0) {
-                questionsList = fetchedAnswers.map((answer, index) => {
-                    const questionSet = mode === 'sample' ? sampleQuestions : testQuestions
-                    return questionSet.find(
+                const questionsList = fetchedAnswers.map((answer, index) => {
+                    return testAnalysisData.find(
                         (q) => q.answer === index && q.low <= answer && q.high >= answer && q.scale
                     ) || null
                 }).filter(Boolean)
+
+                setMatchedQuestions(questionsList)
             }
 
             setAnswers(fetchedAnswers)
-            setMatchedQuestions(questionsList)
         } catch (error) {
             console.error('Error fetching answers:', error)
             setMatchedQuestions([])
         } finally {
             setLoading(false)
         }
-    }, [mode])
+    }, [])
 
     useEffect(() => {
         fetchAnswers()
@@ -90,10 +89,10 @@ const Analysis = () => {
     }
 
     useEffect(() => {
-        if (questions.length > 0 && answers.length > 0) {
-            questions.forEach((q, i) => {
+        if (testQuestions.length > 0 && answers.length > 0) {
+            testQuestions.forEach((q, i) => {
                 if (q.scale !== 64 && !evaluatedPositions.has(q.position)) {
-                    const matches = questions.reduce((acc, item, index) => {
+                    const matches = testQuestions.reduce((acc, item, index) => {
                         if (item.scale === q.scale && index !== i && !evaluatedPositions.has(item.position)) {
                             acc.push(item.position)
                         }
@@ -123,7 +122,7 @@ const Analysis = () => {
             const uniqueResults = Array.from(uniqueResultsMap.values())
 
             const resultsWithAnalysis = uniqueResults.map(result => {
-                const analysis = testQuestions.find(
+                const analysis = testAnalysisData.find(
                     (q) => q.scale === result.scale && result.summedResult >= q.low && result.summedResult <= q.high
                 )?.analysis || 'No analysis available.'
 
@@ -152,7 +151,7 @@ const Analysis = () => {
                 <div className="space-y-4">
                     {currentUniqueResults.map((result, index) => (
                         <div key={index} className={`p-4 shadow-md rounded-lg border border-gray-200 ${getResultBackgroundColor(index)}`}>
-                            <p className="text-gray-700">Analysis: {result.analysis}</p>
+                            <p className="text-gray-700">{result.analysis}</p>
                         </div>
                     ))}
                 </div>

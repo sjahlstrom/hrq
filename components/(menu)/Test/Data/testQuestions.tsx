@@ -1,4 +1,4 @@
-const questions = [
+const testQuestions = [
    {
       question: "If a clerk gave me too much change back, I wouldn't tell",
       scale: 13,
@@ -1235,4 +1235,4 @@ const questions = [
    },
 ]
 
-export default questions
+export default testQuestions
