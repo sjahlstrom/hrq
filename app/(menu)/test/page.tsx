@@ -20,7 +20,7 @@ const TheTest: React.FC = async () => {
             {user ? (
                 <Breadcrumb
                     pageName="Test Page"
-                    description="The test is designed for you to learn more than you knew about yourself, how you related to others, and how others can relate to you.  It's not a short 10 question quiz.  Take your time, think about each question.  You cannot go back and change your answers, but you can quit before finishing and restart where you left off at a later time."
+                    description="This test measures the qualities that make people good partners in relationships.   It is not a short 10 question quiz.   It is in depth, takes about 25 minutes and will generate a lengthy report, designed only for you.   In it you will learn about yourself, how you relate to others, and how others relate to you.  Take your time, think about each question.   Read each question, and then move the slider or just click on the slider bar where you think you are, thinking only of yourself.   Be honest.    Think carefully.   After you click on the slider, click on Next Question.   Your answer will  be recorded and the next question will appear.   You cannot go back and change your answers, but you can quit before finishing and restart where you left off at a later time."
                 />
             ) : (
                 <Breadcrumb
