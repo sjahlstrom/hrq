@@ -31,7 +31,8 @@
 //     const [totalLieValue, setTotalLieValue] = useState<number>(0)
 //     const [lieAnalysis, setLieAnalysis] = useState<string | null>(null)
 //     const [uniqueResults, setUniqueResults] = useState<any[]>([])
-//     const itemsPerPage = 6
+//     const [itemsPerPage, setItemsPerPage] = useState<number>(6) // Default page size
+//     const [totalPages, setTotalPages] = useState<number>(0) // Total pages calculation
 //
 //     const fetchAnswers = useCallback(async () => {
 //         setLoading(true)
@@ -89,7 +90,27 @@
 //         window.scrollTo({ top: 440, behavior: 'smooth' })
 //     }, [currentPage])
 //
-//     const totalPages = Math.ceil(matchedQuestions.length / itemsPerPage)
+//     useEffect(() => {
+//         // Adjust items per page based on screen width
+//         const handleResize = () => {
+//             setItemsPerPage(window.innerWidth <= 1178 ? 4 : 6)
+//         }
+//
+//         // Set initial items per page
+//         handleResize()
+//
+//         // Add resize event listener
+//         window.addEventListener('resize', handleResize)
+//
+//         // Clean up event listener on component unmount
+//         return () => window.removeEventListener('resize', handleResize)
+//     }, [])
+//
+//     useEffect(() => {
+//         if (matchedQuestions.length > 0) {
+//             setTotalPages(Math.ceil(matchedQuestions.length / itemsPerPage))
+//         }
+//     }, [matchedQuestions, itemsPerPage])
 //
 //     const handlePageChange = (pageNumber: number) => {
 //         if (pageNumber > 0 && pageNumber <= totalPages) {
@@ -196,10 +217,27 @@
 //             <div className="flex justify-center mt-6 space-x-4">
 //                 <button
 //                     onClick={() => handlePageChange(currentPage - 1)}
-//                     className={`px-3 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-[#4F7164]'}`}
+//                     className={`relative w-24 px-3 py-2 rounded overflow-hidden transition-all duration-300 ${
+//                         currentPage === 1
+//                             ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+//                             : 'bg-logo-green text-white hover:bg-[#4F7164] group'
+//                     }`}
 //                     disabled={currentPage === 1}
 //                 >
-//                     Previous
+//                     <span
+//                         className={`relative z-10 ${currentPage === 1 ? 'pointer-events-none' : ''}`}
+//                     >
+//                         Previous
+//                     </span>
+//                     <span className="absolute inset-0 overflow-hidden rounded-md">
+//                         <span
+//                             className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#4F7164] transition-transform duration-500 ${
+//                                 currentPage === 1
+//                                     ? 'hidden'
+//                                     : 'group-hover:translate-x-0 group-hover:scale-150'
+//                             }`}
+//                         ></span>
+//                     </span>
 //                 </button>
 //
 //                 {/* Conditional rendering for page numbers */}
@@ -218,13 +256,29 @@
 //                     ))}
 //                 </div>
 //
-//                 {/* Always show the Next button */}
 //                 <button
 //                     onClick={() => handlePageChange(currentPage + 1)}
-//                     className={`px-3 py-2 rounded ${currentPage === totalUniquePages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-[#4F7164]'}`}
+//                     className={`relative w-24 px-3 py-2 rounded overflow-hidden transition-all duration-300 ${
+//                         currentPage === totalUniquePages
+//                             ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+//                             : 'bg-logo-green text-white hover:bg-[#4F7164] group'
+//                     }`}
 //                     disabled={currentPage === totalUniquePages}
 //                 >
-//                     Next
+//                     <span
+//                         className={`relative z-10 ${currentPage === totalUniquePages ? 'pointer-events-none' : ''}`}
+//                     >
+//                         Next
+//                     </span>
+//                     <span className="absolute inset-0 overflow-hidden rounded-md">
+//                         <span
+//                             className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#4F7164] transition-transform duration-500 ${
+//                                 currentPage === totalUniquePages
+//                                     ? 'hidden'
+//                                     : 'group-hover:translate-x-0 group-hover:scale-150'
+//                             }`}
+//                         ></span>
+//                     </span>
 //                 </button>
 //             </div>
 //
@@ -240,6 +294,7 @@
 // }
 //
 // export default Analysis
+
 
 'use client'
 
@@ -271,6 +326,7 @@ const TestAnalysis = () => {
     const [matchedQuestions, setMatchedQuestions] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [currentPage, setCurrentPage] = useState<number>(1)
+    const [fadeIn, setFadeIn] = useState<boolean>(false) // State to control fade-in effect
     const [totalLieValue, setTotalLieValue] = useState<number>(0)
     const [lieAnalysis, setLieAnalysis] = useState<string | null>(null)
     const [uniqueResults, setUniqueResults] = useState<any[]>([])
@@ -334,18 +390,13 @@ const TestAnalysis = () => {
     }, [currentPage])
 
     useEffect(() => {
-        // Adjust items per page based on screen width
         const handleResize = () => {
             setItemsPerPage(window.innerWidth <= 1178 ? 4 : 6)
         }
 
-        // Set initial items per page
         handleResize()
-
-        // Add resize event listener
         window.addEventListener('resize', handleResize)
 
-        // Clean up event listener on component unmount
         return () => window.removeEventListener('resize', handleResize)
     }, [])
 
@@ -354,6 +405,13 @@ const TestAnalysis = () => {
             setTotalPages(Math.ceil(matchedQuestions.length / itemsPerPage))
         }
     }, [matchedQuestions, itemsPerPage])
+
+    useEffect(() => {
+        // Trigger fade-in when the page changes
+        setFadeIn(false)
+        const timer = setTimeout(() => setFadeIn(true), 100) // Delay to ensure smooth fade-in
+        return () => clearTimeout(timer) // Clean up timer on component unmount
+    }, [currentPage])
 
     const handlePageChange = (pageNumber: number) => {
         if (pageNumber > 0 && pageNumber <= totalPages) {
@@ -443,7 +501,11 @@ const TestAnalysis = () => {
             {loading ? (
                 <p className="text-gray-600">Loading...</p>
             ) : currentUniqueResults.length > 0 ? (
-                <div className="space-y-4">
+                <div
+                    className={`space-y-4 transition-opacity duration-5000 ${
+                        fadeIn ? 'opacity-100' : 'opacity-0'
+                    }`}
+                >
                     {currentUniqueResults.map((result, index) => (
                         <div
                             key={index}
@@ -458,14 +520,6 @@ const TestAnalysis = () => {
             )}
 
             <div className="flex justify-center mt-6 space-x-4">
-                {/*<button*/}
-                {/*    onClick={() => handlePageChange(currentPage - 1)}*/}
-                {/*    className={`px-3 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-[#4F7164]'}`}*/}
-                {/*    disabled={currentPage === 1}*/}
-                {/*>*/}
-                {/*    Previous*/}
-                {/*</button>*/}
-
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     className={`relative w-24 px-3 py-2 rounded overflow-hidden transition-all duration-300 ${
@@ -480,18 +534,8 @@ const TestAnalysis = () => {
                     >
                         Previous
                     </span>
-                    <span className="absolute inset-0 overflow-hidden rounded-md">
-                        <span
-                            className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#4F7164] transition-transform duration-500 ${
-                                currentPage === 1
-                                    ? 'hidden'
-                                    : 'group-hover:translate-x-0 group-hover:scale-150'
-                            }`}
-                        ></span>
-                    </span>
                 </button>
 
-                {/* Conditional rendering for page numbers */}
                 <div className="hidden md:flex">
                     {Array.from(
                         { length: totalUniquePages },
@@ -507,15 +551,6 @@ const TestAnalysis = () => {
                     ))}
                 </div>
 
-                {/* Always show the Next button */}
-                {/*<button*/}
-                {/*    onClick={() => handlePageChange(currentPage + 1)}*/}
-                {/*    className={`px-3 py-2 rounded ${currentPage === totalUniquePages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-[#4F7164]'}`}*/}
-                {/*    disabled={currentPage === totalUniquePages}*/}
-                {/*>*/}
-                {/*    Next*/}
-                {/*</button>*/}
-
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     className={`relative w-24 px-3 py-2 rounded overflow-hidden transition-all duration-300 ${
@@ -529,15 +564,6 @@ const TestAnalysis = () => {
                         className={`relative z-10 ${currentPage === totalUniquePages ? 'pointer-events-none' : ''}`}
                     >
                         Next
-                    </span>
-                    <span className="absolute inset-0 overflow-hidden rounded-md">
-                        <span
-                            className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#4F7164] transition-transform duration-500 ${
-                                currentPage === totalUniquePages
-                                    ? 'hidden'
-                                    : 'group-hover:translate-x-0 group-hover:scale-150'
-                            }`}
-                        ></span>
                     </span>
                 </button>
             </div>

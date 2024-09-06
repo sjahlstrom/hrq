@@ -183,29 +183,12 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 <div>{currentQuestion.options.right}</div>
             </div>
             <div className="flex justify-center w-full">
-                {/*{questionIndex < questionData.length - 1 ? (*/}
-                {/*    <Button*/}
-                {/*        className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700 w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"*/}
-                {/*        onClick={advanceToNextQuestion}*/}
-                {/*        disabled={!isSliderUsed} // Disable button until slider is used*/}
-                {/*    >*/}
-                {/*        Next Question*/}
-                {/*    </Button>*/}
-                {/*) : (*/}
-                {/*    <Button*/}
-                {/*        className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-[#517C67] hover:bg-[#1E5545] w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"*/}
-                {/*        onClick={handleShowAnalysis}*/}
-                {/*    >*/}
-                {/*        Show Analysis*/}
-                {/*    </Button>*/}
-                {/*)}*/}
-
                 {questionIndex < questionData.length - 1 ? (
                     <Button
-                        className={`relative px-6 py-2  rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${
+                        className={`relative w-[400px] px-6 py-2  rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${
                             !isSliderUsed
                                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                : 'bg-blue-500 hover:bg-blue-700 group'
+                                : 'bg-logo-green text-white hover:bg-[#4F7164] group'
                         }`}
                         onClick={advanceToNextQuestion}
                         disabled={!isSliderUsed} // Disable button until slider is used
@@ -217,7 +200,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                         </span>
                         <span className="absolute inset-0 overflow-hidden rounded-xl">
                             <span
-                                className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-blue-700 transition-transform duration-500 ${
+                                className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#4F7164] transition-transform duration-500 ${
                                     !isSliderUsed
                                         ? 'hidden'
                                         : 'group-hover:translate-x-0 group-hover:scale-150'
