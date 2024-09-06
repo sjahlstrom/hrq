@@ -183,23 +183,64 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 <div>{currentQuestion.options.right}</div>
             </div>
             <div className="flex justify-center w-full">
+                {/*{questionIndex < questionData.length - 1 ? (*/}
+                {/*    <Button*/}
+                {/*        className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700 w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"*/}
+                {/*        onClick={advanceToNextQuestion}*/}
+                {/*        disabled={!isSliderUsed} // Disable button until slider is used*/}
+                {/*    >*/}
+                {/*        Next Question*/}
+                {/*    </Button>*/}
+                {/*) : (*/}
+                {/*    <Button*/}
+                {/*        className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-[#517C67] hover:bg-[#1E5545] w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"*/}
+                {/*        onClick={handleShowAnalysis}*/}
+                {/*    >*/}
+                {/*        Show Analysis*/}
+                {/*    </Button>*/}
+                {/*)}*/}
+
                 {questionIndex < questionData.length - 1 ? (
                     <Button
-                        className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700 w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"
+                        className={`relative px-6 py-2  rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${
+                            !isSliderUsed
+                                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                : 'bg-blue-500 hover:bg-blue-700 group'
+                        }`}
                         onClick={advanceToNextQuestion}
                         disabled={!isSliderUsed} // Disable button until slider is used
                     >
-                        Next Question
+                        <span
+                            className={`relative z-10 ${!isSliderUsed ? 'pointer-events-none' : ''}`}
+                        >
+                            Next Question
+                        </span>
+                        <span className="absolute inset-0 overflow-hidden rounded-xl">
+                            <span
+                                className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-blue-700 transition-transform duration-500 ${
+                                    !isSliderUsed
+                                        ? 'hidden'
+                                        : 'group-hover:translate-x-0 group-hover:scale-150'
+                                }`}
+                            ></span>
+                        </span>
                     </Button>
                 ) : (
                     <Button
-                        className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-[#517C67] hover:bg-[#1E5545] w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"
+                        className={`relative w-full  px-6 py-2 rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${'bg-[#517C67] hover:bg-[#1E5545] group'}`}
                         onClick={handleShowAnalysis}
                     >
-                        Show Analysis
+                        <span className="relative z-10">Show Analysis</span>
+                        <span className="absolute inset-0 overflow-hidden rounded-xl">
+                            <span
+                                className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#1E5545] transition-transform duration-500 group-hover:translate-x-0 group-hover:scale-150`}
+                            ></span>
+                        </span>
                     </Button>
                 )}
-                <br /><br />
+
+                <br />
+                <br />
                 {/*TODO: Testing only -- remove*/}
                 {testMode === 'test' && (
                     <Button
@@ -222,7 +263,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     >
                         <strong className="block font-medium text-black">
                             {fireworksIndex === halfwayIndex
-                                ? 'Congratulations!  You\'re halfway there!'
+                                ? "Congratulations!  You're halfway there!"
                                 : 'End of test testQuestions'}
                         </strong>
                     </div>

@@ -259,10 +259,10 @@ export const Analysis = () => {
     const searchParams = useSearchParams()
     const mode = searchParams.get('mode')
 
-    if (mode === "test") {
-        return <TestAnalysis />  // Render the TestAnalysis component
+    if (mode === 'test') {
+        return <TestAnalysis /> // Render the TestAnalysis component
     } else {
-        return <SampleAnalysis />  // Render the SampleAnalysis component
+        return <SampleAnalysis /> // Render the SampleAnalysis component
     }
 }
 
@@ -274,8 +274,8 @@ const TestAnalysis = () => {
     const [totalLieValue, setTotalLieValue] = useState<number>(0)
     const [lieAnalysis, setLieAnalysis] = useState<string | null>(null)
     const [uniqueResults, setUniqueResults] = useState<any[]>([])
-    const [itemsPerPage, setItemsPerPage] = useState<number>(6)  // Default page size
-    const [totalPages, setTotalPages] = useState<number>(0)  // Total pages calculation
+    const [itemsPerPage, setItemsPerPage] = useState<number>(6) // Default page size
+    const [totalPages, setTotalPages] = useState<number>(0) // Total pages calculation
 
     const fetchAnswers = useCallback(async () => {
         setLoading(true)
@@ -283,11 +283,19 @@ const TestAnalysis = () => {
             let fetchedAnswers = await getTestResponses()
 
             if (fetchedAnswers.length > 0) {
-                const questionsList = fetchedAnswers.map((answer, index) => {
-                    return testAnalysisData.find(
-                        (q) => q.answer === index && q.low <= answer && q.high >= answer && q.scale
-                    ) || null
-                }).filter(Boolean)
+                const questionsList = fetchedAnswers
+                    .map((answer, index) => {
+                        return (
+                            testAnalysisData.find(
+                                (q) =>
+                                    q.answer === index &&
+                                    q.low <= answer &&
+                                    q.high >= answer &&
+                                    q.scale
+                            ) || null
+                        )
+                    })
+                    .filter(Boolean)
 
                 setMatchedQuestions(questionsList)
             }
@@ -307,11 +315,16 @@ const TestAnalysis = () => {
 
     useEffect(() => {
         if (answers.length > 0) {
-            const lieValues = lies.map((index) => answers[index]).filter(Boolean)
+            const lieValues = lies
+                .map((index) => answers[index])
+                .filter(Boolean)
             const totalLie = lieValues.reduce((acc, value) => acc + value, 0)
             setTotalLieValue(totalLie)
 
-            const analysis = lieScale.find(entry => totalLie >= entry.low && totalLie <= entry.high)?.analysis || 'No analysis available.'
+            const analysis =
+                lieScale.find(
+                    (entry) => totalLie >= entry.low && totalLie <= entry.high
+                )?.analysis || 'No analysis available.'
             setLieAnalysis(analysis)
         }
     }, [answers])
@@ -357,7 +370,11 @@ const TestAnalysis = () => {
             testQuestions.forEach((q, i) => {
                 if (q.scale !== 64 && !evaluatedPositions.has(q.position)) {
                     const matches = testQuestions.reduce((acc, item, index) => {
-                        if (item.scale === q.scale && index !== i && !evaluatedPositions.has(item.position)) {
+                        if (
+                            item.scale === q.scale &&
+                            index !== i &&
+                            !evaluatedPositions.has(item.position)
+                        ) {
                             acc.push(item.position)
                         }
                         return acc
@@ -368,8 +385,13 @@ const TestAnalysis = () => {
                         matches.forEach((pos) => evaluatedPositions.add(pos))
 
                         const positions = [q.position, ...matches]
-                        const answersValues = positions.map((pos) => pos >= 0 && pos < answers.length ? answers[pos] : 0)
-                        const sum = answersValues.reduce((total, value) => total + value, 0)
+                        const answersValues = positions.map((pos) =>
+                            pos >= 0 && pos < answers.length ? answers[pos] : 0
+                        )
+                        const sum = answersValues.reduce(
+                            (total, value) => total + value,
+                            0
+                        )
                         const result = Math.floor(sum / 2)
 
                         results.push({
@@ -382,13 +404,19 @@ const TestAnalysis = () => {
                 }
             })
 
-            const uniqueResultsMap = new Map(results.map(item => [item.scale, item]))
+            const uniqueResultsMap = new Map(
+                results.map((item) => [item.scale, item])
+            )
             const uniqueResults = Array.from(uniqueResultsMap.values())
 
-            const resultsWithAnalysis = uniqueResults.map(result => {
-                const analysis = testAnalysisData.find(
-                    (q) => q.scale === result.scale && result.summedResult >= q.low && result.summedResult <= q.high
-                )?.analysis || 'No analysis available.'
+            const resultsWithAnalysis = uniqueResults.map((result) => {
+                const analysis =
+                    testAnalysisData.find(
+                        (q) =>
+                            q.scale === result.scale &&
+                            result.summedResult >= q.low &&
+                            result.summedResult <= q.high
+                    )?.analysis || 'No analysis available.'
 
                 return {
                     ...result,
@@ -402,7 +430,10 @@ const TestAnalysis = () => {
 
     const indexOfLastResult = currentPage * itemsPerPage
     const indexOfFirstResult = indexOfLastResult - itemsPerPage
-    const currentUniqueResults = uniqueResults.slice(indexOfFirstResult, indexOfLastResult)
+    const currentUniqueResults = uniqueResults.slice(
+        indexOfFirstResult,
+        indexOfLastResult
+    )
     const totalUniquePages = Math.ceil(uniqueResults.length / itemsPerPage)
 
     return (
@@ -414,7 +445,10 @@ const TestAnalysis = () => {
             ) : currentUniqueResults.length > 0 ? (
                 <div className="space-y-4">
                     {currentUniqueResults.map((result, index) => (
-                        <div key={index} className={`p-4 shadow-md rounded-lg border border-gray-200 ${getResultBackgroundColor(index)}`}>
+                        <div
+                            key={index}
+                            className={`p-4 shadow-md rounded-lg border border-gray-200 ${getResultBackgroundColor(index)}`}
+                        >
                             <p className="text-gray-700">{result.analysis}</p>
                         </div>
                     ))}
@@ -424,17 +458,45 @@ const TestAnalysis = () => {
             )}
 
             <div className="flex justify-center mt-6 space-x-4">
+                {/*<button*/}
+                {/*    onClick={() => handlePageChange(currentPage - 1)}*/}
+                {/*    className={`px-3 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-[#4F7164]'}`}*/}
+                {/*    disabled={currentPage === 1}*/}
+                {/*>*/}
+                {/*    Previous*/}
+                {/*</button>*/}
+
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
-                    className={`px-3 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-[#4F7164]'}`}
+                    className={`relative w-24 px-3 py-2 rounded overflow-hidden transition-all duration-300 ${
+                        currentPage === 1
+                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            : 'bg-logo-green text-white hover:bg-[#4F7164] group'
+                    }`}
                     disabled={currentPage === 1}
                 >
-                    Previous
+                    <span
+                        className={`relative z-10 ${currentPage === 1 ? 'pointer-events-none' : ''}`}
+                    >
+                        Previous
+                    </span>
+                    <span className="absolute inset-0 overflow-hidden rounded-md">
+                        <span
+                            className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#4F7164] transition-transform duration-500 ${
+                                currentPage === 1
+                                    ? 'hidden'
+                                    : 'group-hover:translate-x-0 group-hover:scale-150'
+                            }`}
+                        ></span>
+                    </span>
                 </button>
 
                 {/* Conditional rendering for page numbers */}
                 <div className="hidden md:flex">
-                    {Array.from({ length: totalUniquePages }, (_, i) => i + 1).map(pageNumber => (
+                    {Array.from(
+                        { length: totalUniquePages },
+                        (_, i) => i + 1
+                    ).map((pageNumber) => (
                         <button
                             key={pageNumber}
                             onClick={() => handlePageChange(pageNumber)}
@@ -446,12 +508,37 @@ const TestAnalysis = () => {
                 </div>
 
                 {/* Always show the Next button */}
+                {/*<button*/}
+                {/*    onClick={() => handlePageChange(currentPage + 1)}*/}
+                {/*    className={`px-3 py-2 rounded ${currentPage === totalUniquePages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-[#4F7164]'}`}*/}
+                {/*    disabled={currentPage === totalUniquePages}*/}
+                {/*>*/}
+                {/*    Next*/}
+                {/*</button>*/}
+
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
-                    className={`px-3 py-2 rounded ${currentPage === totalUniquePages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-logo-green text-white hover:bg-[#4F7164]'}`}
+                    className={`relative w-24 px-3 py-2 rounded overflow-hidden transition-all duration-300 ${
+                        currentPage === totalUniquePages
+                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            : 'bg-logo-green text-white hover:bg-[#4F7164] group'
+                    }`}
                     disabled={currentPage === totalUniquePages}
                 >
-                    Next
+                    <span
+                        className={`relative z-10 ${currentPage === totalUniquePages ? 'pointer-events-none' : ''}`}
+                    >
+                        Next
+                    </span>
+                    <span className="absolute inset-0 overflow-hidden rounded-md">
+                        <span
+                            className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#4F7164] transition-transform duration-500 ${
+                                currentPage === totalUniquePages
+                                    ? 'hidden'
+                                    : 'group-hover:translate-x-0 group-hover:scale-150'
+                            }`}
+                        ></span>
+                    </span>
                 </button>
             </div>
 
