@@ -193,7 +193,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     </Button>
                 ) : (
                     <Button
-                        className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-green-500 hover:bg-green-700 w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"
+                        className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-[#517C67] hover:bg-[#1E5545] w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"
                         onClick={handleShowAnalysis}
                     >
                         Show Analysis

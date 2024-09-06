@@ -39,12 +39,12 @@ const Hero = () => {
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <circle
-                            cx="277"
-                            cy="63"
-                            r="225"
-                            fill="url(#paint0_linear_25:217)"
-                        />
+                        {/*<circle*/}
+                        {/*    cx="277"*/}
+                        {/*    cy="63"*/}
+                        {/*    r="225"*/}
+                        {/*    fill="url(#paint0_linear_25:217)"*/}
+                        {/*/>*/}
                         <circle
                             cx="17.9997"
                             cy="182"
