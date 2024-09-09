@@ -11,13 +11,14 @@ const Admin = () => {
         const checkUserRole = async () => {
             const role = await getUserRole();
             if (role !== "ADMIN") {
-                toast.error("Access Denied", {
-                    style: {
-                        backgroundColor: 'red',
-                        color: 'white',
-                        fontWeight: 'bold',
-                    }
-                }); // Show a red toast with white text and bold font if the user is not an admin
+                // toast.error("Access Denied", {
+                //     style: {
+                //         backgroundColor: 'red',
+                //         color: 'white',
+                //         fontWeight: 'bold',
+                //     }
+                // }); // Show a red toast with white text and bold font if the user is not an admin
+                console.log("Access Denied");
             }
             setIsAdmin(role === "ADMIN");
         };

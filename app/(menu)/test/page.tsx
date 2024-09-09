@@ -3,7 +3,7 @@ import QuestionSection from '@/components/(menu)/Test'
 import Breadcrumb from '@/components/Common/Breadcrumb'
 import sampleQuestions from '@/components/(menu)/Test/Data/sampleQuestions'
 import testQuestions from '@/components/(menu)/Test/Data/testQuestions'
-import { currentUser } from '@clerk/nextjs/server'
+import { currentUser } from '@clerk/nextjs/server' // Make sure this is correct
 import { getTestResponseLength } from '@/app/api/answers'
 
 const TheTest: React.FC = async () => {
