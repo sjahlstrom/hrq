@@ -349,7 +349,7 @@ const TestAnalysis = () => {
                              Based on your analysis, we recommend reviewing the results carefully and considering the following actions:
                          </p>
                          <ul className="list-disc list-inside text-gray-700 mt-4 space-y-2">
-                             <li className="font-semibold">Your Total Composite Score is {total}</li>
+                             <li>Your Total Composite Score is {total}</li>
 
                              <li>Review the areas where scores were below average.</li>
                              <li>Consider additional tests to explore further.</li>
