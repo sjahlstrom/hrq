@@ -34,20 +34,19 @@ interface QuestionSectionProps {
 }
 
 const QuestionSection: React.FC<QuestionSectionProps> = ({
-    questionData,
-    fireworksIndex,
-    questionNumber,
-}) => {
+                                                             questionData,
+                                                             fireworksIndex,
+                                                             questionNumber,
+                                                         }) => {
     const [questionIndex, setQuestionIndex] = useState(questionNumber)
     const [sliderValue, setSliderValue] = useState(15)
     const [reverseSliderValue, setReverseSliderValue] = useState(15)
-    const [answers, setAnswers] = useState<number[]>([])
-    const [isSliderUsed, setIsSliderUsed] = useState(false) // New state
-
+    const [answers, setAnswers] = useState<number[]>([]) // Define the setAnswers state
+    const [isSliderUsed, setIsSliderUsed] = useState(false)
     const router = useRouter()
 
-    let currentQuestion = questionData[questionIndex]
-    const isLastQuestion = questionIndex === questionData.length
+    const currentQuestion = questionData[questionIndex]
+    const isLastQuestion = questionIndex === questionData.length - 1
     const testMode = questionData.length < 6 ? 'sample' : 'test'
     const halfwayIndex = Math.floor(questionData.length / 2)
 
@@ -57,9 +56,8 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 // Perform any redirection or test completion logic here
             }
         }
-
         checkAndRedirect()
-    }, [isLastQuestion, router, testMode])
+    }, [isLastQuestion, testMode])
 
     const handleShowAnalysis = useCallback(async () => {
         try {
@@ -74,13 +72,10 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
 
     const advanceToNextQuestion = useCallback(async () => {
         if (!isLastQuestion) {
-            const testResponse = currentQuestion.reverse
-                ? reverseSliderValue
-                : sliderValue
-            const associatedScale = currentQuestion.scale
+            const testResponse = currentQuestion.reverse ? reverseSliderValue : sliderValue
             const response: UpdateTestUserProps = {
                 testResponse: [testResponse],
-                associatedScale,
+                associatedScale: currentQuestion.scale,
             }
 
             if (testMode === 'test') {
@@ -92,13 +87,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
 
                 setAnswers((prev) => {
                     const updatedAnswers = [...prev, testResponse]
-
-                    // Write the updated array to localStorage on every question
-                    localStorage.setItem(
-                        'array',
-                        JSON.stringify(updatedAnswers)
-                    )
-
+                    localStorage.setItem('array', JSON.stringify(updatedAnswers))
                     return updatedAnswers
                 })
             }
@@ -108,39 +97,27 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
             if (questionData[questionIndex + 1]?.reverse) {
                 setReverseSliderValue(15)
             }
-
-            // Reset slider interaction state
             setIsSliderUsed(false)
         }
-    }, [
-        isLastQuestion,
-        currentQuestion,
-        sliderValue,
-        reverseSliderValue,
-        questionData,
-        questionIndex,
-        testMode,
-    ])
+    }, [isLastQuestion, currentQuestion, sliderValue, reverseSliderValue, questionData, questionIndex, testMode])
 
     const updateSliderValue = useCallback((value: number | number[]) => {
         setSliderValue(Array.isArray(value) ? value[0] : value)
-        setIsSliderUsed(true) // Slider has been interacted with
+        setIsSliderUsed(true)
     }, [])
 
     const handleReverseSliderChange = useCallback((value: number) => {
         setReverseSliderValue(value)
-        setIsSliderUsed(true) // Reverse slider has been interacted with
+        setIsSliderUsed(true)
     }, [])
 
     const widthPercentage = `${(questionIndex / (fireworksIndex === 64 ? 128 : questionData.length - 1)) * 100}%`
 
-    // TODO: Remove this test
-    const handleDeleteUserTestResponsesAndAssociatedScales =
-        useCallback(async () => {
-            await deleteUserTestResponsesAndAssociatedScales()
-            setQuestionIndex(0)
-            router.push(`/`)
-        }, [router])
+    const handleDeleteUserTestResponsesAndAssociatedScales = useCallback(async () => {
+        await deleteUserTestResponsesAndAssociatedScales()
+        setQuestionIndex(0)
+        router.push(`/`)
+    }, [router])
 
     return (
         <div className="bg-gray-700">
@@ -150,13 +127,13 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     style={{ width: widthPercentage }}
                 ></div>
             </div>
-            <div className="bg-gray-700">
-                <div className="px-4 py-4 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-0 md:mb-10 min-h-24">
-                    <h2 className="text-base md:text-2xl font-medium text-black dark:text-white">
-                        {currentQuestion.question}
-                    </h2>
-                </div>
+
+            <div className="px-4 py-4 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-0 md:mb-10 min-h-24">
+                <h2 className="text-base md:text-2xl font-medium text-black dark:text-white">
+                    {currentQuestion.question}
+                </h2>
             </div>
+
             <div className="px-8 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-4 md:mb-10">
                 {currentQuestion.reverse ? (
                     <div className="w-full mx-auto mt-4 md:mt-5">
@@ -182,16 +159,29 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 <div>{currentQuestion.options.middle}</div>
                 <div>{currentQuestion.options.right}</div>
             </div>
+
             <div className="flex justify-center w-full">
-                {questionIndex < questionData.length - 1 ? (
+                {isLastQuestion ? (
                     <Button
-                        className={`relative w-[400px] px-6 py-2  rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${
+                        className="relative w-full px-6 py-2 rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden bg-[#517C67] hover:bg-[#1E5545] group"
+                        onClick={handleShowAnalysis}
+                    >
+                        <span className="relative z-10">Show Analysis</span>
+                        <span className="absolute inset-0 overflow-hidden rounded-xl">
+                            <span
+                                className="absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#1E5545] transition-transform duration-500 group-hover:translate-x-0 group-hover:scale-150"
+                            ></span>
+                        </span>
+                    </Button>
+                ) : (
+                    <Button
+                        className={`relative w-[400px] px-6 py-2 rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${
                             !isSliderUsed
                                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                 : 'bg-logo-green text-white hover:bg-[#4F7164] group'
                         }`}
                         onClick={advanceToNextQuestion}
-                        disabled={!isSliderUsed} // Disable button until slider is used
+                        disabled={!isSliderUsed}
                     >
                         <span
                             className={`relative z-10 ${!isSliderUsed ? 'pointer-events-none' : ''}`}
@@ -208,34 +198,19 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                             ></span>
                         </span>
                     </Button>
-                ) : (
-                    <Button
-                        className={`relative w-full  px-6 py-2 rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${'bg-[#517C67] hover:bg-[#1E5545] group'}`}
-                        onClick={handleShowAnalysis}
-                    >
-                        <span className="relative z-10">Show Analysis</span>
-                        <span className="absolute inset-0 overflow-hidden rounded-xl">
-                            <span
-                                className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#1E5545] transition-transform duration-500 group-hover:translate-x-0 group-hover:scale-150`}
-                            ></span>
-                        </span>
-                    </Button>
-                )}
-
-                <br />
-                <br />
-                {/*TODO: Testing only -- remove*/}
-                {testMode === 'test' && (
-                    <Button
-                        className="px-6 -mt-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700 w-full md:w-3/4 lg:w-2/3 py-2 md:py-4 items-center justify-center text-white mx-auto"
-                        onClick={
-                            handleDeleteUserTestResponsesAndAssociatedScales
-                        }
-                    >
-                        <div>For Testing only ... Delete answers</div>
-                    </Button>
                 )}
             </div>
+
+            {testMode === 'test' && (
+                <div className="flex justify-center mt-6">
+                    <Button
+                        className="px-6 py-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700"
+                        onClick={handleDeleteUserTestResponsesAndAssociatedScales}
+                    >
+                        Delete answers (Testing only)
+                    </Button>
+                </div>
+            )}
 
             {questionIndex === fireworksIndex && (
                 <>
@@ -246,11 +221,10 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     >
                         <strong className="block font-medium text-black">
                             {fireworksIndex === halfwayIndex
-                                ? "Congratulations!  You're halfway there!"
-                                : 'End of test testQuestions'}
+                                ? "Congratulations! You're halfway there!"
+                                : 'End of test'}
                         </strong>
                     </div>
-                    <br />
                 </>
             )}
         </div>

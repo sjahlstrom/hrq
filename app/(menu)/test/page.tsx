@@ -13,6 +13,9 @@ const TheTest: React.FC = async () => {
         const userId = user.id
         const responseLength = await getTestResponseLength(userId)
         length = responseLength ?? 0
+
+        // console.log("ROLE: ", await getUserRole())
+
     }
 
     return (

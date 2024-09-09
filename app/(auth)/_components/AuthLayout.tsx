@@ -1,8 +1,8 @@
 'use client'; // Mark this component as a client component
 
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react'
 
-const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+const AuthLayout = ({ children }: { children: ReactNode }) => {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {

@@ -419,7 +419,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
 import { SignInButton, UserButton, useUser } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
@@ -601,7 +600,6 @@ const Header = () => {
                                                 <Button
                                                     onClick={handleSignInClick}
                                                     size="sm"
-                                                    variant="primary"
                                                     className="rounded-xl"
                                                 >
                                                     Login

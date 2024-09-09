@@ -10,9 +10,3 @@ export interface Question {
     reverse?: boolean
     scale: number
 }
-
-interface QuestionSectionProps {
-    questionData: Question[]
-    fireworksIndex: number
-    questionNumber: number
-}
