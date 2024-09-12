@@ -33,7 +33,6 @@ export async function POST(req: Request) {
 
   // Create a new Svix instance with your secret.
   const wh = new Webhook(WEBHOOK_SECRET);
-
   let evt: WebhookEvent;
 
   // Verify the payload with the headers
@@ -56,10 +55,11 @@ export async function POST(req: Request) {
       await db.user.create({
           data: {
               externalUserId: payload.data.id,
-              email: payload.data.user.primary_email_address,
+              email: payload.data.email_addresses[0]['email_address'],
               username: payload.data.username,
               image: payload.data.image_url,
           },
+
       });
   }
 
