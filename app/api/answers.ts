@@ -1,7 +1,8 @@
 'use server'
 
 import { db } from '@/lib/db'
-import { currentUser } from '@clerk/nextjs/server'
+import { clerkClient, currentUser } from '@clerk/nextjs/server'
+import { revalidatePath } from 'next/cache'
 
 export const calculateTestResponseAverage = async (
     userId: string
@@ -22,11 +23,22 @@ export const calculateTestResponseAverage = async (
 }
 
 export const getUsers = async () => {
+    const user = await currentUser()
+
     try {
         return await db.user.findMany({
+            // do not include the current user in the results
+            where: {
+                externalUserId: {
+                    not: user?.id, // Exclude current user's externalUserId
+                },
+            },
             select: {
                 username: true,
+                id: true,
+                externalUserId: true,
                 paid_rq: true,
+                banned: true,
                 email: true,
                 testCompleted: true,
             },
@@ -182,3 +194,75 @@ export const getUserRole = async (): Promise<string | null> => {
         return null
     }
 }
+
+export const banUser = async (externalUserId: string) => {
+
+   if (!externalUserId) {
+       throw new Error('No externalUserId provided')
+   }
+
+    try {
+        const userToBan = await db.user.findUnique({
+            where: { externalUserId: externalUserId },
+        })
+
+        if (!userToBan) {
+            throw new Error('User not found')
+        }
+
+        // Ban user
+        await clerkClient.users.banUser(externalUserId)
+        revalidatePath("/users");
+
+        // ban user in Prisma database
+        await db.user.update({
+            where: { externalUserId: externalUserId },
+            data: { banned: true },
+        })
+        return true
+    } catch (error) {
+        console.error('Error banning user:', error)
+    }
+}
+
+export const unBanUser = async (externalUserId: string) => {
+    try {
+        const userToBan = await db.user.findUnique({
+            where: { externalUserId: externalUserId },
+        })
+
+        if (!userToBan) {
+            throw new Error('User not found')
+        }
+
+        // Ban user
+        await clerkClient.users.unbanUser(externalUserId)
+         revalidatePath("/users");
+
+        // ban user in Prisma database
+        await db.user.update({
+            where: { externalUserId: externalUserId },
+            data: { banned: false },
+        })
+        return true
+    } catch (error) {
+        console.error('Error unBanning user:', error)
+    }
+}
+
+export const isBanned = async (user) => {
+    try {
+        const bannedUser = await db.user.findUnique({
+            where: { externalUserId: user.externalUserId },
+        });
+
+        if (!bannedUser) {
+            throw new Error('User not found');
+        }
+
+        return bannedUser.banned;
+    } catch (error) {
+        console.error('Error checking if user is banned:', error);
+        return false;
+    }
+};

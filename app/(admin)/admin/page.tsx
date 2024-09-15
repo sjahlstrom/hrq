@@ -1,17 +1,24 @@
-import Breadcrumb from "@/components/Common/Breadcrumb";
-import Admin from '@/components/(admin)'
+import { redirect } from 'next/navigation'
+import { getUserRole } from '@/app/api/answers'
+import { currentUser } from '@clerk/nextjs/server'
+import Sidebar from '@/app/(admin)/admin/_components/Sidebar'
 
-const AdminPage = () => {
+const IndexPage = async () => {
+    const role = await getUserRole()
+
+    if (role !== 'ADMIN') {
+        redirect('/')
+    }
+
     return (
         <>
-            <Breadcrumb
-                pageName="Admin Page"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
-            />
-
-            <Admin />
+            <div className="flex h-screen">
+                <div className="mt-24 rounded bg-pantone624 hidden md:block h-[88vh] w-[260px]">
+                    <Sidebar />
+                </div>
+            </div>
         </>
-    );
-};
+    )
+}
 
-export default AdminPage;
+export default IndexPage

@@ -600,7 +600,7 @@ const Header = () => {
                                                 <Button
                                                     onClick={handleSignInClick}
                                                     size="sm"
-                                                    className="rounded-xl"
+                                                    className="rounded-xl bg-logo-green text-gray-700"
                                                 >
                                                     Login
                                                 </Button>
