@@ -3,7 +3,7 @@ import QuestionSection from '@/components/(menu)/Test'
 import sampleQuestions from '@/components/(menu)/Test/Data/sampleQuestions'
 import testQuestions from '@/components/(menu)/Test/Data/testQuestions'
 import { currentUser } from '@clerk/nextjs/server'
-import { getTestResponseLength } from '@/app/api/answers'
+import { getTestResponseLength } from '@/app/api/users'
 
 const TheTest = async () => {
     const user = await currentUser()

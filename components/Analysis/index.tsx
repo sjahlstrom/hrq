@@ -405,7 +405,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import testAnalysisData from '@/components/Analysis/Data/TestAnalysisData';
 import lieScale from '@/components/Analysis/Data/LieScale';
 import { useSearchParams } from 'next/navigation';
-import { calculateTestResponseAverage, getTestResponses } from '@/app/api/answers';
+import { calculateTestResponseAverage, getTestResponses } from '@/app/api/users';
 import testQuestions from '@/components/(menu)/Test/Data/testQuestions';
 import SampleAnalysis from '@/components/Analysis/SampleAnalysis';
 import { useUser } from '@clerk/nextjs';

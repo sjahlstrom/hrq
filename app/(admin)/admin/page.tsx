@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { getUserRole } from '@/app/api/answers'
+import { getUserRole } from '@/app/api/users'
 import { currentUser } from '@clerk/nextjs/server'
 import Sidebar from '@/app/(admin)/admin/_components/Sidebar'
 

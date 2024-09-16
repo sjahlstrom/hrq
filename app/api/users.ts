@@ -250,19 +250,4 @@ export const unBanUser = async (externalUserId: string) => {
     }
 }
 
-export const isBanned = async (user) => {
-    try {
-        const bannedUser = await db.user.findUnique({
-            where: { externalUserId: user.externalUserId },
-        });
 
-        if (!bannedUser) {
-            throw new Error('User not found');
-        }
-
-        return bannedUser.banned;
-    } catch (error) {
-        console.error('Error checking if user is banned:', error);
-        return false;
-    }
-};

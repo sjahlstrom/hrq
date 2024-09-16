@@ -11,7 +11,7 @@ import {
     setTestCompleted,
     updateTestResponse,
     UpdateTestUserProps,
-} from '@/app/api/answers'
+} from '@/app/api/users'
 import { useRouter } from 'next/navigation'
 
 export interface Option {
