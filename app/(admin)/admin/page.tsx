@@ -1,17 +1,13 @@
-import { redirect } from 'next/navigation'
-import { getUserRole } from '@/app/api/users'
-import { currentUser } from '@clerk/nextjs/server'
+'use client'
+
 import Sidebar from '@/app/(admin)/admin/_components/Sidebar'
+import CheckUserRole from '@/components/checkUserRole'
 
-const IndexPage = async () => {
-    const role = await getUserRole()
-
-    if (role !== 'ADMIN') {
-        redirect('/')
-    }
+const IndexPage =  () => {
 
     return (
         <>
+            <CheckUserRole />
             <div className="flex h-screen">
                 <div className="mt-24 rounded bg-pantone624 hidden md:block h-[88vh] w-[260px]">
                     <Sidebar />

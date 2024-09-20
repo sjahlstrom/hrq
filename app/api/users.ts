@@ -37,10 +37,10 @@ export const getUsers = async () => {
                 username: true,
                 id: true,
                 externalUserId: true,
-                paid_rq: true,
                 banned: true,
                 email: true,
                 testCompleted: true,
+                paid_rq: true,
             },
         })
     } catch (error) {

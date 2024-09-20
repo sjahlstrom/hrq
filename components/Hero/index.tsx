@@ -1,4 +1,5 @@
-import React from 'react'
+
+import React from 'react';
 
 const Hero = () => {
     return (
@@ -7,12 +8,15 @@ const Hero = () => {
 
             <section
                 id="home"
-                className="relative z-10 bg-laurel-green overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] bg-cover bg-center"
+                className="relative z-10  overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] bg-cover bg-center"
                 style={{
                     backgroundImage: "url('/images/hero/silhouette.svg')",
+                    minHeight: '88vh', // This sets the section to fill 88% of the screen height
                 }}
             >
-                <div className="container">
+                <div
+                    className="container mt-[-80px]" // Moves the entire container up by 20px
+                >
                     <div className="-mx-4 flex flex-wrap">
                         <div className="w-full px-4">
                             <div
@@ -23,14 +27,32 @@ const Hero = () => {
                                     High Relationship Quotient
                                 </h1>
                                 <p className="mb-12 text-base font-medium !leading-relaxed text-body-color dark:text-gray-300-800 dark:opacity-90 sm:text-lg md:text-xl">
-                                    Find your relationship quotient and why your
-                                    dating life has not been as successful as
-                                    you would like
+                                    Find your relationship quotient and why your dating life has not been
+                                    as successful as you would like
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                {/*<div className="container">*/}
+                {/*    <div className="-mx-4 flex flex-wrap">*/}
+                {/*        <div className="w-full px-4">*/}
+                {/*            <div*/}
+                {/*                className="wow fadeInUp mx-auto max-w-[800px] text-center"*/}
+                {/*                data-wow-delay=".2s"*/}
+                {/*            >*/}
+                {/*                <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-gray-300 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">*/}
+                {/*                    High Relationship Quotient*/}
+                {/*                </h1>*/}
+                {/*                <p className="mb-12 text-base font-medium !leading-relaxed text-body-color dark:text-gray-300-800 dark:opacity-90 sm:text-lg md:text-xl">*/}
+                {/*                    Find your relationship quotient and why your dating life has*/}
+                {/*                    not been as successful as you would like*/}
+                {/*                </p>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 <div className="absolute top-0 right-0 z-[-1] opacity-30 lg:opacity-100">
                     <svg
                         width="450"
@@ -327,7 +349,7 @@ const Hero = () => {
                 </div>
             </section>
         </>
-    )
-}
+    );
+};
 
-export default Hero
+export default Hero;

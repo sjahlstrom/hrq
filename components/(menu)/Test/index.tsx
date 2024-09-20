@@ -34,10 +34,10 @@ interface QuestionSectionProps {
 }
 
 const QuestionSection: React.FC<QuestionSectionProps> = ({
-                                                             questionData,
-                                                             fireworksIndex,
-                                                             questionNumber,
-                                                         }) => {
+    questionData,
+    fireworksIndex,
+    questionNumber,
+}) => {
     const [questionIndex, setQuestionIndex] = useState(questionNumber)
     const [sliderValue, setSliderValue] = useState(15)
     const [reverseSliderValue, setReverseSliderValue] = useState(15)
@@ -72,7 +72,9 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
 
     const advanceToNextQuestion = useCallback(async () => {
         if (!isLastQuestion) {
-            const testResponse = currentQuestion.reverse ? reverseSliderValue : sliderValue
+            const testResponse = currentQuestion.reverse
+                ? reverseSliderValue
+                : sliderValue
             const response: UpdateTestUserProps = {
                 testResponse: [testResponse],
                 associatedScale: currentQuestion.scale,
@@ -87,7 +89,10 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
 
                 setAnswers((prev) => {
                     const updatedAnswers = [...prev, testResponse]
-                    localStorage.setItem('array', JSON.stringify(updatedAnswers))
+                    localStorage.setItem(
+                        'array',
+                        JSON.stringify(updatedAnswers)
+                    )
                     return updatedAnswers
                 })
             }
@@ -99,7 +104,15 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
             }
             setIsSliderUsed(false)
         }
-    }, [isLastQuestion, currentQuestion, sliderValue, reverseSliderValue, questionData, questionIndex, testMode])
+    }, [
+        isLastQuestion,
+        currentQuestion,
+        sliderValue,
+        reverseSliderValue,
+        questionData,
+        questionIndex,
+        testMode,
+    ])
 
     const updateSliderValue = useCallback((value: number | number[]) => {
         setSliderValue(Array.isArray(value) ? value[0] : value)
@@ -113,11 +126,12 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
 
     const widthPercentage = `${(questionIndex / (fireworksIndex === 64 ? 128 : questionData.length - 1)) * 100}%`
 
-    const handleDeleteUserTestResponsesAndAssociatedScales = useCallback(async () => {
-        await deleteUserTestResponsesAndAssociatedScales()
-        setQuestionIndex(0)
-        router.push(`/`)
-    }, [router])
+    const handleDeleteUserTestResponsesAndAssociatedScales =
+        useCallback(async () => {
+            await deleteUserTestResponsesAndAssociatedScales()
+            setQuestionIndex(0)
+            router.push(`/`)
+        }, [router])
 
     return (
         <div className="bg-gray-700">
@@ -168,9 +182,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     >
                         <span className="relative z-10">Show Analysis</span>
                         <span className="absolute inset-0 overflow-hidden rounded-xl">
-                            <span
-                                className="absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#1E5545] transition-transform duration-500 group-hover:translate-x-0 group-hover:scale-150"
-                            ></span>
+                            <span className="absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#1E5545] transition-transform duration-500 group-hover:translate-x-0 group-hover:scale-150"></span>
                         </span>
                     </Button>
                 ) : (
@@ -205,7 +217,9 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 <div className="flex justify-center mt-6">
                     <Button
                         className="px-6 py-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700"
-                        onClick={handleDeleteUserTestResponsesAndAssociatedScales}
+                        onClick={
+                            handleDeleteUserTestResponsesAndAssociatedScales
+                        }
                     >
                         Delete answers (Testing only)
                     </Button>

@@ -1,37 +1,46 @@
 import Stripe from "stripe";
-import { NextResponse, NextRequest } from "next/server";
+import { stripe } from "@/lib/stripe";
+import { db } from "@/lib/db";
+import { NextResponse } from "next/server";
 
-// Initialize Stripe with the secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+export async function POST(req: Request) {
+    const body = await req.text();
+    const signature = req.headers.get("Stripe-Signature") as string;
 
-export async function POST(req: NextRequest) {
+    let event: Stripe.Event;
+
     try {
-        // Parse the request payload
-        const payload = await req.text();
-        const response = JSON.parse(payload);
-
-        // Get Stripe signature from headers
-        const sig = req.headers.get("Stripe-Signature");
-
-        // Convert timestamps to human-readable date strings
-        const dateTime = new Date(response?.created * 1000).toLocaleDateString();
-        const timeString = new Date(response?.created * 1000).toLocaleDateString();
-
-        // Construct the Stripe webhook event
-        const event = stripe.webhooks.constructEvent(
-            payload,
-            sig!,
+        event = stripe.webhooks.constructEvent(
+            body,
+            signature,
             process.env.STRIPE_WEBHOOK_SECRET!
-        );
-
-        // Log the event type and return a success response
-        console.log("event", event.type);
-        return NextResponse.json({ status: "Success", eventType: event.type });
-    } catch (error) {
-        // Handle any errors that occur during processing
-        console.error("Error processing webhook", error);
-        return NextResponse.json({ status: "Failed", error: error.message });
+        )
+    } catch (error: any) {
+        return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
     }
-}
 
-export const runtime = "edge";
+    const session = event.data.object as Stripe.Checkout.Session;
+    const userId = session?.metadata?.userId;
+    const testId = session?.metadata?.testId;
+    const amount = session?.metadata?.amount;
+
+    if (event.type === "checkout.session.completed") {
+        if(!userId || !testId) {
+            return new NextResponse(`Webhook Error: Missing metadata`, { status: 400 });
+        }
+
+        const amount = parseFloat(session?.metadata?.amount) || 0;
+
+        await db.purchase.create({
+            data: {
+                testId: testId,
+                userId: userId,
+                amount: amount
+            }
+        });
+    } else {
+        return new NextResponse(`Webhook Error: Unsupported event type ${event.type}`, { status: 200 });
+    }
+
+    return new NextResponse(null, { status: 200 });
+}

@@ -19,7 +19,7 @@ import Link from 'next/link'
 
 const Sidebar = () => {
     return (
-        <div className="mt-0 rounded bg-pantone624 hidden md:block h-[88vh] w-[260px]">
+        <div className=" bg-gray-700 mt-0 rounded  hidden md:block h-[90vh] w-[260px]">
             <div className="fixed left-4 h-full w-1/5 bg-secondary">
                 <Command className="bg-secondary rounded-none mt-20">
                     <CommandList>
@@ -32,6 +32,10 @@ const Sidebar = () => {
                             <CommandItem>
                                 <Newspaper className="mr-4 h-4 w-12" />
                                 <Link href="/users">Users</Link>
+                            </CommandItem>
+                            <CommandItem>
+                                <Newspaper className="mr-4 h-4 w-12" />
+                                <Link href="/stats">Stats</Link>
                             </CommandItem>
                             <br /><br /><br /><br />
                             <p> Other functionality may <br />come later</p>

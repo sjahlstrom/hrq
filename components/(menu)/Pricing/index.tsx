@@ -87,7 +87,7 @@ const Pricing = () => {
                   price='9.95'
                   // duration={isMonthly ? 'mo' : 'yr'}
                   duration='0'
-                  subtitle="The test is free ... get detailed results for a one time fee"
+                  subtitle="Get detailed test results for a one time fee"
                >
                  <OfferList text="Need some bullet points" status="active" />
                  <OfferList text="Need some bullet points" status="active" />

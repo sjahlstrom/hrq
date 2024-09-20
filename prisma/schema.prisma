@@ -32,8 +32,9 @@ model User {
   role            UserRole  @default(USER)
   accounts        Account[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Purchase  Purchase[]
 }
 
 model Account {
@@ -53,4 +54,60 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+// model Test {
+//   id        String     @id @default(cuid())
+//   userId    String
+//   title     String     @db.Text
+//   price     Float?
+//   purchases Purchase[]
+//   createdAt DateTime   @default(now())
+//   updatedAt DateTime   @updatedAt
+// }
+//
+// model Purchase {
+//   id        String   @id @default(uuid())
+//   userId    String
+//   amount    Float
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt()
+//
+//   user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   Test   Test?   @relation(fields: [testId], references: [id])
+//   testId String?
+// }
+
+model Test {
+  id        String     @id @default(cuid())
+  userId    String
+  title     String     @db.Text
+  price     Float?
+  purchases Purchase[] // This is the relation field
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Purchase {
+  id        String   @id @default(uuid())
+  userId    String
+  testId    String? // Ensure testId is included here as well
+  amount    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  test Test? @relation(fields: [testId], references: [id])
+
+  @@unique([userId, testId]) // Add this line to create a unique constraint
+}
+
+model StripeCustomer {
+  id               String @id @default(cuid())
+  userId           String @unique
+  stripeCustomerId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
