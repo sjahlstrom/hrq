@@ -217,13 +217,13 @@
 // import { Button } from '@/components/ui/button'
 //
 // const Header = () => {
-//     // Navbar toggle
+//     // Renamed_Navbar toggle
 //     const [navbarOpen, setNavbarOpen] = useState(false);
 //     const navbarToggleHandler = () => {
 //         setNavbarOpen(!navbarOpen);
 //     };
 //
-//     // Sticky Navbar
+//     // Sticky Renamed_Navbar
 //     const [sticky, setSticky] = useState(false);
 //     const handleStickyNavbar = () => {
 //         if (window.scrollY >= 80) {
@@ -424,13 +424,13 @@ import { SignInButton, UserButton, useUser } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
-    // Navbar toggle
+    // Renamed_Navbar toggle
     const [navbarOpen, setNavbarOpen] = useState(false);
     const navbarToggleHandler = () => {
         setNavbarOpen(!navbarOpen);
     };
 
-    // Sticky Navbar
+    // Sticky Renamed_Navbar
     const [sticky, setSticky] = useState(false);
     const handleStickyNavbar = () => {
         if (window.scrollY >= 80) {
@@ -483,8 +483,8 @@ const Header = () => {
                 }`}
             >
                 <div className="container">
-                    <div className="relative -mx-4 flex items-center justify-between">
-                        <div className="w-60 max-w-full px-4 xl:mr-12">
+                    <div className="relative mx-4 flex items-center justify-between">
+                        <div className="w-40 max-w-full px-4 xl:mr-12">
                             <Link
                                 href="/"
                                 className={`header-logo block w-full ${
@@ -496,14 +496,14 @@ const Header = () => {
                                     alt="logo"
                                     width={140}
                                     height={140}
-                                    className="w-full dark:hidden"
+                                    className="w-full dark:hidden ml-6"
                                 />
                                 <Image
                                     src="/images/logo/logo.png"
                                     alt="logo"
                                     width={140}
                                     height={140}
-                                    className="hidden w-full dark:block"
+                                    className="hidden w-full dark:block ml-6"
                                 />
                             </Link>
                         </div>

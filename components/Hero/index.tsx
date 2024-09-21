@@ -23,7 +23,7 @@ const Hero = () => {
                                 className="wow fadeInUp mx-auto max-w-[800px] text-center"
                                 data-wow-delay=".2s"
                             >
-                                <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-gray-300 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
+                                <h1 className="mb-5 -mt-10 text-3xl font-bold leading-tight text-black dark:text-gray-300 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
                                     High Relationship Quotient
                                 </h1>
                                 <p className="mb-12 text-base font-medium !leading-relaxed text-body-color dark:text-gray-300-800 dark:opacity-90 sm:text-lg md:text-xl">
@@ -35,24 +35,6 @@ const Hero = () => {
                     </div>
                 </div>
 
-                {/*<div className="container">*/}
-                {/*    <div className="-mx-4 flex flex-wrap">*/}
-                {/*        <div className="w-full px-4">*/}
-                {/*            <div*/}
-                {/*                className="wow fadeInUp mx-auto max-w-[800px] text-center"*/}
-                {/*                data-wow-delay=".2s"*/}
-                {/*            >*/}
-                {/*                <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-gray-300 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">*/}
-                {/*                    High Relationship Quotient*/}
-                {/*                </h1>*/}
-                {/*                <p className="mb-12 text-base font-medium !leading-relaxed text-body-color dark:text-gray-300-800 dark:opacity-90 sm:text-lg md:text-xl">*/}
-                {/*                    Find your relationship quotient and why your dating life has*/}
-                {/*                    not been as successful as you would like*/}
-                {/*                </p>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
                 <div className="absolute top-0 right-0 z-[-1] opacity-30 lg:opacity-100">
                     <svg
                         width="450"

@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-const Navbar = () => {
+const Renamed_Navbar = () => {
   return (
     <div className='bg-primary dark:bg-slate-700 text-white py-2 px-5 flex justify-between'>
       <Link href='/public'>
@@ -42,4 +42,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Renamed_Navbar;

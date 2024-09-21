@@ -2,7 +2,7 @@ Change the SVG is all the pages that have a cut off circle -- looks bad
 
 I'm getting a totalAverage, not a summedAverage
 
-Make UserCard wider
+Fix setting the wrong value in summedAverage
 
 I think I have a fence post problem with questions ... 1 to 128 ... maybe it should be 0 - 127 ???
 

@@ -28,9 +28,9 @@ const AboutSectionOne = () => {
          <div className="container">
             <div className="border-b border-body-color/[.15] pb-16 md:pb-20 lg:pb-28 dark:border-white/[.15]">
                <div className="-mx-4 flex flex-wrap items-center">
-                  <div className="w-full px-4 lg:w-1/2">
+                  <div className="w-full px-4 lg:w-1/">
                      <SectionTitle
-                        title="Crafted for High Relationship Quotient"
+                        title="High Relationship Quotient"
                         paragraph="The main ‘thrust’ is to focus on helping people to find their potential in increasing their satisfaction in their relationship."
                         mb="44px"
                      />
