@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import testAnalysisData from '@/components/Analysis/Data/TestAnalysisData';
 import lieScale from '@/components/Analysis/Data/LieScale';
 import { useSearchParams } from 'next/navigation';
-import { calculateTestResponseAverage, getTestResponses } from '@/app/api/users';
+import { calculateTestResponseAverage, getTestResponses, setSummedTotals } from '@/app/api/users'
 import testQuestions from '@/components/(menu)/Test/Data/testQuestions';
 import SampleAnalysis from '@/components/Analysis/SampleAnalysis';
 import { useUser } from '@clerk/nextjs';
@@ -38,6 +38,8 @@ const TestAnalysis = () => {
             if (user?.id) {
                 try {
                     const userAverage = await calculateTestResponseAverage(user.id);
+                    // save to db
+                    await setSummedTotals(userAverage);
                     setTotalSummedValues(userAverage);
                 } catch (error) {
                     console.error('Error calculating total:', error);

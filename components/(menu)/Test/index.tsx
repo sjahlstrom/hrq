@@ -7,7 +7,7 @@ import ForwardSlider from '@/components/Slider/ForwardSlider'
 import Confetti from 'react-confetti'
 import { Button } from '@/components/ui/button'
 import {
-    deleteUserTestResponsesAndAssociatedScales,
+    deleteUserTestResponsesAndAssociatedScales, setSummedTotals,
     setTestCompleted,
     updateTestResponse,
     UpdateTestUserProps,

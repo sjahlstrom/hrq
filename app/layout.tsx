@@ -6,13 +6,8 @@ import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import ScrollToTop from '@/components/ScrollToTop'
 import '../styles/index.css'
-import { Roboto } from 'next/font/google'
+import { inter, roboto_mono, montserrat } from '@/app/ui/fonts'
 
-const roboto = Roboto({
-    weight: ['400', '700'],
-    subsets: ['latin'],
-    display: 'swap',
-})
 // app/layout.tsx or app/layout.jsx
 
 export default function RootLayout({
@@ -22,17 +17,18 @@ export default function RootLayout({
 }) {
     return (
         <ClerkProvider appearance={{ baseTheme: dark }}>
-            <html suppressHydrationWarning lang="en" className={roboto.className}>
+            <html
+                lang="en"
+                className={`
+            ${inter.variable} 
+            ${roboto_mono.variable}
+            ${montserrat.variable}`}
+            >
                 <head>
-                    {/* Add Google Font link */}
-                    {/*             <link*/}
-                    {/*                 href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"*/}
-                    {/*                 rel="stylesheet"*/}
-                    {/*             />*/}
-                    <title>Human Relationship Quotient</title>
+                    <title>High Relationship Quotient</title>
                 </head>
 
-                <body className="dark:bg-gray-700">
+                <body className="dark:bg-gray-800">
                     <Providers>
                         <Header />
                         {children}

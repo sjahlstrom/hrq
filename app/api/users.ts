@@ -40,6 +40,7 @@ export const getUsers = async () => {
                 banned: true,
                 email: true,
                 testCompleted: true,
+                summedTotal: true,
                 paid_rq: true,
             },
         })
@@ -99,6 +100,7 @@ export const deleteUserTestResponsesAndAssociatedScales =
                 data: {
                     testResponse: { set: [] },
                     associatedScale: { set: [] },
+                    summedTotal: 0,
                     testCompleted: false,
                 },
             })
@@ -120,7 +122,6 @@ export const setTestCompleted = async (): Promise<boolean> => {
         console.error('No user found')
         return false
     }
-
     try {
         await db.user.update({
             where: { externalUserId: user.id },
@@ -132,6 +133,41 @@ export const setTestCompleted = async (): Promise<boolean> => {
         return false
     }
 }
+
+export const setSummedTotals = async (average: number): Promise<boolean> => {
+    const user = await currentUser();
+
+    if (!user) {
+        console.error('No user found');
+        return false;
+    }
+
+    try {
+        // Fetch the user data to check if testCompleted is true
+        const userData = await db.user.findUnique({
+            where: { externalUserId: user.id },
+            select: { testCompleted: true },
+        });
+
+        // Check if testCompleted is true
+        if (!userData?.testCompleted) {
+            console.error('Cannot set test average: Test not completed.');
+            return false;
+        }
+
+        // Update the testAverage field in the database with the provided average
+        await db.user.update({
+            where: { externalUserId: user.id },
+            data: { summedTotal: average }, // Use the provided average value
+        });
+
+        return true;
+    } catch (error) {
+        console.error('Error setting testAverage:', error);
+        return false;
+    }
+};
+
 
 export const getTestResponseLength = async (
     userId: string
@@ -196,10 +232,9 @@ export const getUserRole = async (): Promise<string | null> => {
 }
 
 export const banUser = async (externalUserId: string) => {
-
-   if (!externalUserId) {
-       throw new Error('No externalUserId provided')
-   }
+    if (!externalUserId) {
+        throw new Error('No externalUserId provided')
+    }
 
     try {
         const userToBan = await db.user.findUnique({
@@ -212,7 +247,7 @@ export const banUser = async (externalUserId: string) => {
 
         // Ban user
         await clerkClient.users.banUser(externalUserId)
-        revalidatePath("/users");
+        revalidatePath('/users')
 
         // ban user in Prisma database
         await db.user.update({
@@ -237,7 +272,7 @@ export const unBanUser = async (externalUserId: string) => {
 
         // Ban user
         await clerkClient.users.unbanUser(externalUserId)
-         revalidatePath("/users");
+        revalidatePath('/users')
 
         // ban user in Prisma database
         await db.user.update({
@@ -250,4 +285,14 @@ export const unBanUser = async (externalUserId: string) => {
     }
 }
 
+const getSummedTotalIfCompleted = (selectedUser) => {
+    return selectedUser?.testCompleted ? selectedUser.summedTotal : null;
+};
 
+// // Example usage:
+// const selectedUser = {
+//     testCompleted: true,
+//     summedTotal: 980.5,
+// };
+//
+// console.log(getSummedTotalIfCompleted(selectedUser)); // Output: 980.5

@@ -2,7 +2,7 @@
 
 /* styles/globals.css or wherever you place your global styles */
 .hero-background {
-  background-image: url('/images/hero/sil');
+  background-image: url('/images/hero/silhouette.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -30,6 +30,7 @@ html,
 body,
 :root {
   height: 100%;
+  --font-poppins: ${poppins.style.fontFamily};
 }
 
 @layer base {

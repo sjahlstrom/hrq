@@ -1,12 +1,8 @@
-Test that you can resume questions at the correct point
+Change the SVG is all the pages that have a cut off circle -- looks bad
 
-If TestCompleted === true, do not retake the test
+I'm getting a totalAverage, not a summedAverage
 
+Make UserCard wider
 
-Today's issues ...
-     Sample questions ... when at end of questions, clicking next attempts to execute
-     Test questions ... do not attempt to display questions if testCompleted === true
+I think I have a fence post problem with questions ... 1 to 128 ... maybe it should be 0 - 127 ???
 
-
-Eventually, remove all unnecessary console.log statements
-Consider using Pino as a logger

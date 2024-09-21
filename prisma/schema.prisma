@@ -20,6 +20,7 @@ model User {
   testResponse    Int[]
   associatedScale Int[]
   testCompleted   Boolean   @default(false)
+  summedTotal     Float?
   paid_rq         Boolean   @default(false)
   paid_cq         Boolean   @default(false)
   banned          Boolean   @default(false)
@@ -55,28 +56,6 @@ model Account {
 
   @@unique([provider, providerAccountId])
 }
-
-// model Test {
-//   id        String     @id @default(cuid())
-//   userId    String
-//   title     String     @db.Text
-//   price     Float?
-//   purchases Purchase[]
-//   createdAt DateTime   @default(now())
-//   updatedAt DateTime   @updatedAt
-// }
-//
-// model Purchase {
-//   id        String   @id @default(uuid())
-//   userId    String
-//   amount    Float
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt()
-//
-//   user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   Test   Test?   @relation(fields: [testId], references: [id])
-//   testId String?
-// }
 
 model Test {
   id        String     @id @default(cuid())

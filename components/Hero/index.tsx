@@ -8,7 +8,7 @@ const Hero = () => {
 
             <section
                 id="home"
-                className="relative z-10  overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] bg-cover bg-center"
+                className="relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] bg-cover bg-center"
                 style={{
                     backgroundImage: "url('/images/hero/silhouette.svg')",
                     minHeight: '88vh', // This sets the section to fill 88% of the screen height
@@ -61,12 +61,6 @@ const Hero = () => {
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        {/*<circle*/}
-                        {/*    cx="277"*/}
-                        {/*    cy="63"*/}
-                        {/*    r="225"*/}
-                        {/*    fill="url(#paint0_linear_25:217)"*/}
-                        {/*/>*/}
                         <circle
                             cx="17.9997"
                             cy="182"
