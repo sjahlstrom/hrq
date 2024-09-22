@@ -8,8 +8,6 @@ import ScrollToTop from '@/components/ScrollToTop'
 import '../styles/index.css'
 import { inter, roboto_mono, montserrat } from '@/app/ui/fonts'
 
-// app/layout.tsx or app/layout.jsx
-
 export default function RootLayout({
     children,
 }: {
@@ -25,7 +23,7 @@ export default function RootLayout({
             ${montserrat.variable}`}
             >
                 <head>
-                    <title>High Relationship Quotient</title>
+                    <title>HighRQ</title>
                 </head>
 
                 <body className="dark:bg-gray-800">

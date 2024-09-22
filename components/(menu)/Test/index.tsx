@@ -47,6 +47,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
 
     const currentQuestion = questionData[questionIndex]
     const isLastQuestion = questionIndex === questionData.length - 1
+    console.log ("questionData.length", questionData.length)
     const testMode = questionData.length < 6 ? 'sample' : 'test'
     const halfwayIndex = Math.floor(questionData.length / 2)
 

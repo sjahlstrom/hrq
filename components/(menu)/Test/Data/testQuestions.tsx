@@ -1097,7 +1097,7 @@ const testQuestions = [
       scale: 51,
       position: 115,
       reverse: false,
-      options: { left: 'True', middle: 'Soft Of', right: 'False' },
+      options: { left: 'True', middle: 'Sort Of', right: 'False' },
    },
 
    {

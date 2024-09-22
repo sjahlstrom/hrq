@@ -285,14 +285,17 @@ export const unBanUser = async (externalUserId: string) => {
     }
 }
 
-const getSummedTotalIfCompleted = (selectedUser) => {
-    return selectedUser?.testCompleted ? selectedUser.summedTotal : null;
-};
+// Inside your API or backend function
 
-// // Example usage:
-// const selectedUser = {
-//     testCompleted: true,
-//     summedTotal: 980.5,
+// export const setSummedTotals = async (userId, total) => {
+//     try {
+//         const updatedUser = await prisma.user.update({
+//             where: { id: userId },
+//             data: { summedTotal: total },
+//         });
+//         return updatedUser;
+//     } catch (error) {
+//         console.error('Error updating summedTotal:', error);
+//         throw error;
+//     }
 // };
-//
-// console.log(getSummedTotalIfCompleted(selectedUser)); // Output: 980.5

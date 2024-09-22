@@ -1,4 +1,4 @@
-
+'use client'
 import React from 'react';
 
 const Hero = () => {
@@ -11,7 +11,8 @@ const Hero = () => {
                 className="relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] bg-cover bg-center"
                 style={{
                     backgroundImage: "url('/images/hero/silhouette.svg')",
-                    minHeight: '88vh', // This sets the section to fill 88% of the screen height
+                    minHeight: '88vh',
+                    backgroundSize: '90%', // Adjusts the background image size to be 10% smaller
                 }}
             >
                 <div
@@ -23,11 +24,11 @@ const Hero = () => {
                                 className="wow fadeInUp mx-auto max-w-[800px] text-center"
                                 data-wow-delay=".2s"
                             >
-                                <h1 className="mb-5 -mt-10 text-3xl font-bold leading-tight text-black dark:text-gray-300 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
+                                <h1 className="mb-5 -mt-20 text-3xl font-bold leading-tight text-black dark:text-gray-300 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
                                     High Relationship Quotient
                                 </h1>
                                 <p className="mb-12 text-base font-medium !leading-relaxed text-body-color dark:text-gray-300-800 dark:opacity-90 sm:text-lg md:text-xl">
-                                    Find your relationship quotient and why your dating life has not been
+                                    Find your relationship quotient and learn why your dating life has not been
                                     as successful as you would like
                                 </p>
                             </div>
@@ -324,6 +325,7 @@ const Hero = () => {
                     </svg>
                 </div>
             </section>
+
         </>
     );
 };

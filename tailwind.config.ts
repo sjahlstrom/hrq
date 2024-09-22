@@ -46,7 +46,7 @@ const config = {
         pantone621: '#D1E0D7', // Approximate HEX value for Pantone 621
         pantone622: '#B4C4B7', // Approximate HEX value for Pantone 622
         pantone624: '#7A9D96', // Approximate HEX value for Pantone 624
-
+        pantone625: '#5B7961', // Approximate HEX value for Pantone 624
 
         steel: {
           100: '#D2E0F0',

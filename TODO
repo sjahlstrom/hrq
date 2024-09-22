@@ -6,3 +6,10 @@ Fix setting the wrong value in summedAverage
 
 I think I have a fence post problem with questions ... 1 to 128 ... maybe it should be 0 - 127 ???
 
+change logo-green to a color in the new logo -- use eyedropper
+
+I don't like the question subtitles jumping around -- see if I can fix that
+
+Confetti seems pretty cheezy for a pro site
+
+if not testCompleted, in user dialog show number of questions answered
