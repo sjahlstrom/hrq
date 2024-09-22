@@ -248,14 +248,14 @@ function Pagination({ currentPage, totalPages, handlePageChange }) {
                 {/*Previous button*/}
                 <li>
                     <Button
-                        onClick={() => handlePageChange(currentPage + 1)}
+                        onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === totalPages}
                         variant="outline"
                         size="icon"
-                        className="rounded-full w-[120px] bg-pantone624 hover:bg-pantone625 border border-pantone621 transition-colors duration-300"
+                        className="rounded-full w-[120px] bg-pantone624 hover:bg-pantone625 active:bg-green-800 border border-pantone621 transition-colors duration-300"
                     >
                         <span className="sr-only">Next</span>
-                        Next
+                        Previous
                     </Button>
 
                 </li>
@@ -269,7 +269,7 @@ function Pagination({ currentPage, totalPages, handlePageChange }) {
                                 currentPage === number ? 'secondary' : 'outline'
                             }
                             size="icon"
-                            className="rounded-full bg-pantone624 hover:bg-pantone625 border-pantone621 transition-colors duration-300 mx-1"
+                            className="rounded-full bg-pantone624 hover:bg-pantone625  active:bg-green-800 border border-pantone624 transition-colors duration-300 mx-1"
                         >
                             {number}
                         </Button>
