@@ -4,10 +4,9 @@ import React, { useState, useCallback, useEffect } from 'react'
 import 'rc-slider/assets/index.css'
 import ReverseSlider from '@/components/Slider/ReverseSlider'
 import ForwardSlider from '@/components/Slider/ForwardSlider'
-import Confetti from 'react-confetti'
 import { Button } from '@/components/ui/button'
 import {
-    deleteUserTestResponsesAndAssociatedScales, setSummedTotals,
+    deleteUserTestResponsesAndAssociatedScales,
     setTestCompleted,
     updateTestResponse,
     UpdateTestUserProps,
@@ -143,20 +142,22 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 ></div>
             </div>
 
-            <div className="px-4 py-4 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-0 md:mb-10 min-h-24">
+            <div
+                className="px-4 py-4 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-0 md:mb-10 min-h-24">
                 <h2 className="text-base md:text-2xl font-medium text-black dark:text-white">
                     {currentQuestion.question}
                 </h2>
             </div>
 
-            <div className="px-8 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-4 md:mb-10">
+            <div
+                className="px-8 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-4 md:mb-10">
                 {currentQuestion.reverse ? (
                     <div className="w-full mx-auto mt-4 md:mt-5">
                         <ReverseSlider
                             value={reverseSliderValue}
                             onChange={handleReverseSliderChange}
                         />
-                        <p>Current Value: {reverseSliderValue}</p>
+                        {/*<p>Current Value: {reverseSliderValue}</p>*/}
                     </div>
                 ) : (
                     <div className="w-full mt-4 mx-auto md:mt-5">
@@ -164,16 +165,18 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                             value={sliderValue}
                             onChange={updateSliderValue}
                         />
-                        <p>Current Value: {sliderValue}</p>
+                        {/*<p>Current Value: {sliderValue}</p>*/}
                     </div>
                 )}
             </div>
 
-            <div className="flex px-12 p-2 -mt-4 justify-between w-full md:w-3/4 lg:w-2/3 items-center text-black dark:text-white mx-auto mb-4 md:mb-10">
-                <div>{currentQuestion.options.left}</div>
-                <div>{currentQuestion.options.middle}</div>
-                <div>{currentQuestion.options.right}</div>
+            <div
+                className="flex flex-col md:flex-row px-12 py-2 -mt-4 justify-between w-full md:w-3/4 lg:w-2/3 items-center text-black dark:text-white mx-auto mb-4 md:mb-10 gap-4">
+                <div className="flex-1 text-center">{currentQuestion.options.left}</div>
+                <div className="flex-1 text-center">{currentQuestion.options.middle}</div>
+                <div className="flex-1 text-center">{currentQuestion.options.right}</div>
             </div>
+
 
             <div className="flex justify-center w-full">
                 {isLastQuestion ? (
@@ -183,12 +186,13 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     >
                         <span className="relative z-10">Show Analysis</span>
                         <span className="absolute inset-0 overflow-hidden rounded-xl">
-                            <span className="absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#1E5545] transition-transform duration-500 group-hover:translate-x-0 group-hover:scale-150"></span>
+                            <span
+                                className="absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#1E5545] transition-transform duration-500 group-hover:translate-x-0 group-hover:scale-150"></span>
                         </span>
                     </Button>
                 ) : (
                     <Button
-                        className={`relative w-[400px] px-6 py-2 rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${
+                        className={`mb-8 relative w-[400px] px-6 py-2 rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${
                             !isSliderUsed
                                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                 : 'bg-logo-green text-white hover:bg-[#4F7164] group'
@@ -201,6 +205,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                         >
                             Next Question
                         </span>
+
                         <span className="absolute inset-0 overflow-hidden rounded-xl">
                             <span
                                 className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#4F7164] transition-transform duration-500 ${
@@ -214,22 +219,22 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 )}
             </div>
 
-            {testMode === 'test' && (
-                <div className="flex justify-center mt-6">
-                    <Button
-                        className="px-6 py-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700"
-                        onClick={
-                            handleDeleteUserTestResponsesAndAssociatedScales
-                        }
-                    >
-                        Delete answers (Testing only)
-                    </Button>
-                </div>
-            )}
+            {/*{testMode === 'test' && (*/}
+            {/*    <div className="flex justify-center mt-6">*/}
+            {/*        <Button*/}
+            {/*            className="px-6 py-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700"*/}
+            {/*            onClick={*/}
+            {/*                handleDeleteUserTestResponsesAndAssociatedScales*/}
+            {/*            }*/}
+            {/*        >*/}
+            {/*            Delete answers (Testing only)*/}
+            {/*        </Button>*/}
+            {/*    </div>*/}
+            {/*)}*/}
 
             {questionIndex === fireworksIndex && (
                 <>
-                    <Confetti />
+                    {/*<Confetti />*/}
                     <div
                         role="alert"
                         className="rounded-xl border border-blue-800 bg-yellow-300 p-4 mt-10 text-center"

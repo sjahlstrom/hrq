@@ -32,6 +32,12 @@ const config = {
       },
     },
     extend: {
+
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'], // Add Poppins to your theme
+        roboto_mono: ["Roboto", "sans-serif"],
+      },
+
       colors: {
 
         current: 'currentColor',

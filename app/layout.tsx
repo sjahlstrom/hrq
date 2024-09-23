@@ -6,37 +6,64 @@ import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import ScrollToTop from '@/components/ScrollToTop'
 import '../styles/index.css'
-import { inter, roboto_mono, montserrat } from '@/app/ui/fonts'
+import { inter, roboto_mono, poppins, open_sans} from '@/app/ui/fonts'
 
 export default function RootLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
+    // return (
+    //     <ClerkProvider appearance={{ baseTheme: dark }}>
+    //         <html
+    //             lang="en"
+    //             className={`
+    //         ${inter.variable}
+    //         ${roboto_mono.variable}
+    //         ${open_sans.variable}
+    //         ${poppins.variable}`}
+    //         >
+    //             <head>
+    //                 <title>HighRQ</title>
+    //             </head>
+    //
+    //             ‹body className={'${roboto_mono.variable} ${poppins.variable}`}>
+    //                                    <Providers>
+    //                     <Header />
+    //                     {children}
+    //                     <Footer />
+    //                     <ScrollToTop />
+    //                 </Providers>
+    //             </body>
+    //         </html>
+    //     </ClerkProvider>
+    // )
     return (
         <ClerkProvider appearance={{ baseTheme: dark }}>
             <html
                 lang="en"
                 className={`
-            ${inter.variable} 
-            ${roboto_mono.variable}
-            ${montserrat.variable}`}
+        ${inter.variable} 
+        ${roboto_mono.variable}
+        ${open_sans.variable}
+        ${poppins.variable}
+      `}
             >
-                <head>
-                    <title>HighRQ</title>
-                </head>
-
-                <body className="dark:bg-gray-800">
-                    <Providers>
-                        <Header />
-                        {children}
-                        <Footer />
-                        <ScrollToTop />
-                    </Providers>
-                </body>
+            <head>
+                <title>HighRQ</title>
+            </head>
+            <body className={`${roboto_mono.variable} ${poppins.variable}`}>
+            <Providers>
+                <Header />
+                {children}
+                <Footer />
+                <ScrollToTop />
+            </Providers>
+            </body>
             </html>
         </ClerkProvider>
-    )
+    );
+
 }
 
 // app/layout.tsx or pages/_app.tsx depending on your project structure
