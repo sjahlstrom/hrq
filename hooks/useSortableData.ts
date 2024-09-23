@@ -1,33 +1,40 @@
 import { useState, useMemo } from 'react'
 
-export function useSortableData<T>(
-    items: T[],
-    config = { key: '', direction: '' as 'asc' | 'desc' }) {
-    const [sortConfig, setSortConfig] = useState(config)
+type SortConfig<T> = {
+    key: keyof T;
+    direction: 'ascending' | 'descending';
+} | null;
+
+export function useSortableData<T>(items: T[], config: SortConfig<T> = null) {
+    const [sortConfig, setSortConfig] = useState<SortConfig<T>>(config);
 
     const sortedItems = useMemo(() => {
-        const sortableItems = [...items]
-        if (sortConfig.key !== '') {
+        let sortableItems = [...items];
+        if (sortConfig !== null) {
             sortableItems.sort((a, b) => {
-                if (a[sortConfig.key as keyof T] < b[sortConfig.key as keyof T]) {
-                    return sortConfig.direction === 'asc' ? -1 : 1
+                if (a[sortConfig.key] < b[sortConfig.key]) {
+                    return sortConfig.direction === 'ascending' ? -1 : 1;
                 }
-                if (a[sortConfig.key as keyof T] > b[sortConfig.key as keyof T]) {
-                    return sortConfig.direction === 'asc' ? 1 : -1
+                if (a[sortConfig.key] > b[sortConfig.key]) {
+                    return sortConfig.direction === 'ascending' ? 1 : -1;
                 }
-                return 0
-            })
+                return 0;
+            });
         }
-        return sortableItems
-    }, [items, sortConfig])
+        return sortableItems;
+    }, [items, sortConfig]);
 
-    const requestSort = (key: string) => {
-        let direction: 'asc' | 'desc' = 'asc'
-        if (sortConfig.key === key && sortConfig.direction === 'asc') {
-            direction = 'desc'
+    const requestSort = (key: keyof T) => {
+        let direction: 'ascending' | 'descending' = 'ascending';
+        if (
+            sortConfig &&
+            sortConfig.key === key &&
+            sortConfig.direction === 'ascending'
+        ) {
+            direction = 'descending';
         }
-        setSortConfig({ key, direction })
-    }
+        setSortConfig({ key, direction });
+    };
 
-    return { items: sortedItems, requestSort, sortConfig }
+    return { items: sortedItems, requestSort, sortConfig };
 }
