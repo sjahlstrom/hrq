@@ -8,7 +8,7 @@ export type UserDataCardProps = {
 }
 
 export default function UserDataCard(props: UserDataCardProps) {
-    const defaultImage = './mesh.png'
+    const defaultImage = '/images/dashboard/mesh.png'
     return (
         <div className="flex flex-wrap  justify-between gap-3">
             <section className="flex justify-between gap-3">

@@ -88,7 +88,7 @@ const Dashboard = async () => {
     const UserData: UserDataCardProps[] = recentUsers.map((account) => ({
         name: account.username || 'Unknown',
         email: account.email || 'Unknown',
-        image: account.image || './mesh.png',
+        image: account.image || '/images/dashboard/mesh.png',
         time: formatDistanceToNow(new Date(account.createdAt), {
             addSuffix: true,
         }),
@@ -98,7 +98,7 @@ const Dashboard = async () => {
     const PurchaseData: UserPurchaseProps[] = recentSales.map((purchase) => ({
         name: purchase.user.username || 'Unknown',
         email: purchase.user.email || 'Unknown',
-        image: purchase.user.image || './mesh.png',
+        image: purchase.user.image || '/images/dashboard/mesh.png',
         saleAmount: `$${(purchase.amount || 0).toFixed(2)}`,
     }))
 
