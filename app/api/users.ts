@@ -40,6 +40,7 @@ export const getUsers = async () => {
                 banned: true,
                 email: true,
                 testCompleted: true,
+                testResponse: true,
                 summedTotal: true,
                 paid_rq: true,
             },

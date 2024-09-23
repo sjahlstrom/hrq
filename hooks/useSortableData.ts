@@ -1,6 +1,8 @@
 import { useState, useMemo } from 'react'
 
-export function useSortableData<T>(items: T[], config = { key: '', direction: '' as 'asc' | 'desc' }) {
+export function useSortableData<T>(
+    items: T[],
+    config = { key: '', direction: '' as 'asc' | 'desc' }) {
     const [sortConfig, setSortConfig] = useState(config)
 
     const sortedItems = useMemo(() => {

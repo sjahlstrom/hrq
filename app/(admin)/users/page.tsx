@@ -26,15 +26,16 @@ interface User {
     testCompleted: boolean
     summedTotal: number
     externalUserId: string
-
+    testResponse: number[]
 }
 
 export default function UsersComponent() {
-    const { users, loading, banUser, unBanUser } = useUsers()
+    const { users = [], loading, banUser, unBanUser } = useUsers()
     const {
         items: sortedUsers,
         requestSort,
         sortConfig,
+    //     @ts-ignore
     } = useSortableData<User>(users)
     const [searchQuery, setSearchQuery] = useState('')
     const [selectedUser, setSelectedUser] = useState<User | null>(null)
@@ -106,7 +107,7 @@ export default function UsersComponent() {
                                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-700" />
                                 <Input
                                     type="text"
-                                    className="w-full pl-10 pr-4 py-2 text-gray-700 border-gray-300 focus:border-blue-500 focus:ring-blue-500 placeholder:text-gray-300" // Explicit placeholder styling
+                                    className="w-full pl-10 pr-4 py-2 text-gray-700 rounded focus:border-blue-500 focus:ring-blue-500 placeholder:text-gray-300 border-red-900 " // Explicit placeholder styling
                                     placeholder="Search by email (case-insensitive)"
                                     value={searchQuery}
                                     onChange={(e) =>
