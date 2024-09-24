@@ -132,9 +132,9 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { ChevronUp, ChevronDown } from "lucide-react"
+} from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
+import { ChevronUp, ChevronDown } from 'lucide-react'
 
 interface User {
     username: string
@@ -148,25 +148,44 @@ interface User {
 }
 
 type SortConfig = {
-    key: keyof User;
-    direction: 'ascending' | 'descending';
-} | null;
+    key: keyof User
+    direction: 'ascending' | 'descending'
+} | null
 
+// interface UserTableProps {
+//     currentItems: User[]
+//     handleSort: (key: keyof User) => void
+//     handleUsernameClick: (user: User) => void
+//     handleBanUser: (user: User) => void
+//     sortConfig: SortConfig
+// }
 interface UserTableProps {
     currentItems: User[]
     handleSort: (key: keyof User) => void
     handleUsernameClick: (user: User) => void
-    handleBanUser: (user: User) => void
-    sortConfig: SortConfig
+    handleBanUser: (user: User) => Promise<void>
+    sortConfig: {
+        key: keyof User
+        direction: 'ascending' | 'descending'
+    }
+    isClient: boolean // Add this line
 }
 
-export default function UserTable({
-                                      currentItems,
-                                      handleSort,
-                                      handleUsernameClick,
-                                      handleBanUser,
-                                      sortConfig,
-                                  }: UserTableProps) {
+// export default function UserTable({
+//                                       currentItems,
+//                                       handleSort,
+//                                       handleUsernameClick,
+//                                       handleBanUser,
+//                                       sortConfig,
+//                                   }: UserTableProps) {
+export function UserTable({
+    currentItems,
+    handleSort,
+    handleUsernameClick,
+    handleBanUser,
+    sortConfig,
+    isClient, // Add this line
+}: UserTableProps) {
     const tableHeaders = useMemo(
         () => [
             { key: 'username', label: 'Username' },
@@ -194,16 +213,18 @@ export default function UserTable({
                             >
                                 <button
                                     className="flex items-center space-x-1"
-                                    onClick={() => handleSort(header.key as keyof User)}
+                                    onClick={() =>
+                                        handleSort(header.key as keyof User)
+                                    }
                                 >
                                     <span>{header.label}</span>
-                                    {sortConfig?.key === header.key && (
-                                        sortConfig.direction === 'ascending' ? (
+                                    {sortConfig?.key === header.key &&
+                                        (sortConfig.direction ===
+                                        'ascending' ? (
                                             <ChevronUp className="h-4 w-4" />
                                         ) : (
                                             <ChevronDown className="h-4 w-4" />
-                                        )
-                                    )}
+                                        ))}
                                 </button>
                             </TableHead>
                         ))}
@@ -241,7 +262,9 @@ export default function UserTable({
                             <TableCell className="px-6 py-0 text-red-900 whitespace-nowrap">
                                 <Button
                                     onClick={() => handleBanUser(user)}
-                                    variant={user.banned ? 'outline' : 'destructive'}
+                                    variant={
+                                        user.banned ? 'outline' : 'destructive'
+                                    }
                                     size="sm"
                                 >
                                     {user.banned ? 'Unban' : 'Ban'}
