@@ -1,6 +1,6 @@
 import Breadcrumb from '@/components/Common/Breadcrumb'
 import React from 'react'
-import TestAnalysis from '@/components/Analysis'
+import TestAnalysis from '@/components/(test)/Analysis'
 
 const AnalysisPage = () => {
     return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import sampleAnalysisData from '@/components/Analysis/Data/SampleAnalysisData';
+import sampleAnalysisData from '@/components/(test)/Analysis/Data/SampleAnalysisData';
 import { useSearchParams } from 'next/navigation';
-import sampleQuestions from '@/components/(menu)/Test/Data/sampleQuestions';
+import sampleQuestions from '@/components/(test)/Test/Data/sampleQuestions';
 
 const SampleAnalysis = () => {
     const [answers, setAnswers] = useState<number[]>([]);

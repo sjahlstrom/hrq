@@ -117,9 +117,9 @@ import { usePagination } from '@/hooks/usePagination'
 import { useClientSideEffect } from '@/hooks/useClientSideEffect'
 import CheckUserRole from '@/components/checkUserRole'
 import UserCard from '@/components/(dashboard)/user-card'
-import {UserTable} from '@/components/(dashboard)/UserTable'
+import {UserTable} from '@/components/(dashboard)/user-table'
 import SearchBar from '@/components/(dashboard)/SearchBar'
-import Pagination from '@/components/(dashboard)/Pagination'
+import Pagination from '@/components/(dashboard)/user-pagination'
 
 interface User {
     username: string
