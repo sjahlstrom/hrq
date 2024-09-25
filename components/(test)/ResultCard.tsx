@@ -15,7 +15,6 @@ interface ResultCardProps {
 export default function ResultCard({ result, index }: ResultCardProps) {
     const getResultBackgroundColor = (index: number) =>
         index % 2 === 0 ? 'bg-pantone621' : 'bg-pantone622'
-
     return (
         <Card className={`${getResultBackgroundColor(index)} border border-gray-400`}>
             <CardContent className="p-4">
