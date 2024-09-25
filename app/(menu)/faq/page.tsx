@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import React from 'react'
-import Faq from '@/components/(menu)/Faq'
+import Faq from '@/components/(menu)/Faq/FAQ'
 
 const FaqsPage = () => {
    return (

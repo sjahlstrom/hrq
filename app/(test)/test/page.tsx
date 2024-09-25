@@ -1,5 +1,5 @@
 import Breadcrumb from '@/components/Common/Breadcrumb'
-import QuestionSection from '@/components/(test)/Test'
+import QuestionSection from '@/components/(test)/Test/TheTest'
 import sampleQuestions from '@/components/(test)/Test/Data/sampleQuestions'
 import testQuestions from '@/components/(test)/Test/Data/testQuestions'
 import { currentUser } from '@clerk/nextjs/server'

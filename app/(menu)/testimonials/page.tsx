@@ -1,6 +1,6 @@
 import Breadcrumb from '@/components/Common/Breadcrumb'
 import React from 'react'
-import Testimonials from '@/components/(menu)/Testimonials'
+import Testimonials from '@/components/(menu)/Testimonials/Testimonials'
 
 const TestimonialsPage = () => {
    return (

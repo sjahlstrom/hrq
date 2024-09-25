@@ -30,7 +30,7 @@ import UserPurchaseCard, {
 import BarChart from '@/components/(dashboard)/barchart'
 import LineGraph from '@/components/(dashboard)/line-graph'
 import GoalDataCard from '@/components/(dashboard)/goal'
-import CheckUserRole from '@/components/checkUserRole'
+import CheckUserRole from '@/components/CheckUserRole'
 
 const Dashboard = async () => {
     const currentDate = new Date()

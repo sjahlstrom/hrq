@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import Features from '@/components/(menu)/Features'
+import Features from '@/components/(menu)/Features/Features'
 
 const FeaturesPage = () => {
    return (

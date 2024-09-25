@@ -1,6 +1,6 @@
 import { auth, currentUser } from '@clerk/nextjs/server'
 import ScrollUp from '@/components/Common/ScrollUp'
-import Hero from '@/components/Hero'
+import Hero from '@/components/Hero/Hero'
 
 export default async function Home() {
     // Get the userId from auth() -- if null, the user is not signed in

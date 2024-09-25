@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
-import ScoreClassificationTable from'@/components/(test)/score-classification-table'
-import NextSteps from '@/components/(test)/next-steps'
+import ScoreClassificationTable from '@/components/(test)/ScoreClassificationTable'
+import NextSteps from '@/components/(test)/NextSteps'
 import React from 'react'
 
 const FinalAnalysis = ({ lieAnalysis, totalSummedValues }) => {

@@ -10,9 +10,9 @@ import {
     setSummedTotals,
 } from '@/app/api/users'
 import testQuestions from '@/components/(test)/Test/Data/testQuestions'
-import ResultCard from '@/components/(test)/result-card'
-import Pagination from '@/components/(test)/pagination'
-import FinalAnalysis from '@/components/(test)/final-analysis'
+import ResultCard from '@/components/(test)/ResultCard'
+import Pagination from '@/components/(test)/Pagination'
+import FinalAnalysis from '@/components/(test)/FinalAnalysis'
 
 const lies = [38, 45, 52, 57, 69, 79, 91, 102, 109, 125]
 

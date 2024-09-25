@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import React from 'react'
-import Pricing from '@/components/(menu)/Pricing'
+import Pricing from '@/components/(menu)/Pricing/Pricing'
 
 const PricingPage = () => {
    return (

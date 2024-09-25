@@ -1,6 +1,6 @@
 import Breadcrumb from '@/components/Common/Breadcrumb'
 import React from 'react'
-import SampleReport from '@/components/(menu)/Reports/Sample'
+import SampleReport from '@/components/(menu)/Reports/Sample/Reports'
 
 const SampleReportPage = () => {
    return (

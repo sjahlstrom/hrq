@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import React from "react";
-import Services from "@/components/(menu)/Services";
+import Services from "@/components/(menu)/Services/Services";
 
 const ServicesPage = () => {
     return (

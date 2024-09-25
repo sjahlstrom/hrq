@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import FaqItem from '@/components/(menu)/FaqItem'
+import FaqItem from '@/components/(menu)/FaqItem/FAQItem'
 
 const FaqPage = () => {
    return (

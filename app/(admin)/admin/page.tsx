@@ -1,7 +1,7 @@
 'use client'
 
 import Sidebar from '@/app/(admin)/admin/_components/Sidebar'
-import CheckUserRole from '@/components/checkUserRole'
+import CheckUserRole from '@/components/CheckUserRole'
 
 const IndexPage =  () => {
 
