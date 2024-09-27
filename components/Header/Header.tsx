@@ -130,7 +130,7 @@ const Header = () => {
                                                 {menuItem.path ? (
                                                     <Link
                                                         href={menuItem.path}
-                                                        className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                                                        className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-fifth lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
                                                         onClick={() => setNavbarOpen(false)} // Close the menu on item click
                                                     >
                                                         {menuItem.title}

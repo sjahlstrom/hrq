@@ -37,6 +37,13 @@ const config: Config = {
         black: '#090E34',
         dark: '#1D2144',
         'logo-green': '#4d9582',
+
+        first: "#2c6557",
+        second: '#92acab',
+        third: '#a9bbc2',
+        fourth: '#7e7d7d',
+        fifth: "#f5f4f4",
+
         pantone5635: '#98b7b2',
         pantone5655: '#b3cdc2',
         pantone621: '#D1E0D7',
