@@ -1,3 +1,41 @@
+// import { ClerkProvider } from '@clerk/nextjs'
+// import { dark } from '@clerk/themes'
+import { arimo, laila, telex, inter } from '@/app/ui/fonts'
+// import { Providers } from '@/app/providers'
+// import Header from '@/components/Header/Header'
+// import Footer from '@/components/Footer/Footer'
+// import ScrollToTop from '@/components/ScrollToTop'
+//
+// export const metadata = {
+//     title: 'Human Relationship Quotient',
+//     description:
+//         'Discover your relationship quotient and improve your dating life',
+// }
+//
+// export default function RootLayout({
+//     children,
+// }: {
+//     children: React.ReactNode
+// }) {
+//     return (
+//         <ClerkProvider appearance={{ baseTheme: dark }}>
+//             <html
+//                 lang="en"
+//                 className={`${inter.variable} ${arimo.variable} ${laila.variable} ${telex.variable}`}
+//             >
+//                 <body className="dark:bg-green-950">
+//                     <Providers>
+//                         <Header />
+//                         <main>{children}</main>
+//                         <Footer />
+//                         <ScrollToTop />
+//                     </Providers>
+//                 </body>
+//             </html>
+//         </ClerkProvider>
+//     )
+// }
+
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { Providers } from './providers'
@@ -6,88 +44,31 @@ import Footer from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
 import ScrollToTop from '@/components/ScrollToTop'
 import '../styles/index.css'
-import { inter, roboto_mono, poppins, open_sans} from '@/app/ui/fonts'
 
 export default function RootLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
-    // return (
-    //     <ClerkProvider appearance={{ baseTheme: dark }}>
-    //         <html
-    //             lang="en"
-    //             className={`
-    //         ${inter.variable}
-    //         ${roboto_mono.variable}
-    //         ${open_sans.variable}
-    //         ${poppins.variable}`}
-    //         >
-    //             <head>
-    //                 <title>HighRQ</title>
-    //             </head>
-    //
-    //             ‹body className={'${roboto_mono.variable} ${poppins.variable}`}>
-    //                                    <Providers>
-    //                     <Header />
-    //                     {children}
-    //                     <Footer />
-    //                     <ScrollToTop />
-    //                 </Providers>
-    //             </body>
-    //         </html>
-    //     </ClerkProvider>
-    // )
     return (
         <ClerkProvider appearance={{ baseTheme: dark }}>
             <html
                 lang="en"
-                className={`
-        ${inter.variable} 
-        ${roboto_mono.variable}
-        ${open_sans.variable}
-        ${poppins.variable}
-      `}
+                className={`${inter.variable} ${arimo.variable} ${laila.variable} ${telex.variable}`}
             >
-            <head>
-                <title>HighRQ</title>
-            </head>
-            <body className={`${roboto_mono.variable} ${poppins.variable}`}>
-            <Providers>
-                <Header />
-                {children}
-                <Footer />
-                <ScrollToTop />
-            </Providers>
-            </body>
+                <head>
+                    <title>Human Relationship Quotient</title>
+                </head>
+
+                <body>
+                    <Providers>
+                        <Header />
+                        {children}
+                        <Footer />
+                        <ScrollToTop />
+                    </Providers>
+                </body>
             </html>
         </ClerkProvider>
-    );
-
+    )
 }
-
-// app/layout.tsx or pages/_app.tsx depending on your project structure
-// import Head from 'next/head';
-// import './globals.css'; // Import global CSS if needed
-//
-// export const metadata = {
-//     title: 'Your App Title',
-//     description: 'Your App Description',
-// };
-//
-// export default function RootLayout({ children }: { children: React.ReactNode }) {
-//     return (
-//         <html lang="en">
-//         <Head>
-//             {/* Add Google Font link */}
-//             <link
-//                 href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
-//                 rel="stylesheet"
-//             />
-//         </Head>
-//         <body className="font-roboto">{/* Apply font class to the body if needed */}
-//         {children}
-//         </body>
-//         </html>
-//     );
-// }

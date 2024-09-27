@@ -1,4 +1,4 @@
-import { Inter, Roboto_Mono, Poppins, Open_Sans} from 'next/font/google'
+import { Inter, Arimo, Laila, Telex } from 'next/font/google'
 
 export const inter = Inter({
     subsets: ['latin'],
@@ -6,23 +6,23 @@ export const inter = Inter({
     variable: '--font-inter',
 })
 
-export const roboto_mono = Roboto_Mono({
+export const arimo = Arimo({
     subsets: ['latin'],
     display: 'swap',
-    variable: '--font-roboto-mono',
+    variable: '--font-arimo',
+    weight: ['400', '700'],
 })
 
-export const poppins= Poppins({
+export const laila = Laila({
     subsets: ['latin'],
-    weight: ['300', '500', '700'], // Specify the weights you need
     display: 'swap',
-    variable: '--font-open-sans',
+    variable: '--font-laila',
+    weight: ['300', '400', '500', '600', '700'],
 })
 
-
-export const open_sans = Open_Sans({
+export const telex = Telex({
     subsets: ['latin'],
-    weight: ['300', '500', '700'], // Specify the weights you need
     display: 'swap',
-    variable: '--font-open-sans',
+    variable: '--font-telex',
+    weight: ['400'],
 })
