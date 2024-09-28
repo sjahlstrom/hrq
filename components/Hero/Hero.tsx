@@ -1,33 +1,37 @@
 'use client'
 
-import { arimo, laila } from '@/app/ui/fonts'
+import { laila, telex } from '@/app/ui/fonts'
+import Image from 'next/image'
 
-const Hero = () => {
+export default function Hero() {
     return (
         <>
-
             <div className="bg-first h-[140px]"></div>
 
             <section
                 id="home"
-                className="bg-first  relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] bg-cover bg-center"
-                style={{
-                    backgroundImage: "url('/images/hero/silhouette.svg')",
-                    minHeight: '88vh',
-                    backgroundSize: '90%',
-                }}
+                className="relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] bg-first min-h-[88vh]"
             >
-                <div className=" container mt-[-80px]">
-                    <div className="-mx-4 flex flex-wrap">
-                        <div className="w-full px-4">
+                <div className="absolute inset-0 z-[-1] flex items-center justify-center mt-40">
+                    <Image
+                        src="/images/hero/hands.svg"
+                        alt="Background image of hands"
+                        width={800}
+                        height={800}
+                        className="opacity-10"
+                    />
+                </div>
+                <div className="container mt-[-80px] px-4">
+                    <div className="flex flex-wrap">
+                        <div className="text-third w-full">
                             <div
                                 className="mx-auto max-w-[800px] text-center"
                                 data-wow-delay=".2s"
                             >
-                                <h1 className={`${laila.className} mb-5 -mt-20 text-3xl font-semibold text-black dark:text-fifth sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight`}>
+                                <h1 className={`${laila.className} mb-5 text-2xl font-semibold sm:text-3xl md:text-4xl lg:text-5xl leading-tight`}>
                                     High Relationship Quotient
                                 </h1>
-                                <p className={`${laila.className} mb-12 text-base font-small !leading-relaxed text-body-color dark:text-fifth  dark:opacity-90 sm:text-lg md:text-xl`}>
+                                <p className={`${telex.className} mb-12 text-sm sm:text-base md:text-lg lg:text-xl font-small leading-relaxed`}>
                                     Find your relationship quotient and learn why your dating life has not been
                                     as successful as you would like
                                 </p>
@@ -35,11 +39,7 @@ const Hero = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* SVG code remains unchanged */}
             </section>
         </>
     );
-};
-
-export default Hero;
+}

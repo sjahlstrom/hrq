@@ -19,7 +19,7 @@
 /* Component-specific styles */
 @layer components {
   .hero-background {
-    background-image: url('/images/hero/silhouette.svg');
+    background-image: url('public/images/hero/hands.svg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

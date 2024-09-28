@@ -38,11 +38,24 @@ const config: Config = {
         dark: '#1D2144',
         'logo-green': '#4d9582',
 
-        first: "#2c6557",
-        second: '#92acab',
-        third: '#a9bbc2',
-        fourth: '#7e7d7d',
-        fifth: "#f5f4f4",
+        // first: "#2c6557",
+        // second: '#92acab',
+        // third: '#a9bbc2',
+        // fourth: '#7e7d7d',
+        // fifth: "#f5f4f4",
+
+
+        first: "#2c6557",       // Deep Green-Blue (Primary)
+        second: "#ffcbaf",      // Soft Peach (Complementary)
+        third: "#f2e6d9",       // Light Sand (Complementary)
+        fourth: "#2c6575",      // Muted Teal (Analogous)
+        fifth: "#2c574d",       // Forest Green (Analogous)
+        sixth: "#d96e4c",       // Rust Orange (Accent)
+        seventh: "#e9b44c",     // Golden Yellow (Accent)
+        eighth: "#d9d9d9",      // Light Gray (Neutral)
+        ninth: "#3b3b3b" ,       // Charcoal (Neutral)
+
+
 
         pantone5635: '#98b7b2',
         pantone5655: '#b3cdc2',
