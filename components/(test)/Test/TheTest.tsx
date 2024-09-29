@@ -12,6 +12,7 @@ import {
     UpdateTestUserProps,
 } from '@/app/api/users'
 import { useRouter } from 'next/navigation'
+import { nunito, palanquin } from '@/app/ui/fonts'
 
 export interface Option {
     left: string
@@ -147,13 +148,13 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
 
             <div
                 className="px-4 py-4 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-0 md:mb-10 min-h-24">
-                <h2 className="text-base md:text-2xl font-medium text-black dark:text-white">
+                <h2 className={`${nunito.className} text-base md:text-2xl font-medium text-black dark:text-third`}>
                     {currentQuestion.question}
                 </h2>
             </div>
 
             <div
-                className="px-8 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-4 md:mb-10">
+                className=" px-8 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-4 md:mb-10">
                 {currentQuestion.reverse ? (
                     <div className="w-full mx-auto mt-4 md:mt-5">
                         <ReverseSlider
@@ -174,7 +175,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
             </div>
 
             <div
-                className="flex flex-col md:flex-row px-12 py-2 -mt-4 justify-between w-full md:w-[80%] lg:w-[80%] items-center text-black dark:text-white mx-auto mb-4 md:mb-10 gap-4 translate-x-2.5">
+                className="flex flex-col md:flex-row px-12 py-2 -mt-4 justify-between w-full md:w-[80%] lg:w-[80%] items-center text-black dark:text-third mx-auto mb-4 md:mb-10 gap-4 translate-x-2.5">
                 <div className="flex-1 text-center">{currentQuestion.options.left}</div>
                 <div className="flex-1 text-center">{currentQuestion.options.middle}</div>
                 <div className="flex-1 text-center">{currentQuestion.options.right}</div>
@@ -237,7 +238,6 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
 
             {questionIndex === fireworksIndex && (
                 <>
-                    {/*<Confetti />*/}
                     <div
                         role="alert"
                         className="rounded-xl border border-blue-800 bg-yellow-300 p-4 mt-10 text-center"

@@ -1,6 +1,6 @@
 'use client'
 
-import { laila, telex } from '@/app/ui/fonts'
+import { nunito, palanquin, arimo, laila, telex } from '@/app/ui/fonts'
 import Image from 'next/image'
 
 export default function Hero() {
@@ -28,10 +28,10 @@ export default function Hero() {
                                 className="mx-auto max-w-[800px] text-center"
                                 data-wow-delay=".2s"
                             >
-                                <h1 className={`${laila.className} mb-5 text-2xl font-semibold sm:text-3xl md:text-4xl lg:text-5xl leading-tight`}>
+                                <h1 className={`${nunito.className} mb-5 text-2xl font-semibold sm:text-3xl md:text-4xl lg:text-5xl leading-tight`}>
                                     High Relationship Quotient
                                 </h1>
-                                <p className={`${telex.className} mb-12 text-sm sm:text-base md:text-lg lg:text-xl font-small leading-relaxed`}>
+                                <p className={`${palanquin.className} mb-12 text-xs sm:text-base md:text-lg lg:text-xl font-small leading-relaxed`}>
                                     Find your relationship quotient and learn why your dating life has not been
                                     as successful as you would like
                                 </p>
