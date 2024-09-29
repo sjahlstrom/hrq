@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState, useCallback } from 'react';
 import sampleAnalysisData from '@/components/(test)/Analysis/Data/SampleAnalysisData';
 import { useSearchParams } from 'next/navigation';

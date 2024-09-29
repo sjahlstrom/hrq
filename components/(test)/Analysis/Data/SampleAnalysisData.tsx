@@ -39,7 +39,7 @@ const sampleAnalysisData = [
         low: 0,
         high: 10,
         analysis:
-            'When it comes to social awareness, you do not easily assess social situations--not smoothly gauging the "temperature and tone" of social gatherings. You are not prone to integrate with others, potentially having difficulty conversing or blending with a group. Individually, if you are an extrovert, you may have difficulty talking with just one person. Introverts have this same skill but prefer more individual interactions than with groups. You may struggle with this more if you are talking to three or more people.',
+        'When it comes to motivation, you are not a self-starter.   Some might describe you as a laggard.   This will be less of a problem if your partner is the same, but will cause conflicts if your partner is self-motivated or worse,  hyper in this area.'
     },
 
     {
@@ -50,7 +50,7 @@ const sampleAnalysisData = [
         low: 11,
         high: 20,
         analysis:
-            "When it comes to social awareness, you are neither at ease with or at odds with social situations. Sometimes you can and sometimes you can't gauge the 'temperature and tone' of social gatherings. Occasionally you can more easily integrate with others, potentially to converse and blend with a group. However, just about as often, you may not be able to do this. Individually, equally you will also be able to and sometimes not be able to talk with just one person, but that may not be necessary if you happen to be an extrovert. Introverts have this same skill but prefer more individual interactions than with groups. Your style is somewhere in between.",
+       'When it comes to motivation, you are in the middle, neither a self-starter, nor a laggard.   This will not be a problem if your partner is the same, but will cause conflicts if your partner is either very slow to engage, or is hyper in this area.   Your orientation is neutral, which gives you some flexibility.'
     },
 
     {
@@ -61,7 +61,7 @@ const sampleAnalysisData = [
         low: 21,
         high: 30,
         analysis:
-            'When it comes to social awareness, you can  assess social situations with ease, gauging the "temperature and tone" of social gatherings. This allows you to smoothly integrate with others, potentially to converse more with ease and blend with a group. Individually, equally you will also be able to talk with just one person, but that may not be necessary if you happen to be an extrovert. Introverts have this same skill but prefer more individual interactions than with groups.',
+        'When it comes to motivation, you are a self-starter.   Few think of you as a laggard.   This will not be a problem if your partner is the same, but will cause conflicts if your partner is very slow to engage or relies on others to begin projects.'
     },
 
     {
