@@ -24,6 +24,7 @@ const SampleAnalysis = () => {
                     fetchedAnswers = JSON.parse(storedAnswers);
                 }
             }
+            console.log(fetchedAnswers);
 
             if (fetchedAnswers.length > 0) {
                 questions = fetchedAnswers.map((answer, index) => {
