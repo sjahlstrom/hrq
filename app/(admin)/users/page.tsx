@@ -181,11 +181,9 @@ export default function UsersComponent() {
     return (
         <>
             <CheckUserRole />
-            <div className="flex mt-40 min-h-screen bg-gray-100">
+            <div className="mt-28 flex min-h-screen bg-gray-100">
                 <div className="flex flex-col w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-6">
-                        User Management
-                    </h1>
+
                     <div className="bg-white shadow-md rounded-lg overflow-hidden">
                         <SearchBar
                             searchQuery={searchQuery}

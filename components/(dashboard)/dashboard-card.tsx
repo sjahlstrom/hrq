@@ -17,12 +17,12 @@ export const DashboardCard = ({
     return (
         <div className="bg-slate-100/40 border shadow flex w-full flex-col gap-3 rounded-[6px] p-5">
             <section className="flex justify-between gap-2">
-                <p className="text-sm">{label}</p>
-                <Icon className="h-4 w-4" />
+                <p className="text-black text-sm">{label}</p>
+                <Icon className="text-black h-4 w-4" />
             </section>
             <section className="flex flex-col gap-2">
-                <h2 className="font-semibold text-2xl">{amount}</h2>
-                <p className="text-sm">{description}</p>
+                <h2 className="text-black font-semibold text-2xl">{amount}</h2>
+                <p className="text-black text-sm">{description}</p>
             </section>
         </div>
     )
@@ -33,7 +33,7 @@ export function DashboardCardContent(props: React.HTMLAttributes<HTMLDivElement>
         <div
             {...props}
             className={cn(
-                "border flex w-[448px] flex-col gap-3 rounded-[6px] p-5 shadow bg-slate-100/40",
+                "text-black border flex w-[448px] flex-col gap-3 rounded-[6px] p-5 shadow bg-slate-100/40",
                 props.className
             )}
         />

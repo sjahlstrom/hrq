@@ -1,6 +1,7 @@
+
 'use client'
 
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useMemo } from 'react'
 import 'rc-slider/assets/index.css'
 import ReverseSlider from '@/components/Slider/ReverseSlider'
 import ForwardSlider from '@/components/Slider/ForwardSlider'
@@ -12,7 +13,7 @@ import {
     UpdateTestUserProps,
 } from '@/app/api/users'
 import { useRouter } from 'next/navigation'
-import { nunito, palanquin } from '@/app/ui/fonts'
+import { nunito } from '@/app/ui/fonts'
 
 export interface Option {
     left: string
@@ -33,31 +34,47 @@ interface QuestionSectionProps {
     questionNumber: number
 }
 
-const QuestionSection: React.FC<QuestionSectionProps> = ({
-    questionData,
-    fireworksIndex,
-    questionNumber,
-}) => {
+const SliderOptions: React.FC<{ options: Option }> = ({ options }) => (
+    <div className="flex justify-between items-center text-black dark:text-third mt-2 px-8">
+        {Object.entries(options).map(([key, value], index) => (
+            <div
+                key={key}
+                className={`flex-1 ${index === 1 ? 'text-center -ml-4' : index === 2 ? 'text-right' : 'ml-10'} text-xs sm:text-sm md:text-base truncate ${index === 1 ? 'px-2' : ''}`}
+            >
+                {value}
+            </div>
+        ))}
+    </div>
+)
+
+export default function QuestionSection({
+    questionData = [],
+    fireworksIndex = 0,
+    questionNumber = 0,
+}: QuestionSectionProps) {
     const [questionIndex, setQuestionIndex] = useState(questionNumber)
     const [sliderValue, setSliderValue] = useState(15)
     const [reverseSliderValue, setReverseSliderValue] = useState(15)
-    const [answers, setAnswers] = useState<number[]>([]) // Define the setAnswers state
+    const [answers, setAnswers] = useState<number[]>([])
     const [isSliderUsed, setIsSliderUsed] = useState(false)
     const router = useRouter()
 
-    const currentQuestion = questionData[questionIndex]
+    const currentQuestion = useMemo(() => {
+        return questionData[questionIndex] || {
+            question: '',
+            options: { left: '', middle: '', right: '' },
+            scale: 0,
+        }
+    }, [questionData, questionIndex])
+
     const isLastQuestion = questionIndex === questionData.length - 1
-    console.log ("questionData.length", questionData.length)
     const testMode = questionData.length < 6 ? 'sample' : 'test'
     const halfwayIndex = Math.floor(questionData.length / 2)
 
     useEffect(() => {
-        const checkAndRedirect = async () => {
-            if (isLastQuestion && testMode === 'test') {
-                // Perform any redirection or test completion logic here
-            }
+        if (isLastQuestion && testMode === 'test') {
+            // Perform any redirection or test completion logic here
         }
-        checkAndRedirect()
     }, [isLastQuestion, testMode])
 
     const handleShowAnalysis = useCallback(async () => {
@@ -90,7 +107,6 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 if (questionIndex === 0) {
                     localStorage.clear()
                 }
-
                 setAnswers((prev) => {
                     const updatedAnswers = [...prev, testResponse]
                     localStorage.setItem(
@@ -103,9 +119,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
 
             setQuestionIndex((prev) => prev + 1)
             setSliderValue(15)
-            if (questionData[questionIndex + 1]?.reverse) {
-                setReverseSliderValue(15)
-            }
+            setReverseSliderValue(15)
             setIsSliderUsed(false)
         }
     }, [
@@ -113,32 +127,31 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
         currentQuestion,
         sliderValue,
         reverseSliderValue,
-        questionData,
         questionIndex,
         testMode,
     ])
 
-    const updateSliderValue = useCallback((value: number | number[]) => {
-        setSliderValue(Array.isArray(value) ? value[0] : value)
-        setIsSliderUsed(true)
-    }, [])
-
-    const handleReverseSliderChange = useCallback((value: number) => {
-        setReverseSliderValue(value)
-        setIsSliderUsed(true)
-    }, [])
+    const updateSliderValue = useCallback(
+        (value: number | number[]) => {
+            const newValue = Array.isArray(value) ? value[0] : value
+            if (currentQuestion.reverse) {
+                setReverseSliderValue(newValue)
+            } else {
+                setSliderValue(newValue)
+            }
+            setIsSliderUsed(true)
+        },
+        [currentQuestion.reverse]
+    )
 
     const widthPercentage = `${(questionIndex / (fireworksIndex === 64 ? 128 : questionData.length - 1)) * 100}%`
 
-    const handleDeleteUserTestResponsesAndAssociatedScales =
-        useCallback(async () => {
-            await deleteUserTestResponsesAndAssociatedScales()
-            setQuestionIndex(0)
-            router.push(`/`)
-        }, [router])
+    if (questionData.length === 0) {
+        return <div>No questions available.</div>
+    }
 
     return (
-        <div className="bg-gray-700">
+        <div className=" mt-10 bg-gray-600">
             <div className="h-1 w-full bg-neutral-200 dark:bg-neutral-600">
                 <div
                     className="h-1 bg-logo-green"
@@ -146,114 +159,80 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                 ></div>
             </div>
 
-            <div
-                className="px-4 py-4 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-0 md:mb-10 min-h-24">
-                <h2 className={`${nunito.className} text-base md:text-2xl font-medium text-black dark:text-third`}>
+            <div className="px-4 py-4 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-0 md:mb-10 min-h-24">
+                <h2
+                    className={`${nunito.className} text-base md:text-2xl font-medium text-black dark:text-third`}
+                >
                     {currentQuestion.question}
                 </h2>
             </div>
 
-            <div
-                className=" px-8 flex w-full md:w-3/4 lg:w-2/3 items-center justify-center text-white mx-auto mb-4 md:mb-10">
-                {currentQuestion.reverse ? (
-                    <div className="w-full mx-auto mt-4 md:mt-5">
+            <div className="w-full md:w-3/4 lg:w-2/3 mx-auto mb-4 md:mb-10">
+                <div className="px-8">
+                    {currentQuestion.reverse ? (
                         <ReverseSlider
                             value={reverseSliderValue}
-                            onChange={handleReverseSliderChange}
+                            onChange={updateSliderValue}
                         />
-                        {/*<p>Current Value: {reverseSliderValue}</p>*/}
-                    </div>
-                ) : (
-                    <div className="w-full mt-4 mx-auto md:mt-5">
+                    ) : (
                         <ForwardSlider
                             value={sliderValue}
                             onChange={updateSliderValue}
                         />
-                        {/*<p>Current Value: {sliderValue}</p>*/}
-                    </div>
-                )}
+                    )}
+                </div>
+                <div className="mt-4">
+                    <SliderOptions options={currentQuestion.options} />
+                </div>
             </div>
-
-            <div
-                className="flex flex-col md:flex-row px-12 py-2 -mt-4 justify-between w-full md:w-[80%] lg:w-[80%] items-center text-black dark:text-third mx-auto mb-4 md:mb-10 gap-4 translate-x-2.5">
-                <div className="flex-1 text-center">{currentQuestion.options.left}</div>
-                <div className="flex-1 text-center">{currentQuestion.options.middle}</div>
-                <div className="flex-1 text-center">{currentQuestion.options.right}</div>
-            </div>
-
 
             <div className="flex justify-center w-full">
-                {isLastQuestion ? (
-                    <Button
-                        className="relative w-full px-6 py-2 rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden bg-[#517C67] hover:bg-[#1E5545] group"
-                        onClick={handleShowAnalysis}
+                <Button
+                    className={`mb-8 relative w-[400px] px-6 py-2 rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${
+                        isLastQuestion
+                            ? 'bg-[#517C67] hover:bg-[#1E5545] group'
+                            : !isSliderUsed
+                              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                              : 'bg-logo-green text-white hover:bg-[#4F7164] group'
+                    }`}
+                    onClick={
+                        isLastQuestion
+                            ? handleShowAnalysis
+                            : advanceToNextQuestion
+                    }
+                    disabled={!isLastQuestion && !isSliderUsed}
+                >
+                    <span
+                        className={`relative z-10 ${!isSliderUsed && !isLastQuestion ? 'pointer-events-none' : ''}`}
                     >
-                        <span className="relative z-10">Show Analysis</span>
-                        <span className="absolute inset-0 overflow-hidden rounded-xl">
-                            <span
-                                className="absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#1E5545] transition-transform duration-500 group-hover:translate-x-0 group-hover:scale-150"></span>
-                        </span>
-                    </Button>
-
-                ) : (
-                    <Button
-                        className={`mb-8 relative w-[400px] px-6 py-2 rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${
-                            !isSliderUsed
-                                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                : 'bg-logo-green text-white hover:bg-[#4F7164] group'
-                        }`}
-                        onClick={advanceToNextQuestion}
-                        disabled={!isSliderUsed}
-                    >
+                        {isLastQuestion ? 'Show Analysis' : 'Next Question'}
+                    </span>
+                    <span className="absolute inset-0 overflow-hidden rounded-xl">
                         <span
-                            className={`relative z-10 ${!isSliderUsed ? 'pointer-events-none' : ''}`}
-                        >
-                            Next Question
-                        </span>
-
-                        <span className="absolute inset-0 overflow-hidden rounded-xl">
-                            <span
-                                className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#4F7164] transition-transform duration-500 ${
-                                    !isSliderUsed
-                                        ? 'hidden'
-                                        : 'group-hover:translate-x-0 group-hover:scale-150'
-                                }`}
-                            ></span>
-                        </span>
-                    </Button>
-                )}
-
+                            className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full ${
+                                isLastQuestion ? 'bg-[#1E5545]' : 'bg-[#4F7164]'
+                            } transition-transform duration-500 ${
+                                !isSliderUsed && !isLastQuestion
+                                    ? 'hidden'
+                                    : 'group-hover:translate-x-0 group-hover:scale-150'
+                            }`}
+                        ></span>
+                    </span>
+                </Button>
             </div>
-            <br />
-            {/*{testMode === 'test' && (*/}
-            {/*    <div className="flex justify-center mt-6">*/}
-            {/*        <Button*/}
-            {/*            className="px-6 py-2 rounded-xl shadow-md text-xl bg-blue-500 hover:bg-blue-700"*/}
-            {/*            onClick={*/}
-            {/*                handleDeleteUserTestResponsesAndAssociatedScales*/}
-            {/*            }*/}
-            {/*        >*/}
-            {/*            Delete answers (Testing only)*/}
-            {/*        </Button>*/}
-            {/*    </div>*/}
-            {/*)}*/}
 
             {questionIndex === fireworksIndex && (
-                <>
-                    <div
-                        role="alert"
-                        className="rounded-xl border border-blue-800 bg-yellow-300 p-4 mt-10 text-center"
-                    >
-                        <strong className="block font-medium text-black">
-                            {fireworksIndex === halfwayIndex
-                                ? 'Congratulations! You\'re halfway there!'
-                                : 'End of test'}
-                        </strong>
-                    </div>
-                </>
+                <div
+                    role="alert"
+                    className="rounded-xl border border-blue-800 bg-yellow-300 p-4 mt-10 text-center"
+                >
+                    <strong className="block font-medium text-black">
+                        {fireworksIndex === halfwayIndex
+                            ? "Congratulations! You're halfway there!"
+                            : 'End of test'}
+                    </strong>
+                </div>
             )}
         </div>
     )
 }
-
-export default QuestionSection
