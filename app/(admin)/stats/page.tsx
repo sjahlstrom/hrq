@@ -139,10 +139,8 @@ const Dashboard = async () => {
     return (
         <>
             <CheckUserRole />
-            <div className="flex flex-col gap-8 w-full">
-                <h1 className="text-2xl font-bold text-center mx-6">
-                    Dashboard
-                </h1>
+            <div className="mt-28 bg-first flex flex-col gap-8 w-full">
+
                 <div className="container mx-auto py-8">
                     <div className="flex flex-col gap-5 w-full">
                         <section
@@ -152,6 +150,7 @@ const Dashboard = async () => {
                                 Icon={DollarSign}
                                 amount={`$${totalAmount.toFixed(2)}`}
                                 description="All Time"
+
                             />
                             <DashboardCard
                                 label="Total Paid Subscriptions"
