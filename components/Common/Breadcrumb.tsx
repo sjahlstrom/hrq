@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { arimo, telex } from '@/app/ui/fonts'
 
 const Breadcrumb = ({
   pageName,
@@ -18,7 +19,7 @@ const Breadcrumb = ({
                   {pageName}
                 </h1>
 
-                <p className="text-third text-base font-sm leading-relaxed text-body-color">
+                <p className={`${arimo.className} text-third text-base font-xs leading-relaxed text-body-color`}>
                   {description}
                 </p>
 
