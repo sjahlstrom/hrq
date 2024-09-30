@@ -194,6 +194,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                                 className="absolute left-0 w-full h-full origin-center -translate-x-full rounded-full bg-[#1E5545] transition-transform duration-500 group-hover:translate-x-0 group-hover:scale-150"></span>
                         </span>
                     </Button>
+
                 ) : (
                     <Button
                         className={`mb-8 relative w-[400px] px-6 py-2 rounded-xl shadow-md text-xl transition-all duration-300 overflow-hidden ${
@@ -221,8 +222,9 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                         </span>
                     </Button>
                 )}
-            </div>
 
+            </div>
+            <br />
             {/*{testMode === 'test' && (*/}
             {/*    <div className="flex justify-center mt-6">*/}
             {/*        <Button*/}
@@ -244,7 +246,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
                     >
                         <strong className="block font-medium text-black">
                             {fireworksIndex === halfwayIndex
-                                ? "Congratulations! You're halfway there!"
+                                ? 'Congratulations! You\'re halfway there!'
                                 : 'End of test'}
                         </strong>
                     </div>

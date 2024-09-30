@@ -49,14 +49,14 @@ export default function Header() {
 
     return (
         <header
-            className={`header top-0 left-0 z-40 flex w-full items-center bg-transparent ${
+            className={`header top-0 left-0 z-40 flex w-full items-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#2c6575] to-[#2c6557] ${
                 sticky
-                    ? "!fixed !z-[9999] !bg-dark !bg-opacity-80 shadow-sticky backdrop-blur-sm !transition"
-                    : "absolute"
+                    ? "!fixed !z-[9999] !bg-dark !bg-opacity-80 shadow-sticky backdrop-blur-sm !transition "
+                    : "absolute "
             }`}
         >
             <div className="container">
-                <div className="relative mx-4 flex items-center justify-between">
+                <div className="relative mx-4 flex items-center justify-between ">
                     <div className="w-40 max-w-full px-4 xl:mr-12">
                         <Link
                             href="/"
@@ -65,7 +65,7 @@ export default function Header() {
                             } `}
                         >
                             <Image
-                                src="/images/logo/logo.png"
+                                src="/images/logo/logo2.png"
                                 alt="logo"
                                 width={140}
                                 height={140}
