@@ -10,11 +10,11 @@ export default function Hero() {
 
             <section
                 id="home"
-                className="relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[160px] md:pb-[130px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] bg-first min-h-[92vh]"
+                className="relative  z-10 overflow-hidden pt-[120px] pb-16 md:pt-[160px] md:pb-[130px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] bg-first min-h-[92vh]"
             >
                 <div className="absolute inset-0 z-[-1] flex items-center justify-center">
                     <Image
-                        src="/images/hero/bg.png"
+                        src="/images/hero/test.jpg"
                         alt="Background image"
                         fill
                         priority={true}
