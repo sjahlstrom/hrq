@@ -14,6 +14,7 @@ import {
 } from '@/app/api/users'
 import { useRouter } from 'next/navigation'
 import { nunito } from '@/app/ui/fonts'
+import Footer from '@/components/Footer/Footer'
 
 export interface Option {
     left: string
@@ -151,7 +152,7 @@ export default function QuestionSection({
     }
 
     return (
-        <div className=" mt-10 bg-gray-600">
+        <div className=" mt-10 bg-first">
             <div className="h-1 w-full bg-neutral-200 dark:bg-neutral-600">
                 <div
                     className="h-1 bg-logo-green"
@@ -234,5 +235,6 @@ export default function QuestionSection({
                 </div>
             )}
         </div>
+
     )
 }
