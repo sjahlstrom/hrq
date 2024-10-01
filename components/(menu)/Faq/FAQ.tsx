@@ -14,8 +14,7 @@ const FaqPage = () => {
                <div className="-mx-4 flex flex-wrap -mt-32">
                   <div className="w-full px-4 ">
                      <div
-                        className="wow fadeInUp mx-auto max-w-[800px]"
-                        data-wow-delay=".2s"
+                        className="mx-auto max-w-[800px]"
                      >
 
                         <div className="px-8 space-y-8 mb-4">

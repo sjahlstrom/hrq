@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -23,14 +22,14 @@ export default function Header() {
         setSticky(window.scrollY >= 80);
     };
 
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: Event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setNavbarOpen(false);
             setOpenIndex(-1);
         }
     };
 
-    const handleSubmenu = (index) => {
+    const handleSubmenu = (index: number) => {
         setOpenIndex(openIndex === index ? -1 : index);
     };
 
@@ -49,27 +48,25 @@ export default function Header() {
 
     return (
         <header
-             className={`header top-0 left-0 z-40 flex w-full items-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#2c6575] to-[#2c6557] ${
-                    sticky
-                    ? "!fixed !z-[9999] !bg-dark !bg-opacity-80 shadow-sticky backdrop-blur-sm !transition "
-                    : "absolute "
+            className={`header top-0 left-0 z-40 flex w-full items-center h-[84px] ${
+                sticky
+                    ? "fixed z-[9999] bg-dark bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
+                    : "absolute"
             }`}
         >
-            <div className="container">
-                <div className="-mt-10 relative mx-4 flex items-center justify-between ">
+            <div className="container h-full">
+                <div className="relative mx-4 flex items-center justify-between h-full">
                     <div className="w-40 max-w-full px-4 xl:mr-12">
                         <Link
                             href="/"
-                            className={`header-logo block w-full ${
-                                sticky ? "py-5 lg:py-2" : "py-8"
-                            } `}
+                            className="header-logo  w-full h-full flex items-center"
                         >
                             <Image
                                 src="/images/logo/logo2.png"
                                 alt="logo"
                                 width={140}
                                 height={140}
-                                className="w-full ml-6"
+                                className="w-auto h-auto max-h-[60px]"
                                 priority
                             />
                         </Link>
@@ -113,7 +110,7 @@ export default function Header() {
                                             {menuItem.path ? (
                                                 <Link
                                                     href={menuItem.path}
-                                                    className={`flex py-2 text-base text-third group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                                                    className="flex py-2 text-base text-third group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
                                                     onClick={() => setNavbarOpen(false)}
                                                 >
                                                     {menuItem.title}
