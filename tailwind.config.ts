@@ -53,9 +53,56 @@ const config: Config = {
         sixth: "#d96e4c",       // Rust Orange (Accent)
         seventh: "#e9b44c",     // Golden Yellow (Accent)
         eighth: "#d9d9d9",      // Light Gray (Neutral)
-        ninth: "#3b3b3b" ,       // Charcoal (Neutral)
+        ninth: "#3b3b3b",       // Charcoal (Neutral)
 
-
+        'reseda-green': {
+          DEFAULT: '#678561',
+          '100': '#151b13',
+          '200': '#293527',
+          '300': '#3e503a',
+          '400': '#526a4d',
+          '500': '#678561',
+          '600': '#83a17d',
+          '700': '#a2b89d',
+          '800': '#c1d0be',
+          '900': '#e0e7de',
+        },
+        'baby-powder': {
+          DEFAULT: '#FDFEFA',
+          '100': '#435411',
+          '200': '#87a921',
+          '300': '#badd52',
+          '400': '#dceda6',
+          '500': '#fdfefa',
+          '600': '#fefefc',
+          '700': '#fefefc',
+          '800': '#fefffd',
+          '900': '#fffffe',
+        },
+        'dun': {
+          DEFAULT: '#DBCBA9',
+          '100': '#372d17',
+          '200': '#6d592e',
+          '300': '#a48645',
+          '400': '#c4aa72',
+          '500': '#dbcba9',
+          '600': '#e2d5ba',
+          '700': '#e9e0cb',
+          '800': '#f1eadc',
+          '900': '#f8f5ee',
+        },
+        'ash-gray': {
+          DEFAULT: '#AEBAA9',
+          '100': '#222820',
+          '200': '#444f40',
+          '300': '#66775f',
+          '400': '#8a9b82',
+          '500': '#aebaa9',
+          '600': '#bfc9bb',
+          '700': '#cfd6cc',
+          '800': '#dfe4dd',
+          '900': '#eff1ee',
+        },
 
         pantone5635: '#98b7b2',
         pantone5655: '#b3cdc2',

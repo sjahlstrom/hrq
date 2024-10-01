@@ -10,22 +10,31 @@ export default function Hero() {
 
             <section
                 id="home"
-                className="relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[160px] md:pb-[130px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] bg-first min-h-[92vh]"
+                className="relative z-10 overflow-hidden pt-[100px] pb-16 md:pt-[160px] md:pb-[130px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] bg-first min-h-[92vh]"
             >
-                <div className="absolute inset-0 z-[-1] flex items-center justify-center">
+                {/*<div className="absolute inset-0 z-[-1] flex items-center justify-center">*/}
+                {/*    <Image*/}
+                {/*        src="/images/hero/test.jpg"*/}
+                {/*        alt="Background image"*/}
+                {/*        width={1200}*/}
+                {/*        height={1200}*/}
+                {/*        priority={true}*/}
+                {/*        style={{ objectFit: 'cover' }}*/}
+                {/*    />*/}
+                <div className="absolute inset-0 z-[-1]">
                     <Image
-                        src="/images/hero/bg.png"
+                        src="/images/hero/test.jpg"
                         alt="Background image"
                         fill
-                        priority={true}
-                        style={{ objectFit: 'cover' }}
+                        priority
+                        // style={{ objectFit: 'cover' }}
                     />
                 </div>
                 <div className="container px-4 mx-auto">
                     <div className="flex flex-wrap">
                         <div className="text-third w-full">
-                            <div className="mx-auto max-w-[800px] text-center">
-                                <h1 className={`${nunito.className} mb-5 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight`}>
+                            <div className="-mt-16 mx-auto max-w-[800px] text-center">
+                                <h1 className={`${nunito.className} -mt-10 mb-5 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight`}>
                                     High Relationship Quotient
                                 </h1>
                                 <p className={`${palanquin.className} mb-12 text-sm sm:text-base md:text-lg lg:text-xl font-small leading-relaxed`}>
