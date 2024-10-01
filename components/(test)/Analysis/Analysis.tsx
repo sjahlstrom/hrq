@@ -129,7 +129,7 @@ export default function TestAnalysis() {
                     const adjustedTotal = totalSummedValues + totalLie / 10
                     await calculateTestResponseAverage(user.id)
                     await setSummedTotals(adjustedTotal)
-                    console.log('Persisted Total Summed Values:', adjustedTotal)
+                    // console.log('Persisted Total Summed Values:', adjustedTotal)
                 } catch (error) {
                     console.error('Error persisting totalSummedValues:', error)
                 }
