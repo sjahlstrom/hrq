@@ -18,8 +18,7 @@ const PricingBox = (props: {
   return (
     <div className="w-full ">
       <div
-         className="wow mb-96 fadeInUp relative z-10 rounded-md bg-yellow-100 px-8 py-10 shadow-signUp dark:bg-gray-600"
-         data-wow-delay=".1s"
+         className=" mb-96 fadeInUp relative z-10 rounded-md bg-yellow-100 px-8 py-10 shadow-signUp dark:bg-gray-600"
       >
         <div className="flex items-center justify-between">
           <h3 className="price mb-2 text-3xl font-bold text-black dark:text-white">
