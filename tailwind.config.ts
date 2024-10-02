@@ -38,12 +38,31 @@ const config: Config = {
         dark: '#1D2144',
         'logo-green': '#4d9582',
 
-        // first: "#2c6557",
-        // second: '#92acab',
-        // third: '#a9bbc2',
-        // fourth: '#7e7d7d',
-        // fifth: "#f5f4f4",
-
+        night: {
+          DEFAULT: '#0C0D0F',
+          100: '#020203',
+          200: '#050506',
+          300: '#070708',
+          400: '#090a0b',
+          500: '#0c0d0f',
+          600: '#363b44',
+          700: '#626a7a',
+          800: '#939ba9',
+          900: '#c9cdd4'
+        },
+        brown: {
+          DEFAULT: '#8C5521',
+          100: '#1c1107',
+          200: '#38220d',
+          300: '#543314',
+          400: '#70441a',
+          500: '#8c5521',
+          600: '#c3762e',
+          700: '#d9985b',
+          800: '#e5ba92',
+          900: '#f2ddc8'
+        },
+// #23261D #F2C879 #8C5423 #9863D #0D0D0D
 
         first: "#2c6557",       // Deep Green-Blue (Primary)
         second: "#ffcbaf",      // Soft Peach (Complementary)
@@ -54,55 +73,6 @@ const config: Config = {
         seventh: "#e9b44c",     // Golden Yellow (Accent)
         eighth: "#d9d9d9",      // Light Gray (Neutral)
         ninth: "#3b3b3b",       // Charcoal (Neutral)
-
-        'reseda-green': {
-          DEFAULT: '#678561',
-          '100': '#151b13',
-          '200': '#293527',
-          '300': '#3e503a',
-          '400': '#526a4d',
-          '500': '#678561',
-          '600': '#83a17d',
-          '700': '#a2b89d',
-          '800': '#c1d0be',
-          '900': '#e0e7de',
-        },
-        'baby-powder': {
-          DEFAULT: '#FDFEFA',
-          '100': '#435411',
-          '200': '#87a921',
-          '300': '#badd52',
-          '400': '#dceda6',
-          '500': '#fdfefa',
-          '600': '#fefefc',
-          '700': '#fefefc',
-          '800': '#fefffd',
-          '900': '#fffffe',
-        },
-        'dun': {
-          DEFAULT: '#DBCBA9',
-          '100': '#372d17',
-          '200': '#6d592e',
-          '300': '#a48645',
-          '400': '#c4aa72',
-          '500': '#dbcba9',
-          '600': '#e2d5ba',
-          '700': '#e9e0cb',
-          '800': '#f1eadc',
-          '900': '#f8f5ee',
-        },
-        'ash-gray': {
-          DEFAULT: '#AEBAA9',
-          '100': '#222820',
-          '200': '#444f40',
-          '300': '#66775f',
-          '400': '#8a9b82',
-          '500': '#aebaa9',
-          '600': '#bfc9bb',
-          '700': '#cfd6cc',
-          '800': '#dfe4dd',
-          '900': '#eff1ee',
-        },
 
         pantone5635: '#98b7b2',
         pantone5655: '#b3cdc2',
