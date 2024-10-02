@@ -1,12 +1,12 @@
 'use client'
 
-import { nunito, palanquin } from '@/app/ui/fonts'
+import { nunito, telex } from '@/app/ui/fonts'
 import Image from 'next/image'
 
 export default function Hero() {
     return (
         <>
-            <div className="bg-fifth h-[84px]"></div>
+            {/*<div className="bg-fifth h-[84px]"></div>*/}
 
             <section
                 id="home"
@@ -25,10 +25,10 @@ export default function Hero() {
                     <div className="flex flex-wrap">
                         <div className="text-third w-full">
                             <div className="mx-auto max-w-[800px] text-center">
-                                <h1 className={`${nunito.className} mb-5 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight`}>
+                                <h1 className={`${nunito.className}  mb-5 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight`}>
                                     High Relationship Quotient
                                 </h1>
-                                <p className={`${palanquin.className} mb-12 text-sm sm:text-base md:text-lg lg:text-xl font-small leading-relaxed`}>
+                                <p className={`${telex.className} text-amber-900 mb-12 text-sm sm:text-base md:text-lg lg:text-xl font-small leading-relaxed`}>
                                     Find your relationship quotient and learn why your dating life has not been
                                     as successful as you would like
                                 </p>

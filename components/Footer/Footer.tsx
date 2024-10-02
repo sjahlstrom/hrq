@@ -1,14 +1,24 @@
 import { laila, telex } from '@/app/ui/fonts';
+import Link from 'next/link'
 
 const Footer = () => {
     return (
         <footer >
-            <div className=" bg-fifth">
+            <div className=" bg-brown-200">
                 <div className="container px-6 py-8 mx-auto">
-                    <div className="flex flex-col items-center -mt-2 text-center text-third">
-                        <div className={telex.className}>
-                            <p>High Relationship Quotient</p>
+                    {/*<div className="flex flex-col items-center -mt-2 text-center text-brown-900">*/}
+                    {/*    <div className={telex.className}>*/}
+                    {/*        <p>High Relationship Quotient</p>*/}
+                    {/*    </div>*/}
+
+                    <Link href="/" className="cursor-pointer">
+                        <div className="flex flex-col items-center -mt-2 text-center text-brown-900">
+                            <div className={telex.className}>
+                                <p>High Relationship Quotient</p>
+                            </div>
                         </div>
+                    </Link>
+
 
                         <div className={`flex flex-wrap justify-center mt-4 -mx-4 ${telex.className}`}>
                             {[
@@ -19,7 +29,7 @@ const Footer = () => {
                                 <a
                                     key={link.href}
                                     href={link.href}
-                                    className={`mx-4 text-sm transition-colors duration-300  text-second hover:text-first ${telex.className}`}
+                                    className={`mx-4 text-sm transition-colors duration-300 text-brown-800 hover:text-brown-500 ${telex.className}`}
                                     aria-label={link.ariaLabel}
                                 >
                                     {link.label}
@@ -64,7 +74,6 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-            </div>
         </footer>
     );
 };

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import menuData from "./menuData";
+import menuData from '@/components/Header/menuData'
 import { SignInButton, UserButton, useUser } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 
@@ -50,27 +50,25 @@ export default function Header() {
         <header
             className={`header top-0 left-0 z-40 flex w-full items-center h-[84px] ${
                 sticky
-                    ? "fixed z-[9999] bg-dark bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
+                    ? "fixed z-[9999] bg-brown-200 bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
                     : "absolute"
             }`}
         >
             <div className="container h-full">
                 <div className="relative mx-4 flex items-center justify-between h-full">
-                    <div className="w-40 max-w-full px-4 xl:mr-12">
-                        <Link
-                            href="/"
-                            className="header-logo  w-full h-full flex items-center"
-                        >
+                    <div className="w-40 max-w-full px-4 xl:mr-12 relative h-[60px]">
+                        <Link href="/" className="header-logo w-full h-full flex items-center">
                             <Image
-                                src="/images/logo/logo2.png"
+                                src="/images/logo/logo.webp"
                                 alt="logo"
-                                width={140}
-                                height={140}
-                                className="w-auto h-auto max-h-[60px]"
+                                fill
+                                style={{ objectFit: 'contain' }}
                                 priority
                             />
                         </Link>
                     </div>
+
+
                     <div className="flex w-full items-center justify-between px-4">
                         <div>
                             <button
@@ -80,17 +78,17 @@ export default function Header() {
                                 className="absolute right-4 top-1/2 block translate-y-[-50%] rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
                             >
                                 <span
-                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 ${
+                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-brown-700 transition-all duration-300 ${
                                         navbarOpen ? " top-[7px] rotate-45" : " "
                                     }`}
                                 />
                                 <span
-                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 ${
+                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-brown-700 transition-all duration-300 ${
                                         navbarOpen ? "opacity-0 " : " "
                                     }`}
                                 />
                                 <span
-                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 ${
+                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-brown-700 transition-all duration-300 ${
                                         navbarOpen ? " top-[-8px] -rotate-45" : " "
                                     }`}
                                 />
@@ -98,7 +96,8 @@ export default function Header() {
                             <nav
                                 ref={dropdownRef}
                                 id="navbarCollapse"
-                                className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] border-body-color/50 bg-dark py-4 px-6 duration-300 lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
+                                className={`navbar absolute right-3 z-30 w-[150px] rounded border-[.5px] border-body-color/50 bg-amber-300 py-4 px-6 duration-300 lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100
+                                ${
                                     navbarOpen
                                         ? "visibility top-full opacity-100"
                                         : "invisible top-[120%] opacity-0"
@@ -140,7 +139,7 @@ export default function Header() {
                                                             <Link
                                                                 href={submenuItem.path}
                                                                 key={submenuItem.id}
-                                                                className="block rounded py-2.5 text-sm text-white hover:opacity-70 lg:px-3"
+                                                                className="block rounded py-2.5 text-sm text-amber-900 hover:opacity-70 lg:px-3"
                                                                 onClick={(e) => {
                                                                     e.stopPropagation();
                                                                     setNavbarOpen(false);
@@ -167,7 +166,7 @@ export default function Header() {
                                             <Button
                                                 onClick={handleSignInClick}
                                                 size="sm"
-                                                className="rounded-xl bg-logo-green text-gray-700"
+                                                className="rounded-xl bg-brown-500 text-amber-900"
                                             >
                                                 Login
                                             </Button>

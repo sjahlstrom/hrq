@@ -36,7 +36,7 @@ interface QuestionSectionProps {
 }
 
 const SliderOptions: React.FC<{ options: Option }> = ({ options }) => (
-    <div className="flex justify-between items-center text-black dark:text-third mt-2 px-8">
+    <div className="flex justify-between items-center text-brown-200 mt-2 px-8">
         {Object.entries(options).map(([key, value], index) => (
             <div
                 key={key}
@@ -152,7 +152,7 @@ export default function QuestionSection({
     }
 
     return (
-        <div className=" mt-10 bg-first">
+        <div className=" mt-10 bg-brown-800">
             <div className="h-1 w-full bg-neutral-200 dark:bg-neutral-600">
                 <div
                     className="h-1 bg-logo-green"
@@ -194,7 +194,7 @@ export default function QuestionSection({
                             ? 'bg-[#517C67] hover:bg-[#1E5545] group'
                             : !isSliderUsed
                               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                              : 'bg-logo-green text-white hover:bg-[#4F7164] group'
+                              : 'bg-brown-500 text-white hover:bg-[#4F7164] group'
                     }`}
                     onClick={
                         isLastQuestion
@@ -211,7 +211,7 @@ export default function QuestionSection({
                     <span className="absolute inset-0 overflow-hidden rounded-xl">
                         <span
                             className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full ${
-                                isLastQuestion ? 'bg-[#1E5545]' : 'bg-[#4F7164]'
+                                isLastQuestion ? 'bg-[#1E5545]' : 'bg-brown-400'
                             } transition-transform duration-500 ${
                                 !isSliderUsed && !isLastQuestion
                                     ? 'hidden'
@@ -225,7 +225,7 @@ export default function QuestionSection({
             {questionIndex === fireworksIndex && (
                 <div
                     role="alert"
-                    className="rounded-xl border border-blue-800 bg-yellow-300 p-4 mt-10 text-center"
+                    className="rounded-xl border border-blue-800 bg-amber-800 p-4 mt-10 text-center"
                 >
                     <strong className="block font-medium text-black">
                         {fireworksIndex === halfwayIndex

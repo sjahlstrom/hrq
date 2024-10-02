@@ -1,4 +1,4 @@
-import { nunito, palanquin, arimo, laila, telex, inter } from '@/app/ui/fonts'
+import { nunito,arimo, laila, telex} from '@/app/ui/fonts'
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { Providers } from './providers'
@@ -17,7 +17,7 @@ export default function RootLayout({
         <ClerkProvider appearance={{ baseTheme: dark }}>
             <html
                 lang="en"
-                className={`${inter.variable} ${arimo.variable} ${laila.variable} ${telex.variable} ${nunito.variable}`}
+                className={`${arimo.variable} ${laila.variable} ${telex.variable} ${nunito.variable}`}
             >
                 <head>
                     <title>Human Relationship Quotient</title>
