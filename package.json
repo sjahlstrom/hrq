@@ -54,12 +54,16 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
     "@types/node": "^20.14.13",
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.3.0",
     "@types/uuid": "^9.0.8",
     "eslint": "^8.33.0",
     "eslint-config-next": "14.0.4",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.3.3",
     "prisma": "^5.20.0",
     "tailwindcss": "^3.4.7",
