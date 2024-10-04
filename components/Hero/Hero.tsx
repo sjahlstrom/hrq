@@ -6,15 +6,13 @@ import Image from 'next/image'
 export default function Hero() {
     return (
         <>
-            {/*<div className=" h-[84px]"></div>*/}
-
             <section
                 id="home"
                 className="relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[160px] md:pb-[130px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px]  min-h-[82vh]"
             >
                 <div className="absolute inset-0 z-[-1] flex items-center justify-center">
                     <Image
-                        src="/images/hero/test.jpg"
+                        src="/images/hero/landing.jpg"
                         alt="Background image"
                         fill
                         priority={true}
