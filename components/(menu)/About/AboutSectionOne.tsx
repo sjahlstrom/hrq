@@ -35,6 +35,24 @@ const AboutSectionOne = () => {
                         mb="44px"
                      />
 
+                     <div>
+                        Congratulations!   You have come to High RQ’s website.  It’s new and revolutionary.   This site will tell you about the next development in measuring human potential, especially for relationships.
+
+                        What is it?
+
+                        RQ stands for Relationship Quotient.   RQ is a new concept.   Like an IQ test that measures the many abilities that make up your intelligence, RQ measures the  qualities, traits and tendencies that make up your ability to be in a relationship.   There are many, many aspects of your personality, behavioral tendencies, relationship skills that make up the RQ.   Now, there is a test to measure RQ.   Are you a good catch?   Can you go the distance?
+
+                        Why is it important?
+
+                        We all are a mix of many, many traits.   Many of these traits contribute to our relationship successes, many foreshadow failure. Developing a high RQ gives us an advantage in being with others, making lasting relationships successful relationships.   This usually brings dating services to mind, screening potential partners for good relationship skills.  Relationship skills are required everywhere, not just in the dating world.   Think about your relationship with the boss at work, or your neighbor, or your kids, parents, aunts, uncles—you get the idea.  We all need higher RQ’s to make relationships better in ALL venues and functions.
+
+                        Why are you here?
+
+                        You are here to find out your RQ.   Are you a good catch?   Can YOU go the distance in a relationship?   Do you have the traits and abilities required to be a high quality person?   If you’re intrigued and want to know more about the RQ and how it came about, click the button below.
+
+                     </div>
+
+
                      <div
                         className=" mb-12 max-w-[570px] lg:mb-0"
                      >

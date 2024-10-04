@@ -37,6 +37,9 @@ const config: Config = {
                 black: '#090E34',
                 dark: '#1D2144',
 
+                pantone621: '#3068CC',
+                pantone622: '#f29979',
+
                 sunsetRockies: {
                     'deep-blue': '#1a1d38',    // Dark part of the sky
                     'indigo': '#3b4b8a',       // Rich dark blue hue
