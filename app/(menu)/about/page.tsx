@@ -1,5 +1,4 @@
-import AboutSectionOne from "@/components/(menu)/About/AboutSectionOne";
-import AboutSectionTwo from "@/components/(menu)/About/AboutSectionTwo";
+import AboutSectionOne from "@/components/(menu)/About/About";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 
 const AboutPage = () => {
