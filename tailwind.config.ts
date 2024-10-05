@@ -37,41 +37,12 @@ const config: Config = {
                 black: '#090E34',
                 dark: '#1D2144',
 
-                pantone621: '#3068CC',
-                pantone622: '#f29979',
-
-                sunsetRockies: {
-                    'deep-blue': '#1a1d38',    // Dark part of the sky
-                    'indigo': '#3b4b8a',       // Rich dark blue hue
-                    'muted-pink': '#f29979',   // Soft pink/orange glow near horizon
-                    'muted-orange': '#f2c57c', // Warm muted orange glow
-                    'purple': '#664e7d',       // Transition from orange/pink to blue
-                },
-
-                destinOcean: {
-                    'turquoise': '#40E0D0',    // Shallow turquoise waters
-                    'aqua': '#7FFFD4',         // Vibrant aqua in very shallow areas
-                    'deep-blue': '#006994',    // Deep water offshore
-                    'seafoam-green': '#9FE2BF', // Lighter seafoam green near the shore
-                },
-
                 'off-white': '#e5dfd2',  // Light off-white (complementary to dark grayish-black)
                 'cyan': '#42a6e5',  // Vibrant cyan (complementary to golden yellow)
                 'coral-pink': '#db837b',  // Soft coral pink (complementary to muted greenish hue)
                 'blue-gray': '#3d4a68',  // Deep bluish-grey (complementary to earthy brown)
                 'blue-strong': '#315aa8',  // Strong blue (complementary to warm gold-brown)
 
-                teal: {
-                    100: '#ccfbfb',  // Lightest teal
-                    200: '#99f7f7',
-                    300: '#66f2f2',
-                    400: '#33eeee',
-                    500: '#00eaea',  // Base teal (can be rgb(0, 128, 128))
-                    600: '#00bdbd',
-                    700: '#009090',
-                    800: '#006363',
-                    900: '#003636',  // Darkest teal
-                },
                 night: {
                     DEFAULT: '#0C0D0F',
                     50: '#0C0E10',
