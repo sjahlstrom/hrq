@@ -1,17 +1,18 @@
-import AboutSectionOne from "@/components/(menu)/About/About";
-import Breadcrumb from "@/components/Common/Breadcrumb";
+import About from '@/components/(menu)/About/About'
+import Breadcrumb from '@/components/Common/Breadcrumb'
 
 const AboutPage = () => {
-  return (
-    <div >
-      <Breadcrumb
-        pageName="About Page"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
-      />
-      <AboutSectionOne />
-      {/*<AboutSectionTwo />*/}
-    </div>
-  );
-};
+    return (
+        <div>
+            <div className="bg-green-200">
+                <Breadcrumb
+                    pageName="About"
+                    description="The main 'thrust' is to focus on helping people to find their potential and increasing their satisfaction in their relationship."
+                />
+                <About />
+            </div>
+        </div>
+    )
+}
 
 export default AboutPage;
