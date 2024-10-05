@@ -50,7 +50,7 @@ export default function AboutPage() {
                           )}
                        </Button>
                        {activeSection === section.title && (
-                           <CardContent className="pt-0 pb-6">
+                           <CardContent className="text-gray-100 pt-0 pb-6">
                               <p className="text-muted-foreground">{section.content}</p>
                            </CardContent>
                        )}
@@ -64,7 +64,7 @@ export default function AboutPage() {
                    <ul className="space-y-2">
                       {benefits.map((benefit, index) => (
                           <li key={index} className="text-muted-foreground flex items-center">
-                             <span className="mr-2 text-primary">•</span>
+                             <span className="mr-2 text-black">•</span>
                              {benefit}
                           </li>
                       ))}
