@@ -26,14 +26,14 @@ export default function Hero() {
                         >
                             High Relationship Quotient
                         </h1>
-                        <p
-                            className={`${telex.className}  text-cinnabar-200 mb-12 text-sm sm:text-base md:text-lg lg:text-xl font-small leading-relaxed text-semibold`}
-                        >
-                            Life is a balancing act.{' '}
-                            <p>
-                                Find out how to get get yours in balance and
-                                improve all of your relationships.
-                            </p>
+                        {/*<p*/}
+                        {/*    className={`${telex.className}  text-cinnabar-200 mb-12 text-sm sm:text-base md:text-lg lg:text-xl font-small leading-relaxed text-semibold`}*/}
+                        {/*>*/}
+                        {/*</p>*/}
+                        <p className={`${telex.className}  font-laila text-cinnabar-200 mb-12 text-sm sm:text-base md:text-lg lg:text-xl font-small leading-relaxed text-semibold`}>
+                            Life is a balancing act. <br />Find out how to get
+                            yours in balance and improve all of your
+                            relationships.
                         </p>
                     </div>
                 </div>
