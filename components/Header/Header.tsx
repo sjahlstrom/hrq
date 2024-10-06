@@ -78,17 +78,17 @@ export default function Header() {
                                 className="absolute -right-12 top-1/2 block translate-y-[-50%] rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
                             >
                                 <span
-                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-brown-700 transition-all duration-300 ${
+                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-cinnabar-900 transition-all duration-300 ${
                                         navbarOpen ? ' top-[7px] rotate-45' : ' '
                                     }`}
                                 />
                                 <span
-                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-green-700 transition-all duration-300 ${
+                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-cinnabar-800 transition-all duration-300 ${
                                         navbarOpen ? 'opacity-0 ' : ' '
                                     }`}
                                 />
                                 <span
-                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-brown-700 transition-all duration-300 ${
+                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-cinnabar-700 transition-all duration-300 ${
                                         navbarOpen ? ' top-[-8px] -rotate-45' : ' '
                                     }`}
                                 />
@@ -112,7 +112,7 @@ export default function Header() {
                                             {menuItem.path ? (
                                                 <Link
                                                     href={menuItem.path}
-                                                    className="flex py-2 text-base text-gray-200 group-hover:opacity-40 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
+                                                    className="flex py-2 text-base text-blue-900 group-hover:opacity-40 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
                                                     onClick={() => setNavbarOpen(false)}
                                                 >
                                                     {menuItem.title}
@@ -121,7 +121,7 @@ export default function Header() {
                                                 <>
                                                     <a
                                                         onClick={() => handleSubmenu(index)}
-                                                        className="flex cursor-pointer items-center justify-between py-2 text-base text-gray-200 group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
+                                                        className="flex cursor-pointer items-center justify-between py-2 text-base text-blue-900 group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
                                                     >
                                                         {menuItem.title}
                                                         <span className="pl-3">
@@ -169,7 +169,7 @@ export default function Header() {
                                             <Button
                                                 onClick={handleSignInClick}
                                                 size="sm"
-                                                className="rounded-xl bg-[#DDB26B] text-gray-700"
+                                                className="rounded-xl bg-cinnabar-800 text-gray-700"
                                             >
                                                 Login
                                             </Button>

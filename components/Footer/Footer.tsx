@@ -4,15 +4,11 @@ import Link from 'next/link'
 const Footer = () => {
     return (
         <footer>
-            <div className=" bg-night-100">
+            <div className="bg-air_force_blue-300">
                 <div className="container px-6 py-8 mx-auto">
-                    {/*<div className="flex flex-col items-center -mt-2 text-center text-brown-900">*/}
-                    {/*    <div className={telex.className}>*/}
-                    {/*        <p>High Relationship Quotient</p>*/}
-                    {/*    </div>*/}
 
                     <Link href="/" className="cursor-pointer">
-                        <div className="text-off-white flex flex-col items-center -mt-2 text-center ">
+                        <div className="text-atomic_tangerine-700 flex flex-col items-center -mt-2 text-center ">
                             <div className={telex.className}>
                                 <p>High Relationship Quotient</p>
                             </div>
@@ -38,7 +34,7 @@ const Footer = () => {
                             <a
                                 key={link.href}
                                 href={link.href}
-                                className={`mx-4 text-sm transition-colors duration-300 text-brown-800 hover:text-brown-500 ${telex.className}`}
+                                className={`mx-4 text-sm transition-colors duration-300 text-blue-400 hover:text-blue-600 ${telex.className}`}
                                 aria-label={link.ariaLabel}
                             >
                                 {link.label}
@@ -51,7 +47,7 @@ const Footer = () => {
                     <div
                         className={`flex flex-col items-center sm:flex-row sm:justify-between ${laila.className}`}
                     >
-                        <p className="text-xs text-third ">
+                        <p className="text-xs text-blue-100">
                             Copyright © Pending, 06/22/2019. HighRQ, Inc. All
                             Rights Reserved. HighRQ, Relationship quotient (RQ),
                             Compatibility Quotient (CQ), and several other
