@@ -19,6 +19,7 @@ const config: Config = {
                 sm: '575px',
                 md: '768px',
                 lg: '992px',
+                'xl-custom': '1177px', // Custom breakpoint
                 xl: '1200px',
                 '2xl': '1400px',
             },

@@ -4,7 +4,7 @@ import Link from 'next/link'
 const Footer = () => {
     return (
         <footer>
-            <div className="bg-air_force_blue-300">
+            <div className="bg-atomic_tangerine-200">
                 <div className="container px-6 py-8 mx-auto">
 
                     <Link href="/" className="cursor-pointer">
@@ -42,7 +42,7 @@ const Footer = () => {
                         ))}
                     </div>
 
-                    <hr className="my-6 md:my-4 border-gray-700" />
+                    <hr className="my-6 md:my-4 border-atomic_tangerine-600" />
 
                     <div
                         className={`flex flex-col items-center sm:flex-row sm:justify-between ${laila.className}`}

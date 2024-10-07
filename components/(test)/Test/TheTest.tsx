@@ -37,7 +37,7 @@ const SliderOptions: React.FC<{ options: Option }> = ({ options }) => (
         {Object.entries(options).map(([key, value], index) => (
             <div
                 key={key}
-                className={`absolute transform -translate-y-1/2 text-xs sm:text-sm text-brown-200 ${
+                className={`absolute transform -translate-y-1/2 text-xs sm:text-sm  ${
                     index === 0
                         ? 'left-16'
                         : index === 1
@@ -163,12 +163,11 @@ export default function TheTest({
     }
 
     return (
-        // <div className="flex flex-col min-h-[calc(100vh-508px)] bg-[#DDB26B]">
-        <div className="flex flex-col min-h-[calc(100vh-508px)] bg-night-700">
+        <div className="flex flex-col min-h-[calc(100vh-450px)] bg-atomic_tangerine-300">
 
-            <div className="h-1 w-full bg-neutral-200 dark:bg-neutral-600">
+            <div className="h-1 w-full bg-atomic_tangerine-500">
                 <div
-                    className="h-1 bg-[#517C67] transition-all duration-300 ease-in-out"
+                    className="h-1 bg-atomic_tangerine-400 transition-all duration-300 ease-in-out"
                     style={{ width: widthPercentage }}
                 ></div>
             </div>
@@ -176,7 +175,7 @@ export default function TheTest({
             <div className="flex-grow flex flex-col justify-between items-center px-4 py-8 md:py-16">
                 <div className="w-full max-w-3xl text-center mb-8 md:mb-12">
                     <h2
-                        className={`${nunito.className} text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-black dark:text-third`}
+                        className={`${nunito.className} text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-gray-100`}
                     >
                         {currentQuestion.question}
                     </h2>
@@ -206,7 +205,7 @@ export default function TheTest({
                                 ? 'bg-[#517C67] hover:bg-[#1E5545] group'
                                 : !isSliderUsed
                                     ? 'bg-gray-400 text-gray-500 cursor-not-allowed'
-                                    : 'bg-green-200 text-white hover:bg-[#4F7164] group'
+                                    : 'bg-air_force_blue-500 text-gray-100 hover:bg-[#4F7164] group'
                         }`}
                         onClick={
                             isLastQuestion
@@ -225,7 +224,7 @@ export default function TheTest({
                                 className={`absolute left-0 w-full h-full origin-center -translate-x-full rounded-full ${
                                     isLastQuestion
                                         ? 'bg-[#1E5545]'
-                                        : 'bg-green-300'
+                                        : 'bg-air_force_blue-300'
                                 } transition-transform duration-500 ${
                                     !isSliderUsed && !isLastQuestion
                                         ? 'hidden'
@@ -241,7 +240,7 @@ export default function TheTest({
                         role="alert"
                         className="rounded-xl border border-blue-800 bg-amber-800 p-4 text-center w-full max-w-3xl text-base sm:text-lg"
                     >
-                        <strong className="block font-medium text-black">
+                        <strong className="block font-medium text-white">
                             {fireworksIndex === halfwayIndex
                                 ? "Congratulations! You're halfway there!"
                                 : 'End of test'}

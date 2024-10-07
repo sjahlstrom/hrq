@@ -8,7 +8,6 @@ import { getTestResponseLength } from '@/app/api/users'
 const TheTest = async () => {
     const user = await currentUser()
 
-    // Initialize response length to 0
     let length = 0
     if (user) {
         const userId = user.id
@@ -20,7 +19,7 @@ const TheTest = async () => {
 
     return (
         <>
-            <div className="bg-green-100">
+            <div className="bg-atomic_tangerine-200">
                 <Breadcrumb
                     pageName="Test Page"
                     description={
