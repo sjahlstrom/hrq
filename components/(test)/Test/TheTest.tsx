@@ -163,9 +163,9 @@ export default function TheTest({
     }
 
     return (
-        <div className="flex flex-col min-h-[calc(100vh-450px)] bg-atomic_tangerine-300">
+        <div className="flex flex-col min-h-[calc(100vh-450px)] bg-hrqColors-skyBlue-700">
 
-            <div className="h-1 w-full bg-atomic_tangerine-500">
+            <div className="h-1 w-full bg-hrqColors-skyBlue-500">
                 <div
                     className="h-1 bg-atomic_tangerine-400 transition-all duration-300 ease-in-out"
                     style={{ width: widthPercentage }}
@@ -204,7 +204,7 @@ export default function TheTest({
                             isLastQuestion
                                 ? 'bg-[#517C67] hover:bg-[#1E5545] group'
                                 : !isSliderUsed
-                                    ? 'bg-gray-400 text-gray-500 cursor-not-allowed'
+                                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
                                     : 'bg-air_force_blue-500 text-gray-100 hover:bg-[#4F7164] group'
                         }`}
                         onClick={

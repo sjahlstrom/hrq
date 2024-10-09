@@ -19,7 +19,7 @@ const TheTest = async () => {
 
     return (
         <>
-            <div className="bg-atomic_tangerine-200">
+            <div className="bg-hrqColors-coolGray-700 ">
                 <Breadcrumb
                     pageName="Test Page"
                     description={

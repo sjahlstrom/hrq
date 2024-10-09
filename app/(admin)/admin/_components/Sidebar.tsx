@@ -1,20 +1,5 @@
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandItem,
-    CommandList,
-    CommandSeparator,
-    CommandShortcut,
-} from '@/components/ui/command'
-import {
-    LayoutDashboard,
-    Newspaper,
-    Folders,
-    CreditCard,
-    Settings,
-    User,
-} from 'lucide-react'
+import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
+import { Newspaper } from 'lucide-react'
 import Link from 'next/link'
 
 const Sidebar = () => {

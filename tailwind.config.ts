@@ -25,6 +25,19 @@ const config: Config = {
             },
         },
         extend: {
+            backgroundImage: {
+                'custom-radial': 'radial-gradient(ellipse at top, var(--tw-gradient-stops))',
+            },
+            clrs: {
+                sky: {
+                    400: '#38bdf8', // Tailwind's default sky-400 color
+                },
+                blue: {
+                    80: '#e0f2fe', // Custom blue color at 80% lightness
+                },
+            },
+
+
             fontFamily: {
                 inter: ['var(--font-inter)', ...fontFamily.sans],
                 arimo: ['var(--font-arimo)', ...fontFamily.sans],
@@ -38,77 +51,73 @@ const config: Config = {
                 black: '#090E34',
                 dark: '#1D2144',
 
-                air_force_blue: {
-                    DEFAULT: '#6B8C9F',
-                    100: '#151c20',
-                    200: '#2a3840',
-                    300: '#3f5460',
-                    400: '#547080',
-                    500: '#6b8c9f',
-                    600: '#89a3b2',
-                    700: '#a6bac5',
-                    800: '#c4d1d8',
-                    900: '#e1e8ec',
-                },
-                cinnabar: {
-                    DEFAULT: '#E5421F',
-                    100: '#2f0d05',
-                    200: '#5d1a0b',
-                    300: '#8c2710',
-                    400: '#ba3416',
-                    500: '#e5421f',
-                    600: '#ea694c',
-                    700: '#ef8f79',
-                    800: '#f5b4a6',
-                    900: '#fadad2',
-                },
-                mountbatten_pink: {
-                    DEFAULT: '#9A787C',
-                    100: '#1f1819',
-                    200: '#3f2f31',
-                    300: '#5e474a',
-                    400: '#7e5f62',
-                    500: '#9a787c',
-                    600: '#ae9497',
-                    700: '#c2afb1',
-                    800: '#d7cacb',
-                    900: '#ebe4e5',
-                },
-                atomic_tangerine: {
-                    DEFAULT: '#EB9166',
-                    100: '#3c1808',
-                    200: '#77300f',
-                    300: '#b34817',
-                    400: '#e3652a',
-                    500: '#eb9166',
-                    600: '#efa684',
-                    700: '#f3bca3',
-                    800: '#f7d3c2',
-                    900: '#fbe9e0',
-                },
-                peach: {
-                    DEFAULT: '#F7BB89',
-                    100: '#482305',
-                    200: '#8f460a',
-                    300: '#d7690f',
-                    400: '#f29040',
-                    500: '#f7bb89',
-                    600: '#f8c8a0',
-                    700: '#fad5b7',
-                    800: '#fce3cf',
-                    900: '#fdf1e7',
-                },
-                light_blue: {
-                    DEFAULT: '#AACFDC',
-                    100: '#162e37',
-                    200: '#2d5d6e',
-                    300: '#438ba5',
-                    400: '#71afc5',
-                    500: '#aacfdc',
-                    600: '#b9d8e3',
-                    700: '#cbe1ea',
-                    800: '#dcebf1',
-                    900: '#eef5f8',
+                hrqColors: {
+                    skyBlue: {
+                        100: '#e1eff6', // Lightest
+                        200: '#c3dcea',
+                        300: '#aacedb',
+                        400: '#91b0cc',
+                        500: '#7892be', // Base
+                        600: '#6179a0',
+                        700: '#4d6283',
+                        800: '#3a4b67',
+                        900: '#27354b'  // Darkest
+                    },
+                    slateBlue: {
+                        100: '#cfd7dd',
+                        200: '#b0c0c8',
+                        300: '#90aab2',
+                        400: '#71939d',
+                        500: '#517c67', // Base
+                        600: '#40655a',
+                        700: '#334f4b',
+                        800: '#26393c',
+                        900: '#1a242d'
+                    },
+                    coolGray: {
+                        100: '#dfe6ec',
+                        200: '#c2cdd4',
+                        300: '#a5b3bc',
+                        400: '#899ba9',
+                        500: '#708593', // Base
+                        600: '#596c7a',
+                        700: '#445560',
+                        800: '#303e47',
+                        900: '#1c2830'
+                    },
+                    sunsetOrange: {
+                        100: '#f8d2cb',
+                        200: '#f2a399',
+                        300: '#ec7667',
+                        400: '#e44f26',
+                        500: '#bd4321', // Base
+                        600: '#97361b',
+                        700: '#7a2b17',
+                        800: '#5d2212',
+                        900: '#3f170d'
+                    },
+                    peach: {
+                        100: '#fde5d4',
+                        200: '#facbb0',
+                        300: '#f5b08d',
+                        400: '#f0966a',
+                        500: '#eb7d47', // Base
+                        600: '#c4633a',
+                        700: '#9d4e2f',
+                        800: '#763924',
+                        900: '#4e2518'
+                    },
+                    coral: {
+                        100: '#f8d5cb',
+                        200: '#f0ac9d',
+                        300: '#e88271',
+                        400: '#e05944',
+                        500: '#b8483a', // Base
+                        600: '#91372e',
+                        700: '#6c2a23',
+                        800: '#47201a',
+                        900: '#23100d'
+                    }
                 },
 
                 border: 'hsl(var(--border))',
@@ -151,8 +160,13 @@ const config: Config = {
                 sm: 'calc(var(--radius) - 4px)',
             },
             keyframes: {
+                slideUp: {
+                    '0%': { transform: 'translateY(20px)', opacity: '0' },
+                    '100%': { transform: 'translateY(0)', opacity: '1' },
+                },
+
                 fadeIn: {
-                    '0%': { opacity: '0' },
+                    '0%': { opacity: '0.3' },
                     '100%': { opacity: '1' },
                 },
                 'accordion-down': {
@@ -167,7 +181,9 @@ const config: Config = {
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
-                'fade-in': 'fadeIn 0.5s ease-in-out',
+                'fade-in': 'fadeIn 1.0s ease-in-out',
+                'slideUp': 'slideUp 0.5s ease-out forwards',
+
             },
         },
     },

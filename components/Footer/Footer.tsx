@@ -4,11 +4,11 @@ import Link from 'next/link'
 const Footer = () => {
     return (
         <footer>
-            <div className="bg-atomic_tangerine-200">
+            <div className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800">
                 <div className="container px-6 py-8 mx-auto">
 
                     <Link href="/" className="cursor-pointer">
-                        <div className="text-atomic_tangerine-700 flex flex-col items-center -mt-2 text-center ">
+                        <div className="bg-hrqColors-coolGray-700 flex flex-col items-center -mt-2 text-center ">
                             <div className={telex.className}>
                                 <p>High Relationship Quotient</p>
                             </div>
@@ -42,7 +42,7 @@ const Footer = () => {
                         ))}
                     </div>
 
-                    <hr className="my-6 md:my-4 border-atomic_tangerine-600" />
+                    <hr className="my-6 md:my-4 border-hrqColors-sunsetOrange-300" />
 
                     <div
                         className={`flex flex-col items-center sm:flex-row sm:justify-between ${laila.className}`}
@@ -52,8 +52,7 @@ const Footer = () => {
                             Rights Reserved. HighRQ, Relationship quotient (RQ),
                             Compatibility Quotient (CQ), and several other
                             marks, colors, and images are registered and common
-                            law trademarks of HighRQ, Inc. Other trademarks and
-                            brands are the property of their respective owners.
+                            law trademarks of HighRQ, Inc.
                         </p>
                     </div>
 
