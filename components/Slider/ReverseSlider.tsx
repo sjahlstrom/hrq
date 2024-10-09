@@ -4,7 +4,7 @@ import 'rc-slider/assets/index.css'
 
 const sliderStyles = {
     rail: {
-        backgroundColor: '#c3762e',
+        backgroundColor: '#9d4e2f',
         height: 10,
         borderRadius: 5,
     },
@@ -13,12 +13,12 @@ const sliderStyles = {
         height: 10,
     },
     handle: {
-        borderColor: '#fdead0',
+        borderColor: '#f0966a',
         height: 24,
         width: 24,
         marginLeft: -8,
         marginTop: -7,
-        backgroundColor: '#E24458',
+        backgroundColor: '#ff0000',
     },
 }
 

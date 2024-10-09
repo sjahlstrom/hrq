@@ -74,8 +74,8 @@ const SampleAnalysis = () => {
     }, []);
 
     return (
-        <section className="p-6 bg-gray-100 min-h-screen">
-            <h1 className="text-3xl font-bold text-gray-800 mb-6">Analysis...</h1>
+        <section className="p-6 bg-custom-radial from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100 min-h-screen">
+            <h1 className="text-3xl font-bold text-dark mb-6">Analysis...</h1>
             {loading ? (
                 <p className="text-gray-600">Loading...</p>
             ) : matchedQuestions.length > 0 ? (
@@ -83,14 +83,14 @@ const SampleAnalysis = () => {
                     {matchedQuestions.map((question, index) => (
                         <div
                             key={index}
-                            className={`p-4 shadow-md rounded-lg border border-gray-200 ${index % 2 === 0 ? 'bg-green-800' : 'bg-green-900'} 
+                            className={`p-4 shadow-md rounded-lg border border-gray-200 ${index % 2 === 0 ? 'bg-custom-radial from-hrqColors-skyBlue-600 to-hrqColors-skyBlue-400' : 'bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-600'} 
                         ${fadeIn ? 'opacity-100' : 'opacity-0'} 
                         transition-opacity duration-700 ease-in-out delay-${index * 400}ms`}
                         >
-                            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+                            <h2 className="text-2xl font-semibold text-white mb-2">
                                 {question.question}
                             </h2>
-                            <p className="text-gray-700">{question.analysis}</p>
+                            <p className="text-dark">{question.analysis}</p>
                         </div>
                     ))}
                 </div>
@@ -98,9 +98,9 @@ const SampleAnalysis = () => {
                 <p className="text-gray-600">No matching questions found.</p>
             )}
 
-            <div className="mt-8 bg-green-700 shadow-md rounded-lg border border-gray-200 p-6">
+            <div className="mt-8 bg-amber-200 shadow-md rounded-lg border border-gray-200 p-6">
                 <p className="text-gray-700">
-                    Mini-report, based on whether you score high, medium or low, on the questions. The above questions represent only one question for each trait or quality. The actual test has more than one question for each and measures other characters than the ones here. This is a sample report, only one page of probably ten or fifteen for the actual test report. It is offered to give you a feel for what will follow, should you take the HighRQ test, which is much more comprehensive. According to your scores, based upon a comparison to norms, the following is likely true.
+                    A mini-report, based on whether you score high, medium or low, on the questions. The above questions represent only one question for each trait or quality. The actual test has more than one question for each and measures other characters than the ones here. This is a sample report, only one page of probably ten or fifteen for the actual test report. It is offered to give you a feel for what will follow, should you take the HighRQ test, which is much more comprehensive. According to your scores, based upon a comparison to norms, the following is likely true.
                 </p>
             </div>
         </section>

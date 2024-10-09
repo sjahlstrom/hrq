@@ -50,7 +50,8 @@ export default function Header() {
         <header
             className={`header top-0 left-0 z-40 flex w-full items-center h-[84px] ${
                 sticky
-                    ? "fixed z-[9999] bg-[#0C0E10]] bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
+                    // add bg-xxx to add color to menu scroll
+                    ? "fixed z-[9999] bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
                     : "absolute"
             }`}
         >
@@ -78,17 +79,17 @@ export default function Header() {
                                 className="absolute -right-12 top-1/2 block translate-y-[-50%] rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
                             >
                                 <span
-                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-cinnabar-400 transition-all duration-300 ${
+                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-hrqColors-coral-500 transition-all duration-300 ${
                                         navbarOpen ? ' top-[7px] rotate-45' : ' '
                                     }`}
                                 />
                                 <span
-                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-emerald-600 transition-all duration-300 ${
+                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-hrqColors-skyBlue-800 transition-all duration-300 ${
                                         navbarOpen ? 'opacity-0 ' : ' '
                                     }`}
                                 />
                                 <span
-                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-cinnabar-400 transition-all duration-300 ${
+                                    className={`relative my-1.5 block h-0.5 w-[30px] bg-hrqColors-coral-500 transition-all duration-300 ${
                                         navbarOpen ? ' top-[-8px] -rotate-45' : ' '
                                     }`}
                                 />
@@ -97,7 +98,7 @@ export default function Header() {
                             <nav
                                 ref={dropdownRef}
                                 id="navbarCollapse"
-                                className={`navbar absolute right-1 translate-x-[40px] z-30 w-[150px] rounded border-[.5px] border-body-color/50 bg-green-100 py-4 px-6 duration-300 lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100
+                                className={`navbar absolute right-1 translate-x-[40px] z-30 w-[150px] rounded border-[.5px] border-body-color/50  py-4 px-6 duration-300 lg:visible lg:static lg:w-auto lg:border-none lg:!.transparent lg:p-0 lg:opacity-100
     ${
                                     navbarOpen
                                         ? 'visibility top-full opacity-100'
@@ -112,7 +113,7 @@ export default function Header() {
                                             {menuItem.path ? (
                                                 <Link
                                                     href={menuItem.path}
-                                                    className="flex py-2 text-base text-blue-900 group-hover:opacity-40 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
+                                                    className="flex py-2 text-base text-dark group-hover:opacity-40 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
                                                     onClick={() => setNavbarOpen(false)}
                                                 >
                                                     {menuItem.title}
@@ -121,7 +122,7 @@ export default function Header() {
                                                 <>
                                                     <a
                                                         onClick={() => handleSubmenu(index)}
-                                                        className="flex cursor-pointer items-center justify-between py-2 text-base text-blue-900 group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
+                                                        className="flex cursor-pointer items-center justify-between py-2 text-base text-dark group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
                                                     >
                                                         {menuItem.title}
                                                         <span className="pl-3">
@@ -169,7 +170,7 @@ export default function Header() {
                                             <Button
                                                 onClick={handleSignInClick}
                                                 size="sm"
-                                                className="rounded-xl bg-cinnabar-800 text-gray-700"
+                                                className="rounded-xl bg-hrqColors-peach-300 text-gray-700"
                                             >
                                                 Login
                                             </Button>
