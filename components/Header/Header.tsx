@@ -170,7 +170,7 @@ export default function Header() {
                                             <Button
                                                 onClick={handleSignInClick}
                                                 size="sm"
-                                                className="rounded-xl bg-hrqColors-peach-300 text-gray-700"
+                                                className="rounded-xl bg-[#fc6a4a] text-gray-700"
                                             >
                                                 Login
                                             </Button>

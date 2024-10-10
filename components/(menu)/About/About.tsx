@@ -13,7 +13,9 @@ export default function AboutPage() {
     return (
         <section id="about" className="pt-12 sm:pt-26 md:pt-34 lg:pt-46 xl:pt-54 bg-custom-radial from-hrqColors-slateBlue-400 to-hrqColors-slateBlue-200 py-16 md:py-20 lg:py-28 min-h-screen">
             <div className="container mx-auto px-4 max-w-4xl xl:max-w-6xl">
-                <h1 className="text-4xl font-bold mb-8 text-center text-deepSlate">Welcome to the High Relationship Quotient (HighRQ)</h1>
+                <h1 className="text-4xl font-bold mb-4 text-center text-deepSlate">
+                    Welcome to the High Relationship Quotient (HighRQ)
+                </h1>
                 <p className="text-xl text-muted-foreground mb-12 text-center">
                     Discover the next evolution in measuring human potential, especially in relationships.
                 </p>
