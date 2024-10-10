@@ -31,7 +31,7 @@ export default function ResultCard({ result, index }: ResultCardProps) {
                 {/*    Summed Result: {result.summedResult}*/}
                 {/*</p>*/}
                 <div className="bg-white bg-opacity-50 p-3 rounded-md">
-                    <p className="text-gray-800 font-medium">Analysis:</p>
+                    {/*<p className="text-gray-800 font-medium">Analysis:</p>*/}
                     <p className="text-gray-700 mt-1">{result.analysis}</p>
                 </div>
             </CardContent>

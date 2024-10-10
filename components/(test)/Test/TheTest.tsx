@@ -41,8 +41,8 @@ const SliderOptions: React.FC<{ options: Option }> = ({ options }) => (
                     index === 0
                         ? 'left-16'
                         : index === 1
-                          ? 'left-1/2 -translate-x-1/2'
-                          : 'right-10'
+                            ? 'left-1/2 -translate-x-1/2'
+                            : 'right-10'
                 }`}
                 style={{
                     top: '50%',
@@ -56,10 +56,10 @@ const SliderOptions: React.FC<{ options: Option }> = ({ options }) => (
 )
 
 export default function TheTest({
-    questionData = [],
-    fireworksIndex = 0,
-    questionNumber = 0,
-}: TheTestProps) {
+                                    questionData = [],
+                                    fireworksIndex = 0,
+                                    questionNumber = 0,
+                                }: TheTestProps) {
     const [state, setState] = useState({
         questionIndex: questionNumber,
         sliderValue: 15,
@@ -69,6 +69,7 @@ export default function TheTest({
         fadeIn: true,
         currentQuestionText: '',
         testCompleted: false,
+        isAnalysisButtonClicked: false,
     })
 
     const router = useRouter()
@@ -105,22 +106,25 @@ export default function TheTest({
     }, [currentQuestion])
 
     const handleShowAnalysis = useCallback(async () => {
+        if (state.isAnalysisButtonClicked) return
+
+        setState((prev) => ({ ...prev, isAnalysisButtonClicked: true }))
+
         try {
             if (testMode === 'test') {
                 if (!state.testCompleted) {
                     await setTestCompleted()
                     setState((prev) => ({ ...prev, testCompleted: true }))
                 }
-                if (state.testCompleted) {
-                    router.push(`/analysis?mode=${testMode}`)
-                }
+                router.push(`/analysis?mode=${testMode}`)
             } else {
                 router.push(`/sampleAnalysis?mode=${testMode}`)
             }
         } catch (error) {
             console.error('Error completing the test:', error)
+            setState((prev) => ({ ...prev, isAnalysisButtonClicked: false }))
         }
-    }, [router, testMode, state.testCompleted])
+    }, [router, testMode, state.testCompleted, state.isAnalysisButtonClicked])
 
     const advanceToNextQuestion = useCallback(async () => {
         if (!isLastQuestion) {
@@ -175,10 +179,7 @@ export default function TheTest({
     }
 
     return (
-        <div
-            className="flex flex-col min-h-[calc(100vh-350
-        px)] bg-hrqColors-skyBlue-700"
-        >
+        <div className="flex flex-col min-h-[calc(100vh-350px)] bg-hrqColors-skyBlue-700">
             <div className="h-1 w-full bg-hrqColors-skyBlue-600">
                 <div
                     className="h-1 bg-hrqColors-sunsetOrange-400 transition-all duration-300 ease-in-out"
@@ -223,20 +224,20 @@ export default function TheTest({
                             isLastQuestion
                                 ? 'bg-hrqColors-skyBlue-500 hover:bg-hrqColors-skyBlue-800 group'
                                 : !state.isSliderUsed
-                                  ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
-                                  : 'bg-hrqColors-skyBlue-600 text-gray-100 hover:bg-hrqColors-skyBlue-800 group'
+                                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                                    : 'bg-hrqColors-skyBlue-600 text-gray-100 hover:bg-hrqColors-skyBlue-800 group'
                         }`}
                         onClick={
                             isLastQuestion
                                 ? handleShowAnalysis
                                 : advanceToNextQuestion
                         }
-                        disabled={!isLastQuestion && !state.isSliderUsed}
+                        disabled={(!isLastQuestion && !state.isSliderUsed) || state.isAnalysisButtonClicked}
                     >
                         <span
                             className={`relative z-10 ${!state.isSliderUsed && !isLastQuestion ? 'pointer-events-none' : ''}`}
                         >
-                            {isLastQuestion ? 'Show Analysis' : 'Next Question'}
+                            {isLastQuestion ? (state.isAnalysisButtonClicked ? 'Loading...' : 'Show Analysis') : 'Next Question'}
                         </span>
                         <span className="absolute inset-0 overflow-hidden rounded-xl">
                             <span

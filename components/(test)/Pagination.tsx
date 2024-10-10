@@ -121,7 +121,7 @@ const Pagination: React.FC<PaginationProps> = ({
                         disabled={currentPage === 1}
                         variant="outline"
                         size="icon"
-                        className="rounded-full w-[120px] bg-pantone624 hover:bg-pantone625 active:bg-green-800 border border-pantone621 transition-colors duration-300"
+                        className="rounded-full w-[120px] bg-hrqColors-slateBlue-400 hover:bg-hrqColors-slateBlue-600 active:bg-green-800 border border-pantone621 transition-colors duration-300"
                     >
                         <span className="sr-only">Previous</span>
                         Previous
@@ -140,7 +140,7 @@ const Pagination: React.FC<PaginationProps> = ({
                                         : 'outline'
                                 }
                                 size="icon"
-                                className="rounded-full bg-pantone624 hover:bg-pantone625 active:bg-green-800 border border-pantone624 transition-colors duration-300 mx-1"
+                                className="rounded-full bg-hrqColors-slateBlue-300 hover:bg-hrqColors-slateBlue-600 active:bg-hrqColors-slateBlue-800 border border-pantone624 transition-colors duration-300 mx-1"
                             >
                                 {number}
                             </Button>
@@ -154,7 +154,7 @@ const Pagination: React.FC<PaginationProps> = ({
                         disabled={currentPage === totalPages}
                         variant="outline"
                         size="icon"
-                        className="rounded-full w-[120px] bg-pantone624 hover:bg-pantone625 border border-pantone621 transition-colors duration-300"
+                        className="rounded-full w-[120px] bg-hrqColors-slateBlue-400 hover:bg-hrqColors-slateBlue-600 border border-pantone621 transition-colors duration-300"
                     >
                         <span className="sr-only">Next</span>
                         Next

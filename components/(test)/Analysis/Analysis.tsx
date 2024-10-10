@@ -10,7 +10,6 @@ import {
     setSummedTotals,
 } from '@/app/api/users'
 import testQuestions from '@/components/(test)/Test/Data/testQuestions'
-import ResultCard from '@/components/(test)/ResultCard'
 import Pagination from '@/components/(test)/Pagination'
 import FinalAnalysis from '@/components/(test)/FinalAnalysis'
 
@@ -36,6 +35,7 @@ export default function TestAnalysis() {
     const [totalLie, setTotalLie] = useState(0)
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage, setItemsPerPage] = useState(ITEMS_PER_PAGE_DESKTOP)
+    const [fadeIn, setFadeIn] = useState(true)
 
     const { user, isSignedIn } = useUser()
 
@@ -54,9 +54,11 @@ export default function TestAnalysis() {
         const lieValues = LIES.map((index) => answers[index]).filter(Boolean)
         const totalLieValue = lieValues.reduce((acc, value) => acc + value, 0)
         setTotalLie(totalLieValue)
-        const analysis = lieScale.find(
-            (entry) => totalLieValue >= entry.low && totalLieValue <= entry.high
-        )?.analysis || 'No analysis available.'
+        const analysis =
+            lieScale.find(
+                (entry) =>
+                    totalLieValue >= entry.low && totalLieValue <= entry.high
+            )?.analysis || 'No analysis available.'
         setLieAnalysis(analysis)
     }, [])
 
@@ -68,16 +70,26 @@ export default function TestAnalysis() {
         testQuestions.forEach((q, i) => {
             if (q.scale !== 64 && !evaluatedPositions.has(q.position)) {
                 const matches = testQuestions
-                    .filter((item, index) => item.scale === q.scale && index !== i && !evaluatedPositions.has(item.position))
-                    .map(item => item.position)
+                    .filter(
+                        (item, index) =>
+                            item.scale === q.scale &&
+                            index !== i &&
+                            !evaluatedPositions.has(item.position)
+                    )
+                    .map((item) => item.position)
 
                 if (matches.length > 0) {
                     evaluatedPositions.add(q.position)
                     matches.forEach((pos) => evaluatedPositions.add(pos))
 
                     const positions = [q.position, ...matches]
-                    const answersValues = positions.map((pos) => answers[pos] || 1)
-                    const sum = answersValues.reduce((total, value) => total + value, 0)
+                    const answersValues = positions.map(
+                        (pos) => answers[pos] || 1
+                    )
+                    const sum = answersValues.reduce(
+                        (total, value) => total + value,
+                        0
+                    )
                     const result = Math.floor(sum / 2)
 
                     results.push({
@@ -95,17 +107,20 @@ export default function TestAnalysis() {
 
         setTotalSummedValues(totalSum)
 
-        const uniqueResultsMap = new Map(results.map((item) => [item.scale, item]))
+        const uniqueResultsMap = new Map(
+            results.map((item) => [item.scale, item])
+        )
         const uniqueResults = Array.from(uniqueResultsMap.values())
 
         const resultsWithAnalysis = uniqueResults.map((result) => ({
             ...result,
-            analysis: testAnalysisData.find(
-                (q) =>
-                    q.scale === result.scale &&
-                    result.summedResult >= q.low &&
-                    result.summedResult <= q.high
-            )?.analysis || 'No analysis available.',
+            analysis:
+                testAnalysisData.find(
+                    (q) =>
+                        q.scale === result.scale &&
+                        result.summedResult >= q.low &&
+                        result.summedResult <= q.high
+                )?.analysis || 'No analysis available.',
         }))
 
         setUniqueResults(resultsWithAnalysis)
@@ -129,7 +144,6 @@ export default function TestAnalysis() {
                     const adjustedTotal = totalSummedValues + totalLie / 10
                     await calculateTestResponseAverage(user.id)
                     await setSummedTotals(adjustedTotal)
-                    // console.log('Persisted Total Summed Values:', adjustedTotal)
                 } catch (error) {
                     console.error('Error persisting totalSummedValues:', error)
                 }
@@ -140,7 +154,11 @@ export default function TestAnalysis() {
 
     useEffect(() => {
         const handleResize = () => {
-            setItemsPerPage(window.innerWidth <= MOBILE_BREAKPOINT ? ITEMS_PER_PAGE_MOBILE : ITEMS_PER_PAGE_DESKTOP)
+            setItemsPerPage(
+                window.innerWidth <= MOBILE_BREAKPOINT
+                    ? ITEMS_PER_PAGE_MOBILE
+                    : ITEMS_PER_PAGE_DESKTOP
+            )
         }
 
         handleResize()
@@ -149,8 +167,12 @@ export default function TestAnalysis() {
     }, [])
 
     const handlePageChange = (pageNumber: number) => {
-        setCurrentPage(pageNumber)
-        window.scrollTo({ top: 440, behavior: 'smooth' })
+        setFadeIn(false)
+        setTimeout(() => {
+            setCurrentPage(pageNumber)
+            setFadeIn(true)
+            window.scrollTo({ top: 440, behavior: 'smooth' })
+        }, 300)
     }
 
     if (loading) {
@@ -159,32 +181,54 @@ export default function TestAnalysis() {
 
     const indexOfLastResult = currentPage * itemsPerPage
     const indexOfFirstResult = indexOfLastResult - itemsPerPage
-    const currentResults = uniqueResults.slice(indexOfFirstResult, indexOfLastResult)
+    const currentResults = uniqueResults.slice(
+        indexOfFirstResult,
+        indexOfLastResult
+    )
     const totalPages = Math.ceil(uniqueResults.length / itemsPerPage)
 
     return (
-        <section className="p-6 min-h-screen bg-gray-300">
-            <h1 className="text-3xl font-bold text-gray-800 mb-6">Analysis</h1>
-            {currentResults.length > 0 ? (
-                <div className="space-y-4">
-                    {currentResults.map((result, index) => (
-                        <ResultCard key={result.scale} result={result} index={index} />
-                    ))}
-                </div>
-            ) : (
-                <p className="text-gray-600">No results available.</p>
-            )}
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                handlePageChange={handlePageChange}
-            />
-            {currentPage === totalPages && lieAnalysis && (
-                <FinalAnalysis
-                    lieAnalysis={lieAnalysis}
-                    totalSummedValues={totalSummedValues + totalLie / 10}
+        <section className="py-12 bg-custom-radial from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100">
+            <div className="container mx-auto px-4">
+                <h1 className="text-3xl font-bold text-dark mb-6">
+                    Analysis Results
+                </h1>
+                {currentResults.length > 0 ? (
+                    <div className="space-y-4">
+                        {currentResults.map((result, index) => (
+                            <div
+                                key={result.scale}
+                                className={`p-4 shadow-md rounded-lg border border-gray-200 ${
+                                    index % 2 === 0
+                                        ? 'bg-custom-radial from-hrqColors-skyBlue-600 to-hrqColors-skyBlue-400'
+                                        : 'bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-600'
+                                } 
+                                ${fadeIn ? 'opacity-100' : 'opacity-0'} 
+                                transition-opacity duration-700 ease-in-out`}
+                            >
+                                {/*<h2 className="text-2xl font-semibold text-white mb-2">*/}
+                                {/*    Scale {result.scale}*/}
+                                {/*</h2>*/}
+                                {/*<p className="text-dark mb-2">Score: {result.summedResult}</p>*/}
+                                <p className="text-dark">{result.analysis}</p>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-gray-600">No results available.</p>
+                )}
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    handlePageChange={handlePageChange}
                 />
-            )}
+                {currentPage === totalPages && lieAnalysis && (
+                    <FinalAnalysis
+                        lieAnalysis={lieAnalysis}
+                        totalSummedValues={totalSummedValues + totalLie / 10}
+                    />
+                )}
+            </div>
         </section>
     )
 }
