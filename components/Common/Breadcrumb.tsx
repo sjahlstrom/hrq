@@ -36,7 +36,7 @@ const Breadcrumb = ({
                           >
                             Home
                           </Link>
-                            <span className="mr-2 block h-2 w-2 rotate-45 border-t-2 border-r-2 border-hrqColors-coral-500"></span>
+                            <span className="mr-2 block h-2 w-2 rotate-45 border-t-2 border-r-2 border-hrqColors-coral-400"></span>
                         </li>
                           <li className="text-hrqColors-skyBlue-900 text-base font-medium ">
                           {pageName}

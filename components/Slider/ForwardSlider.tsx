@@ -10,7 +10,7 @@ interface CreateSliderProps {
 
 const sliderStyles = {
    rail: {
-      backgroundColor: '#9d4e2f',
+      backgroundColor: '#e44f26',
       height: 10,
       borderRadius: 5,
    },
@@ -24,7 +24,7 @@ const sliderStyles = {
       width: 24,
       marginLeft: -8,
       marginTop: -7,
-      backgroundColor: '#ff0000',
+      backgroundColor: '#7892be',
    },
 }
 
