@@ -1,89 +1,105 @@
-import NewsLatterBox from './NewsLatterBox'
 
-const Contact = () => {
-   return (
-      <div className="bg-wild-blue">
-         <section
-            id="contact"
-            className="overflow-hidden py-16 md:py-20 lg:py-28"
-         >
-            <div className="container">
-               <div className="-mx-4 flex flex-wrap">
-                  <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
-                     <div
-                        className="mb-12 rounded-md bg-primary/[3%] px-8 py-11 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px] dark:bg-dark"
-                     >
-                        <h2 className="mb-3 text-2xl font-bold text-black sm:text-3xl lg:text-2xl xl:text-3xl dark:text-white">
-                           Need help? Let us know
-                        </h2>
-                        <p className="mb-12 text-base font-medium text-body-color">
-                           Our support team will get back to you ASAP via email.
-                        </p>
-                        <form>
-                           <div className="-mx-4 flex flex-wrap">
-                              <div className="w-full px-4 md:w-1/2">
-                                 <div className="mb-8">
-                                    <label
-                                       htmlFor="name"
-                                       className="mb-3 block text-sm font-medium text-dark dark:text-white"
-                                    >
-                                       Your Name
-                                    </label>
-                                    <input
-                                       type="text"
-                                       placeholder="Enter your name"
-                                       className="shadow-one dark:shadow-signUp w-full rounded-md border border-transparent px-6 py-3 text-base text-body-color placeholder-body-color outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51]"
-                                    />
-                                 </div>
-                              </div>
-                              <div className="w-full px-4 md:w-1/2">
-                                 <div className="mb-8">
-                                    <label
-                                       htmlFor="email"
-                                       className="mb-3 block text-sm font-medium text-dark dark:text-white"
-                                    >
-                                       Your Email
-                                    </label>
-                                    <input
-                                       type="email"
-                                       placeholder="Enter your email"
-                                       className="shadow-one dark:shadow-signUp w-full rounded-md border border-transparent px-6 py-3 text-base text-body-color placeholder-body-color outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51]"
-                                    />
-                                 </div>
-                              </div>
-                              <div className="w-full px-4">
-                                 <div className="mb-8">
-                                    <label
-                                       htmlFor="message"
-                                       className="mb-3 block text-sm font-medium text-dark dark:text-white"
-                                    >
-                                       Your Message
-                                    </label>
-                                    <textarea
-                                       name="message"
-                                       rows={5}
-                                       placeholder="Enter your Message"
-                                       className="shadow-one dark:shadow-signUp w-full resize-none rounded-md border border-transparent px-6 py-3 text-base text-body-color placeholder-body-color outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51]"
-                                    ></textarea>
-                                 </div>
-                              </div>
-                              <div className="w-full px-4">
-                                 <button className="hover:shadow-signUp rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80">
-                                    Submit Questions
-                                 </button>
-                              </div>
-                           </div>
-                        </form>
-                     </div>
-                  </div>
-                  <div className="w-full px-4 lg:w-5/12 xl:w-4/12">
-                     <NewsLatterBox />
-                  </div>
-               </div>
-            </div>
-         </section>
-      </div>
-   )
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+import { useUser } from '@clerk/nextjs'
+
+const schema = z.object({
+    name: z.string().min(2, { message: "Name must be at least 2 characters long" }),
+    email: z.string().email({ message: "Invalid email address" }),
+    message: z.string().min(10, { message: "Message must be at least 10 characters long" })
+})
+
+type FormData = z.infer<typeof schema>
+
+export default function ContactPage() {
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+    const { user, isLoaded } = useUser()
+
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>({
+        resolver: zodResolver(schema)
+    })
+
+    useEffect(() => {
+        if (isLoaded && user) {
+            setValue('name', user.fullName || user.username || '')
+            setValue('email', user.primaryEmailAddress?.emailAddress || '')
+        }
+    }, [isLoaded, user, setValue])
+
+    const onSubmit = async (data: FormData) => {
+        setIsSubmitting(true)
+        setSubmitStatus('idle')
+        try {
+            const response = await fetch('/api/sendMail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+
+            if (response.ok) {
+                setSubmitStatus('success')
+                reset()
+            } else {
+                throw new Error('Failed to send email')
+            }
+        } catch (error) {
+            setSubmitStatus('error')
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
+
+    return (
+        <div className="max-w-md mx-auto border-2 mt-6 p-6 bg-white rounded shadow-md">
+            <h1 className="text-2xl font-bold mb-7 text-gray-700">Contact Us</h1>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div>
+                    <input
+                        {...register('name')}
+                        placeholder="Your Name"
+                        className={`w-full px-3 py-2 text-gray-700 border rounded focus:outline-none bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-200 ${errors.name ? "border-red-500" : "border-gray-300"}`}
+                    />
+                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+                </div>
+                <div>
+                    <input
+                        {...register('email')}
+                        placeholder="Your Email"
+                        type="email"
+                        className={`w-full px-3 py-2 text-gray-700 border rounded focus:outline-none bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-200 ${errors.email ? "border-red-500" : "border-gray-300"}`}
+                    />
+                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                </div>
+                <div>
+          <textarea
+              {...register('message')}
+              placeholder="Your Message"
+              rows={4}
+              className={`w-full px-3 py-2 text-gray-700 border rounded focus:outline-none bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-200 ${errors.message ? "border-red-500" : "border-gray-300"}`}
+          />
+                    {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
+                </div>
+                <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:shadow-outline disabled:opacity-50"
+                >
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                </button>
+            </form>
+            {submitStatus === 'success' && (
+                <p className="mt-4 text-green-500">Message sent successfully!</p>
+            )}
+            {submitStatus === 'error' && (
+                <p className="mt-4 text-red-500">Failed to send message. Please try again.</p>
+            )}
+        </div>
+    )
 }
-
-export default Contact
