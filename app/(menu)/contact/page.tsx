@@ -1,17 +1,23 @@
-import Breadcrumb from "@/components/Common/Breadcrumb";
-import Contact from "@/components/(menu)/Contact/Contact";
+import Breadcrumb from '@/components/Common/Breadcrumb'
+import ContactForm  from '@/components/(menu)/Contact/Contact'
 
 const ContactPage = () => {
-  return (
-    <>
-      <Breadcrumb
-        pageName="Contact Page"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
-      />
-
-      <Contact />
-    </>
-  );
-};
+    return (
+        <div>
+            <div className="bg-hrqColors-skyBlue-100">
+                <Breadcrumb
+                    pageName="Contact"
+                    description="Send us an email and we will get back to you as soon as possible!"
+                />
+                <ContactForm />
+            </div>
+        </div>
+    )
+}
 
 export default ContactPage;
+
+
+
+
+
