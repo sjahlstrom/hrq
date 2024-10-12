@@ -1,5 +1,6 @@
 import Breadcrumb from '@/components/Common/Breadcrumb'
-import ContactForm  from '@/components/(menu)/Contact/Contact'
+import ContactForm from '@/components/(menu)/Contact/Contact'
+import { telex } from '@/app/ui/fonts'
 
 const ContactPage = () => {
     return (
@@ -7,7 +8,7 @@ const ContactPage = () => {
             <div className="bg-hrqColors-skyBlue-100">
                 <Breadcrumb
                     pageName="Contact"
-                    description="Send us an email and we will get back to you as soon as possible!"
+                    description="Got questions? &nbsp;Want to send feedback? &nbsp;Let us know."
                 />
                 <ContactForm />
             </div>
@@ -15,9 +16,4 @@ const ContactPage = () => {
     )
 }
 
-export default ContactPage;
-
-
-
-
-
+export default ContactPage

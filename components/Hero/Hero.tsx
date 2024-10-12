@@ -20,10 +20,10 @@ export default function Hero() {
             </div>
 
             <div className="relative w-full">
-                <div className="absolute -top-5 left-[10px] w-2/3">
+                <div className="absolute -top-5  w-3/5">
                     <div className="mx-auto max-w-[800px] text-center">
                         <h1
-                            className={`${nunito.className} animate-fade-in text-blue-900 mb-5 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight`}
+                            className={`${nunito.className} animate-fade-in text-blue-900 mb-5 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-6xl xl:text-6xl leading-tight`}
                         >
                             High Relationship Quotient
                         </h1>

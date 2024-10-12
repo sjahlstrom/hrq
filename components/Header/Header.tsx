@@ -98,7 +98,7 @@ export default function Header() {
                             <nav
                                 ref={dropdownRef}
                                 id="navbarCollapse"
-                                className={`navbar absolute right-1 translate-x-[40px] z-30 w-[150px] rounded border-[.5px] border-body-color/50  py-4 px-6 duration-300 lg:visible lg:static lg:w-auto lg:border-none lg:!.transparent lg:p-0 lg:opacity-100
+                                className={`navbar absolute right-1 translate-x-[40px] z-30 w-[150px] rounded border-[.5px] border-body-color/50  py-4 px-6 duration-300  lg:visible lg:static lg:w-auto lg:border-none lg:!.transparent lg:p-0 lg:opacity-100
     ${
                                     navbarOpen
                                         ? 'visibility top-full opacity-100'
