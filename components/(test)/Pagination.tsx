@@ -114,14 +114,13 @@ const Pagination: React.FC<PaginationProps> = ({
             aria-label="Pagination"
         >
             <ul className="inline-flex items-center space-x-2">
-                {/*Previous button*/}
                 <li>
                     <Button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                         variant="outline"
                         size="icon"
-                        className="rounded-full w-[120px] bg-hrqColors-slateBlue-400 hover:bg-hrqColors-slateBlue-600 active:bg-green-800 border border-pantone621 transition-colors duration-300"
+                        className="rounded-full w-[120px] bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300"
                     >
                         <span className="sr-only">Previous</span>
                         Previous
@@ -140,7 +139,7 @@ const Pagination: React.FC<PaginationProps> = ({
                                         : 'outline'
                                 }
                                 size="icon"
-                                className="rounded-full bg-hrqColors-slateBlue-300 hover:bg-hrqColors-slateBlue-600 active:bg-hrqColors-slateBlue-800 border border-pantone624 transition-colors duration-300 mx-1"
+                                className="rounded-full bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300 mx-1"
                             >
                                 {number}
                             </Button>
@@ -154,7 +153,7 @@ const Pagination: React.FC<PaginationProps> = ({
                         disabled={currentPage === totalPages}
                         variant="outline"
                         size="icon"
-                        className="rounded-full w-[120px] bg-hrqColors-slateBlue-400 hover:bg-hrqColors-slateBlue-600 border border-pantone621 transition-colors duration-300"
+                        className="rounded-full w-[120px] bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300"
                     >
                         <span className="sr-only">Next</span>
                         Next

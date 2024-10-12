@@ -1,46 +1,44 @@
-import Stripe from "stripe";
-import { stripe } from "@/lib/stripe";
-import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
+import Stripe from 'stripe'
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2024-06-20',
+    typescript: true,
+})
 
 export async function POST(req: Request) {
-    const body = await req.text();
-    const signature = req.headers.get("Stripe-Signature") as string;
-
-    let event: Stripe.Event;
-
     try {
-        event = stripe.webhooks.constructEvent(
-            body,
-            signature,
-            process.env.STRIPE_WEBHOOK_SECRET!
-        )
-    } catch (error: any) {
-        return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
-    }
+        const { price } = await req.json()
 
-    const session = event.data.object as Stripe.Checkout.Session;
-    const userId = session?.metadata?.userId;
-    const testId = session?.metadata?.testId;
-    const amount = session?.metadata?.amount;
-
-    if (event.type === "checkout.session.completed") {
-        if(!userId || !testId) {
-            return new NextResponse(`Webhook Error: Missing metadata`, { status: 400 });
+        // Ensure price is a valid number and convert to cents
+        const unitAmount = Math.round(parseFloat(price) * 100)
+        if (isNaN(unitAmount) || unitAmount <= 0) {
+            throw new Error('Invalid price')
         }
 
-        const amount = parseFloat(session?.metadata?.amount) || 0;
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [
+                {
+                    price_data: {
+                        currency: 'usd',
+                        product_data: {
+                            name: 'Test Results',
+                            description: 'Comprehensive test analysis and personalized improvement suggestions',
+                        },
+                        unit_amount: unitAmount,
+                    },
+                    quantity: 1,
+                },
+            ],
+            mode: 'payment',
+            success_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/success`,
+            cancel_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/cancel`,
+        })
 
-        await db.purchase.create({
-            data: {
-                testId: testId,
-                userId: userId,
-                amount: amount
-            }
-        });
-    } else {
-        return new NextResponse(`Webhook Error: Unsupported event type ${event.type}`, { status: 200 });
+        return NextResponse.json({ sessionId: session.id })
+    } catch (err) {
+        console.error('Error creating checkout session:', err)
+        return NextResponse.json({ error: 'Error creating checkout session' }, { status: 500 })
     }
-
-    return new NextResponse(null, { status: 200 });
 }

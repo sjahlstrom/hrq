@@ -194,22 +194,18 @@ export default function TestAnalysis() {
                     Analysis Results
                 </h1>
                 {currentResults.length > 0 ? (
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                         {currentResults.map((result, index) => (
                             <div
                                 key={result.scale}
-                                className={`p-4 shadow-md rounded-lg border border-gray-200 ${
+                                className={`p-4 shadow-lg rounded-lg border border-gray-200 ${
                                     index % 2 === 0
-                                        ? 'bg-custom-radial from-hrqColors-skyBlue-600 to-hrqColors-skyBlue-400'
-                                        : 'bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-600'
+                                        ? 'bg-hrqColors-skyBlue-400'
+                                        : 'bg-hrqColors-skyBlue-600'
                                 } 
                                 ${fadeIn ? 'opacity-100' : 'opacity-0'} 
                                 transition-opacity duration-700 ease-in-out`}
                             >
-                                {/*<h2 className="text-2xl font-semibold text-white mb-2">*/}
-                                {/*    Scale {result.scale}*/}
-                                {/*</h2>*/}
-                                {/*<p className="text-dark mb-2">Score: {result.summedResult}</p>*/}
                                 <p className="text-dark">{result.analysis}</p>
                             </div>
                         ))}

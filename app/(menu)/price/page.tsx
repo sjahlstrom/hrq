@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import React from 'react'
-import Pricing from '@/components/(menu)/Pricing/Pricing'
+import PurchaseResults from '@/components/(menu)/Pricing/Pricing'
 
 const PricingPage = () => {
    return (
@@ -9,7 +9,7 @@ const PricingPage = () => {
             pageName="Pricing Page"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
          />
-         <Pricing />
+         <PurchaseResults />
       </div>
    );
 };
