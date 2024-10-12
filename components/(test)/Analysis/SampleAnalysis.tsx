@@ -79,11 +79,11 @@ const SampleAnalysis = () => {
             {loading ? (
                 <p className="text-gray-600">Loading...</p>
             ) : matchedQuestions.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-6">
                     {matchedQuestions.map((question, index) => (
                         <div
                             key={index}
-                            className={`p-4 shadow-md rounded-lg border border-gray-200 ${index % 2 === 0 ? 'bg-custom-radial from-hrqColors-skyBlue-600 to-hrqColors-skyBlue-400' : 'bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-600'} 
+                            className={`p-4 shadow-md rounded-lg border border-gray-200 ${index % 2 === 0 ? 'bg-hrqColors-skyBlue-500' : 'bg-hrqColors-skyBlue-400 '} 
                         ${fadeIn ? 'opacity-100' : 'opacity-0'} 
                         transition-opacity duration-700 ease-in-out delay-${index * 400}ms`}
                         >

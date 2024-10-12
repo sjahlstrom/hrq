@@ -18,22 +18,7 @@ export default function Hero() {
                     style={{ objectFit: 'cover' }}
                 />
             </div>
-            {/*<div className="relative w-full">*/}
-            {/*    <div className="absolute -top-5 left-[10px] w-2/3 ">*/}
-            {/*        <div className="mx-auto max-w-[800px] text-center">*/}
-            {/*            <h1*/}
-            {/*                className={`${nunito.className} text-blue-900 mb-5 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight`}*/}
-            {/*            >*/}
-            {/*                High Relationship Quotient*/}
-            {/*            </h1>*/}
-            {/*            <p className={`${telex.className}  font-laila text-hrqColors-skyBlue-800 mb-12 text-sm sm:text-base md:text-lg lg:text-xl font-small leading-relaxed text-semibold`}>*/}
-            {/*                Life is a balancing act. <br />Find out how to get*/}
-            {/*                yours in balance and improve all of your*/}
-            {/*                relationships.*/}
-            {/*            </p>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
+
             <div className="relative w-full">
                 <div className="absolute -top-5 left-[10px] w-2/3">
                     <div className="mx-auto max-w-[800px] text-center">

@@ -41,8 +41,8 @@ const SliderOptions: React.FC<{ options: Option }> = ({ options }) => (
                     index === 0
                         ? 'left-16'
                         : index === 1
-                            ? 'left-1/2 -translate-x-1/2'
-                            : 'right-10'
+                          ? 'left-1/2 -translate-x-1/2'
+                          : 'right-10'
                 }`}
                 style={{
                     top: '50%',
@@ -56,10 +56,10 @@ const SliderOptions: React.FC<{ options: Option }> = ({ options }) => (
 )
 
 export default function TheTest({
-                                    questionData = [],
-                                    fireworksIndex = 0,
-                                    questionNumber = 0,
-                                }: TheTestProps) {
+    questionData = [],
+    fireworksIndex = 0,
+    questionNumber = 0,
+}: TheTestProps) {
     const [state, setState] = useState({
         questionIndex: questionNumber,
         sliderValue: 15,
@@ -190,18 +190,18 @@ export default function TheTest({
             <div className="flex-grow flex flex-col justify-between items-center px-4 py-8 md:py-16">
                 <div className="w-full max-w-3xl text-center mb-8 md:mb-12">
                     <h2
-                        className={`
-                            ${nunito.className} 
-                            mt-10 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-gray-100
-                            transition-opacity duration-300 ease-in-out
-                            ${state.fadeIn ? 'opacity-100' : 'opacity-0'}
+                        className={`${nunito.className} 
+                           mt-10 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-gray-100
+                           transition-opacity duration-300 ease-in-out
+                           ${state.fadeIn ? 'opacity-100' : 'opacity-0'}
+                           h-20 overflow-hidden leading-snug pb-1
                         `}
                     >
                         {state.currentQuestionText}
                     </h2>
                 </div>
 
-                <div className="w-full max-w-3xl mb-8 md:mb-12">
+                <div className="w-full max-w-3xl mb-8 md:mb-12 -mt-24">
                     <div className="px-4 md:px-8">
                         {currentQuestion.reverse ? (
                             <ReverseSlider
@@ -218,26 +218,33 @@ export default function TheTest({
                     <SliderOptions options={currentQuestion.options} />
                 </div>
 
-                <div className="w-full max-w-3xl flex justify-center mb-8 md:mb-12">
+                <div className="w-full max-w-3xl flex justify-center mb-8 md:mb-12 -mt-24">
                     <Button
                         className={`relative w-full max-w-md px-6 py-3 text-lg sm:text-xl rounded-xl shadow-md transition-all duration-300 overflow-hidden ${
                             isLastQuestion
                                 ? 'bg-hrqColors-skyBlue-500 hover:bg-hrqColors-skyBlue-800 group'
                                 : !state.isSliderUsed
-                                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
-                                    : 'bg-hrqColors-skyBlue-600 text-gray-100 hover:bg-hrqColors-skyBlue-800 group'
+                                  ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                                  : 'bg-hrqColors-skyBlue-600 text-gray-100 hover:bg-hrqColors-skyBlue-800 group'
                         }`}
                         onClick={
                             isLastQuestion
                                 ? handleShowAnalysis
                                 : advanceToNextQuestion
                         }
-                        disabled={(!isLastQuestion && !state.isSliderUsed) || state.isAnalysisButtonClicked}
+                        disabled={
+                            (!isLastQuestion && !state.isSliderUsed) ||
+                            state.isAnalysisButtonClicked
+                        }
                     >
                         <span
                             className={`relative z-10 ${!state.isSliderUsed && !isLastQuestion ? 'pointer-events-none' : ''}`}
                         >
-                            {isLastQuestion ? (state.isAnalysisButtonClicked ? 'Loading...' : 'Show Analysis') : 'Next Question'}
+                            {isLastQuestion
+                                ? state.isAnalysisButtonClicked
+                                    ? 'Loading...'
+                                    : 'Show Analysis'
+                                : 'Next Question'}
                         </span>
                         <span className="absolute inset-0 overflow-hidden rounded-xl">
                             <span
@@ -258,9 +265,9 @@ export default function TheTest({
                 {state.questionIndex === fireworksIndex && (
                     <div
                         role="alert"
-                        className="rounded-xl border border-blue-800 bg-amber-800 p-4 text-center w-full max-w-3xl text-base sm:text-lg"
+                        className="rounded-xl border border-blue-800 bg-yellow-300 p-4  text-center w-full max-w-3xl text-base sm:text-lg"
                     >
-                        <strong className="block font-medium text-white">
+                        <strong className="block font-medium text-hrqColors-coolGray-800">
                             {fireworksIndex === halfwayIndex
                                 ? "Congratulations! You're halfway there!"
                                 : 'End of test'}

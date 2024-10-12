@@ -19,12 +19,12 @@ const sliderStyles = {
       height: 10,
    },
    handle: {
-      borderColor: '#f0966a',
+      borderColor: '#ff0000',
       height: 24,
       width: 24,
       marginLeft: -8,
       marginTop: -7,
-      backgroundColor: '#7892be',
+      backgroundColor: '#47201a',
    },
 }
 

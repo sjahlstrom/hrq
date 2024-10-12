@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { useUser } from '@clerk/nextjs'
+import { nunito } from '@/app/ui/fonts'
 
 const schema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters long" }),
@@ -58,7 +59,7 @@ export default function ContactPage() {
 
     return (
         <div className="max-w-md mx-auto border-2 mt-6 p-6 bg-white rounded shadow-md">
-            <h1 className="text-2xl font-bold mb-7 text-gray-700">Contact Us</h1>
+            <h1 className={`${nunito.className} text-2xl font-bold mb-7 text-gray-700`}>Contact Us</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
                     <input
@@ -89,7 +90,7 @@ export default function ContactPage() {
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:shadow-outline disabled:opacity-50"
+                    className="w-full bg-blue-500 text-white font-bold py-2 px-4 border rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline disabled:opacity-50"
                 >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
