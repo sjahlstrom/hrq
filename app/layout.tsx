@@ -7,6 +7,19 @@ import Footer from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
 import ScrollToTop from '@/components/ScrollToTop'
 import '../styles/index.css'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    metadataBase: new URL('http://hrq.vercel.app'),
+    keywords: ['hrq', 'High Relationship Quotient', 'test', 'analysis', 'psychology', 'dating'],
+    title: {
+        default: 'HRQ',
+        template: '%s | HRQ'
+    },
+    openGraph: {
+        description: 'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships.'
+    }
+}
 
 export default function RootLayout({
     children,
@@ -19,18 +32,21 @@ export default function RootLayout({
                 lang="en"
                 className={`${arimo.variable} ${laila.variable} ${telex.variable} ${nunito.variable}`}
             >
-                <head>
-                    <title>Human Relationship Quotient</title>
-                </head>
+            <head>
+                <title>Human Relationship Quotient</title>
+                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+            </head>
 
-                <body>
-                    <Providers>
-                        <Header />
-                        {children}
-                        <Footer />
-                        <ScrollToTop />
-                    </Providers>
-                </body>
+            <body>
+            <Providers>
+                <Header />
+                {children}
+                <Footer />
+                <ScrollToTop />
+            </Providers>
+            </body>
             </html>
         </ClerkProvider>
     )

@@ -58,18 +58,19 @@ model Account {
 }
 
 model Test {
-  id        String     @id @default(cuid())
-  userId    String
-  title     String     @db.Text
-  price     Float?
-  purchases Purchase[] // This is the relation field
+  id          String     @id @default(cuid())
+  userId      String
+  title       String     @db.Text
+  description String     @db.Text
+  price       Float?
+  purchases   Purchase[] // This is the relation field
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Purchase {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   userId    String
   testId    String? // Ensure testId is included here as well
   amount    Float
@@ -83,9 +84,10 @@ model Purchase {
 }
 
 model StripeCustomer {
-  id               String @id @default(cuid())
-  userId           String @unique
-  stripeCustomerId String @unique
+  id               String  @id @default(cuid())
+  userId           String  @unique
+  email            String? @unique
+  stripeCustomerId String  @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

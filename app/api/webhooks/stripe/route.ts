@@ -1,44 +1,33 @@
-import { NextResponse } from 'next/server'
-import Stripe from 'stripe'
+import { NextRequest, NextResponse } from 'next/server'
+import { stripe } from '@/lib/stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2024-06-20',
-    typescript: true,
-})
+export async function POST(req: NextRequest) {
 
-export async function POST(req: Request) {
+    const payload = await req.text()
+    const res = JSON.parse(payload)
+    const sig = req.headers.get('Stripe-Signature')
+
+    const dateTime = new Date(res?.created * 1000).toLocaleDateString()
+    const timeString = new Date(res?.created * 1000).toLocaleDateString()
+
+
     try {
-        const { price } = await req.json()
+        let event = stripe.webhooks.constructEvent(
+            payload,
+            sig!,
+            process.env.STRIPE_WEBHOOK_SECRET!
+        )
+        console.log(event, event.type)
+        // charge.succeeded
+        // payment_intent.succeeded
+        // payment_intent.created
 
-        // Ensure price is a valid number and convert to cents
-        const unitAmount = Math.round(parseFloat(price) * 100)
-        if (isNaN(unitAmount) || unitAmount <= 0) {
-            throw new Error('Invalid price')
-        }
+        // crete methods to handle the different events
+        // and save data to the database
 
-        const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card'],
-            line_items: [
-                {
-                    price_data: {
-                        currency: 'usd',
-                        product_data: {
-                            name: 'Test Results',
-                            description: 'Comprehensive test analysis and personalized improvement suggestions',
-                        },
-                        unit_amount: unitAmount,
-                    },
-                    quantity: 1,
-                },
-            ],
-            mode: 'payment',
-            success_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/success`,
-            cancel_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/cancel`,
-        })
-
-        return NextResponse.json({ sessionId: session.id })
-    } catch (err) {
-        console.error('Error creating checkout session:', err)
-        return NextResponse.json({ error: 'Error creating checkout session' }, { status: 500 })
+        return NextResponse.json({ status: 'success', event: event.type })
+    } catch (error) {
+        return NextResponse.json({ status: 'error', error: error.message })
     }
+
 }

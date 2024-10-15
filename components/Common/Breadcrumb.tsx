@@ -10,11 +10,11 @@ const Breadcrumb = ({
 }) => {
     return (
         <>
-            <section className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 relative z-10 -mt-24 overflow-hidden pt-28 lg:pt-[150px]">
+            <section className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 relative z-10 -mt-28 overflow-hidden pt-20 lg:pt-[150px]">
               <div className="container ">
                 <div className="-mx-4 flex flex-wrap items-center">
                   <div className="w-full px-4 md:w-8/12 lg:w-7/12">
-                    <div className="mb-8 mt-20 max-w-[570px] md:mb-0 lg:mb-12">
+                    <div className="mb-8 mt-10 max-w-[570px] md:mb-0 lg:mb-12">
                       <h1 className=" animate-fade-in mb-5 text-2xl font-semibold text-white sm:text-3xl">
                         {pageName}
                       </h1>
