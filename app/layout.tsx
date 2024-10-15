@@ -1,4 +1,4 @@
-import { nunito,arimo, laila, telex} from '@/app/ui/fonts'
+import { arimo, laila, nunito, telex } from '@/app/ui/fonts'
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { Providers } from './providers'
@@ -6,8 +6,9 @@ import React from 'react'
 import Footer from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
 import ScrollToTop from '@/components/ScrollToTop'
-import '../styles/index.css'
+import '@/styles/index.css'
 import { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
     metadataBase: new URL('http://hrq.vercel.app'),
@@ -43,6 +44,7 @@ export default function RootLayout({
             <Providers>
                 <Header />
                 {children}
+                <Analytics />
                 <Footer />
                 <ScrollToTop />
             </Providers>
