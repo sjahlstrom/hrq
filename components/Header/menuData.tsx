@@ -78,6 +78,12 @@ const menuData: Menu[] = [
             path: '/tos',
             newTab: false,
          },
+         {
+            id: 999,
+            title: 'Admin',
+            path: '/admin',
+            newTab: false,
+         },
       ],
    },
 
