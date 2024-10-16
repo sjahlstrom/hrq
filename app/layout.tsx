@@ -9,6 +9,7 @@ import ScrollToTop from '@/components/ScrollToTop'
 import '@/styles/index.css'
 import { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/dist/next'
 
 export const metadata: Metadata = {
     metadataBase: new URL('http://hrq.vercel.app'),
@@ -38,6 +39,7 @@ export default function RootLayout({
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
             </head>
 
             <body>
@@ -45,6 +47,7 @@ export default function RootLayout({
                 <Header />
                 {children}
                 <Analytics />
+                <SpeedInsights />
                 <Footer />
                 <ScrollToTop />
             </Providers>
