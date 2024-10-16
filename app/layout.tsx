@@ -9,7 +9,7 @@ import ScrollToTop from '@/components/ScrollToTop'
 import '@/styles/index.css'
 import { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/dist/next'
+import  SpeedInsights  from '@vercel/speed-insights/dist/next'
 
 export const metadata: Metadata = {
     metadataBase: new URL('http://hrq.vercel.app'),
