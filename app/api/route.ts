@@ -1,24 +1,21 @@
-import type { NextRequest } from "next/server"
+import { NextRequest, NextResponse } from 'next/server'
 import { Ratelimit } from '@upstash/ratelimit'
 import { kv } from '@vercel/kv'
-import { headers } from 'next/headers'
 
 const ratelimit = new Ratelimit({
     redis: kv,
     limiter: Ratelimit.slidingWindow(5, '10s')
 })
 
-export const config = {
-    runtime: 'edge',
-}
+export const runtime = "edge"
 
-export default async function handler(request: NextRequest) {
+export async function GET(request: NextRequest) {
     const ip = request.ip ?? '127.0.0.1'
-    const { limit, reset, remaining } = await ratelimit.limit(ip)
+    const { success, limit, reset, remaining } = await ratelimit.limit(ip)
 
-    if (remaining === 0) {
-        return new Response(
-            JSON.stringify({ error: "Rate limit exceeded" }),
+    if (!success) {
+        return NextResponse.json(
+            { error: "Rate limit exceeded" },
             {
                 status: 429,
                 headers: {
@@ -27,13 +24,10 @@ export default async function handler(request: NextRequest) {
                     'X-RateLimit-Reset': reset.toString(),
                 },
             }
-        );
-    }
-    else {
-        // do action ...
-        // maybe send email or whatever appropriate
-        return Response.json({message: 'Rate limit exceeded'})
+        )
     }
 
+    // do action ...
+    // maybe send email or whatever appropriate
+    return NextResponse.json({ message: 'Action performed successfully' })
 }
-
