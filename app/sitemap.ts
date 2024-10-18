@@ -10,6 +10,22 @@ export default  function sitemap() {
             lastModified: new Date(),
         },
         {
+            url: `${baseUrl}/analysis`,
+            lastModified: new Date(),
+        },
+        {
+            url: `${baseUrl}/services`,
+            lastModified: new Date(),
+        },
+        {
+            url: `${baseUrl}/FAQs`,
+            lastModified: new Date(),
+        },
+        {
+            url: `${baseUrl}/tos`,
+            lastModified: new Date(),
+        },
+        {
             url: `${baseUrl}/price`,
             lastModified: new Date(),
         },

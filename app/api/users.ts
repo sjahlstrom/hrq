@@ -136,11 +136,11 @@ export const setTestCompleted = async (): Promise<boolean> => {
 }
 
 export const setSummedTotals = async (average: number): Promise<boolean> => {
-    const user = await currentUser();
+    const user = await currentUser()
 
     if (!user) {
-        console.error('No user found');
-        return false;
+        console.error('No user found')
+        return false
     }
 
     try {
@@ -148,27 +148,26 @@ export const setSummedTotals = async (average: number): Promise<boolean> => {
         const userData = await db.user.findUnique({
             where: { externalUserId: user.id },
             select: { testCompleted: true },
-        });
+        })
 
         // Check if testCompleted is true
         if (!userData?.testCompleted) {
-            console.error('Cannot set test average: Test not completed.');
-            return false;
+            console.error('Cannot set test average: Test not completed.')
+            return false
         }
 
         // Update the testAverage field in the database with the provided average
         await db.user.update({
             where: { externalUserId: user.id },
             data: { summedTotal: average }, // Use the provided average value
-        });
+        })
 
-        return true;
+        return true
     } catch (error) {
-        console.error('Error setting testAverage:', error);
-        return false;
+        console.error('Error setting testAverage:', error)
+        return false
     }
-};
-
+}
 
 export const getTestResponseLength = async (
     userId: string
@@ -196,8 +195,6 @@ export const getTestResponses = async (): Promise<number[]> => {
             console.error('No user is currently logged in.')
             throw new Error('No user is currently logged in.')
         }
-
-        // console.log('Fetching test responses for user:', user.id)
 
         const responses = await db.user.findUnique({
             where: { externalUserId: user.id }, // Assuming 'externalUserId' is the key in the DB
@@ -285,18 +282,3 @@ export const unBanUser = async (externalUserId: string) => {
         console.error('Error unBanning user:', error)
     }
 }
-
-// Inside your API or backend function
-
-// export const setSummedTotals = async (userId, total) => {
-//     try {
-//         const updatedUser = await prisma.user.update({
-//             where: { id: userId },
-//             data: { summedTotal: total },
-//         });
-//         return updatedUser;
-//     } catch (error) {
-//         console.error('Error updating summedTotal:', error);
-//         throw error;
-//     }
-// };

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 
 interface PaginationProps {
     currentPage: number
@@ -9,11 +9,11 @@ interface PaginationProps {
 }
 
 export default function Pagination({
-                                       currentPage,
-                                       pageCount,
-                                       setCurrentPage,
-                                       totalItems
-                                   }: PaginationProps) {
+    currentPage,
+    pageCount,
+    setCurrentPage,
+    totalItems,
+}: PaginationProps) {
     const pageNumbers = Array.from({ length: pageCount }, (_, i) => i + 1)
 
     return (
@@ -38,7 +38,9 @@ export default function Pagination({
                     <li key={number}>
                         <Button
                             onClick={() => setCurrentPage(number)}
-                            variant={currentPage === number ? 'secondary' : 'outline'}
+                            variant={
+                                currentPage === number ? 'secondary' : 'outline'
+                            }
                             size="icon"
                             className="rounded-full bg-pantone624 hover:bg-pantone625 active:bg-green-800 border border-pantone624 transition-colors duration-300 mx-1"
                         >

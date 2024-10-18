@@ -1,82 +1,76 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { kv } from '@vercel/kv'
+import { Redis } from '@upstash/redis'
+
+const redis = new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL!,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+})
+
+// Time window in seconds (10 minutes = 600 seconds)
+const WINDOW_TIME = 6000
+// Maximum number of requests per window
+const MAX_REQUESTS = 5
 
 export const runtime = "edge"
-
-const RATE_LIMIT = 5
-const WINDOW_SIZE = 10 * 60 * 1000 // 10 minutes in milliseconds
-
-async function rateLimit(ip: string): Promise<{ success: boolean; limit: number; remaining: number; reset: number }> {
-    const now = Date.now()
-    const key = `ratelimit:${ip}`
-
-    const result = await kv.zrange(key, 0, 0, { withScores: true })
-    const oldestTimestamp = result.length ? Number(result[0][1]) : null
-
-    if (oldestTimestamp && now - oldestTimestamp > WINDOW_SIZE) {
-        await kv.zremrangebyscore(key, 0, oldestTimestamp)
-    }
-
-    const currentCount = await kv.zcard(key)
-
-    if (currentCount >= RATE_LIMIT) {
-        const oldestAllowedResult = await kv.zrange(key, 0, 0, { withScores: true })
-        const oldestAllowed = oldestAllowedResult.length ? Number(oldestAllowedResult[0][1]) : now
-        const reset = oldestAllowed + WINDOW_SIZE
-
-        return {
-            success: false,
-            limit: RATE_LIMIT,
-            remaining: 0,
-            reset,
-        }
-    }
-
-    await kv.zadd(key, { score: now, member: now.toString() })
-    await kv.expire(key, Math.ceil(WINDOW_SIZE / 1000))
-
-    return {
-        success: true,
-        limit: RATE_LIMIT,
-        remaining: RATE_LIMIT - currentCount - 1,
-        reset: now + WINDOW_SIZE,
-    }
-}
 
 export async function GET(request: NextRequest) {
     try {
         const ip = request.ip ?? '127.0.0.1'
-        const { success, limit, remaining, reset } = await rateLimit(ip)
+        const key = `ratelimit:${ip}`
 
-        if (!success) {
-            return NextResponse.json(
-                {
-                    error: "Rate limit exceeded",
-                    retryAfter: Math.floor((reset - Date.now()) / 1000)
-                },
-                {
-                    status: 429,
-                    headers: {
-                        'X-RateLimit-Limit': limit.toString(),
-                        'X-RateLimit-Remaining': remaining.toString(),
-                        'X-RateLimit-Reset': reset.toString(),
-                        'Retry-After': Math.floor((reset - Date.now()) / 1000).toString()
-                    },
-                }
-            )
+        // Get current count and timestamp
+        const [count, timestamp] = await redis.mget(key, `${key}:timestamp`) as [number | null, string | null]
+        const currentTime = Math.floor(Date.now() / 1000)
+
+        // If this is a new IP or the window has expired
+        if (!count || !timestamp || (currentTime - parseInt(timestamp)) >= WINDOW_TIME) {
+            // Set new values
+            await redis.mset({
+                [key]: 1,
+                [`${key}:timestamp`]: currentTime.toString()
+            })
+
+            // Set expiry for both keys
+            await redis.expire(key, WINDOW_TIME)
+            await redis.expire(`${key}:timestamp`, WINDOW_TIME)
+
+            return NextResponse.json({
+                message: 'Action performed successfully',
+                remaining: MAX_REQUESTS - 1
+            })
         }
 
-        return NextResponse.json({
-            message: 'Action performed successfully',
-            remaining,
-            reset: Math.floor((reset - Date.now()) / 1000)
-        })
+        // If within window and under limit
+        if (count < MAX_REQUESTS) {
+            await redis.incr(key)
+
+            return NextResponse.json({
+                message: 'Action performed successfully',
+                remaining: MAX_REQUESTS - (count + 1)
+            })
+        }
+
+        // Rate limit exceeded
+        return NextResponse.json(
+            {
+                error: "Rate limit exceeded",
+                resetIn: WINDOW_TIME - (currentTime - parseInt(timestamp))
+            },
+            {
+                status: 429,
+                headers: {
+                    'X-RateLimit-Limit': MAX_REQUESTS.toString(),
+                    'X-RateLimit-Remaining': '0',
+                    'X-RateLimit-Reset': (parseInt(timestamp) + WINDOW_TIME).toString(),
+                },
+            }
+        )
     } catch (error) {
         console.error('Rate limiting error:', error)
-        // Fail open approach - allow the request if rate limiting fails
+        // Fail open - allow the request in case of errors
         return NextResponse.json({
             message: 'Action performed successfully',
             warning: 'Rate limiting temporarily disabled'
-        }, { status: 500 })
+        })
     }
 }

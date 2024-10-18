@@ -12,7 +12,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata: Metadata = {
     metadataBase: new URL('http://hrq.vercel.app'),
-    keywords: ['hrq', 'High Relationship Quotient', 'test', 'analysis', 'psychology', 'dating'],
+    keywords: ['hrq', 'RQ', 'High Relationship Quotient', 'test', 'analysis', 'psychology', 'dating'],
     title: {
         default: 'HRQ',
         template: '%s | HRQ'
