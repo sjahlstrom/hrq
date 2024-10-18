@@ -242,7 +242,7 @@ import { useEffect, useRef, useState } from 'react'
 import { SignInButton, UserButton, useUser } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 import { useIsAdmin } from '@/hooks/useIsAdmim'
-import menuData from '@/components/Header/menuData'
+import menuData from '@/components/Common/Header/menuData'
 
 export default function Component() {
     const [navbarOpen, setNavbarOpen] = useState(false)
@@ -299,7 +299,7 @@ export default function Component() {
                 <div className="relative mx-4 flex items-center justify-between h-full">
                     <div className="w-40 max-w-full px-4 xl:mr-12 relative h-[60px]">
                         <Link
-                            href="/"
+                            href="/public"
                             className="header-logo w-full h-full flex items-center"
                         >
                             <Image
