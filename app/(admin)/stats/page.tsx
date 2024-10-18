@@ -31,6 +31,7 @@ import BarChart from '@/app/(admin)/stats/_components/barchart'
 import LineGraph from '@/app/(admin)/stats/_components/line-graph'
 import GoalDataCard from '@/app/(admin)/stats/_components/goal'
 import CheckUserRole from '@/components/CheckUserRole'
+import Breadcrumb from '@/components/Common/Breadcrumb'
 
 const Dashboard = async () => {
     const currentDate = new Date()
@@ -138,8 +139,14 @@ const Dashboard = async () => {
 
     return (
         <>
+            <div className="bg-gray-600">
+                <Breadcrumb
+                    pageName="Stats Page"
+                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
+                />
+            </div>
             <CheckUserRole />
-            <div className="mt-28 bg-first flex flex-col gap-8 w-full">
+            <div className=" bg-first flex flex-col gap-8 w-full">
 
                 <div className="container mx-auto py-8">
                     <div className="flex flex-col gap-5 w-full">

@@ -41,7 +41,7 @@ const redis = new Redis({
 })
 
 // Time window in seconds (10 minutes = 600 seconds)
-const WINDOW_TIME = 600
+const WINDOW_TIME = 6000
 // Maximum number of requests per window
 const MAX_REQUESTS = 5
 
