@@ -52,24 +52,21 @@ export async function GET(request: NextRequest) {
         const ip = request.ip ?? '127.0.0.1'
         const key = `ratelimit:${ip}`
 
-        // Use Redis pipeline for atomic operations
-        const pipeline = redis.pipeline()
-        pipeline.get(key)
-        pipeline.get(`${key}:timestamp`)
-        pipeline.time()
-        const [[count, timestamp, [currentTime]]] = await pipeline.exec()
-
-        const parsedCount = count ? parseInt(count as string) : 0
-        const parsedTimestamp = timestamp ? parseInt(timestamp as string) : 0
+        // Get current count and timestamp
+        const [count, timestamp] = await redis.mget<[string | null, string | null]>(key, `${key}:timestamp`)
+        const currentTime = Math.floor(Date.now() / 1000)
 
         // If this is a new IP or the window has expired
-        if (!parsedCount || (currentTime - parsedTimestamp) >= WINDOW_TIME) {
-            const pipeline = redis.pipeline()
-            pipeline.set(key, 1)
-            pipeline.set(`${key}:timestamp`, currentTime)
-            pipeline.expire(key, WINDOW_TIME)
-            pipeline.expire(`${key}:timestamp`, WINDOW_TIME)
-            await pipeline.exec()
+        if (!count || !timestamp || (currentTime - parseInt(timestamp)) >= WINDOW_TIME) {
+            // Set new values
+            await redis.mset({
+                [key]: 1,
+                [`${key}:timestamp`]: currentTime.toString()
+            })
+
+            // Set expiry for both keys
+            await redis.expire(key, WINDOW_TIME)
+            await redis.expire(`${key}:timestamp`, WINDOW_TIME)
 
             return NextResponse.json({
                 message: 'Action performed successfully',
@@ -77,13 +74,15 @@ export async function GET(request: NextRequest) {
             })
         }
 
+        const currentCount = parseInt(count)
+
         // If within window and under limit
-        if (parsedCount < MAX_REQUESTS) {
+        if (currentCount < MAX_REQUESTS) {
             await redis.incr(key)
 
             return NextResponse.json({
                 message: 'Action performed successfully',
-                remaining: MAX_REQUESTS - (parsedCount + 1)
+                remaining: MAX_REQUESTS - (currentCount + 1)
             })
         }
 
@@ -91,14 +90,14 @@ export async function GET(request: NextRequest) {
         return NextResponse.json(
             {
                 error: "Rate limit exceeded",
-                resetIn: WINDOW_TIME - (currentTime - parsedTimestamp)
+                resetIn: WINDOW_TIME - (currentTime - parseInt(timestamp))
             },
             {
                 status: 429,
                 headers: {
                     'X-RateLimit-Limit': MAX_REQUESTS.toString(),
                     'X-RateLimit-Remaining': '0',
-                    'X-RateLimit-Reset': (parsedTimestamp + WINDOW_TIME).toString(),
+                    'X-RateLimit-Reset': (parseInt(timestamp) + WINDOW_TIME).toString(),
                 },
             }
         )
