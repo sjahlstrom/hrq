@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
         const key = `ratelimit:${ip}`
 
         // Get current count and timestamp
-        const [count, timestamp] = await redis.mget<[string | null, string | null]>(key, `${key}:timestamp`)
+        const [count, timestamp] = await redis.mget(key, `${key}:timestamp`) as [number | null, string | null]
         const currentTime = Math.floor(Date.now() / 1000)
 
         // If this is a new IP or the window has expired
@@ -74,15 +74,13 @@ export async function GET(request: NextRequest) {
             })
         }
 
-        const currentCount = parseInt(count)
-
         // If within window and under limit
-        if (currentCount < MAX_REQUESTS) {
+        if (count < MAX_REQUESTS) {
             await redis.incr(key)
 
             return NextResponse.json({
                 message: 'Action performed successfully',
-                remaining: MAX_REQUESTS - (currentCount + 1)
+                remaining: MAX_REQUESTS - (count + 1)
             })
         }
 
