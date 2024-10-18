@@ -27,9 +27,9 @@ import {
 import UserPurchaseCard, {
     UserPurchaseProps,
 } from '@/components/(dashboard)/user-purchase-card'
-import BarChart from '@/components/(dashboard)/barchart'
-import LineGraph from '@/components/(dashboard)/line-graph'
-import GoalDataCard from '@/components/(dashboard)/goal'
+import BarChart from '@/app/(admin)/stats/_components/barchart'
+import LineGraph from '@/app/(admin)/stats/_components/line-graph'
+import GoalDataCard from '@/app/(admin)/stats/_components/goal'
 import CheckUserRole from '@/components/CheckUserRole'
 
 const Dashboard = async () => {

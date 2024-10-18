@@ -1,5 +1,7 @@
+// 'use client'
+//
 // import { Button } from '@/components/ui/button'
-// import React from 'react'
+// import React, { useState, useEffect } from 'react'
 //
 // interface PaginationProps {
 //     currentPage: number
@@ -12,6 +14,21 @@
 //     totalPages,
 //     handlePageChange,
 // }) => {
+//     const [showNumbers, setShowNumbers] = useState(true)
+//
+//     useEffect(() => {
+//         const handleResize = () => {
+//             setShowNumbers(window.innerWidth > 1080)
+//         }
+//
+//         handleResize() // Initial check
+//         window.addEventListener('resize', handleResize)
+//
+//         return () => {
+//             window.removeEventListener('resize', handleResize)
+//         }
+//     }, [])
+//
 //     const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1)
 //
 //     return (
@@ -20,14 +37,13 @@
 //             aria-label="Pagination"
 //         >
 //             <ul className="inline-flex items-center space-x-2">
-//                 {/*Previous button*/}
 //                 <li>
 //                     <Button
 //                         onClick={() => handlePageChange(currentPage - 1)}
 //                         disabled={currentPage === 1}
 //                         variant="outline"
 //                         size="icon"
-//                         className="rounded-full w-[120px] bg-pantone624 hover:bg-pantone625 active:bg-green-800 border border-pantone621 transition-colors duration-300"
+//                         className="rounded-full w-[120px] bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300"
 //                     >
 //                         <span className="sr-only">Previous</span>
 //                         Previous
@@ -35,20 +51,23 @@
 //                 </li>
 //
 //                 {/* Page Number Buttons */}
-//                 {pageNumbers.map((number) => (
-//                     <li key={number}>
-//                         <Button
-//                             onClick={() => handlePageChange(number)}
-//                             variant={
-//                                 currentPage === number ? 'secondary' : 'outline'
-//                             }
-//                             size="icon"
-//                             className="rounded-full bg-pantone624 hover:bg-pantone625 active:bg-green-800 border border-pantone624 transition-colors duration-300 mx-1"
-//                         >
-//                             {number}
-//                         </Button>
-//                     </li>
-//                 ))}
+//                 {showNumbers &&
+//                     pageNumbers.map((number) => (
+//                         <li key={number} className="hidden xl:block">
+//                             <Button
+//                                 onClick={() => handlePageChange(number)}
+//                                 variant={
+//                                     currentPage === number
+//                                         ? 'secondary'
+//                                         : 'outline'
+//                                 }
+//                                 size="icon"
+//                                 className="rounded-full bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300 mx-1"
+//                             >
+//                                 {number}
+//                             </Button>
+//                         </li>
+//                     ))}
 //
 //                 {/* Next Button */}
 //                 <li>
@@ -57,7 +76,7 @@
 //                         disabled={currentPage === totalPages}
 //                         variant="outline"
 //                         size="icon"
-//                         className="rounded-full w-[120px] bg-pantone624 hover:bg-pantone625 border border-pantone621 transition-colors duration-300"
+//                         className="rounded-full w-[120px] bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300"
 //                     >
 //                         <span className="sr-only">Next</span>
 //                         Next
@@ -87,10 +106,10 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({
-    currentPage,
-    totalPages,
-    handlePageChange,
-}) => {
+                                                   currentPage,
+                                                   totalPages,
+                                                   handlePageChange,
+                                               }) => {
     const [showNumbers, setShowNumbers] = useState(true)
 
     useEffect(() => {
@@ -107,6 +126,7 @@ const Pagination: React.FC<PaginationProps> = ({
     }, [])
 
     const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1)
+    const isLastPage = currentPage === totalPages
 
     return (
         <nav
@@ -117,10 +137,14 @@ const Pagination: React.FC<PaginationProps> = ({
                 <li>
                     <Button
                         onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
+                        disabled={currentPage === 1 || isLastPage}
                         variant="outline"
                         size="icon"
-                        className="rounded-full w-[120px] bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300"
+                        className={`rounded-full w-[120px] transition-colors duration-300 ${
+                            isLastPage
+                                ? 'bg-gray-300 border-gray-400 cursor-not-allowed text-gray-500'
+                                : 'bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border-hrqColors-skyBlue-700'
+                        }`}
                     >
                         <span className="sr-only">Previous</span>
                         Previous
@@ -133,13 +157,16 @@ const Pagination: React.FC<PaginationProps> = ({
                         <li key={number} className="hidden xl:block">
                             <Button
                                 onClick={() => handlePageChange(number)}
-                                variant={
-                                    currentPage === number
-                                        ? 'secondary'
-                                        : 'outline'
-                                }
+                                disabled={isLastPage}
+                                variant="outline"
                                 size="icon"
-                                className="rounded-full bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300 mx-1"
+                                className={`rounded-full border transition-colors duration-300 mx-1 ${
+                                    isLastPage
+                                        ? 'bg-gray-300 border-gray-400 cursor-not-allowed text-gray-500'
+                                        : currentPage === number
+                                            ? 'bg-blue-800 text-white hover:bg-blue-900 border-blue-900'
+                                            : 'bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border-hrqColors-skyBlue-700'
+                                }`}
                             >
                                 {number}
                             </Button>
@@ -153,7 +180,11 @@ const Pagination: React.FC<PaginationProps> = ({
                         disabled={currentPage === totalPages}
                         variant="outline"
                         size="icon"
-                        className="rounded-full w-[120px] bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300"
+                        className={`rounded-full w-[120px] transition-colors duration-300 ${
+                            isLastPage
+                                ? 'bg-gray-300 border-gray-400 cursor-not-allowed text-gray-500'
+                                : 'bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border-hrqColors-skyBlue-700'
+                        }`}
                     >
                         <span className="sr-only">Next</span>
                         Next
