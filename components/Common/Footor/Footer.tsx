@@ -7,7 +7,7 @@ const Footer = () => {
             <div className="bg-custom-radial from-hrqColors-skyBlue-800 to-hrqColors-skyBlue-400">
                 <div className="container px-6 py-8 mx-auto">
 
-                    <Link href="/" className="cursor-pointer">
+                    <Link href="/public" className="cursor-pointer">
                         <div className=" flex flex-col items-center -mt-2 text-center ">
                             <div className={telex.className}>
                                 <p>High Relationship Quotient</p>
