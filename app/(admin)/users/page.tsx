@@ -10,7 +10,7 @@ import UserCard from '@/components/(dashboard)/user-card'
 import { UserTable } from '@/components/(dashboard)/user-table'
 import { SkeletonUserTable } from '@/components/(dashboard)/skeleton-user-table'
 import SearchBar from '@/components/(dashboard)/search-bar'
-import Pagination from '@/components/(dashboard)/user-pagination'
+import UsersPagination from '@/components/(dashboard)/user-pagination'
 import Breadcrumb from '@/components/Common/bread-crumb'
 
 export default function UsersComponent() {
@@ -95,7 +95,7 @@ export default function UsersComponent() {
                                     sortConfig={sortConfig}
                                     isClient={isClient}
                                 />
-                                <Pagination
+                                <UsersPagination
                                     currentPage={currentPage}
                                     pageCount={pageCount}
                                     setCurrentPage={setCurrentPage}

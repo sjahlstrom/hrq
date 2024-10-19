@@ -8,7 +8,7 @@ interface PaginationProps {
     totalItems: number
 }
 
-export default function Pagination({
+export default function UsersPagination({
     currentPage,
     pageCount,
     setCurrentPage,
@@ -28,7 +28,7 @@ export default function Pagination({
                         disabled={currentPage === 1}
                         variant="outline"
                         size="icon"
-                        className="rounded-full w-[120px] bg-pantone624 hover:bg-pantone625 active:bg-green-800 border border-pantone621 transition-colors duration-300"
+                        className="rounded-full w-[120px] bg-red-600 hover:bg-red-800 active:bg-amber-500 border border-pantone621 transition-colors duration-300"
                     >
                         <span className="sr-only">Previous</span>
                         Previous
@@ -54,7 +54,7 @@ export default function Pagination({
                         disabled={currentPage === pageCount}
                         variant="outline"
                         size="icon"
-                        className="rounded-full w-[120px] bg-pantone624 hover:bg-pantone625 border border-pantone621 transition-colors duration-300"
+                        className="rounded-full w-[120px] bg-red-600 hover:bg-red-800 active:bg-amber-500 border border-pantone621 transition-colors duration-300"
                     >
                         <span className="sr-only">Next</span>
                         Next

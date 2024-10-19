@@ -1,6 +1,7 @@
 'use client'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
 
 const NotFoundPage = () => {
     const router = useRouter();
@@ -19,11 +20,11 @@ const NotFoundPage = () => {
                     <p className="mt-4 text-gray-500 dark:text-gray-400">I&#39;m sorry, we&#39;re lost</p>
 
                     <div className="flex items-center mt-6 gap-x-3">
-                        <button
+                        <Button
                             onClick={handleRedirect}
                             className="w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-xl shrink-0 sm:w-auto hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                             Take me home country road to the place that I belong
-                        </button>
+                        </Button>
                     </div>
                 </div>
 

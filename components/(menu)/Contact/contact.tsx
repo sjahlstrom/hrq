@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { useUser } from '@clerk/nextjs'
 import { nunito, telex } from '@/app/ui/fonts'
+import { Button } from '@/components/ui/button'
 
 const schema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters long" }),
@@ -94,13 +95,13 @@ export default function Contact() {
                         />
                         {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
                     </div>
-                    <button
+                    <Button
                         type="submit"
                         disabled={isSubmitting}
                         className="py-3 px-5 text-sm font-medium text-center text-white bg-primary-700 rounded-lg sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700"
                     >
                         {isSubmitting ? 'Sending...' : 'Send message'}
-                    </button>
+                    </Button>
                 </form>
                 {submitStatus === 'success' && (
                     <p className="mt-4 text-green-500 text-center">Message sent successfully!</p>
