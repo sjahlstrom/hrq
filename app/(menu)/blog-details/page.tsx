@@ -1,6 +1,6 @@
-import SharePost from "@/components/(menu)/Blog/SharePost";
-import TagButton from "@/components/(menu)/Blog/TagButton";
-import Image from "next/image";
+import SharePost from '@/components/(menu)/Blog/SharePost'
+import TagButton from '@/components/(menu)/Blog/TagButton'
+import Image from 'next/image'
 
 const BlogDetailsPage = () => {
   return (

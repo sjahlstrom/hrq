@@ -1,6 +1,11 @@
 import Breadcrumb from '@/components/Common/Breadcrumb'
 import React from 'react'
 import TestAnalysis from '@/components/(test)/Analysis/Analysis'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: "Analysis"
+}
 
 const AnalysisPage = () => {
     return (

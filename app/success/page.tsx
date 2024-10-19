@@ -1,4 +1,10 @@
 import { Button } from '@/components/ui/button'
+import { Metadata } from 'next'
+
+
+export const metadata: Metadata = {
+    title: "Success"
+}
 
 export default function PaymentSuccess({
     searchParams: { amount },

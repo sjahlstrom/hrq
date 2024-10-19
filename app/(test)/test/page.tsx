@@ -4,6 +4,12 @@ import sampleQuestions from '@/components/(test)/Test/Data/sampleQuestions'
 import testQuestions from '@/components/(test)/Test/Data/testQuestions'
 import { currentUser } from '@clerk/nextjs/server'
 import { getTestResponseLength } from '@/app/api/users'
+import { Metadata } from 'next'
+
+
+export const metadata: Metadata = {
+    title: "Test Page",
+}
 
 const TheTest = async () => {
     const user = await currentUser()

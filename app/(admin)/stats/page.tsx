@@ -1,38 +1,21 @@
 import React from 'react'
-import {
-    DashboardCard,
-    DashboardCardContent,
-} from '@/components/(dashboard)/dashboard-card'
-
-import UserDataCard, {
-    UserDataCardProps,
-} from '@/components/(dashboard)/user-data-card'
-
+import { DashboardCard, DashboardCardContent } from '@/components/(dashboard)/dashboard-card'
+import UserDataCard, { UserDataCardProps } from '@/components/(dashboard)/user-data-card'
 import { db } from '@/lib/db'
-import {
-    Calendar,
-    CreditCard,
-    DollarSign,
-    PersonStanding,
-    UserPlus,
-    UserRoundCheck,
-} from 'lucide-react'
-import {
-    eachMonthOfInterval,
-    endOfMonth,
-    format,
-    formatDistanceToNow,
-    startOfMonth,
-} from 'date-fns'
-import UserPurchaseCard, {
-    UserPurchaseProps,
-} from '@/components/(dashboard)/user-purchase-card'
+import { Calendar, CreditCard, DollarSign, PersonStanding, UserPlus, UserRoundCheck } from 'lucide-react'
+import { eachMonthOfInterval, endOfMonth, format, formatDistanceToNow, startOfMonth } from 'date-fns'
+import UserPurchaseCard, { UserPurchaseProps } from '@/components/(dashboard)/user-purchase-card'
 import BarChart from '@/app/(admin)/stats/_components/barchart'
 import LineGraph from '@/app/(admin)/stats/_components/line-graph'
 import GoalDataCard from '@/app/(admin)/stats/_components/goal'
 import CheckUserRole from '@/components/CheckUserRole'
 import Breadcrumb from '@/components/Common/Breadcrumb'
+import { Metadata } from 'next'
 
+
+export const metadata: Metadata = {
+    title: "Stats"
+}
 const Dashboard = async () => {
     const currentDate = new Date()
 

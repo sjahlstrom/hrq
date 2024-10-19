@@ -1,5 +1,10 @@
 import About from '@/components/(menu)/About/About'
 import Breadcrumb from '@/components/Common/Breadcrumb'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: "About"
+}
 
 const AboutPage = () => {
     return (
