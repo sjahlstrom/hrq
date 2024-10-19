@@ -27,8 +27,8 @@ const sampleAnalysisData = [
         position: 2,
         low: 21,
         high: 30,
-        analysis:
-            'When it comes to social awareness, you can assess social situations with ease, gauging the "temperature and tone" of social gatherings. This allows you to smoothly integrate with others, potentially to converse more with ease and blend with a group. Individually, equally you will also be able to talk with just one person, but that may not be necessary if you happen to be an extrovert. Introverts have this same skill but prefer more individual interactions than with groups.',
+        analysis: 'You have a natural talent for reading social situations, effortlessly gauging the mood and atmosphere of gatherings. This skill allows you to blend in smoothly, whether you\'re in a group setting or one-on-one conversation. You can easily adapt to different social environments, making connections and engaging with others naturally. If you\'re an extrovert, you might thrive in group interactions, while introverts may prefer using this skill in more intimate settings. Regardless of your social preference, your ability to \'read the room\' is a valuable asset, helping you navigate social interactions with confidence and ease.'
+            // 'When it comes to social awareness, you can assess social situations with ease, gauging the "temperature and tone" of social gatherings. This allows you to smoothly integrate with others, potentially to converse more with ease and blend with a group. Individually, equally you will also be able to talk with just one person, but that may not be necessary if you happen to be an extrovert. Introverts have this same skill but prefer more individual interactions than with groups.',
     },
 
     {

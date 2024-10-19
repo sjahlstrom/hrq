@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button'
+
 const PriceCard = () => {
 
     return (
@@ -48,9 +50,9 @@ const PriceCard = () => {
             {/*<p className="text-red-600 text-sm mb-4">Special promotion</p>*/}
             {/*<p className="text-4xl font-bold text-gray-900 mb-2">$99.99 <span className="text-xl font-medium">USD</span>*/}
             {/*</p>*/}
-            <button className="mt-4 bg-gray-900 text-white text-lg font-medium py-2 px-4 rounded-lg hover:bg-gray-700">
+            <Button className="mt-4 bg-gray-900 text-white text-lg font-medium py-2 px-4 rounded-lg hover:bg-gray-700">
                 Get Exclusive Access
-            </button>
+            </Button>
         </div>
     </div>
     )

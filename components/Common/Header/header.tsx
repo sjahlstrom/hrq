@@ -79,7 +79,7 @@ export default function Component() {
 
                     <div className="flex w-full items-center justify-between px-4">
                         <div>
-                            <button
+                            <Button
                                 onClick={navbarToggleHandler}
                                 id="navbarToggler"
                                 aria-label="Mobile Menu"
@@ -104,7 +104,7 @@ export default function Component() {
                                             : ' '
                                     }`}
                                 />
-                            </button>
+                            </Button>
 
                             <nav
                                 ref={dropdownRef}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { User } from '@/hooks/useUsers'
 import { SortConfig } from '@/hooks/useSortableData'
+import { Button } from '@/components/ui/button'
 
 interface UserTableProps {
     currentItems: User[]
@@ -87,7 +88,7 @@ export const UserTable: React.FC<UserTableProps> = ({
                         </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button
+                        <Button
                             onClick={() => handleBanUser(user)}
                             className={`px-3 py-1 rounded ${
                                 user.banned
@@ -96,7 +97,7 @@ export const UserTable: React.FC<UserTableProps> = ({
                             } text-white`}
                         >
                             {user.banned ? 'Unban' : 'Ban'}
-                        </button>
+                        </Button>
                     </td>
                 </tr>
             ))}

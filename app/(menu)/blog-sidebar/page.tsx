@@ -3,6 +3,7 @@ import SharePost from '@/components/(menu)/Blog/share-post'
 import TagButton from '@/components/(menu)/Blog/tag-button'
 import Image from 'next/image'
 import NewsLatterBox from '@/components/(menu)/Contact/news-letter-box'
+import { Button } from '@/components/ui/button'
 
 const BlogSidebarPage = () => {
   return (
@@ -342,7 +343,7 @@ const BlogSidebarPage = () => {
                     placeholder="Search here..."
                     className="palceholder-body-color mr-5 w-full rounded-md border border-transparent py-3 px-5 text-base font-medium text-body-color outline-none focus:border-primary dark:bg-white dark:bg-opacity-10"
                   />
-                  <button className="flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-md bg-primary text-white">
+                  <Button className="flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-md bg-primary text-white">
                     <svg
                       width="20"
                       height="18"
@@ -355,7 +356,7 @@ const BlogSidebarPage = () => {
                         fill="white"
                       />
                     </svg>
-                  </button>
+                  </Button>
                 </form>
               </div>
               <div className="mb-10 rounded-md bg-primary bg-opacity-5 dark:bg-opacity-10">

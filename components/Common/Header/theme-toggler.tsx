@@ -1,9 +1,10 @@
 import { useTheme } from "next-themes";
+import { Button } from '@/components/ui/button'
 
 const ThemeToggler = () => {
   const { theme, setTheme } = useTheme();
   return (
-    <button
+    <Button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="bg-gray-2 dark:bg-dark-bg flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-black dark:text-white md:h-14 md:w-14"
     >
@@ -36,7 +37,7 @@ const ThemeToggler = () => {
           mask="url(#path-1-inside-1_977:1934)"
         />
       </svg>
-    </button>
+    </Button>
   );
 };
 

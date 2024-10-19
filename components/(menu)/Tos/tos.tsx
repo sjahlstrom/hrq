@@ -13,9 +13,7 @@ const TosPage = () => {
                 <div className="container">
                     <div className="-mx-4 flex flex-wrap -mt-32">
                         <div className="w-full px-4 ">
-                            <div
-                                className="mx-auto max-w-[800px]"
-                            >
+                            <div className="mx-auto max-w-[800px]">
                                 <div className="px-8 space-y-8 mb-4">
                                     <FaqItem
                                         question="Terms of User Agreement"
