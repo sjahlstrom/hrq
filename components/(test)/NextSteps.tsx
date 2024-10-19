@@ -1,10 +1,14 @@
-import { Card, CardContent } from '@/components/ui/card'
 import React from 'react'
+import { Card, CardContent } from '@/components/ui/card'
 
-const NextSteps = ({ totalSummedValues }) => {
+interface NextStepsProps {
+    totalSummedValues: number
+}
+
+const NextSteps: React.FC<NextStepsProps> = ({ totalSummedValues }) => {
     return (
         <Card>
-            <CardContent className="p-6 border shadow-lg bg-custom-radial from-hrqColors-sunsetOrange-400 to-hrqColors-sunsetOrange-200">
+            <CardContent className="p-6 border shadow-lg bg-gradient-radial from-hrqColors-sunsetOrange-400 to-hrqColors-sunsetOrange-200">
                 <h2 className="text-xl font-semibold text-gray-800">
                     Next Steps
                 </h2>

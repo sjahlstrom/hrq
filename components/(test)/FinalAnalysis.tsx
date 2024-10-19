@@ -1,9 +1,14 @@
+import React from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import ScoreClassificationTable from '@/components/(test)/ScoreClassificationTable'
 import NextSteps from '@/components/(test)/NextSteps'
-import React from 'react'
 
-const FinalAnalysis = ({ lieAnalysis, totalSummedValues }) => {
+interface FinalAnalysisProps {
+    lieAnalysis: string
+    totalSummedValues: number
+}
+
+const FinalAnalysis: React.FC<FinalAnalysisProps> = ({ lieAnalysis, totalSummedValues }) => {
     return (
         <div className="mt-8 space-y-8">
             <Card>

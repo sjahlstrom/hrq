@@ -26,8 +26,16 @@ export async function POST(req: NextRequest) {
         // and save data to the database
 
         return NextResponse.json({ status: 'success', event: event.type })
+    // } catch (error) {
+    //     return NextResponse.json({ status: 'error', error: error.message })
+    // }
     } catch (error) {
-        return NextResponse.json({ status: 'error', error: error.message })
+        // Type guard to check if error is an Error object
+        if (error instanceof Error) {
+            return NextResponse.json({ status: 'error', error: error.message }, { status: 500 })
+        } else {
+            // If it's not an Error object, return a generic error message
+            return NextResponse.json({ status: 'error', error: 'An unknown error occurred' }, { status: 500 })
+        }
     }
-
 }

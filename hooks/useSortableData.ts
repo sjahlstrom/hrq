@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 
-type SortConfig<T> = {
+export type SortConfig<T> = {
     key: keyof T;
     direction: 'ascending' | 'descending';
 } | null;

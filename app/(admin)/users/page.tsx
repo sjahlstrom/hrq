@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useCallback, useMemo } from 'react'
-import { useUsers } from '@/hooks/useUsers'
-import { useSortableData } from '@/hooks/useSortableData'
+import { useUsers, User } from '@/hooks/useUsers'
+import { useSortableData, SortConfig } from '@/hooks/useSortableData'
 import { usePagination } from '@/hooks/usePagination'
 import { useClientSideEffect } from '@/hooks/useClientSideEffect'
 import CheckUserRole from '@/components/CheckUserRole'
@@ -12,26 +12,15 @@ import SearchBar from '@/components/(dashboard)/SearchBar'
 import Pagination from '@/components/(dashboard)/user-pagination'
 import Breadcrumb from '@/components/Common/Breadcrumb'
 
-interface User {
-    username: string
-    email: string
-    paid_rq: boolean
-    banned: boolean
-    testCompleted: boolean
-    summedTotal: number
-    externalUserId: string
-    testResponse?: number[]
-}
-
 export default function UsersComponent() {
     const { users = [], loading, banUser, unBanUser } = useUsers()
     const [searchQuery, setSearchQuery] = useState('')
     const [selectedUser, setSelectedUser] = useState<User | null>(null)
     const isClient = useClientSideEffect()
 
-    const initialSortConfig = {
-        key: 'username' as keyof User,
-        direction: 'ascending' as const,
+    const initialSortConfig: SortConfig<User> = {
+        key: 'username',
+        direction: 'ascending',
     }
     const {
         items: sortedUsers,
@@ -41,7 +30,7 @@ export default function UsersComponent() {
 
     const filteredUsers = useMemo(() => {
         return sortedUsers.filter((user) =>
-            user.email.toLowerCase().includes(searchQuery.toLowerCase())
+            user.email?.toLowerCase().includes(searchQuery.toLowerCase())
         )
     }, [sortedUsers, searchQuery])
 
@@ -74,6 +63,10 @@ export default function UsersComponent() {
         },
         [requestSort, setCurrentPage]
     )
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
 
     return (
         <>
