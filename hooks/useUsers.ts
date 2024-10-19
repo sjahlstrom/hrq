@@ -2,13 +2,15 @@ import { useState, useEffect, useCallback } from 'react'
 import { getUsers, banUser as apiBanUser, unBanUser as apiUnBanUser } from '@/app/api/users'
 
 export interface User {
-    username: string
-    email: string
+    id: string
+    username: string | null
+    email: string | null
     paid_rq: boolean
     banned: boolean
     testCompleted: boolean
-    summedTotal: number
+    summedTotal: number | null
     externalUserId: string
+    testResponse: number[]
 }
 
 export function useUsers() {

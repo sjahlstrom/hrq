@@ -22,23 +22,27 @@ const sliderStyles = {
     },
 }
 
-// @ts-ignore
-const ReverseSlider = ({ value, onChange }) => {
+interface ReverseSliderProps {
+    value: number
+    onChange: (value: number) => void
+}
+
+const ReverseSlider: React.FC<ReverseSliderProps> = ({ value, onChange }) => {
     // Transform the value from 0-30 to 30-0
-    const handleSliderChange = (sliderValue: number) => {
-        onChange(30 - sliderValue)
+    const handleSliderChange = (sliderValue: number | number[]) => {
+        if (typeof sliderValue === 'number') {
+            onChange(30 - sliderValue)
+        }
     }
 
     return (
-        <div className="w-fill m-30 mb-2 ml-10 flex">
+        <div className="w-full m-8 mb-2 flex">
             <Slider
-                range
                 min={0}
                 max={30}
                 value={30 - value} // Transform to match slider's position
                 onChange={handleSliderChange}
                 onChangeComplete={() => onChange(value)} // Ensure state is updated on interaction end
-
                 styles={sliderStyles}
             />
         </div>

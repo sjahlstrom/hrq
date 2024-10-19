@@ -171,9 +171,7 @@ export default function Component() {
                                                                     (isSignedIn &&
                                                                         isAdmin)) && (
                                                                     <Link
-                                                                        href={
-                                                                            submenuItem.path
-                                                                        }
+                                                                        href={submenuItem.path || '#'}
                                                                         key={
                                                                             submenuItem.id
                                                                         }

@@ -51,14 +51,12 @@ export default function TestAnalysis() {
     }, [])
 
     const calculateLieValues = useCallback((answers: number[]) => {
-        const lieValues = LIES.map((index) => answers[index]).filter(Boolean)
+        const lieValues = LIES.map((index) => answers[index] || 0)
         const totalLieValue = lieValues.reduce((acc, value) => acc + value, 0)
         setTotalLie(totalLieValue)
-        const analysis =
-            lieScale.find(
-                (entry) =>
-                    totalLieValue >= entry.low && totalLieValue <= entry.high
-            )?.analysis || 'No analysis available.'
+        const analysis = lieScale.find(
+            (entry) => totalLieValue >= entry.low && totalLieValue <= entry.high
+        )?.analysis || 'No analysis available.'
         setLieAnalysis(analysis)
     }, [])
 
@@ -188,9 +186,9 @@ export default function TestAnalysis() {
     const totalPages = Math.ceil(uniqueResults.length / itemsPerPage)
 
     return (
-        <section className="py-12 bg-custom-radial from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100">
+        <section className="py-12 bg-gradient-to-br from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100">
             <div className="container mx-auto px-4">
-                <h1 className="text-3xl font-bold text-dark mb-6">
+                <h1 className="text-3xl font-bold text-gray-800 mb-6">
                     Analysis Results
                 </h1>
                 {currentResults.length > 0 ? (
@@ -206,7 +204,7 @@ export default function TestAnalysis() {
                                 ${fadeIn ? 'opacity-100' : 'opacity-0'} 
                                 transition-opacity duration-700 ease-in-out`}
                             >
-                                <p className="text-dark">{result.analysis}</p>
+                                <p className="text-gray-800">{result.analysis}</p>
                             </div>
                         ))}
                     </div>

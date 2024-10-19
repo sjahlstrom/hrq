@@ -14,8 +14,8 @@ export const metadata: Metadata = {
     metadataBase: new URL('http://hrq.vercel.app'),
     keywords: ['hrq', 'RQ', 'High Relationship Quotient', 'test', 'analysis', 'psychology', 'dating'],
     title: {
-        default: 'HRQ',
-        template: '%s | HRQ'
+        default: 'High Relationship Quotient',
+        template: '%s - High Relationship Quotient'
     },
     openGraph: {
         description: 'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships.'
@@ -34,11 +34,8 @@ export default function RootLayout({
                 className={`${arimo.variable} ${laila.variable} ${telex.variable} ${nunito.variable}`}
             >
             <head>
-                <title>Human Relationship Quotient</title>
+                <title>High Relationship Quotient</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
                 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
             </head>
             <body>
