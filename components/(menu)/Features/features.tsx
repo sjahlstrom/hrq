@@ -1,5 +1,5 @@
-import SectionTitle from '@/components/Common/SectionTitle'
-import SingleFeature from "./SingleFeature";
+import SectionTitle from '@/components/Common/section-title'
+import SingleFeature from "./single-feature";
 import featuresData from "./featuresData";
 import { nunito } from '@/app/ui/fonts'
 

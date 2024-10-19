@@ -15,7 +15,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-export default function ContactPage() {
+export default function Contact() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
     const { user, isLoaded } = useUser()

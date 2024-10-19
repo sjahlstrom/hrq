@@ -1,4 +1,4 @@
-import Breadcrumb from '@/components/Common/Breadcrumb'
+import Breadcrumb from '@/components/Common/bread-crumb'
 import React from 'react'
 import Faq from '@/components/(menu)/Faq/FAQ'
 

@@ -5,12 +5,13 @@ import { User, useUsers } from '@/hooks/useUsers'
 import { SortConfig, useSortableData } from '@/hooks/useSortableData'
 import { usePagination } from '@/hooks/usePagination'
 import { useClientSideEffect } from '@/hooks/useClientSideEffect'
-import CheckUserRole from '@/components/CheckUserRole'
+import CheckUserRole from '@/components/check-user-role'
 import UserCard from '@/components/(dashboard)/user-card'
 import { UserTable } from '@/components/(dashboard)/user-table'
-import SearchBar from '@/components/(dashboard)/SearchBar'
+import { SkeletonUserTable } from '@/components/(dashboard)/skeleton-user-table'
+import SearchBar from '@/components/(dashboard)/search-bar'
 import Pagination from '@/components/(dashboard)/user-pagination'
-import Breadcrumb from '@/components/Common/Breadcrumb'
+import Breadcrumb from '@/components/Common/bread-crumb'
 
 export default function UsersComponent() {
     const { users = [], loading, banUser, unBanUser } = useUsers()
@@ -64,10 +65,6 @@ export default function UsersComponent() {
         [requestSort, setCurrentPage]
     )
 
-    if (loading) {
-        return <div>Loading...</div>
-    }
-
     return (
         <>
             <div className="bg-gray-600">
@@ -86,20 +83,26 @@ export default function UsersComponent() {
                             searchQuery={searchQuery}
                             setSearchQuery={setSearchQuery}
                         />
-                        <UserTable
-                            currentItems={currentItems}
-                            handleSort={handleSort}
-                            handleUsernameClick={handleUsernameClick}
-                            handleBanUser={handleBanUser}
-                            sortConfig={sortConfig}
-                            isClient={isClient}
-                        />
-                        <Pagination
-                            currentPage={currentPage}
-                            pageCount={pageCount}
-                            setCurrentPage={setCurrentPage}
-                            totalItems={filteredUsers.length}
-                        />
+                        {loading ? (
+                            <SkeletonUserTable />
+                        ) : (
+                            <>
+                                <UserTable
+                                    currentItems={currentItems}
+                                    handleSort={handleSort}
+                                    handleUsernameClick={handleUsernameClick}
+                                    handleBanUser={handleBanUser}
+                                    sortConfig={sortConfig}
+                                    isClient={isClient}
+                                />
+                                <Pagination
+                                    currentPage={currentPage}
+                                    pageCount={pageCount}
+                                    setCurrentPage={setCurrentPage}
+                                    totalItems={filteredUsers.length}
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

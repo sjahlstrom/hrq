@@ -1,6 +1,6 @@
-import Breadcrumb from '@/components/Common/Breadcrumb'
+import Breadcrumb from '@/components/Common/bread-crumb'
 import React from 'react'
-import TestAnalysis from '@/components/(test)/Analysis/Analysis'
+import TestAnalysis from '@/components/(test)/Analysis/analysis'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {

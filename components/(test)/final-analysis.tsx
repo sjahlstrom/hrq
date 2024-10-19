@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-import ScoreClassificationTable from '@/components/(test)/ScoreClassificationTable'
-import NextSteps from '@/components/(test)/NextSteps'
+import ScoreClassificationTable from '@/components/(test)/score-classification-table'
+import NextSteps from '@/components/(test)/next-steps'
 
 interface FinalAnalysisProps {
     lieAnalysis: string

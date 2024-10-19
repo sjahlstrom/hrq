@@ -2,13 +2,14 @@ import { arimo, laila, nunito, telex } from '@/app/ui/fonts'
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { Providers } from './providers'
-import Footer from '@/components/Common/Footor/Footer'
-import Header from '@/components/Common/Header/Header'
+import Footer from '@/components/Common/Footor/footer'
+import Header from '@/components/Common/Header/header'
 import ScrollToTop from 'components/Common/ScrollToTop'
 import '@/styles/index.css'
 import { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import Toaster from '@/components/ui/toast'
 
 export const metadata: Metadata = {
     metadataBase: new URL('http://hrq.vercel.app'),
@@ -23,32 +24,32 @@ export const metadata: Metadata = {
     }
 }
 
-export default function RootLayout({
-                                       children,
-                                   }: {
-    children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <ClerkProvider appearance={{ baseTheme: dark }}>
             <html
                 lang="en"
                 className={`${arimo.variable} ${laila.variable} ${telex.variable} ${nunito.variable}`}
             >
-            <head>
-                <title>High Relationship Quotient</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-            </head>
-            <body>
-            <Providers>
-                <Header />
-                {children}
-                <Analytics />
-                <SpeedInsights />
-                <Footer />
-                <ScrollToTop />
-            </Providers>
-            </body>
+                <head>
+                    <title>High Relationship Quotient</title>
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1"
+                    />
+                    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+                </head>
+                <body>
+                    <Providers>
+                        <Header />
+                        {children}
+                        <Analytics />
+                        <SpeedInsights />
+                        <Toaster />
+                        <Footer />
+                        <ScrollToTop />
+                    </Providers>
+                </body>
             </html>
         </ClerkProvider>
     )

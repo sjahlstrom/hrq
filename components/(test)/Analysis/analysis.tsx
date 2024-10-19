@@ -10,8 +10,8 @@ import {
     setSummedTotals,
 } from '@/app/api/users'
 import testQuestions from '@/components/(test)/Test/Data/testQuestions'
-import Pagination from '@/components/(test)/Pagination'
-import FinalAnalysis from '@/components/(test)/FinalAnalysis'
+import Pagination from '@/components/(test)/pagination'
+import FinalAnalysis from '@/components/(test)/final-analysis'
 
 const LIES = [38, 45, 52, 57, 69, 79, 91, 102, 109, 125]
 const ITEMS_PER_PAGE_DESKTOP = 6

@@ -8,8 +8,8 @@ import UserPurchaseCard, { UserPurchaseProps } from '@/components/(dashboard)/us
 import BarChart from '@/app/(admin)/stats/_components/barchart'
 import LineGraph from '@/app/(admin)/stats/_components/line-graph'
 import GoalDataCard from '@/app/(admin)/stats/_components/goal'
-import CheckUserRole from '@/components/CheckUserRole'
-import Breadcrumb from '@/components/Common/Breadcrumb'
+import CheckUserRole from '@/components/check-user-role'
+import Breadcrumb from '@/components/Common/bread-crumb'
 import { Metadata } from 'next'
 
 

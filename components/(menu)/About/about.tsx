@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardContent } from "@/components/ui/card"
 import { Metadata } from 'next'
 
-export default function AboutPage() {
+export default function About() {
     const benefits = [
         "Improve your dating life",
         "Enhance work relationships",

@@ -2,8 +2,8 @@
 
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
-import CheckoutPage from '@/components/(stripe)/CheckoutPage'
-import convertToSubcurrency from '@/lib/convertToSubcurrency'
+import CheckoutPage from '@/components/(stripe)/checkout'
+import convertToSubcurrency from '@/lib/convert-to-subcurrency'
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === undefined) {
     throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not defined')

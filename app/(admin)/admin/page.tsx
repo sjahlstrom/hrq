@@ -2,8 +2,8 @@
 import Link from 'next/link'
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
 import { BarChart, Users } from 'lucide-react'
-import CheckUserRole from '@/components/CheckUserRole'
-import Breadcrumb from '@/components/Common/Breadcrumb'
+import CheckUserRole from '@/components/check-user-role'
+import Breadcrumb from '@/components/Common/bread-crumb'
 import React from 'react'
 
 export default function AdminDashboard() {

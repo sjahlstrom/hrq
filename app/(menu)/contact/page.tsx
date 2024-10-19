@@ -1,5 +1,5 @@
-import Breadcrumb from '@/components/Common/Breadcrumb'
-import ContactForm from '@/components/(menu)/Contact/Contact'
+import Breadcrumb from '@/components/Common/bread-crumb'
+import ContactForm from '@/components/(menu)/Contact/contact'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
