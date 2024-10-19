@@ -12,11 +12,12 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata: Metadata = {
     metadataBase: new URL('http://hrq.vercel.app'),
-    keywords: ['hrq', 'RQ', 'High Relationship Quotient', 'test', 'analysis', 'psychology', 'dating'],
+    keywords: ['hrq', 'HRQ', 'HighRQ', 'RQ', 'High Relationship Quotient', 'test', 'analysis', 'psychology', 'dating'],
     title: {
         default: 'High Relationship Quotient',
         template: '%s - High Relationship Quotient'
     },
+    description: 'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships.',
     openGraph: {
         description: 'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships.'
     }

@@ -1,6 +1,10 @@
-import Breadcrumb from "@/components/Common/Breadcrumb";
+import Breadcrumb from '@/components/Common/Breadcrumb'
 import Features from '@/components/(menu)/Features/Features'
+import { Metadata } from 'next'
 
+export const metadata: Metadata = {
+    title: "Features"
+}
 const FeaturesPage = () => {
    return (
       <>

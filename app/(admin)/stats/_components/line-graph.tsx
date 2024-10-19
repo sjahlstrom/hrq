@@ -1,14 +1,6 @@
 'use client'
-import { CandlestickChart } from 'lucide-react';
-import {
-    LineChart,
-    ResponsiveContainer,
-    XAxis,
-    YAxis,
-    Bar,
-    CartesianGrid,
-    Line,
-} from 'recharts'
+import { CandlestickChart } from 'lucide-react'
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
 export type LineChartProps = {
     data: { month: string; total: number }[]

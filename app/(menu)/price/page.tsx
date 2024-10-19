@@ -1,8 +1,12 @@
-import Breadcrumb from "@/components/Common/Breadcrumb";
+import Breadcrumb from '@/components/Common/Breadcrumb'
 import React from 'react'
 import PurchaseResults from '@/components/(menu)/Pricing/PurchaseResults'
 import PriceCard from '@/components/(menu)/Pricing/PriceCard'
+import { Metadata } from 'next'
 
+export const metadata: Metadata = {
+    title: "Pricing"
+}
 const PricingPage = () => {
    return (
       <div className="bg-gray-600">

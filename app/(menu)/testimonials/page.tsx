@@ -1,6 +1,11 @@
 import Breadcrumb from '@/components/Common/Breadcrumb'
 import React from 'react'
 import Testimonials from '@/components/(menu)/Testimonials/Testimonials'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: "Testimonials",
+}
 
 const TestimonialsPage = () => {
    return (

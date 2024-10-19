@@ -1,5 +1,5 @@
-import { Target } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { Target } from 'lucide-react'
+import { Progress } from '@/components/ui/progress'
 
 export type GoalProps = {
     value: number;

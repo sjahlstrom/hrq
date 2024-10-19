@@ -1,8 +1,7 @@
 'use client'
-
 import Link from 'next/link'
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
-import { Newspaper, Users, BarChart, Settings } from 'lucide-react'
+import { BarChart, Users } from 'lucide-react'
 import CheckUserRole from '@/components/CheckUserRole'
 import Breadcrumb from '@/components/Common/Breadcrumb'
 import React from 'react'

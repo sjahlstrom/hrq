@@ -1,6 +1,11 @@
-import Breadcrumb from "@/components/Common/Breadcrumb";
+import Breadcrumb from '@/components/Common/Breadcrumb'
 import React from 'react'
 import Tos from '@/components/(menu)/Tos/TOS'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: "Terms of Service"
+}
 
 const FaqsPage = () => {
    return (

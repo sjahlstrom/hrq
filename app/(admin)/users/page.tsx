@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState, useCallback, useMemo } from 'react'
-import { useUsers, User } from '@/hooks/useUsers'
-import { useSortableData, SortConfig } from '@/hooks/useSortableData'
+import React, { useCallback, useMemo, useState } from 'react'
+import { User, useUsers } from '@/hooks/useUsers'
+import { SortConfig, useSortableData } from '@/hooks/useSortableData'
 import { usePagination } from '@/hooks/usePagination'
 import { useClientSideEffect } from '@/hooks/useClientSideEffect'
 import CheckUserRole from '@/components/CheckUserRole'

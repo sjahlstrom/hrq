@@ -1,7 +1,11 @@
-import Breadcrumb from "@/components/Common/Breadcrumb";
-import React from "react";
-import Services from "@/components/(menu)/Services/Services";
+import Breadcrumb from '@/components/Common/Breadcrumb'
+import React from 'react'
+import Services from '@/components/(menu)/Services/Services'
+import { Metadata } from 'next'
 
+export const metadata: Metadata = {
+    title: "Services"
+}
 const ServicesPage = () => {
     return (
         <>
