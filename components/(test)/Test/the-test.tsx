@@ -2,8 +2,8 @@
 
 import React, { useState, useCallback, useEffect, useMemo } from 'react'
 import 'rc-slider/assets/index.css'
-import ReverseSlider from '@/components/Slider/ReverseSlider'
-import ForwardSlider from '@/components/Slider/ForwardSlider'
+import ReverseSlider from '@/components/Slider/reverse-slider'
+import ForwardSlider from '@/components/Slider/forward-slider'
 import { Button } from '@/components/ui/button'
 import {
     setTestCompleted,

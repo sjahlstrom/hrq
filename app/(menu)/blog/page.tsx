@@ -1,6 +1,6 @@
-import SingleBlog from '@/components/(menu)/Blog/SingleBlog'
+import SingleBlog from '@/components/(menu)/Blog/singel-blog'
 import blogData from '@/components/(menu)/Blog/blogData'
-import Breadcrumb from '@/components/Common/Breadcrumb'
+import Breadcrumb from '@/components/Common/bread-crumb'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {

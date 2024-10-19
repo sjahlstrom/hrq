@@ -1,8 +1,8 @@
-import RelatedPost from '@/components/(menu)/Blog/RelatedPost'
-import SharePost from '@/components/(menu)/Blog/SharePost'
-import TagButton from '@/components/(menu)/Blog/TagButton'
+import RelatedPost from '@/components/(menu)/Blog/related-post'
+import SharePost from '@/components/(menu)/Blog/share-post'
+import TagButton from '@/components/(menu)/Blog/tag-button'
 import Image from 'next/image'
-import NewsLatterBox from '@/components/(menu)/Contact/NewsLatterBox'
+import NewsLatterBox from '@/components/(menu)/Contact/news-letter-box'
 
 const BlogSidebarPage = () => {
   return (

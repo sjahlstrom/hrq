@@ -1,7 +1,7 @@
-import Breadcrumb from '@/components/Common/Breadcrumb'
+import Breadcrumb from '@/components/Common/bread-crumb'
 import React from 'react'
-import PurchaseResults from '@/components/(menu)/Pricing/PurchaseResults'
-import PriceCard from '@/components/(menu)/Pricing/PriceCard'
+import PurchaseResults from '@/components/(menu)/Pricing/purchase-results'
+import PriceCard from '@/components/(menu)/Pricing/price-card'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {

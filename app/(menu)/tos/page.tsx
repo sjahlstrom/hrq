@@ -1,6 +1,6 @@
-import Breadcrumb from '@/components/Common/Breadcrumb'
+import Breadcrumb from '@/components/Common/bread-crumb'
 import React from 'react'
-import Tos from '@/components/(menu)/Tos/TOS'
+import Tos from '@/components/(menu)/Tos/tos'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {

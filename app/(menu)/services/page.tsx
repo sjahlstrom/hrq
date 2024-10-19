@@ -1,6 +1,6 @@
-import Breadcrumb from '@/components/Common/Breadcrumb'
+import Breadcrumb from '@/components/Common/bread-crumb'
 import React from 'react'
-import Services from '@/components/(menu)/Services/Services'
+import Services from '@/components/(menu)/Services/services'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
