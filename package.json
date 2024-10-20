@@ -49,6 +49,7 @@
     "next": "^14.2.15",
     "next-themes": "^0.2.1",
     "ngrok": "5.0.0-beta.2",
+    "pdf-lib": "^1.17.1",
     "rc-slider": "^11.1.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
