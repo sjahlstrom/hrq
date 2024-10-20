@@ -1,4 +1,3 @@
-
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import React from 'react'
@@ -34,17 +33,18 @@ const ForwardSlider: React.FC<CreateSliderProps> = ({
 }) => {
 
    return (
-      <div className="w-fill m-30 mb-2 ml-10 flex">
-         <Slider
-            range
-            min={0}
-            max={30}
-            value={value}
-            onChange={onChange}
-            onChangeComplete={() => onChange(value)} // Ensure state is updated on interaction end
-            styles={sliderStyles}
-         />
-      </div>
+       // <div className="w-fill m-30 mb-2 ml-10 flex">
+       <div className="w-full m-8 mb-2 flex">
+          <Slider
+              // range
+              min={0}
+              max={30}
+              value={value}
+              onChange={onChange}
+              onChangeComplete={() => onChange(value)} // Ensure state is updated on interaction end
+              styles={sliderStyles}
+          />
+       </div>
    )
 }
 
