@@ -13,7 +13,7 @@ import Toaster from '@/components/ui/toast'
 
 export const metadata: Metadata = {
     metadataBase: new URL('http://hrq.vercel.app'),
-    keywords: ['hrq', 'HRQ', 'HighRQ', 'RQ', 'High Relationship Quotient', 'test', 'analysis', 'psychology', 'dating'],
+    keywords: ['hrq', 'HRQ', 'HighRQ', 'RQ', 'High Relationship Quotient', 'relationships', 'relationship skills', 'personality', 'behavior', 'good catch', 'test', 'analysis', 'psychology', 'dating'],
     title: {
         default: 'High Relationship Quotient',
         template: '%s - High Relationship Quotient'
