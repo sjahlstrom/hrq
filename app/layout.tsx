@@ -31,18 +31,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 lang="en"
                 className={`${arimo.variable} ${laila.variable} ${telex.variable} ${nunito.variable}`}
             >
-                <head>
-                    <title>High Relationship Quotient</title>
-                    <meta
-                        name="viewport"
-                        content="width=device-width, initial-scale=1"
-                    />
-                    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-                </head>
-                <body>
-                    <Providers>
-                        <Header />
-                        {children}
+            <head>
+                <meta name="google-site-verification" content="-cj0V0hW2yNJy0UyKps6po3aC4vhP9WxfnwAKubM_54" />
+                <title>High Relationship Quotient</title>
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
+                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+            </head>
+            <body>
+            <Providers>
+                <Header />
+                {children}
                         <Analytics />
                         <SpeedInsights />
                         <Toaster />

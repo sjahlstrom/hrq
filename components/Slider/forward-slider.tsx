@@ -33,7 +33,6 @@ const ForwardSlider: React.FC<CreateSliderProps> = ({
 }) => {
 
    return (
-       // <div className="w-fill m-30 mb-2 ml-10 flex">
        <div className="w-full m-8 mb-2 flex">
           <Slider
               // range

@@ -37,17 +37,16 @@ const SliderOptions: React.FC<{ options: Option }> = ({ options }) => (
         {Object.entries(options).map(([key, value], index) => (
             <div
                 key={key}
-                className={`absolute transform -translate-y-1/2 text-xs sm:text-sm ${
-                    index === 0
-                        ? 'left-16'
-                        : index === 1
-                          ? 'left-1/2 -translate-x-1/2'
-                          : 'right-10'
-                }`}
-                style={{
-                    top: '50%',
-                    left: index === 1 ? 'calc(50% + 10px)' : undefined,
-                }}
+                className={`
+        absolute top-1/2 -translate-y-1/2 text-xs sm:text-sm
+        ${
+            index === 0
+                ? 'left-4'
+                : index === 1
+                  ? 'left-[calc(50%-12px)] -translate-x-1/2'
+                  : 'right-4'
+        }
+      `}
             >
                 {value}
             </div>
@@ -201,22 +200,43 @@ export default function TheTest({
                     </h2>
                 </div>
 
-                <div className="w-full max-w-3xl mb-8 md:mb-12 -mt-24">
-                    <div className="px-4 md:px-8">
-                        {currentQuestion.reverse ? (
-                            <ReverseSlider
-                                value={state.reverseSliderValue}
-                                onChange={updateSliderValue}
-                            />
-                        ) : (
-                            <ForwardSlider
-                                value={state.sliderValue}
-                                onChange={updateSliderValue}
-                            />
-                        )}
+                {/*<div className="border-2 w-full max-w-3xl mb-8 md:mb-64  ">*/}
+                {/*    <div className="px-4 md:px-8">*/}
+                {/*        {currentQuestion.reverse ? (*/}
+                {/*            <ReverseSlider*/}
+                {/*                value={state.reverseSliderValue}*/}
+                {/*                onChange={updateSliderValue}*/}
+                {/*            />*/}
+                {/*        ) : (*/}
+                {/*            <ForwardSlider*/}
+                {/*                value={state.sliderValue}*/}
+                {/*                onChange={updateSliderValue}*/}
+                {/*            />*/}
+                {/*        )}*/}
+                {/*    </div>*/}
+                {/*    <SliderOptions options={currentQuestion.options} />*/}
+                {/*</div>*/}
+
+                <div
+                    className=" w-full max-w-3xl mb-8 md:mb-64 overflow-hidden mx-auto">  {/* Center the parent container */}
+                    <div className="w-full max-w-full">
+                        <div className="w-[95%] -ml-5 mx-auto">  {/* Center the sliders and adjust their width */}
+                            {currentQuestion.reverse ? (
+                                <ReverseSlider
+                                    value={state.reverseSliderValue}
+                                    onChange={updateSliderValue}
+                                />
+                            ) : (
+                                <ForwardSlider
+                                    value={state.sliderValue}
+                                    onChange={updateSliderValue}
+                                />
+                            )}
+                        </div>
                     </div>
                     <SliderOptions options={currentQuestion.options} />
                 </div>
+
 
                 <div className="w-full max-w-3xl flex justify-center mb-8 md:mb-12 -mt-24">
                     <Button
@@ -224,8 +244,8 @@ export default function TheTest({
                             isLastQuestion
                                 ? 'bg-hrqColors-skyBlue-500 hover:bg-hrqColors-skyBlue-800 group'
                                 : !state.isSliderUsed
-                                  ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
-                                  : 'bg-hrqColors-skyBlue-600 text-gray-100 hover:bg-hrqColors-skyBlue-800 group'
+                                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                                    : 'bg-hrqColors-skyBlue-600 text-gray-100 hover:bg-hrqColors-skyBlue-800 group'
                         }`}
                         onClick={
                             isLastQuestion

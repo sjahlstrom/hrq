@@ -3,7 +3,7 @@ import Hero from '@/components/Hero/hero'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: "Home"
+    title: "Home Page"
 }
 
 export default async function Home() {
