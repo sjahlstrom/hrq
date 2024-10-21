@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
             {
                 userAgent: '*',
                 allow: '/',
-                disallow: ['/admin', '/users', '/stats']
+                disallow: ['/admin', '/users', '/stats', '/public']
             }
         ],
         sitemap: 'http://hrq.vercel.app/sitemap.xml'
