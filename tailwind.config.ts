@@ -51,10 +51,6 @@ const config: Config = {
                 black: '#090E34',
                 dark: '#1D2144',
 
-paleFrost: '#f0f4f5',
-deepSlate: '#1a2327',
-mistyBlue: '#b7c9cf',
-
                 hrqColors: {
                     skyBlue: {
                         100: '#e1eff6', // Lightest
@@ -191,7 +187,7 @@ mistyBlue: '#b7c9cf',
             },
         },
     },
-    plugins: [require('tailwindcss-animate')],
+    plugins: [require('tailwindcss-animate'), require('@tailwindcss/forms')],
 }
 
 export default config

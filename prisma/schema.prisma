@@ -13,29 +13,63 @@ enum UserRole {
   USER
 }
 
+enum Sex {
+  male
+  female
+}
+
+enum Gender {
+  male
+  female
+  other
+}
+
+enum Trans {
+  not
+  male
+  female
+  non
+  prefernot
+}
+
 model User {
-  id              String    @id @default(cuid())
-  externalUserId  String    @unique
-  username        String?   @unique
+  id              String       @id @default(cuid())
+  externalUserId  String       @unique
+  username        String?      @unique
   testResponse    Int[]
   associatedScale Int[]
-  testCompleted   Boolean   @default(false)
+  testCompleted   Boolean      @default(false)
   summedTotal     Float?
-  paid_rq         Boolean   @default(false)
-  paid_cq         Boolean   @default(false)
-  banned          Boolean   @default(false)
-  email           String?   @unique
+  paid_rq         Boolean      @default(false)
+  paid_cq         Boolean      @default(false)
+  banned          Boolean      @default(false)
+  email           String?      @unique
   password        String?
-  areaCode        String?   @db.VarChar(3)
-  zipCode         String?   @db.VarChar(5)
-  image           String?   @db.Text
-  bio             String?   @db.Text
-  role            UserRole  @default(USER)
+  areaCode        String?      @db.VarChar(3)
+  zipCode         String?      @db.VarChar(5)
+  image           String?      @db.Text
+  role            UserRole     @default(USER)
   accounts        Account[]
+  preferences     Preferences? @relation(fields: [preferencesId], references: [id])
+  preferencesId   String?      @unique
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   Purchase  Purchase[]
+}
+
+model Preferences {
+  id          String   @id @default(cuid())
+  age         Int
+  postalCode  Int
+  sex         Sex
+  gender      Gender
+  trans       Trans
+  preferences Int[]
+  bio         String?  @db.Text
+  user        User?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Account {
