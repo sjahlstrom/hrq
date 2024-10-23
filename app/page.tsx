@@ -1,17 +1,19 @@
 import ScrollUp from '@/components/Common/scroll-up'
 import Hero from '@/components/Hero/hero'
+import CTA from '@/components/CTA/cta'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: "Home Page"
+    title: "Home - High Relationship Quotient",
+    description: "Discover how to improve your relationships and find balance in life with High Relationship Quotient.",
 }
 
-export default async function Home() {
-
+export default function Home() {
     return (
         <>
-                <ScrollUp />
-                <Hero />
+            <Hero />
+            <CTA />
+            <ScrollUp />
         </>
     )
 }
