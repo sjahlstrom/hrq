@@ -178,10 +178,10 @@ export default function TheTest({
     }
 
     return (
-        <div className="flex flex-col min-h-[calc(100vh-350px)] bg-hrqColors-skyBlue-700">
-            <div className="h-1 w-full bg-hrqColors-skyBlue-600">
+        <div className="flex flex-col min-h-[calc(100vh-450px)]  bg-hrqColors-skyBlue-700">
+            <div className="h-1 w-full bg-hrqColors-skyBlue-600 ">
                 <div
-                    className="h-1 bg-hrqColors-sunsetOrange-400 transition-all duration-300 ease-in-out"
+                    className="h-1 bg-hrqColors-sunsetOrange-400 transition-all duration-300 ease-in-out "
                     style={{ width: widthPercentage }}
                 ></div>
             </div>
@@ -200,27 +200,13 @@ export default function TheTest({
                     </h2>
                 </div>
 
-                {/*<div className="border-2 w-full max-w-3xl mb-8 md:mb-64  ">*/}
-                {/*    <div className="px-4 md:px-8">*/}
-                {/*        {currentQuestion.reverse ? (*/}
-                {/*            <ReverseSlider*/}
-                {/*                value={state.reverseSliderValue}*/}
-                {/*                onChange={updateSliderValue}*/}
-                {/*            />*/}
-                {/*        ) : (*/}
-                {/*            <ForwardSlider*/}
-                {/*                value={state.sliderValue}*/}
-                {/*                onChange={updateSliderValue}*/}
-                {/*            />*/}
-                {/*        )}*/}
-                {/*    </div>*/}
-                {/*    <SliderOptions options={currentQuestion.options} />*/}
-                {/*</div>*/}
+                <div className=" w-full max-w-3xl mb-8 md:mb-64 overflow-hidden mx-auto ">
 
-                <div
-                    className=" w-full max-w-3xl mb-8 md:mb-64 overflow-hidden mx-auto">  {/* Center the parent container */}
-                    <div className="w-full max-w-full">
-                        <div className="w-[95%] -ml-5 mx-auto">  {/* Center the sliders and adjust their width */}
+                    {/* Center the parent container */}
+                    <div className="w-full max-w-full ">
+                        <div className="w-[95%] -ml-5 mx-auto ">
+                            {' '}
+                            {/* Center the sliders and adjust their width */}
                             {currentQuestion.reverse ? (
                                 <ReverseSlider
                                     value={state.reverseSliderValue}
@@ -237,15 +223,14 @@ export default function TheTest({
                     <SliderOptions options={currentQuestion.options} />
                 </div>
 
-
                 <div className="w-full max-w-3xl flex justify-center mb-8 md:mb-12 -mt-24">
                     <Button
                         className={`relative w-full max-w-md px-6 py-3 text-lg sm:text-xl rounded-xl shadow-md transition-all duration-300 overflow-hidden ${
                             isLastQuestion
                                 ? 'bg-hrqColors-skyBlue-500 hover:bg-hrqColors-skyBlue-800 group'
                                 : !state.isSliderUsed
-                                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
-                                    : 'bg-hrqColors-skyBlue-600 text-gray-100 hover:bg-hrqColors-skyBlue-800 group'
+                                  ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                                  : 'bg-hrqColors-skyBlue-600 text-gray-100 hover:bg-hrqColors-skyBlue-800 group'
                         }`}
                         onClick={
                             isLastQuestion
