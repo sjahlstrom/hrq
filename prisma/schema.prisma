@@ -14,22 +14,22 @@ enum UserRole {
 }
 
 enum Sex {
-  male
-  female
+  MALE
+  FEMALE
 }
 
 enum Gender {
-  male
-  female
-  other
+  MALE
+  FEMALE
+  OTHER
 }
 
 enum Trans {
-  not
-  male
-  female
-  non
-  prefernot
+  NOT_TRANSGENDER
+  MALE
+  FEMALE
+  NON_BINARY
+  PREFER_NOT_TO_SAY
 }
 
 model User {
@@ -65,7 +65,7 @@ model Preferences {
   sex         Sex
   gender      Gender
   trans       Trans
-  preferences Int[]
+  preferences String[]
   bio         String?  @db.Text
   user        User?
   createdAt   DateTime @default(now())
