@@ -26,8 +26,8 @@ enum Gender {
 
 enum Trans {
   NOT_TRANSGENDER
-  MALE
-  FEMALE
+  TRANS_MALE
+  TRANS_FEMALE
   NON_BINARY
   PREFER_NOT_TO_SAY
 }
@@ -50,8 +50,7 @@ model User {
   image           String?      @db.Text
   role            UserRole     @default(USER)
   accounts        Account[]
-  preferences     Preferences? @relation(fields: [preferencesId], references: [id])
-  preferencesId   String?      @unique
+  preferences     Preferences?
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -61,13 +60,14 @@ model User {
 model Preferences {
   id          String   @id @default(cuid())
   age         Int
-  postalCode  Int
+  postalCode  String
   sex         Sex
   gender      Gender
   trans       Trans
   preferences String[]
   bio         String?  @db.Text
-  user        User?
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

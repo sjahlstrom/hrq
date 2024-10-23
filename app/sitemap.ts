@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/tos',
         '/price',
         '/privacy',
-        '/bio',
+        '/cta',
     ]
 
     return routes.map((route) => ({
