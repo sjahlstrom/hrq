@@ -2,20 +2,20 @@ import Link from 'next/link'
 import { arimo, telex } from '@/app/ui/fonts'
 
 const Breadcrumb = ({
-    pageName,
-    description,
-}: {
+                        pageName,
+                        description,
+                    }: {
     pageName: string
     description: string
 }) => {
     return (
         <>
-            <section className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 relative z-10  overflow-hidden pt-20 lg:pt-[150px]">
-                <div className="container ">
-                    <div className="-mx-4 flex flex-wrap items-center">
+            <section className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 relative z-10 overflow-hidden pt-20 lg:pt-[100px] flex flex-col min-h-[300px]">
+                <div className="container flex-grow flex flex-col">
+                    <div className="-mx-4 flex flex-wrap items-center h-full">
                         <div className="w-full px-4 md:w-8/12 lg:w-7/12">
-                            <div className="mb-8 mt-2  max-w-[570px] md:mb-0 lg:mb-12">
-                                <h1 className=" animate-fade-in mb-5 text-2xl font-semibold text-white sm:text-3xl">
+                            <div className="h-full max-w-[570px]">
+                                <h1 className="animate-fade-in mb-5 text-2xl font-semibold text-white sm:text-3xl">
                                     {pageName}
                                 </h1>
 
@@ -45,7 +45,6 @@ const Breadcrumb = ({
                             </div>
                         </div>
                     </div>
-                    <br /> <br />
                 </div>
 
                 <div>

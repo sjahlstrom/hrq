@@ -43,7 +43,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ success: true, user, preferences })
     } catch (error) {
-        console.error('Error updating bio:', error)
+        console.error('Error updating preferences:', error)
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
 }
