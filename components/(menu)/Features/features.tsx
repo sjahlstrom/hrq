@@ -1,4 +1,4 @@
-import SectionTitle from '@/components/Common/section-title'
+import SectionTitle from '@/components/common/section-title'
 import SingleFeature from "./single-feature";
 import featuresData from "./featuresData";
 import { nunito } from '@/app/ui/fonts'

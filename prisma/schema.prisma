@@ -51,6 +51,7 @@ model User {
   role            UserRole     @default(USER)
   accounts        Account[]
   preferences     Preferences?
+  bio             Bio? // One-to-one relation to Bio
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -70,6 +71,17 @@ model Preferences {
   userId      String   @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Bio {
+  id     String   @id @default(cuid())
+  images String[] // Array of image URLs or paths
+  bio    String?  @db.Text
+  user   User     @relation(fields: [userId], references: [id]) // One-to-one relation to User
+  userId String   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Account {

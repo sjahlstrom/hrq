@@ -11,7 +11,7 @@ import { UserTable } from '@/components/(dashboard)/user-table'
 import { SkeletonUserTable } from '@/components/(dashboard)/skeleton-user-table'
 import SearchBar from '@/components/(dashboard)/search-bar'
 import UsersPagination from '@/components/(dashboard)/user-pagination'
-import Breadcrumb from '@/components/Common/bread-crumb'
+import Breadcrumb from '@/components/common/bread-crumb'
 
 export default function UsersComponent() {
     const { users = [], loading, banUser, unBanUser } = useUsers()

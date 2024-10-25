@@ -9,7 +9,7 @@ import BarChart from '@/app/(admin)/stats/_components/barchart'
 import LineGraph from '@/app/(admin)/stats/_components/line-graph'
 import GoalDataCard from '@/app/(admin)/stats/_components/goal'
 import CheckUserRole from '@/components/check-user-role'
-import Breadcrumb from '@/components/Common/bread-crumb'
+import Breadcrumb from '@/components/common/bread-crumb'
 import { Metadata } from 'next'
 
 

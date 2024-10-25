@@ -2,9 +2,9 @@
 // import { ClerkProvider } from '@clerk/nextjs';
 // import { dark } from '@clerk/themes';
 // import { Providers } from './providers';
-// import Footer from '@/components/Common/Footer/footer';
-// import Header from '@/components/Common/Header/header';
-// import ScrollToTop from 'components/Common/ScrollToTop';
+// import Footer from '@/components/common/Footer/footer';
+// import Header from '@/components/common/Header/header';
+// import ScrollToTop from 'components/common/ScrollToTop';
 // import '@/styles/index.css';
 // import { Metadata } from 'next';
 // import { Analytics } from '@vercel/analytics/react';
@@ -63,9 +63,9 @@ import { arimo, laila, nunito, telex } from '@/app/ui/fonts'
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { Providers } from './providers'
-import Footer from '@/components/Common/Footer/footer'
-import Header from '@/components/Common/Header/header'
-import ScrollToTop from '@/components/Common/ScrollToTop'
+import Footer from '@/components/common/Footer/footer'
+import Header from '@/components/common/Header/header'
+import ScrollToTop from '@/components/common/ScrollToTop'
 import '@/styles/index.css'
 import { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
