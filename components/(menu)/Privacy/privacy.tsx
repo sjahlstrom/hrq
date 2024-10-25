@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import SectionTitle from '@/components/Common/section-title'
+import SectionTitle from '@/components/common/section-title'
 
 export default function Privacy() {
     return (

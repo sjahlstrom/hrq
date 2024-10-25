@@ -1,4 +1,4 @@
-import Breadcrumb from '@/components/Common/bread-crumb'
+import Breadcrumb from '@/components/common/bread-crumb'
 import Features from '@/components/(menu)/Features/features'
 import { Metadata } from 'next'
 

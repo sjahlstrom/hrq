@@ -1,5 +1,5 @@
 import { Testimonial } from '@/types/testimonial'
-import SectionTitle from '@/components/Common/section-title'
+import SectionTitle from '@/components/common/section-title'
 import SingleTestimonial from './single-testimonial'
 
 const testimonialData: Testimonial[] = [

@@ -1,4 +1,4 @@
-import Breadcrumb from '@/components/Common/bread-crumb'
+import Breadcrumb from '@/components/common/bread-crumb'
 import React from 'react'
 import PurchaseResults from '@/components/(menu)/Pricing/purchase-results'
 import PriceCard from '@/components/(menu)/Pricing/price-card'

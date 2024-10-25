@@ -1,4 +1,4 @@
-import Breadcrumb from '@/components/Common/bread-crumb'
+import Breadcrumb from '@/components/common/bread-crumb'
 import React from 'react'
 import TestAnalysis from '@/components/(test)/Analysis/analysis'
 import { Metadata } from 'next'

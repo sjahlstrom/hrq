@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react'
 import { SignInButton, UserButton, useUser } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 import { useIsAdmin } from '@/hooks/useIsAdmim'
-import menuData from '@/components/Common/Header/menuData'
+import menuData from '@/components/common/Header/menuData'
 
 export default function Component() {
     const [navbarOpen, setNavbarOpen] = useState(false)

@@ -1,4 +1,4 @@
-import Breadcrumb from '@/components/Common/bread-crumb'
+import Breadcrumb from '@/components/common/bread-crumb'
 import QuestionSection from '@/components/(test)/Test/the-test'
 import sampleQuestions from '@/components/(test)/Test/Data/sampleQuestions'
 import testQuestions from '@/components/(test)/Test/Data/testQuestions'

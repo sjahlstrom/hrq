@@ -1,4 +1,4 @@
-import Breadcrumb from '@/components/Common/bread-crumb'
+import Breadcrumb from '@/components/common/bread-crumb'
 import ContactForm from '@/components/(menu)/Contact/contact'
 import { Metadata } from 'next'
 
