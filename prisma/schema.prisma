@@ -13,25 +13,6 @@ enum UserRole {
   USER
 }
 
-enum Sex {
-  MALE
-  FEMALE
-}
-
-enum Gender {
-  MALE
-  FEMALE
-  OTHER
-}
-
-enum Trans {
-  NOT_TRANSGENDER
-  TRANS_MALE
-  TRANS_FEMALE
-  NON_BINARY
-  PREFER_NOT_TO_SAY
-}
-
 model User {
   id              String       @id @default(cuid())
   externalUserId  String       @unique
@@ -44,9 +25,6 @@ model User {
   paid_cq         Boolean      @default(false)
   banned          Boolean      @default(false)
   email           String?      @unique
-  password        String?
-  areaCode        String?      @db.VarChar(3)
-  zipCode         String?      @db.VarChar(5)
   image           String?      @db.Text
   role            UserRole     @default(USER)
   accounts        Account[]
@@ -59,26 +37,44 @@ model User {
 }
 
 model Preferences {
-  id          String   @id @default(cuid())
-  age         Int
-  postalCode  String
-  sex         Sex
-  gender      Gender
-  trans       Trans
-  preferences String[]
-  bio         String?  @db.Text
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String   @unique
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id String @id @default(cuid())
+
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Bio {
-  id     String   @id @default(cuid())
-  images String[] // Array of image URLs or paths
-  bio    String?  @db.Text
-  user   User     @relation(fields: [userId], references: [id]) // One-to-one relation to User
-  userId String   @unique
+  id             String   @id @default(cuid())
+  images         String[] // Array of image URLs or paths
+  occupation     String
+  education      String
+  income         String
+  postal         String
+  areacode       String
+  birthday       DateTime
+  maritalStatus  String
+  dateType       String
+  sex            String
+  gender         String
+  race           String
+  intent         String
+  smoker         String
+  dataSmoker     String
+  drugs          String
+  dateDrugs      String
+  drinker        String
+  dateDrinkers   String
+  kids           String
+  religion       String
+  language       String
+  secondLanguage String
+  headline       String
+
+  bio    String? @db.Text
+  user   User    @relation(fields: [userId], references: [id]) // One-to-one relation to User
+  userId String  @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
