@@ -29,7 +29,7 @@ model User {
   role            UserRole     @default(USER)
   accounts        Account[]
   preferences     Preferences?
-  bio             Bio? // One-to-one relation to Bio
+  bio             Bio? // One-to-one relation to profile
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -46,38 +46,32 @@ model Preferences {
 }
 
 model Bio {
-  id             String   @id @default(cuid())
-  images         String[] // Array of image URLs or paths
-  occupation     String
-  education      String
-  income         String
-  postal         String
-  areacode       String
-  birthday       DateTime
-  maritalStatus  String
-  dateType       String
-  sex            String
-  gender         String
-  race           String
-  intent         String
-  smoker         String
-  dataSmoker     String
-  drugs          String
-  dateDrugs      String
-  drinker        String
-  dateDrinkers   String
-  kids           String
-  religion       String
-  language       String
-  secondLanguage String
-  headline       String
-
-  bio    String? @db.Text
-  user   User    @relation(fields: [userId], references: [id]) // One-to-one relation to User
-  userId String  @unique
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                     String    @id @default(cuid())
+  userId                 String    @unique
+  user                   User      @relation(fields: [userId], references: [id])
+  occupation             String?
+  education              String?
+  incomeRange            String?
+  postalCode             String?
+  areaCode               String?
+  birthday               DateTime?
+  maritalStatus          String?
+  relationshipTypeWanted String?
+  biologicalSex          String?
+  gender                 String?
+  race                   String?
+  smoker                 String?
+  dateSmoker             String?
+  drugs                  String?
+  dateMarijuanaUser      String?
+  haveChildren           String?
+  dateSomeoneWithKids    String?
+  religion               String?
+  primaryLanguage        String?
+  otherLanguages         String?
+  aboutYourself          String?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
 }
 
 model Account {

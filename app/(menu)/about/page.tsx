@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const AboutPage = () => {
     return (
         <div>
-            <div className="bg-green-200">
+            <div>
                 <Breadcrumb
                     pageName="About"
                     description="The main 'thrust' is to focus on helping people to find their potential and increasing their satisfaction in their relationship."

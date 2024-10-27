@@ -33,7 +33,7 @@ const Sidebar = () => {
                             {/*        <CommandGroup heading='Settings'>*/}
                             {/*            <CommandItem>*/}
                             {/*                <User className='mr-4 h-4 w-12' />*/}
-                            {/*                <span>Profile</span>*/}
+                            {/*                <span>profile</span>*/}
                             {/*                /!*<CommandShortcut>⌘P</CommandShortcut>*!/*/}
                             {/*            </CommandItem>*/}
                             {/*            <CommandItem>*/}
