@@ -58,6 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
                 <link rel="alternate" href="https://hrq.vercel.app/" hrefLang="en" />
                 <meta name="robots" content="all" />
+                <title>High Relationship Quotient</title>
             </head>
             <body className="min-h-screen flex flex-col">
             <Providers>
