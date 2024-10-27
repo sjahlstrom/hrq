@@ -80,28 +80,29 @@ export default function RootLayout({
                 lang="en"
                 className={`${arimo.variable} ${laila.variable} ${telex.variable} ${nunito.variable}`}
             >
-                <head>
-                    <meta
-                        name="google-site-verification"
-                        content="-cj0V0hW2yNJy0UyKps6po3aC4vhP9WxfnwAKubM_54"
-                    />
-                    <meta
-                        name="viewport"
-                        content="width=device-width, initial-scale=1"
-                    />
-                    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-                    <link
-                        rel="alternate"
-                        href="https://hrq.vercel.app/"
-                        hrefLang="en"
-                    />
-                    <meta name="robots" content="all" />
-                    <title>
-                        High Relationship Quotient - Life is a balancing act.
-                    </title>
-                </head>
-                <body className="min-h-screen flex flex-col">
-                    <Providers>
+            <head>
+                <meta name="msvalidate.01" content="F02FCA37DF842444933379AF9833B97C" />
+                <meta
+                    name="google-site-verification"
+                    content="-cj0V0hW2yNJy0UyKps6po3aC4vhP9WxfnwAKubM_54"
+                />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
+                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+                <link
+                    rel="alternate"
+                    href="https://hrq.vercel.app/"
+                    hrefLang="en"
+                />
+                <meta name="robots" content="all" />
+                <title>
+                    High Relationship Quotient - Life is a balancing act.
+                </title>
+            </head>
+            <body className="min-h-screen flex flex-col">
+            <Providers>
                         <Header />
                         <main className="flex-1">{children}</main>
                         <Footer />
