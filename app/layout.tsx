@@ -16,18 +16,38 @@ import React from 'react'
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://hrq.vercel.app'),
-    keywords: ['hrq', 'HRQ', 'HighRQ', 'RQ', 'CQ', 'cq', 'High Relationship Quotient', 'relationships', 'relationship skills', 'personality', 'behavior', 'good catch', 'test', 'analysis', 'psychology', 'dating'],
+    keywords: [
+        'hrq',
+        'HRQ',
+        'HighRQ',
+        'RQ',
+        'CQ',
+        'cq',
+        'High Relationship Quotient',
+        'relationships',
+        'relationship skills',
+        'personality',
+        'behavior',
+        'good catch',
+        'test',
+        'analysis',
+        'psychology',
+        'dating',
+    ],
     title: {
-        default: 'High Relationship Quotient (Hi ghRQ)- Improve your relationships. Life is a balancing act. Find out how to get yours in balance and improve all of your relationships, work, social, romance.',
+        default:
+            'High Relationship Quotient (Hi ghRQ)- Improve your relationships. Life is a balancing act. Find out how to get yours in balance and improve all of your relationships, work, social, romance.',
         template: '%s - High Relationship Quotient',
     },
     alternates: {
         canonical: '/',
     },
-    description: 'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships.',
+    description:
+        'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships, work, social, romance.',
     openGraph: {
         title: 'High Relationship Quotient',
-        description: 'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships, work, social, romance.',
+        description:
+            'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships, work, social, romance.',
         url: 'https://hrq.vercel.app',
         siteName: 'High Relationship Quotient',
         images: [
@@ -43,37 +63,56 @@ export const metadata: Metadata = {
     twitter: {
         card: 'summary_large_image',
         title: 'High Relationship Quotient',
-        description: 'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships, work, social, romance.',
+        description:
+            'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships, work, social, romance.',
         images: ['https://hrq.vercel.app/twitter-image.jpg'],
     },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+    children,
+}: {
+    children: React.ReactNode
+}) {
     return (
         <ClerkProvider appearance={{ baseTheme: dark }}>
-            <html lang="en" className={`${arimo.variable} ${laila.variable} ${telex.variable} ${nunito.variable}`}>
-            <head>
-                <meta name="google-site-verification" content="-cj0V0hW2yNJy0UyKps6po3aC4vhP9WxfnwAKubM_54" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-                <link rel="alternate" href="https://hrq.vercel.app/" hrefLang="en" />
-                <meta name="robots" content="all" />
-            </head>
-            <body className="min-h-screen flex flex-col">
-            <Providers>
-                <Header />
-                <main className="flex-1">
-                    {children}
-                </main>
-                <Footer />
-                <ScrollToTop />
-                <Analytics />
-                <SpeedInsights />
-                <GoogleAnalytics gaId="G-Y8VHLZ4JB8" />
+            <html
+                lang="en"
+                className={`${arimo.variable} ${laila.variable} ${telex.variable} ${nunito.variable}`}
+            >
+                <head>
+                    <meta
+                        name="google-site-verification"
+                        content="-cj0V0hW2yNJy0UyKps6po3aC4vhP9WxfnwAKubM_54"
+                    />
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1"
+                    />
+                    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+                    <link
+                        rel="alternate"
+                        href="https://hrq.vercel.app/"
+                        hrefLang="en"
+                    />
+                    <meta name="robots" content="all" />
+                    <title>
+                        High Relationship Quotient - Life is a balancing act.
+                    </title>
+                </head>
+                <body className="min-h-screen flex flex-col">
+                    <Providers>
+                        <Header />
+                        <main className="flex-1">{children}</main>
+                        <Footer />
+                        <ScrollToTop />
+                        <Analytics />
+                        <SpeedInsights />
+                        <GoogleAnalytics gaId="G-Y8VHLZ4JB8" />
 
-                <Toaster />
-            </Providers>
-            </body>
+                        <Toaster />
+                    </Providers>
+                </body>
             </html>
         </ClerkProvider>
     )
