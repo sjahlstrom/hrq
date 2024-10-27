@@ -3,6 +3,11 @@ import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
 import ProfileForm from '@/components/Profile/ProfileForm'
 import Breadcrumb from '@/components/common/bread-crumb'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: "Profile"
+}
 
 export default async function ProfilePage() {
     const { userId } = auth()

@@ -2,6 +2,12 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import Breadcrumb from '@/components/common/bread-crumb'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: "Not Found"
+}
 
 const NotFoundPage = () => {
     const router = useRouter();
@@ -11,7 +17,12 @@ const NotFoundPage = () => {
     };
 
     return (
-        <section className="bg-white mt-20 dark:bg-gray-900">
+<>
+        <Breadcrumb
+            pageName="About"
+            description="I'm wandering around aimlessly and I'm hopelessly lost"        />
+
+        <section className="bg-white dark:bg-gray-900">
             <div className="container min-h-screen px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12">
                 <div className="w-full lg:w-1/2">
                     <p className="text-sm font-medium text-blue-500 dark:text-blue-400">404 error</p>
@@ -23,7 +34,7 @@ const NotFoundPage = () => {
                         <Button
                             onClick={handleRedirect}
                             className="w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-xl shrink-0 sm:w-auto hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                            Take me home country road to the place that I belong
+                            Take Me Home
                         </Button>
                     </div>
                 </div>
@@ -40,6 +51,7 @@ const NotFoundPage = () => {
                 </div>
             </div>
         </section>
+</>
     )
 }
 

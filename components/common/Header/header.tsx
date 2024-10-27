@@ -121,10 +121,11 @@ export default function Component() {
                                             key={menuItem.id}
                                             className="group relative"
                                         >
+                                            {/* here is where the menu item colors are set */}
                                             {menuItem.path ? (
                                                 <Link
                                                     href={menuItem.path}
-                                                    className="flex py-2 text-base text-white lg:text-dark group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
+                                                    className="flex py-2 text-base text-white lg:text-hrqColors-coolGray-700 group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
                                                     onClick={() =>
                                                         setNavbarOpen(false)
                                                     }
