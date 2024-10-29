@@ -23,11 +23,8 @@ export async function updateProfile(formData: FormData) {
     const gender = formData.get('gender') as string | null
     const race = formData.get('race') as string | null
     const smoker = formData.get('smoker') as string | null
-    const dateSmoker = formData.get('dateSmoker') as string | null
     const drugs = formData.get('drugs') as string | null
-    const dateMarijuanaUser = formData.get('dateMarijuanaUser') as string | null
     const haveChildren = formData.get('haveChildren') as string | null
-    const dateSomeoneWithKids = formData.get('dateSomeoneWithKids') as string | null
     const religion = formData.get('religion') as string | null
     const primaryLanguage = formData.get('primaryLanguage') as string | null
     const otherLanguages = formData.get('otherLanguages') as string | null
@@ -52,11 +49,8 @@ export async function updateProfile(formData: FormData) {
                             gender,
                             race,
                             smoker,
-                            dateSmoker,
                             drugs,
-                            dateMarijuanaUser,
                             haveChildren,
-                            dateSomeoneWithKids,
                             religion,
                             primaryLanguage,
                             otherLanguages,
@@ -75,11 +69,8 @@ export async function updateProfile(formData: FormData) {
                             gender,
                             race,
                             smoker,
-                            dateSmoker,
                             drugs,
-                            dateMarijuanaUser,
                             haveChildren,
-                            dateSomeoneWithKids,
                             religion,
                             primaryLanguage,
                             otherLanguages,

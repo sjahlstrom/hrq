@@ -18,26 +18,23 @@ import { toast } from 'sonner'
 
 const formSchema = z.object({
     occupation: z.string().min(5, 'Occupation must be at least 5 characters.').max(20, 'Occupation must not exceed 20 characters.'),
-    education: z.string({ required_error: 'Please select your education level.' }),
-    incomeRange: z.string({ required_error: 'Please select an income range.' }),
-    postalCode: z.string().max(10, 'Postal code must not exceed 10 characters.'),
-    areaCode: z.string().max(8, 'Area code must not exceed 8 characters.'),
+    education: z.string().min(1, 'Please select your education level.'),
+    incomeRange: z.string().min(1, 'Please select an income range.'),
+    postalCode: z.string().max(10, 'Postal code must not exceed 10 characters.').min(1, 'Postal code is required.'),
+    areaCode: z.string().max(8, 'Area code must not exceed 8 characters.').min(1, 'Area code is required.'),
     birthday: z.date({ required_error: 'Please select a birthday.' }),
-    maritalStatus: z.string({ required_error: 'Please select a marital status.' }),
-    relationshipTypeWanted: z.string({ required_error: 'Please select a relationship type wanted.' }),
-    biologicalSex: z.string({ required_error: 'Please select your biological sex.' }),
-    gender: z.string({ required_error: 'Please select your gender.' }),
-    race: z.string({ required_error: 'Please select your race.' }),
-    smoker: z.string({ required_error: 'Please select your smoking status.' }),
-    dateSmoker: z.string({ required_error: 'Please select if you would date a smoker.' }),
-    drugs: z.string({ required_error: 'Please select your drug use status.' }),
-    dateMarijuanaUser: z.string({ required_error: 'Please select if you would date a marijuana user.' }),
-    haveChildren: z.string({ required_error: 'Please select if you have children.' }),
-    dateSomeoneWithKids: z.string({ required_error: 'Please select if you would date someone with kids.' }),
-    religion: z.string({ required_error: 'Please select your religion.' }),
-    primaryLanguage: z.string({ required_error: 'Please select your primary language.' }),
-    otherLanguages: z.string({ required_error: 'Please select your other languages.' }),
-    aboutYourself: z.string().max(6144, 'Your description must not exceed 6144 characters.'),
+    maritalStatus: z.string().min(1, 'Please select a marital status.'),
+    relationshipTypeWanted: z.string().min(1, 'Please select a relationship type wanted.'),
+    biologicalSex: z.string().min(1, 'Please select your biological sex.'),
+    gender: z.string().min(1, 'Please select your gender.'),
+    race: z.string().min(1, 'Please select your race.'),
+    smoker: z.string().min(1, 'Please select your smoking status.'),
+    drugs: z.string().min(1, 'Please select your drug use status.'),
+    haveChildren: z.string().min(1, 'Please select if you have children.'),
+    religion: z.string().min(1, 'Please select your religion.'),
+    primaryLanguage: z.string().min(1, 'Please select your primary language.'),
+    otherLanguages: z.string().min(1, 'Please select your other languages.'),
+    aboutYourself: z.string().max(6144, 'Your description must not exceed 6144 characters.').min(1, 'Please provide a description about yourself.'),
 })
 
 type FormValues = z.infer<typeof formSchema>
@@ -57,11 +54,8 @@ interface BioData {
     gender: string | null
     race: string | null
     smoker: string | null
-    dateSmoker: string | null
     drugs: string | null
-    dateMarijuanaUser: string | null
     haveChildren: string | null
-    dateSomeoneWithKids: string | null
     religion: string | null
     primaryLanguage: string | null
     otherLanguages: string | null
@@ -76,10 +70,8 @@ interface ProfileFormProps {
 
 const races = ['African-American', 'Asian', 'Black', 'Caucasian', 'Indian', 'Indigenous/Aboriginal', 'Latin/Hispanic', 'Middle Eastern', 'Native American', 'Pacific Islander', 'Other', 'Prefer Not To Say']
 const smokerOptions = ['Yes', 'No', 'Cigars', 'Pipe']
-const dateSmokerOptions = ['Yes', 'No']
 const drugOptions = ['Yes', 'No', 'Marijuana Only']
 const haveChildrenOptions = ['Yes', 'No', 'Over 18']
-const dateSomeoneWithKidsOptions = ['Yes', 'No', 'Yes If Over 18']
 const religionOptions = ['Non-Religious', 'Anglican', 'Baptist', 'Buddhist', 'Catholic', 'Christian - Other', 'Eastern Orthodox', 'Hindu', 'Jewish', 'Mormon', 'Muslim', 'Sikh', 'Spiritual', 'Other']
 const languageOptions = ['English', 'Spanish', 'Arabic', 'Dutch', 'French', 'German', 'Hebrew', 'Hindi', 'Italian', 'Japanese', 'Norwegian', 'Portuguese', 'Russian', 'Swedish', 'Tagalog', 'Urdu', 'Other']
 const educationOptions = ['High School', 'Some College', 'Associate of Arts', 'Bachelor of Arts', 'Bachelor of Science', 'Graduate Degree', 'PhD / Post Doc']
@@ -93,27 +85,25 @@ export default function Component({ initialData }: ProfileFormProps) {
             incomeRange: initialData?.incomeRange || '',
             postalCode: initialData?.postalCode || '',
             areaCode: initialData?.areaCode || '',
-            birthday: initialData?.birthday ? new Date(initialData.birthday) : new Date(),
+            birthday: initialData?.birthday || undefined,
             maritalStatus: initialData?.maritalStatus || '',
             relationshipTypeWanted: initialData?.relationshipTypeWanted || '',
             biologicalSex: initialData?.biologicalSex || '',
             gender: initialData?.gender || '',
             race: initialData?.race || '',
             smoker: initialData?.smoker || '',
-            dateSmoker: initialData?.dateSmoker || '',
             drugs: initialData?.drugs || '',
-            dateMarijuanaUser: initialData?.dateMarijuanaUser || '',
             haveChildren: initialData?.haveChildren || '',
-            dateSomeoneWithKids: initialData?.dateSomeoneWithKids || '',
             religion: initialData?.religion || '',
             primaryLanguage: initialData?.primaryLanguage || '',
             otherLanguages: initialData?.otherLanguages || '',
             aboutYourself: initialData?.aboutYourself || '',
         },
+        mode: 'onSubmit',
     })
 
-    const [selectedYear, setSelectedYear] = React.useState<number>(initialData?.birthday ? new Date(initialData.birthday).getFullYear() : new Date().getFullYear())
-    const [currentMonth, setCurrentMonth] = React.useState(initialData?.birthday ? new Date(initialData.birthday) : new Date())
+    const [selectedYear, setSelectedYear] = React.useState<number>(initialData?.birthday ? initialData.birthday.getFullYear() : new Date().getFullYear())
+    const [currentMonth, setCurrentMonth] = React.useState(initialData?.birthday || new Date())
     const [isSubmitting, setIsSubmitting] = React.useState(false)
 
     async function onSubmit(values: FormValues) {
@@ -121,8 +111,8 @@ export default function Component({ initialData }: ProfileFormProps) {
         const formData = new FormData()
 
         Object.entries(values).forEach(([key, value]) => {
-            if (key === 'birthday') {
-                formData.append(key, (value as Date).toISOString())
+            if (key === 'birthday' && value instanceof Date) {
+                formData.append(key, value.toISOString())
             } else {
                 formData.append(key, value as string)
             }
@@ -164,7 +154,6 @@ export default function Component({ initialData }: ProfileFormProps) {
                         {options || name === 'education' ? (
                             <Select
                                 onValueChange={field.onChange}
-                                value={field.value as string}
                                 defaultValue={field.value as string}
                             >
                                 <SelectTrigger className="border-2 border-black focus:ring-black focus:border-black">
@@ -189,14 +178,6 @@ export default function Component({ initialData }: ProfileFormProps) {
                                 placeholder={placeholder}
                                 className="border-2 border-black focus:ring-black focus:border-black"
                                 maxLength={name === 'postalCode' ? 10 : name === 'areaCode' ? 8 : undefined}
-                                onFocus={(e) => {
-                                    e.currentTarget.placeholder = ''
-                                }}
-                                onBlur={(e) => {
-                                    if (!field.value) {
-                                        e.currentTarget.placeholder = placeholder
-                                    }
-                                }}
                             />
                         )}
                     </FormControl>
@@ -284,7 +265,6 @@ export default function Component({ initialData }: ProfileFormProps) {
                                                             <ChevronLeft className="h-4 w-4" />
                                                         </Button>
                                                         <Button variant="outline" size="icon" className="h-7 w-7 border-black" onClick={() => handleMonthChange(true)}>
-
                                                             <ChevronRight className="h-4 w-4" />
                                                         </Button>
                                                     </div>
@@ -315,6 +295,7 @@ export default function Component({ initialData }: ProfileFormProps) {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {renderFormField('maritalStatus', 'Marital Status', 'Select status', ['Single', 'Married', 'Divorced', 'Widowed', 'Other'])}
+
                         {renderFormField('relationshipTypeWanted', 'Relationship Type Wanted', 'Select type', ['Hang out', 'Long-Term', 'Dating', 'Just Friends'])}
                         {renderFormField('biologicalSex', 'Your Biological Sex', 'Select sex', ['Male', 'Female'])}
                     </div>
@@ -326,14 +307,8 @@ export default function Component({ initialData }: ProfileFormProps) {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField('dateSmoker', 'Date a Smoker?', 'Select option', dateSmokerOptions)}
                         {renderFormField('drugs', 'Drugs', 'Select option', drugOptions)}
-                        {renderFormField('dateMarijuanaUser', 'Date a Marijuana User?', 'Select option', ['Yes', 'No'])}
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {renderFormField('haveChildren', 'Do you have children?', 'Select option', haveChildrenOptions)}
-                        {renderFormField('dateSomeoneWithKids', 'Date Someone With Kids?', 'Select option', dateSomeoneWithKidsOptions)}
                         {renderFormField('religion', 'Religion', 'Select your religion', religionOptions)}
                     </div>
 
@@ -354,14 +329,6 @@ export default function Component({ initialData }: ProfileFormProps) {
                                         className="resize-none border-2 border-black focus:ring-black focus:border-black"
                                         {...field}
                                         maxLength={10000}
-                                        onFocus={(e) => {
-                                            e.currentTarget.placeholder = ''
-                                        }}
-                                        onBlur={(e) => {
-                                            if (!field.value) {
-                                                e.currentTarget.placeholder = 'Share a bit about yourself...'
-                                            }
-                                        }}
                                     />
                                 </FormControl>
                                 <FormDescription className="text-xs text-black">Maximum 10000 characters</FormDescription>
