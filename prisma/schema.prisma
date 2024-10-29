@@ -29,23 +29,14 @@ model User {
   role            UserRole     @default(USER)
   accounts        Account[]
   preferences     Preferences?
-  bio             Bio? // One-to-one relation to profile
+  bio             Profile? // One-to-one relation to profile
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   Purchase  Purchase[]
 }
 
-model Preferences {
-  id String @id @default(cuid())
-
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Bio {
+model Profile {
   id                     String    @id @default(cuid())
   userId                 String    @unique
   user                   User      @relation(fields: [userId], references: [id])
@@ -69,6 +60,26 @@ model Bio {
   aboutYourself          String?
   createdAt              DateTime  @default(now())
   updatedAt              DateTime  @updatedAt
+}
+
+model Preferences {
+  id                     String   @id @default(cuid())
+  user                   User     @relation(fields: [userId], references: [id])
+  userId                 String   @unique
+  education              String?
+  incomeRange            String?
+  maritalStatus          String?
+  relationshipTypeWanted String?
+  biologicalSex          String?
+  gender                 String?
+  race                   String?
+  dateSmoker             String?
+  dateDrinker            String?
+  dateMarijuanaUser      String?
+  dateSomeoneWithKids    String?
+  primaryLanguage        String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 }
 
 model Account {
