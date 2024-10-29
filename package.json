@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.4.1",
-    "@clerk/themes": "^2.1.14",
+    "@clerk/themes": "^2.1.39",
     "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.9.0",
     "@next/third-parties": "^15.0.1",
@@ -69,6 +69,7 @@
     "resend": "^2.1.0",
     "sonner": "^1.5.0",
     "stripe": "^16.12.0",
+    "styled-components": "^6.1.13",
     "svix": "^1.25.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
