@@ -1,6 +1,6 @@
 import { arimo, laila, nunito, telex } from '@/app/ui/fonts'
 import { ClerkProvider } from '@clerk/nextjs'
-import { dark } from '@clerk/themes'
+import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes'
 import { Providers } from './providers'
 import Footer from '@/components/common/Footer/footer'
 import Header from '@/components/common/Header/header'
@@ -13,6 +13,7 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 
 import Toaster from '@/components/ui/toast'
 import React from 'react'
+import { black } from 'next/dist/lib/picocolors'
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://hrq.vercel.app'),
@@ -58,17 +59,32 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <ClerkProvider appearance={{ baseTheme: dark }}>
+        <ClerkProvider
+            appearance={{
+                signIn: {
+                    variables: {
+                        colorPrimary: 'blue',
+                        colorText: 'black',
+                    },
+                },
+                signUp: {
+                    variables: {
+                        colorPrimary: 'blue',
+                        colorText: 'black',
+                    },
+                },
+            }}
+        >
             <html
                 lang="en"
                 className={`${arimo.variable} ${laila.variable} ${telex.variable} ${nunito.variable}`}
             >
             <head>
-                {/*<meta name="msvalidate.01" content="F02FCA37DF842444933379AF9833B97C" />*/}
-                {/*<meta*/}
-                {/*    name="google-site-verification"*/}
-                {/*    content="-cj0V0hW2yNJy0UyKps6po3aC4vhP9WxfnwAKubM_54"*/}
-                {/*/>*/}
+                <meta name="msvalidate.01" content="F02FCA37DF842444933379AF9833B97C" />
+                <meta
+                    name="google-site-verification"
+                    content="-cj0V0hW2yNJy0UyKps6po3aC4vhP9WxfnwAKubM_54"
+                />
                 <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1"
