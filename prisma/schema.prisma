@@ -61,11 +61,8 @@ model Bio {
   gender                 String?
   race                   String?
   smoker                 String?
-  dateSmoker             String?
   drugs                  String?
-  dateMarijuanaUser      String?
   haveChildren           String?
-  dateSomeoneWithKids    String?
   religion               String?
   primaryLanguage        String?
   otherLanguages         String?
