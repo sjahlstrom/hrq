@@ -91,12 +91,12 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
         try {
             const result: SavePreferencesResult = await savePreferences(formData)
             if (result.success) {
-                toast.success("Your preferences have been saved successfully.")
+                toast.success("Your Preferences have been saved successfully.")
             } else {
-                toast.error(result.error || 'An error occurred while updating the preferences')
+                toast.error(result.error || 'An error occurred while updating the Preferences')
             }
         } catch (error) {
-            console.error('Error updating preferences:', error)
+            console.error('Error updating Preferences:', error)
             toast.error('An unexpected error occurred. Please try again later.')
         } finally {
             setIsSubmitting(false)

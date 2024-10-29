@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
 import Breadcrumb from '@/components/common/bread-crumb'
 import { Metadata } from 'next'
-import PreferencesForm, { PreferencesData } from '@/components/preferences/PreferencesForm'
+import PreferencesForm, { PreferencesData } from '@/components/Preferences/PreferencesForm'
 
 export const metadata: Metadata = {
     title: "Preferences"

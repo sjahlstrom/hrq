@@ -3483,7 +3483,7 @@ const testAnalysisData = [
         low: 0,
         high: 10,
         analysis:
-            "You have not much capacity to act with self-motivation or self-direction, even if you are alone. You are more vulnerable to the opinions of others, though not necessarily less sensitive to other's needs or preferences.",
+            "You have not much capacity to act with self-motivation or self-direction, even if you are alone. You are more vulnerable to the opinions of others, though not necessarily less sensitive to other's needs or Preferences.",
     },
     {
         question: "I can't do a lot without having help from others",
@@ -3503,7 +3503,7 @@ const testAnalysisData = [
         low: 21,
         high: 30,
         analysis:
-            " You have the capacity to act with self-motivation or self-direction, which is not necessarily related to whether or not you are alone. You have the ability to be less vulnerable to the opinions of others, though not necessarily less sensitive to other's needs or preferences.",
+            " You have the capacity to act with self-motivation or self-direction, which is not necessarily related to whether or not you are alone. You have the ability to be less vulnerable to the opinions of others, though not necessarily less sensitive to other's needs or Preferences.",
     },
 
     {
