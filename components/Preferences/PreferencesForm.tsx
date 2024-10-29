@@ -5,34 +5,16 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
-import {
-    savePreferences,
-    SavePreferencesResult,
-} from '@/app/actions/update-preferences'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { savePreferences, SavePreferencesResult } from '@/app/actions/update-preferences'
 import { toast } from 'sonner'
 
 const formSchema = z.object({
     education: z.string().min(1, 'Please select education level.'),
     incomeRange: z.string().min(1, 'Please select an income range.'),
     maritalStatus: z.string().min(1, 'Please select a marital status.'),
-    relationshipTypeWanted: z
-        .string()
-        .min(1, 'Please select a relationship type wanted.'),
+    relationshipTypeWanted: z.string().min(1, 'Please select a relationship type wanted.'),
     biologicalSex: z.string().min(1, 'Please select biological sex.'),
     gender: z.string().min(1, 'Please select gender.'),
     race: z.string().min(1, 'Please select race.'),
@@ -68,69 +50,13 @@ interface PreferencesFormProps {
     initialData: PreferencesData | null
 }
 
-const races = [
-    'African-American',
-    'Asian',
-    'Black',
-    'Caucasian',
-    'Indian',
-    'Indigenous/Aboriginal',
-    'Latin/Hispanic',
-    'Middle Eastern',
-    'Native American',
-    'Pacific Islander',
-    'No Preference',
-    'Other',
-    'Prefer Not To Say',
-]
+const races = ['African-American', 'Asian', 'Black', 'Caucasian', 'Indian', 'Indigenous/Aboriginal', 'Latin/Hispanic', 'Middle Eastern', 'Native American', 'Pacific Islander', 'No Preference', 'Other', 'Prefer Not To Say']
 const smokerOptions = ['Yes', 'No']
-const drugOptions = ['Yes', 'No', 'Marijuana Only']
+const drugOptions = ['Yes', 'No']
 const hasChildrenOptions = ['Yes', 'No', 'Over 18']
-const religionOptions = [
-    'Non-Religious',
-    'Anglican',
-    'Baptist',
-    'Buddhist',
-    'Catholic',
-    'Christian - Other',
-    'Eastern Orthodox',
-    'Hindu',
-    'Jewish',
-    'Mormon',
-    'Muslim',
-    'Sikh',
-    'Spiritual',
-    'No Preference',
-    'Other',
-]
-const languageOptions = [
-    'English',
-    'Spanish',
-    'Arabic',
-    'Dutch',
-    'French',
-    'German',
-    'Hebrew',
-    'Hindi',
-    'Italian',
-    'Japanese',
-    'Norwegian',
-    'Portuguese',
-    'Russian',
-    'Swedish',
-    'Tagalog',
-    'Urdu',
-    'Other',
-]
-const educationOptions = [
-    'High School',
-    'Some College',
-    'Associate of Arts',
-    'Bachelor of Arts',
-    'Bachelor of Science',
-    'Graduate Degree',
-    'PhD / Post Doc',
-]
+const religionOptions = ['Non-Religious', 'Anglican', 'Baptist', 'Buddhist', 'Catholic', 'Christian - Other', 'Eastern Orthodox', 'Hindu', 'Jewish', 'Mormon', 'Muslim', 'Sikh', 'Spiritual', 'No Preference', 'Other']
+const languageOptions = ['English', 'Spanish', 'Arabic', 'Dutch', 'French', 'German', 'Hebrew', 'Hindi', 'Italian', 'Japanese', 'Norwegian', 'Portuguese', 'Russian', 'Swedish', 'Tagalog', 'Urdu', 'Other']
+const educationOptions = ['High School', 'Some College', 'Associate of Arts', 'Bachelor of Arts', 'Bachelor of Science', 'Graduate Degree', 'PhD / Post Doc']
 
 export default function PreferencesForm({ initialData }: PreferencesFormProps) {
     const form = useForm<FormValues>({
@@ -163,37 +89,27 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
         })
 
         try {
-            const result: SavePreferencesResult =
-                await savePreferences(formData)
+            const result: SavePreferencesResult = await savePreferences(formData)
             if (result.success) {
-                toast.success('Your preferences have been saved successfully.')
+                toast.success("Your Preferences have been saved successfully.")
             } else {
-                toast.error(
-                    result.error ||
-                        'An error occurred while updating the preferences'
-                )
+                toast.error(result.error || 'An error occurred while updating the Preferences')
             }
         } catch (error) {
-            console.error('Error updating preferences:', error)
+            console.error('Error updating Preferences:', error)
             toast.error('An unexpected error occurred. Please try again later.')
         } finally {
             setIsSubmitting(false)
         }
     }
 
-    const renderFormField = (
-        name: keyof FormValues,
-        label: string,
-        options: string[]
-    ) => (
+    const renderFormField = (name: keyof FormValues, label: string, options: string[]) => (
         <FormField
             control={form.control}
             name={name}
             render={({ field }) => (
                 <FormItem className="relative">
-                    <FormLabel className="font-bold text-hrqColors-skyBlue-100">
-                        {label}
-                    </FormLabel>
+                    <FormLabel className="font-bold text-hrqColors-skyBlue-100">{label}</FormLabel>
                     <FormControl>
                         <Select
                             onValueChange={field.onChange}
@@ -202,15 +118,11 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
                             <SelectTrigger className="border-2 border-black focus:ring-black focus:border-black">
                                 <SelectValue placeholder={`${label}`} />
                             </SelectTrigger>
-                            <SelectContent className="bg-green-500 [&>div]:bg-green-500">
-                                {' '}
-                                {/* Year dropdown background green */}
+                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
                                 {options.map((option) => (
                                     <SelectItem
                                         key={option}
-                                        value={option
-                                            .toLowerCase()
-                                            .replace(/\s+/g, '-')}
+                                        value={option.toLowerCase().replace(/\s+/g, '-')}
                                         className="focus:bg-coolGray-600 focus:text-white"
                                     >
                                         {option}
@@ -228,85 +140,29 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
     return (
         <div className="bg-custom-radial from-hrqColors-peach-500 to-hrqColors-skyBlue-400 p-6">
             <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8"
-                >
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField(
-                            'education',
-                            'Education',
-                            educationOptions
-                        )}
-                        {renderFormField('incomeRange', 'Income Range', [
-                            'Less than $25,000',
-                            '$25,000 - $35,000',
-                            '$35,000 - $50,000',
-                            '$50,000 - $75,000',
-                            '$75,000 - $100,000',
-                            '$100,000 - $150,000',
-                            '$150,000+',
-                        ])}
-                        {renderFormField('maritalStatus', 'Marital Status', [
-                            'Single',
-                            'Married',
-                            'Divorced',
-                            'Widowed',
-                            'No Preference',
-                            'Other',
-                        ])}
+                        {renderFormField('education', 'Education', educationOptions)}
+                        {renderFormField('incomeRange', 'Income Range', ['Less than $25,000', '$25,000 - $35,000', '$35,000 - $50,000', '$50,000 - $75,000', '$75,000 - $100,000', '$100,000 - $150,000', '$150,000+'])}
+                        {renderFormField('maritalStatus', 'Marital Status', ['Single', 'Married', 'Divorced', 'Widowed', 'No Preference', 'Other'])}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField(
-                            'relationshipTypeWanted',
-                            'Relationship Type Wanted',
-                            [
-                                'Hang out',
-                                'Long-Term',
-                                'Dating',
-                                'Sexual',
-                                'Just Friends',
-                            ]
-                        )}
-                        {renderFormField('biologicalSex', 'Biological Sex', [
-                            'Male',
-                            'Female',
-                        ])}
-                        {renderFormField('gender', 'Gender', [
-                            'Male',
-                            'Female',
-                            'Non-Binary',
-                            'Other',
-                        ])}
+                        {renderFormField('relationshipTypeWanted', 'Relationship Type Wanted', ['Hang out', 'Long-Term', 'Dating', 'Sexual', 'Just Friends'])}
+                        {renderFormField('biologicalSex', 'Biological Sex', ['Male', 'Female'])}
+                        {renderFormField('gender', 'Gender', ['Male', 'Female', 'Non-Binary', 'Other'])}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {renderFormField('race', 'Race', races)}
                         {renderFormField('dateSmoker', 'Smoker', smokerOptions)}
-                        {renderFormField(
-                            'dateMarijuanaUser',
-                            'Drug User',
-                            drugOptions
-                        )}
+                        {renderFormField('dateMarijuanaUser', 'Marijuana User', drugOptions)}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField(
-                            'hasChildren',
-                            'Has Children',
-                            hasChildrenOptions
-                        )}
-                        {renderFormField(
-                            'religion',
-                            'Religion',
-                            religionOptions
-                        )}
-                        {renderFormField(
-                            'primaryLanguage',
-                            'Primary Language',
-                            languageOptions
-                        )}
+                        {renderFormField('hasChildren', 'Has Children', hasChildrenOptions)}
+                        {renderFormField('religion', 'Religion', religionOptions)}
+                        {renderFormField('primaryLanguage', 'Primary Language', languageOptions)}
                     </div>
 
                     <Button

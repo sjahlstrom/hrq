@@ -50,10 +50,10 @@ export async function savePreferences(formData: FormData): Promise<SavePreferenc
             create: { ...preferences, userId: user.id },
         })
 
-        revalidatePath('/preferences')
+        revalidatePath('/Preferences')
         return { success: true }
     } catch (error) {
-        console.error('Failed to save preferences:', error)
+        console.error('Failed to save Preferences:', error)
 
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === 'P2003') {
@@ -61,6 +61,6 @@ export async function savePreferences(formData: FormData): Promise<SavePreferenc
             }
         }
 
-        return { success: false, error: 'Failed to save preferences. Please try again later.' }
+        return { success: false, error: 'Failed to save Preferences. Please try again later.' }
     }
 }
