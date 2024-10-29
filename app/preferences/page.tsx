@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
 import Breadcrumb from '@/components/common/bread-crumb'
 import { Metadata } from 'next'
-import PreferencesForm, { PreferencesData } from '@/components/Preferences/PreferencesForm'
+import PreferencesForm, { PreferencesData } from '@/components/preferences/PreferencesForm'
 
 export const metadata: Metadata = {
     title: "Preferences"
@@ -25,7 +25,7 @@ function transformToPreferencesData(dbPreferences: any): PreferencesData | null 
         race: dbPreferences.race,
         dateSmoker: dbPreferences.dateSmoker,
         dateMarijuanaUser: dbPreferences.dateMarijuanaUser,
-        haveChildren: dbPreferences.haveChildren,
+        hasChildren: dbPreferences.hasChildren,
         religion: dbPreferences.religion,
         primaryLanguage: dbPreferences.primaryLanguage,
         createdAt: dbPreferences.createdAt,

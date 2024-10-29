@@ -1,8 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import * as React from 'react'
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form'
 import {
     Select,
     SelectContent,
@@ -10,244 +20,304 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
-import { savePreferences } from '@/app/actions/update-preferences'
-import { Toaster, toast } from 'sonner'
+import {
+    savePreferences,
+    SavePreferencesResult,
+} from '@/app/actions/update-preferences'
+import { toast } from 'sonner'
 
-export default function PreferencesForm() {
-    const [formData, setFormData] = useState({})
+const formSchema = z.object({
+    education: z.string().min(1, 'Please select education level.'),
+    incomeRange: z.string().min(1, 'Please select an income range.'),
+    maritalStatus: z.string().min(1, 'Please select a marital status.'),
+    relationshipTypeWanted: z
+        .string()
+        .min(1, 'Please select a relationship type wanted.'),
+    biologicalSex: z.string().min(1, 'Please select biological sex.'),
+    gender: z.string().min(1, 'Please select gender.'),
+    race: z.string().min(1, 'Please select race.'),
+    dateSmoker: z.string().min(1, 'Please select smoking preference.'),
+    dateMarijuanaUser: z.string().min(1, 'Please select drug use preference.'),
+    hasChildren: z.string().min(1, 'Please select if they have children.'),
+    religion: z.string().min(1, 'Please select religion.'),
+    primaryLanguage: z.string().min(1, 'Please select primary language.'),
+})
 
-    const handleChange = (name: string, value: string) => {
-        setFormData((prev) => ({ ...prev, [name]: value }))
-    }
+type FormValues = z.infer<typeof formSchema>
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        const form = e.currentTarget as HTMLFormElement
-        const formData = new FormData(form)
-        const result = await savePreferences(formData)
+export interface PreferencesData {
+    id: string
+    userId: string
+    education: string | null
+    incomeRange: string | null
+    maritalStatus: string | null
+    relationshipTypeWanted: string | null
+    biologicalSex: string | null
+    gender: string | null
+    race: string | null
+    dateSmoker: string | null
+    dateMarijuanaUser: string | null
+    hasChildren: string | null
+    religion: string | null
+    primaryLanguage: string | null
+    createdAt: Date
+    updatedAt: Date
+}
 
-        if (result.error) {
-            toast.error(result.error)
-        } else {
-            toast.success("Your preferences have been saved.")
+interface PreferencesFormProps {
+    initialData: PreferencesData | null
+}
+
+const races = [
+    'African-American',
+    'Asian',
+    'Black',
+    'Caucasian',
+    'Indian',
+    'Indigenous/Aboriginal',
+    'Latin/Hispanic',
+    'Middle Eastern',
+    'Native American',
+    'Pacific Islander',
+    'No Preference',
+    'Other',
+    'Prefer Not To Say',
+]
+const smokerOptions = ['Yes', 'No']
+const drugOptions = ['Yes', 'No', 'Marijuana Only']
+const hasChildrenOptions = ['Yes', 'No', 'Over 18']
+const religionOptions = [
+    'Non-Religious',
+    'Anglican',
+    'Baptist',
+    'Buddhist',
+    'Catholic',
+    'Christian - Other',
+    'Eastern Orthodox',
+    'Hindu',
+    'Jewish',
+    'Mormon',
+    'Muslim',
+    'Sikh',
+    'Spiritual',
+    'No Preference',
+    'Other',
+]
+const languageOptions = [
+    'English',
+    'Spanish',
+    'Arabic',
+    'Dutch',
+    'French',
+    'German',
+    'Hebrew',
+    'Hindi',
+    'Italian',
+    'Japanese',
+    'Norwegian',
+    'Portuguese',
+    'Russian',
+    'Swedish',
+    'Tagalog',
+    'Urdu',
+    'Other',
+]
+const educationOptions = [
+    'High School',
+    'Some College',
+    'Associate of Arts',
+    'Bachelor of Arts',
+    'Bachelor of Science',
+    'Graduate Degree',
+    'PhD / Post Doc',
+]
+
+export default function PreferencesForm({ initialData }: PreferencesFormProps) {
+    const form = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            education: initialData?.education || '',
+            incomeRange: initialData?.incomeRange || '',
+            maritalStatus: initialData?.maritalStatus || '',
+            relationshipTypeWanted: initialData?.relationshipTypeWanted || '',
+            biologicalSex: initialData?.biologicalSex || '',
+            gender: initialData?.gender || '',
+            race: initialData?.race || '',
+            dateSmoker: initialData?.dateSmoker || '',
+            dateMarijuanaUser: initialData?.dateMarijuanaUser || '',
+            hasChildren: initialData?.hasChildren || '',
+            religion: initialData?.religion || '',
+            primaryLanguage: initialData?.primaryLanguage || '',
+        },
+        mode: 'onSubmit',
+    })
+
+    const [isSubmitting, setIsSubmitting] = React.useState(false)
+
+    async function onSubmit(values: FormValues) {
+        setIsSubmitting(true)
+        const formData = new FormData()
+
+        Object.entries(values).forEach(([key, value]) => {
+            formData.append(key, value as string)
+        })
+
+        try {
+            const result: SavePreferencesResult =
+                await savePreferences(formData)
+            if (result.success) {
+                toast.success('Your preferences have been saved successfully.')
+            } else {
+                toast.error(
+                    result.error ||
+                        'An error occurred while updating the preferences'
+                )
+            }
+        } catch (error) {
+            console.error('Error updating preferences:', error)
+            toast.error('An unexpected error occurred. Please try again later.')
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
-    const languageOptions = [
-        'English', 'Spanish', 'Arabic', 'Chinese', 'Dutch', 'French', 'German', 'Hebrew',
-        'Hindi', 'Italian', 'Japanese', 'Korean', 'Norwegian', 'Portuguese', 'Russian',
-        'Swedish', 'Tagalog', 'Urdu'
-    ]
+    const renderFormField = (
+        name: keyof FormValues,
+        label: string,
+        options: string[]
+    ) => (
+        <FormField
+            control={form.control}
+            name={name}
+            render={({ field }) => (
+                <FormItem className="relative">
+                    <FormLabel className="font-bold text-hrqColors-skyBlue-100">
+                        {label}
+                    </FormLabel>
+                    <FormControl>
+                        <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                        >
+                            <SelectTrigger className="border-2 border-black focus:ring-black focus:border-black">
+                                <SelectValue placeholder={`${label}`} />
+                            </SelectTrigger>
+                            <SelectContent className="bg-green-500 [&>div]:bg-green-500">
+                                {' '}
+                                {/* Year dropdown background green */}
+                                {options.map((option) => (
+                                    <SelectItem
+                                        key={option}
+                                        value={option
+                                            .toLowerCase()
+                                            .replace(/\s+/g, '-')}
+                                        className="focus:bg-coolGray-600 focus:text-white"
+                                    >
+                                        {option}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </FormControl>
+                    <FormMessage className="absolute -bottom-6 left-0 text-red-600 text-sm font-medium" />
+                </FormItem>
+            )}
+        />
+    )
 
     return (
-        <>
+        <div className="bg-custom-radial from-hrqColors-peach-500 to-hrqColors-skyBlue-400 p-6">
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-8"
+                >
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {renderFormField(
+                            'education',
+                            'Education',
+                            educationOptions
+                        )}
+                        {renderFormField('incomeRange', 'Income Range', [
+                            'Less than $25,000',
+                            '$25,000 - $35,000',
+                            '$35,000 - $50,000',
+                            '$50,000 - $75,000',
+                            '$75,000 - $100,000',
+                            '$100,000 - $150,000',
+                            '$150,000+',
+                        ])}
+                        {renderFormField('maritalStatus', 'Marital Status', [
+                            'Single',
+                            'Married',
+                            'Divorced',
+                            'Widowed',
+                            'No Preference',
+                            'Other',
+                        ])}
+                    </div>
 
-                <Toaster position="top-center" />
-                <div className="bg-custom-radial from-hrqColors-skyBlue-900 to-hrqColors-skyBlue-700 p-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {renderFormField(
+                            'relationshipTypeWanted',
+                            'Relationship Type Wanted',
+                            [
+                                'Hang out',
+                                'Long-Term',
+                                'Dating',
+                                'Sexual',
+                                'Just Friends',
+                            ]
+                        )}
+                        {renderFormField('biologicalSex', 'Biological Sex', [
+                            'Male',
+                            'Female',
+                        ])}
+                        {renderFormField('gender', 'Gender', [
+                            'Male',
+                            'Female',
+                            'Non-Binary',
+                            'Other',
+                        ])}
+                    </div>
 
-                    <form
-                        onSubmit={handleSubmit}
-                        className="w-full max-w-4xl mx-auto space-y-8"
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {renderFormField('race', 'Race', races)}
+                        {renderFormField('dateSmoker', 'Smoker', smokerOptions)}
+                        {renderFormField(
+                            'dateMarijuanaUser',
+                            'Drug User',
+                            drugOptions
+                        )}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {renderFormField(
+                            'hasChildren',
+                            'Has Children',
+                            hasChildrenOptions
+                        )}
+                        {renderFormField(
+                            'religion',
+                            'Religion',
+                            religionOptions
+                        )}
+                        {renderFormField(
+                            'primaryLanguage',
+                            'Primary Language',
+                            languageOptions
+                        )}
+                    </div>
+
+                    <Button
+                        type="submit"
+                        className="w-full bg-hrqColors-skyBlue-200 hover:bg-hrqColors-skyBlue-300 active:bg-hrqColors-skyBlue-400 text-black rounded"
+                        disabled={isSubmitting}
                     >
-                        <br />
-                        <div className="space-y-6">
-                            <h1 className="text-2xl text-black font-bold">Preferences - Must Have</h1>
-                            <div className="grid gap-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div className="space-y-2">
-                                        <Label htmlFor="education">Education</Label>
-                                        <Select name="education"
-                                                onValueChange={(value) => handleChange('education', value)}>
-                                            <SelectTrigger id="education" className="border-black text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Education level"/>
-                                            </SelectTrigger >
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {['High School', 'Some College', 'Associate of Arts', 'Bachelor of Arts/Science', 'Graduate Degree', 'PhD/Post Doc'].map((level) => (
-                                                    <SelectItem key={level}
-                                                                value={level.toLowerCase().replace(' ', '-')}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{level}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="income">Income Range</Label>
-                                        <Select name="income" onValueChange={(value) => handleChange('income', value)}>
-                                            <SelectTrigger id="income" className="border-black  text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Income range" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {['$25,000 - $35,000', '$35,000 - $50,000', '$50,000 - $75,000', '$75,000 - $100,000', '> $100,000'].map((range) => (
-                                                    <SelectItem key={range}
-                                                                value={range.toLowerCase().replace(/\$|,/g, '')}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{range}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="maritalStatus">Marital Status</Label>
-                                        <Select name="maritalStatus"
-                                                onValueChange={(value) => handleChange('maritalStatus', value)}>
-                                            <SelectTrigger id="maritalStatus" className="border-black text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Marital status" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {['Single', 'Married', 'Divorced', 'Widowed'].map((status) => (
-                                                    <SelectItem key={status} value={status.toLowerCase()}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{status}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="relationshipType">Type of Relationship Wanted</Label>
-                                        <Select name="relationshipType"
-                                                onValueChange={(value) => handleChange('relationshipType', value)}>
-                                            <SelectTrigger id="relationshipType" className="border-black text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Relationship type" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {['Hang out', 'Long-Term', 'Dating', 'Sexual', 'Just Friends'].map((type) => (
-                                                    <SelectItem key={type} value={type.toLowerCase().replace(' ', '-')}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{type}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="biologicalSex">Biological Sex</Label>
-                                        <Select name="biologicalSex"
-                                                onValueChange={(value) => handleChange('biologicalSex', value)}>
-                                            <SelectTrigger id="biologicalSex" className="border-black text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Biological sex" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {['Male', 'Female'].map((sex) => (
-                                                    <SelectItem key={sex} value={sex.toLowerCase()}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{sex}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="gender">Gender</Label>
-                                        <Select name="gender" onValueChange={(value) => handleChange('gender', value)}>
-                                            <SelectTrigger id="gender" className="border-black text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Gender" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {['Male', 'Female'].map((gender) => (
-                                                    <SelectItem key={gender} value={gender.toLowerCase()}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{gender}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="dateSmoker">Date Smoker</Label>
-                                        <Select name="dateSmoker"
-                                                onValueChange={(value) => handleChange('dateSmoker', value)}>
-                                            <SelectTrigger id="dateSmoker" className="border-black text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Date a smoker?" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {['Yes', 'No'].map((option) => (
-                                                    <SelectItem key={option} value={option.toLowerCase()}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{option}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <Label htmlFor="dateSmoker">Date Drinker</Label>
-                                        <Select name="dateDrinker"
-                                                onValueChange={(value) => handleChange('dateDrinker', value)}>
-                                            <SelectTrigger id="dateDrinker" className="border-black text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Date a drinker?" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {['Yes', 'No'].map((option) => (
-                                                    <SelectItem key={option} value={option.toLowerCase()}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{option}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-
-                                    <h1 className="text-2xl  text-black font-bold">Preferences - Nice to Have</h1>
-                                    <br />
-                                    <div className="space-y-2">
-                                        <Label htmlFor="race">Race</Label>
-                                        <Select name="race" onValueChange={(value) => handleChange('race', value)}>
-                                            <SelectTrigger id="race" className="border-black text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Race" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {['African-American', 'Asian', 'Black', 'Caucasian', 'Indian', 'Indigenous/Aboriginal', 'Middle Eastern', 'Native American', 'Pacific Islander'].map((race) => (
-                                                    <SelectItem key={race} value={race.toLowerCase().replace(' ', '-')}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{race}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <Label htmlFor="dateMarijuanaUser">Date Marijuana User</Label>
-                                        <Select name="dateMarijuanaUser"
-                                                onValueChange={(value) => handleChange('dateMarijuanaUser', value)}>
-                                            <SelectTrigger id="dateMarijuanaUser" className="border-black text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Date a marijuana user?" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {['Yes', 'No'].map((option) => (
-                                                    <SelectItem key={option} value={option.toLowerCase()}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{option}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="dateSomeoneWithKids">Date Someone with Kids</Label>
-                                        <Select name="dateSomeoneWithKids"
-                                                onValueChange={(value) => handleChange('dateSomeoneWithKids', value)}>
-                                            <SelectTrigger id="dateSomeoneWithKids" className="border-black text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Date someone with kids?" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {['Yes', 'No'].map((option) => (
-                                                    <SelectItem key={option} value={option.toLowerCase()}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{option}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="primaryLanguage">Primary Language</Label>
-                                        <Select name="primaryLanguage"
-                                                onValueChange={(value) => handleChange('primaryLanguage', value)}>
-                                            <SelectTrigger id="primaryLanguage" className="border-black text-hrqColors-coolGray-300">
-                                                <SelectValue placeholder="Primary language" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                                {languageOptions.map((language) => (
-                                                    <SelectItem key={language} value={language.toLowerCase()}
-                                                                className="focus:bg-coolGray-600 focus:text-white">{language}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <Button type="submit"
-                                className="w-full">Submit</Button>
-                        {/*className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"></Button>*/}
-
-                    </form>
-                </div>
-            </>
-            )
-            }
+                        {isSubmitting ? 'Submitting...' : 'Submit'}
+                    </Button>
+                </form>
+            </Form>
+        </div>
+    )
+}
