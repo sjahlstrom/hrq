@@ -52,6 +52,7 @@ model Profile {
   gender                 String?
   race                   String?
   smoker                 String?
+  alcohol                String?
   drugs                  String?
   haveChildren           String?
   religion               String?
@@ -73,6 +74,7 @@ model Preferences {
   biologicalSex          String?
   gender                 String?
   race                   String?
+  age                    String?
   dateSmoker             String?
   dateDrinker            String?
   dateMarijuanaUser      String?

@@ -22,7 +22,9 @@ export async function updateProfile(formData: FormData) {
     const biologicalSex = formData.get('biologicalSex') as string | null
     const gender = formData.get('gender') as string | null
     const race = formData.get('race') as string | null
+    const age = formData.get('are') as string | null
     const smoker = formData.get('smoker') as string | null
+    const alcohol = formData.get('alcohol') as string | null
     const drugs = formData.get('drugs') as string | null
     const haveChildren = formData.get('haveChildren') as string | null
     const religion = formData.get('religion') as string | null
@@ -49,6 +51,7 @@ export async function updateProfile(formData: FormData) {
                             gender,
                             race,
                             smoker,
+                            alcohol,
                             drugs,
                             haveChildren,
                             religion,
@@ -69,6 +72,7 @@ export async function updateProfile(formData: FormData) {
                             gender,
                             race,
                             smoker,
+                            alcohol,
                             drugs,
                             haveChildren,
                             religion,
