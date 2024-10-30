@@ -5,36 +5,14 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { format } from 'date-fns'
-import {
-    Calendar as CalendarIcon,
-    ChevronLeft,
-    ChevronRight,
-} from 'lucide-react'
+import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { updateProfile } from '@/app/actions/update-profile'
 import { toast } from 'sonner'
 
@@ -62,6 +40,7 @@ const formSchema = z.object({
     gender: z.string().min(1, 'Please select your gender.'),
     race: z.string().min(1, 'Please select your race.'),
     smoker: z.string().min(1, 'Please select your smoking status.'),
+    alcohol: z.string().min(1, 'Please select your alcohol status.'),
     drugs: z.string().min(1, 'Please select your drug use status.'),
     haveChildren: z.string().min(1, 'Please select if you have children.'),
     religion: z.string().min(1, 'Please select your religion.'),
@@ -90,6 +69,7 @@ interface ProfileData {
     gender: string | null
     race: string | null
     smoker: string | null
+    alcohol: string | null
     drugs: string | null
     haveChildren: string | null
     religion: string | null
@@ -119,6 +99,7 @@ const races = [
     'Prefer Not To Say',
 ]
 const smokerOptions = ['Yes', 'No', 'Cigars', 'Pipe']
+const alcoholOptions = ['Yes', 'No', 'Socially']
 const drugOptions = ['Yes', 'No', 'Marijuana Only']
 const haveChildrenOptions = ['Yes', 'No', 'Over 18']
 const religionOptions = [
@@ -182,6 +163,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
             gender: initialData?.gender || '',
             race: initialData?.race || '',
             smoker: initialData?.smoker || '',
+            alcohol: initialData?.alcohol || '',
             drugs: initialData?.drugs || '',
             haveChildren: initialData?.haveChildren || '',
             religion: initialData?.religion || '',
@@ -221,7 +203,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
             } else {
                 toast.error(
                     result.message ||
-                        'An error occurred while updating the profile'
+                    'An error occurred while updating the profile'
                 )
             }
         } catch (error) {
@@ -256,9 +238,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
             name={name}
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel className="font-bold text-black">
-                        {label}
-                    </FormLabel>
+                    <FormLabel className="font-bold text-black">{label}</FormLabel>
                     <FormControl>
                         {options || name === 'education' ? (
                             <Select
@@ -266,20 +246,13 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                 defaultValue={field.value as string}
                             >
                                 <SelectTrigger className="border-2 border-black focus:ring-black focus:border-black">
-                                    <SelectValue
-                                        placeholder={`Select ${label.toLowerCase()}`}
-                                    />
+                                    <SelectValue placeholder={`${label}`} />
                                 </SelectTrigger>
                                 <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                    {(name === 'education'
-                                        ? educationOptions
-                                        : options
-                                    )?.map((option) => (
+                                    {(name === 'education' ? educationOptions : options)?.map((option) => (
                                         <SelectItem
                                             key={option}
-                                            value={option
-                                                .toLowerCase()
-                                                .replace(/\s+/g, '-')}
+                                            value={option.toLowerCase().replace(/\s+/g, '-')}
                                             className="focus:bg-coolGray-600 focus:text-white"
                                         >
                                             {option}
@@ -293,20 +266,14 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                 value={field.value as string}
                                 placeholder={placeholder}
                                 className="border-2 border-black focus:ring-black focus:border-black"
-                                maxLength={
-                                    name === 'postalCode'
-                                        ? 10
-                                        : name === 'areaCode'
-                                          ? 8
-                                          : undefined
-                                }
+                                maxLength={name === 'postalCode' ? 10 : name === 'areaCode' ? 8 : undefined}
                             />
                         )}
                     </FormControl>
                     {name === 'incomeRange' && (
                         <p className="text-xs text-black mt-1">Not Displayed</p>
                     )}
-                    <FormMessage className = "text-sm text-red-500"/>
+                    <FormMessage className="text-sm text-red-500" />
                 </FormItem>
             )}
         />
@@ -315,70 +282,40 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
     return (
         <div className="bg-custom-radial from-hrqColors-sunsetOrange-100 to-hrqColors-sunsetOrange-400 p-6">
             <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8"
-                >
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField(
-                            'occupation',
-                            'Occupation',
-                            'Your occupation'
-                        )}
-                        {renderFormField(
-                            'education',
-                            'Education',
-                            'Select your education'
-                        )}
-                        {renderFormField(
-                            'incomeRange',
-                            'Income Range',
-                            'Select income range',
-                            [
-                                'Less than $25,000',
-                                '$25,000 - $35,000',
-                                '$35,000 - $50,000',
-                                '$50,000 - $75,000',
-                                '$75,000 - $100,000',
-                                '$100,000 - $150,000',
-                                '$150,000+',
-                            ]
-                        )}
+                        {renderFormField('occupation', 'Occupation', 'Your occupation')}
+                        {renderFormField('education', 'Education', 'Select your education')}
+                        {renderFormField('incomeRange', 'Income Range', 'Select income range', [
+                            'Less than $25,000',
+                            '$25,000 - $35,000',
+                            '$35,000 - $50,000',
+                            '$50,000 - $75,000',
+                            '$75,000 - $100,000',
+                            '$100,000 - $150,000',
+                            '$150,000+',
+                        ])}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField(
-                            'postalCode',
-                            'Postal Code',
-                            'Postal Code'
-                        )}
+                        {renderFormField('postalCode', 'Postal Code', 'Postal Code')}
                         {renderFormField('areaCode', 'Area Code', '1+ ')}
                         <FormField
                             control={form.control}
                             name="birthday"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel className="font-bold text-black">
-                                        Birthday
-                                    </FormLabel>
+                                    <FormLabel className="font-bold text-black">Birthday</FormLabel>
                                     <FormControl>
                                         <Popover>
                                             <PopoverTrigger asChild>
                                                 <Button
                                                     variant={'outline'}
                                                     className={`w-full pl-3 text-left font-normal border-2 border-black focus:ring-black focus:border-black ${
-                                                        !field.value &&
-                                                        'text-muted-foreground'
+                                                        !field.value && 'text-muted-foreground'
                                                     }`}
                                                 >
-                                                    {field.value ? (
-                                                        format(
-                                                            field.value,
-                                                            'MM/dd/yyyy'
-                                                        )
-                                                    ) : (
-                                                        <span>Pick a date</span>
-                                                    )}
+                                                    {field.value ? format(field.value, 'MM/dd/yyyy') : <span>Pick a date</span>}
                                                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
@@ -388,14 +325,9 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                             >
                                                 <div className="flex justify-between p-2 border-b border-black">
                                                     <Select
-                                                        onValueChange={(
-                                                            value
-                                                        ) => {
-                                                            const year =
-                                                                Number(value)
-                                                            setSelectedYear(
-                                                                year
-                                                            )
+                                                        onValueChange={(value) => {
+                                                            const year = Number(value)
+                                                            setSelectedYear(year)
                                                             setCurrentMonth(
                                                                 new Date(
                                                                     year,
@@ -403,16 +335,9 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                                 )
                                                             )
                                                             if (field.value) {
-                                                                const newDate =
-                                                                    new Date(
-                                                                        field.value
-                                                                    )
-                                                                newDate.setFullYear(
-                                                                    year
-                                                                )
-                                                                field.onChange(
-                                                                    newDate
-                                                                )
+                                                                const newDate = new Date(field.value)
+                                                                newDate.setFullYear(year)
+                                                                field.onChange(newDate)
                                                             }
                                                         }}
                                                         value={selectedYear.toString()}
@@ -421,19 +346,15 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                             <SelectValue placeholder="Select Year" />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-hrqColors-coolGray-600 [&>div]:bbg-hrqColors-coolGray-600">
-                                                            {years.map(
-                                                                (year) => (
-                                                                    <SelectItem
-                                                                        key={
-                                                                            year
-                                                                        }
-                                                                        value={year.toString()}
-                                                                        className="focus:bg-coolGray-600 focus:text-white"
-                                                                    >
-                                                                        {year}
-                                                                    </SelectItem>
-                                                                )
-                                                            )}
+                                                            {years.map((year) => (
+                                                                <SelectItem
+                                                                    key={year}
+                                                                    value={year.toString()}
+                                                                    className="focus:bg-coolGray-600 focus:text-white"
+                                                                >
+                                                                    {year}
+                                                                </SelectItem>
+                                                            ))}
                                                         </SelectContent>
                                                     </Select>
                                                     <div className="flex items-center space-x-2">
@@ -441,11 +362,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                             variant="outline"
                                                             size="icon"
                                                             className="h-7 w-7 border-black"
-                                                            onClick={() =>
-                                                                handleMonthChange(
-                                                                    false
-                                                                )
-                                                            }
+                                                            onClick={() => handleMonthChange(false)}
                                                         >
                                                             <ChevronLeft className="h-4 w-4" />
                                                         </Button>
@@ -453,11 +370,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                             variant="outline"
                                                             size="icon"
                                                             className="h-7 w-7 border-black"
-                                                            onClick={() =>
-                                                                handleMonthChange(
-                                                                    true
-                                                                )
-                                                            }
+                                                            onClick={() => handleMonthChange(true)}
                                                         >
                                                             <ChevronRight className="h-4 w-4" />
                                                         </Button>
@@ -469,24 +382,16 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                     onSelect={(date) => {
                                                         field.onChange(date)
                                                         if (date) {
-                                                            setSelectedYear(
-                                                                date.getFullYear()
-                                                            )
-                                                            setCurrentMonth(
-                                                                date
-                                                            )
+                                                            setSelectedYear(date.getFullYear())
+                                                            setCurrentMonth(date)
                                                         }
                                                     }}
+
                                                     month={currentMonth}
-                                                    onMonthChange={
-                                                        setCurrentMonth
-                                                    }
+                                                    onMonthChange={setCurrentMonth}
                                                     disabled={(date) =>
                                                         date > new Date() ||
-                                                        date <
-                                                            new Date(
-                                                                '1900-01-01'
-                                                            )
+                                                        date < new Date('1900-01-01')
                                                     }
                                                     initialFocus
                                                 />
@@ -500,94 +405,39 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField(
-                            'maritalStatus',
-                            'Marital Status',
-                            'Select status',
-                            [
-                                'Single',
-                                'Married',
-                                'Divorced',
-                                'Widowed',
-                                'Other',
-                            ]
-                        )}
-
-                        {renderFormField(
-                            'relationshipTypeWanted',
-                            'Relationship Type Wanted',
-                            'Select type',
-                            [
-                                'Hang out',
-                                'Long-Term',
-                                'Dating',
-                                'Sexual',
-                                'Just Friends',
-                            ]
-                        )}
-                        {renderFormField(
-                            'biologicalSex',
-                            'Your Biological Sex',
-                            'Select sex',
-                            ['Male', 'Female']
-                        )}
+                        {renderFormField('maritalStatus', 'Marital Status', 'Select status', [
+                            'Single',
+                            'Married',
+                            'Divorced',
+                            'Widowed',
+                            'Other',
+                        ])}
+                        {renderFormField('relationshipTypeWanted', 'Relationship Type Wanted', 'Select type', [
+                            'Hang out',
+                            'Long-Term',
+                            'Dating',
+                            'Sexual',
+                            'Just Friends',
+                        ])}
+                        {renderFormField('biologicalSex', 'Your Biological Sex', 'Select sex', ['Male', 'Female'])}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField(
-                            'gender',
-                            'Your Gender',
-                            'Select gender',
-                            ['Male', 'Female', 'Non-Binary', 'Other']
-                        )}
-                        {renderFormField(
-                            'race',
-                            'Your Race',
-                            'Select your race',
-                            races
-                        )}
-                        {renderFormField(
-                            'smoker',
-                            'Smoker',
-                            'Select option',
-                            smokerOptions
-                        )}
+                        {renderFormField('gender', 'Your Gender', 'Select gender', ['Male', 'Female', 'Non-Binary', 'Other'])}
+                        {renderFormField('race', 'Your Race', 'Select your race', races)}
+                        {renderFormField('smoker', 'Smoker', 'Select option', smokerOptions)}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField(
-                            'drugs',
-                            'Drugs',
-                            'Select option',
-                            drugOptions
-                        )}
-                        {renderFormField(
-                            'haveChildren',
-                            'Do you have children?',
-                            'Select option',
-                            haveChildrenOptions
-                        )}
-                        {renderFormField(
-                            'religion',
-                            'Religion',
-                            'Select your religion',
-                            religionOptions
-                        )}
+                        {renderFormField('alcohol', 'Alcohol', 'Select option', alcoholOptions)}
+                        {renderFormField('drugs', 'Drugs', 'Select option', drugOptions)}
+                        {renderFormField('haveChildren', 'Do you have children?', 'Select option', haveChildrenOptions)}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {renderFormField(
-                            'primaryLanguage',
-                            'Your Primary Language',
-                            'Select your primary language',
-                            languageOptions
-                        )}
-                        {renderFormField(
-                            'otherLanguages',
-                            'Other Languages',
-                            'Select other languages',
-                            languageOptions
-                        )}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {renderFormField('religion', 'Religion', 'Select your religion', religionOptions)}
+                        {renderFormField('primaryLanguage', 'Your Primary Language', 'Select your primary language', languageOptions)}
+                        {renderFormField('otherLanguages', 'Other Languages', 'Select other languages', languageOptions)}
                     </div>
 
                     <FormField
@@ -595,9 +445,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                         name="aboutYourself"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="font-bold text-black">
-                                    Tell Us About Yourself
-                                </FormLabel>
+                                <FormLabel className="font-bold text-black">Tell Us About Yourself</FormLabel>
                                 <FormControl>
                                     <Textarea
                                         placeholder="Share a bit about yourself..."
@@ -606,9 +454,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                         maxLength={10000}
                                     />
                                 </FormControl>
-                                <FormDescription className="text-xs text-black">
-                                    Maximum 10000 characters
-                                </FormDescription>
+                                <FormDescription className="text-xs text-black">Maximum 10000 characters</FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
