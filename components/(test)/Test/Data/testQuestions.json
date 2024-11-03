@@ -176,7 +176,7 @@
     }
   },
   {
-    "question": "I try to understand the cause of someone's behavior Later, it helps me to let it go",
+    "question": "I try to understand the cause of someone's behavior. Later, it helps me to let it go",
     "scale": 11,
     "position": 16,
     "reverse": false,
@@ -231,7 +231,7 @@
     }
   },
   {
-    "question": "I can read a person's feelings, even sometimes their thoughts from far away",
+    "question": "I can read a person's feelings, even sometimes their thoughts, from far away",
     "scale": 9,
     "position": 21,
     "reverse": true,
@@ -524,7 +524,7 @@
     "options": {
       "left": "I Don't Think This Way",
       "middle": "Neutral",
-      "right": "That's The Way I Think"
+      "right": "That's The Way I  Think"
     }
   },
   {
@@ -1199,8 +1199,8 @@
     }
   },
   {
-    "question": "I'm not very good at planning ahead",
-    "scale": 49,
+    "question": "I can't do without sex for long",
+    "scale": 60,
     "position": 109,
     "reverse": true,
     "options": {
@@ -1210,10 +1210,131 @@
     }
   },
   {
-    "question": "I have a good credit rating",
-    "scale": 52,
+    "question": "I tend to act without thinking",
+    "scale": 49,
     "position": 110,
+    "reverse": true,
+    "options": {
+      "left": "That's Not Me",
+      "middle": "Neutral",
+      "right": "That's Me"
+    }
+  },
+  {
+    "question": "I can't do a lot without having help from others",
+    "scale": 50,
+    "position": 111,
+    "reverse": true,
+    "options": {
+      "left": "Never",
+      "middle": "Sometimes",
+      "right": "Always"
+    }
+  },
+  {
+    "question": "I'm still feeling a little tender from my last relationship",
+    "scale": 58,
+    "position": 112,
     "reverse": false,
+    "options": {
+      "left": "True",
+      "middle": "So-So",
+      "right": "False"
+    }
+  },
+  {
+    "question": "You won't see it coming if I'm mad at you",
+    "scale": 54,
+    "position": 113,
+    "reverse": true,
+    "options": {
+      "left": "That's Not Me",
+      "middle": "Sometimes",
+      "right": "That's Me Alright"
+    }
+  },
+  {
+    "question": "I have been in trouble with the law (excluding traffic citations)",
+    "scale": 51,
+    "position": 114,
+    "reverse": false,
+    "options": {
+      "left": "True",
+      "middle": "Sort Of",
+      "right": "False"
+    }
+  },
+  {
+    "question": "I don't spend more than I can repay",
+    "scale": 52,
+    "position": 115,
+    "reverse": false,
+    "options": {
+      "left": "Incorrect",
+      "middle": "Neutral",
+      "right": "Correct"
+    }
+  },
+  {
+    "question": "I'm not very good at estimating how long things will take",
+    "scale": 61,
+    "position": 116,
+    "reverse": true,
+    "options": {
+      "left": "Fully Disagree",
+      "middle": "Neutral",
+      "right": "Fully Agree"
+    }
+  },
+  {
+    "question": "I'm usually the first one to bring up being 'exclusive'",
+    "scale": 53,
+    "position": 117,
+    "reverse": true,
+    "options": {
+      "left": "Never",
+      "middle": "Sometimes",
+      "right": "Always"
+    }
+  },
+  {
+    "question": "I have been fired from a job",
+    "scale": 63,
+    "position": 118,
+    "reverse": false,
+    "options": {
+      "left": "True",
+      "middle": "Soft Of",
+      "right": "False"
+    }
+  },
+  {
+    "question": "I'm fussy and/or picky",
+    "scale": 47,
+    "position": 119,
+    "reverse": false,
+    "options": {
+      "left": "That's Me",
+      "middle": "Neutral",
+      "right": "That's Not Me"
+    }
+  },
+  {
+    "question": "I'm a perfectionist",
+    "scale": 55,
+    "position": 120,
+    "reverse": true,
+    "options": {
+      "left": "Not Even Close",
+      "middle": "Neutral",
+      "right": "Nailed It"
+    }
+  },
+  {
+    "question": "I have served jail time",
+    "scale": 51,
+    "position": 121,
+    "reverse": true,
     "options": {
       "left": "No",
       "middle": "Neutral",
@@ -1221,10 +1342,21 @@
     }
   },
   {
-    "question": "I have a good sense of humor",
+    "question": "I make my own decisions",
     "scale": 50,
-    "position": 111,
+    "position": 122,
     "reverse": false,
+    "options": {
+      "left": "Never or Rarely",
+      "middle": "Neutral",
+      "right": "Mostly or Always"
+    }
+  },
+  {
+    "question": "When it comes to influencing people, punishment is better than praise",
+    "scale": 57,
+    "position": 123,
+    "reverse": true,
     "options": {
       "left": "Fully Disagree",
       "middle": "Neutral",
@@ -1232,102 +1364,58 @@
     }
   },
   {
-    "question": "I have a good sense of style",
-    "scale": 47,
-    "position": 112,
-    "reverse": true,
-    "options": {
-      "left": "True",
-      "middle": "Neutral",
-      "right": "False"
-    }
-  },
-  {
-    "question": "I have a good sense of direction",
-    "scale": 51,
-    "position": 113,
-    "reverse": false,
-    "options": {
-      "left": "Wrong",
-      "middle": "Neutral",
-      "right": "Right"
-    }
-  },
-  {
-    "question": "I have a good sense of rhythm",
-    "scale": 50,
-    "position": 114,
+    "question": "Some people deserve what's coming to them",
+    "scale": 64,
+    "position": 124,
     "reverse": true,
     "options": {
       "left": "Yes",
-      "middle": "Neutral",
+      "middle": "Not necessarily",
       "right": "No"
     }
   },
   {
-    "question": "I have a good sense of balance",
-    "scale": 51,
-    "position": 115,
-    "reverse": true,
-    "options": {
-      "left": "Correct",
-      "middle": "Neutral",
-      "right": "Incorrect"
-    }
-  },
-  {
-    "question": "I have a good sense of smell",
-    "scale": 64,
-    "position": 116,
+    "question": "The man (or more dominant partner) should always make the first move",
+    "scale": 62,
+    "position": 125,
     "reverse": false,
     "options": {
-      "left": "Fully Disagree",
-      "middle": "Neutral",
-      "right": "Fully Agree"
+      "left": "Always",
+      "middle": "Maybe",
+      "right": "Never"
     }
   },
   {
-    "question": "I have a good sense of taste",
-    "scale": 64,
-    "position": 117,
+    "question": "I have no history of jumping from job to job",
+    "scale": 63,
+    "position": 126,
     "reverse": true,
     "options": {
-      "left": "True",
+      "left": "Fully Agree",
       "middle": "Neutral",
-      "right": "False"
+      "right": "Fully Disagree"
     }
   },
   {
-    "question": "I have a good sense of hearing",
-    "scale": 64,
-    "position": 118,
-    "reverse": false,
-    "options": {
-      "left": "Wrong",
-      "middle": "Neutral",
-      "right": "Right"
-    }
-  },
-  {
-    "question": "I have a good sense of touch",
-    "scale": 64,
-    "position": 119,
-    "reverse": true,
-    "options": {
-      "left": "Yes",
-      "middle": "Neutral",
-      "right": "No"
-    }
-  },
-  {
-    "question": "I have a good sense of sight",
-    "scale": 64,
-    "position": 120,
+    "question": "I usually get things done on time",
+    "scale": 61,
+    "position": 127,
     "reverse": false,
     "options": {
       "left": "Incorrect",
       "middle": "Neutral",
       "right": "Correct"
+    }
+  },
+  {
+    "question": "End of Questions",
+    "scale": 0,
+    "position": 128,
+    "reverse": false,
+    "options": {
+      "left": "",
+      "middle": "",
+      "right": ""
     }
   }
 ]

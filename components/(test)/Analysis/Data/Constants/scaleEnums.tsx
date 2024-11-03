@@ -10,7 +10,7 @@ export const ScaleEnums = Object.freeze({
     GEQ: 7,
     EMI: 8,
     EMP: 9,
-    EXV: 10,
+    // EXV: 10,
     FOR: 11,
     FNC: 12,
     HON: 13,
