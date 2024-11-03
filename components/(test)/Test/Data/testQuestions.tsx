@@ -146,7 +146,7 @@ const testQuestions = [
    },
    {
       question:
-          "I try to understand the cause of someone's behavior Later, it helps me to let it go",
+          "I try to understand the cause of someone's behavior. Later, it helps me to let it go",
       scale: 11,
       position: 16,
       reverse: false,
@@ -202,7 +202,7 @@ const testQuestions = [
 
    {
       question:
-          "I can read a person's feelings, even sometimes their thoughts from far away",
+          "I can read a person's feelings, even sometimes their thoughts, from far away",
       scale: 9,
       position: 21,
       reverse: true,

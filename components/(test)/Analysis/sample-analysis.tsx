@@ -92,7 +92,7 @@ const SampleAnalysis: React.FC = () => {
         // <section className="p-6 bg-gradient-radial from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100 min-h-screen">
         <section className="py-12 bg-gradient-to-br from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100">
 
-            <h1 className="text-3xl font-bold text-gray-800 mb-6">
+            <h1 className="text-3xl font-bold text-gray-800 mb-6 px-2">
                 Analysis...
             </h1>
             {loading ? (

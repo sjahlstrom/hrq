@@ -201,7 +201,6 @@ export const getTestResponses = async (): Promise<number[]> => {
             where: { externalUserId: user.id }, // Assuming 'externalUserId' is the key in the DB
             select: { testResponse: true },
         })
-
         return responses?.testResponse || []
     } catch (error) {
         console.error('Error retrieving test responses:', error)
@@ -283,3 +282,39 @@ export const unBanUser = async (externalUserId: string) => {
         console.error('Error unBanning user:', error)
     }
 }
+
+export const sumTestResponsesAtPositions = async (positions: [number, number]): Promise<number> => {
+    try {
+        const user = await currentUser()
+
+        if (!user) {
+            console.error('No user is currently logged in.')
+            throw new Error('No user is currently logged in.')
+        }
+
+        const responses = await db.user.findUnique({
+            where: { externalUserId: user.id },
+            select: { testResponse: true },
+        })
+
+        if (!responses || !responses.testResponse) {
+            console.error('No test responses found for the user.')
+            throw new Error('No test responses found for the user.')
+        }
+
+        const [index1, index2] = positions
+        const value1 = responses.testResponse[index1]
+        const value2 = responses.testResponse[index2]
+
+        if (typeof value1 !== 'number' || typeof value2 !== 'number') {
+            console.error('Invalid test response values at the specified positions.')
+            throw new Error('Invalid test response values at the specified positions.')
+        }
+
+        return value1 + value2
+    } catch (error) {
+        console.error('Error summing test responses:', error)
+        throw error
+    }
+}
+

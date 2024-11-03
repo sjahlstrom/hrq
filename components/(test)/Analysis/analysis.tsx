@@ -12,6 +12,8 @@ import {
 import testQuestions from '@/components/(test)/Test/Data/testQuestions'
 import Pagination from '@/components/(test)/pagination'
 import FinalAnalysis from '@/components/(test)/final-analysis'
+import { BChart } from '@/components/(test)/Analysis/bChart'
+import scaleEnums from '@/components/(test)/Analysis/Data/Constants/scaleEnums'
 
 const LIES = [38, 45, 52, 57, 69, 79, 91, 102, 109, 125]
 const ITEMS_PER_PAGE_DESKTOP = 6
@@ -54,9 +56,11 @@ export default function TestAnalysis() {
         const lieValues = LIES.map((index) => answers[index] || 0)
         const totalLieValue = lieValues.reduce((acc, value) => acc + value, 0)
         setTotalLie(totalLieValue)
-        const analysis = lieScale.find(
-            (entry) => totalLieValue >= entry.low && totalLieValue <= entry.high
-        )?.analysis || 'No analysis available.'
+        const analysis =
+            lieScale.find(
+                (entry) =>
+                    totalLieValue >= entry.low && totalLieValue <= entry.high
+            )?.analysis || 'No analysis available.'
         setLieAnalysis(analysis)
     }, [])
 
@@ -185,6 +189,21 @@ export default function TestAnalysis() {
     )
     const totalPages = Math.ceil(uniqueResults.length / itemsPerPage)
 
+    // const scales = [
+    //     { number: scaleEnums.AGR, name: 'AGR' },
+    //     { number: scaleEnums.ALT, name: 'ALT' },
+    //     { number: scaleEnums.AUT, name: 'AUT' },
+    //     { number: scaleEnums.BOU, name: 'BOU' },
+    //     { number: scaleEnums.CNC, name: 'CNC' },
+    // ]
+    // const scales2 = [
+    //     { number: scaleEnums.COO, name: 'COO' },
+    //     { number: scaleEnums.GEQ, name: 'GEQ' },
+    //     { number: scaleEnums.EMI, name: 'EMI' },
+    //     { number: scaleEnums.EMP, name: 'EMP' },
+    //     { number: scaleEnums.FOR, name: 'FOR' },
+    // ]
+
     return (
         <section className="py-12 bg-gradient-to-br from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100">
             <div className="container mx-auto px-4">
@@ -201,10 +220,12 @@ export default function TestAnalysis() {
                                         ? 'bg-hrqColors-skyBlue-400'
                                         : 'bg-hrqColors-skyBlue-600'
                                 } 
-                                ${fadeIn ? 'opacity-100' : 'opacity-0'} 
-                                transition-opacity duration-700 ease-in-out`}
+                            ${fadeIn ? 'opacity-100' : 'opacity-0'} 
+                            transition-opacity duration-700 ease-in-out`}
                             >
-                                <p className="text-gray-800">{result.analysis}</p>
+                                <p className="text-gray-800">
+                                    {result.analysis}
+                                </p>
                             </div>
                         ))}
                     </div>
@@ -223,6 +244,15 @@ export default function TestAnalysis() {
                     />
                 )}
             </div>
+
+            {/*<div className="grid grid-cols-1 md:grid-cols-2  gpp-4 py-2 p-4">*/}
+            {/*    <div className="w-full px-1">*/}
+            {/*        <BChart scales={scales} />*/}
+            {/*    </div>*/}
+            {/*    <div className="w-full px-1">*/}
+            {/*        <BChart scales={scales2} />*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </section>
     )
 }
