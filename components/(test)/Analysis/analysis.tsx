@@ -2,8 +2,8 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
-import testAnalysisData from '@/components/(test)/Analysis/Data/TestAnalysisData'
-import lieScale from '@/components/(test)/Analysis/Data/LieScale'
+import testAnalysisData from '@/components/(test)/Analysis/Data/Constants/TestAnalysisData'
+import lieScale from '@/components/(test)/Analysis/Data/Constants/LieScale'
 import {
     calculateTestResponseAverage,
     getTestResponses,
@@ -12,8 +12,6 @@ import {
 import testQuestions from '@/components/(test)/Test/Data/testQuestions'
 import Pagination from '@/components/(test)/pagination'
 import FinalAnalysis from '@/components/(test)/final-analysis'
-import { BChart } from '@/components/(test)/Analysis/bChart'
-import scaleEnums from '@/components/(test)/Analysis/Data/Constants/scaleEnums'
 
 const LIES = [38, 45, 52, 57, 69, 79, 91, 102, 109, 125]
 const ITEMS_PER_PAGE_DESKTOP = 6
@@ -189,21 +187,6 @@ export default function TestAnalysis() {
     )
     const totalPages = Math.ceil(uniqueResults.length / itemsPerPage)
 
-    // const scales = [
-    //     { number: scaleEnums.AGR, name: 'AGR' },
-    //     { number: scaleEnums.ALT, name: 'ALT' },
-    //     { number: scaleEnums.AUT, name: 'AUT' },
-    //     { number: scaleEnums.BOU, name: 'BOU' },
-    //     { number: scaleEnums.CNC, name: 'CNC' },
-    // ]
-    // const scales2 = [
-    //     { number: scaleEnums.COO, name: 'COO' },
-    //     { number: scaleEnums.GEQ, name: 'GEQ' },
-    //     { number: scaleEnums.EMI, name: 'EMI' },
-    //     { number: scaleEnums.EMP, name: 'EMP' },
-    //     { number: scaleEnums.FOR, name: 'FOR' },
-    // ]
-
     return (
         <section className="py-12 bg-gradient-to-br from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100">
             <div className="container mx-auto px-4">
@@ -244,15 +227,6 @@ export default function TestAnalysis() {
                     />
                 )}
             </div>
-
-            {/*<div className="grid grid-cols-1 md:grid-cols-2  gpp-4 py-2 p-4">*/}
-            {/*    <div className="w-full px-1">*/}
-            {/*        <BChart scales={scales} />*/}
-            {/*    </div>*/}
-            {/*    <div className="w-full px-1">*/}
-            {/*        <BChart scales={scales2} />*/}
-            {/*    </div>*/}
-            {/*</div>*/}
         </section>
     )
 }

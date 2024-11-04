@@ -3,27 +3,25 @@ import { Card, CardContent } from '@/components/ui/card'
 import ScoreClassificationTable from '@/components/(test)/score-classification-table'
 import NextSteps from '@/components/(test)/next-steps'
 import { BChart } from '@/components/(test)/Analysis/bChart'
-import scaleEnums from '@/components/(test)/Analysis/Data/Constants/scaleEnums'
+import {
+    scales,
+    scales2,
+    scales3,
+    scales4,
+    scales5,
+    scales6,
+    scales7,
+    scales8,
+    scales9,
+    scales10,
+    scales11,
+    scales12,
+} from '@/components/(test)/Analysis/Data/Constants/Scales'
 
 interface FinalAnalysisProps {
     lieAnalysis: string
     totalSummedValues: number
 }
-
-const scales = [
-    { number: scaleEnums.AGR, name: 'AGR' },
-    { number: scaleEnums.ALT, name: 'ALT' },
-    { number: scaleEnums.AUT, name: 'AUT' },
-    { number: scaleEnums.BOU, name: 'BOU' },
-    { number: scaleEnums.CNC, name: 'CNC' },
-]
-const scales2 = [
-    { number: scaleEnums.COO, name: 'COO' },
-    { number: scaleEnums.GEQ, name: 'GEQ' },
-    { number: scaleEnums.EMI, name: 'EMI' },
-    { number: scaleEnums.EMP, name: 'EMP' },
-    { number: scaleEnums.FOR, name: 'FOR' },
-]
 
 const FinalAnalysis: React.FC<FinalAnalysisProps> = ({
     lieAnalysis,
@@ -41,11 +39,41 @@ const FinalAnalysis: React.FC<FinalAnalysisProps> = ({
                 <NextSteps totalSummedValues={totalSummedValues} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2  gpp-4 py-2 p-4">
-                <div className=" w-full px-1">
+                <div className="w-full px-1">
                     <BChart scales={scales} />
                 </div>
                 <div className="w-full px-1">
                     <BChart scales={scales2} />
+                </div>
+                <div className="w-full px-1">
+                    <BChart scales={scales3} />
+                </div>
+                <div className="w-full px-1">
+                    <BChart scales={scales4} />
+                </div>
+                <div className="w-full px-1">
+                    <BChart scales={scales5} />
+                </div>
+                <div className="w-full px-1">
+                    <BChart scales={scales6} />
+                </div>
+                <div className="w-full px-1">
+                    <BChart scales={scales7} />
+                </div>
+                <div className="w-full px-1">
+                    <BChart scales={scales8} />
+                </div>
+                <div className="w-full px-1">
+                    <BChart scales={scales9} />
+                </div>
+                <div className="w-full px-1">
+                    <BChart scales={scales10} />
+                </div>
+                <div className="w-full px-1">
+                    <BChart scales={scales11} />
+                </div>
+                <div className="w-full px-1">
+                    <BChart scales={scales12} />
                 </div>
             </div>
         </>

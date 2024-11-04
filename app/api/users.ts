@@ -106,11 +106,11 @@ export const deleteUserTestResponsesAndAssociatedScales =
                 },
             })
             console.log(
-                'User test responses and associated scales deleted successfully'
+                'User test responses and associated Scales.tsx deleted successfully'
             )
         } catch (error) {
             console.error(
-                'Error deleting user test responses and associated scales:',
+                'Error deleting user test responses and associated Scales.tsx:',
                 error
             )
         }

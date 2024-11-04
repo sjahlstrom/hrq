@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
-import sampleAnalysisData from '@/components/(test)/Analysis/Data/SampleAnalysisData'
+import sampleAnalysisData from '@/components/(test)/Analysis/Data/Constants/SampleAnalysisData'
 import sampleQuestions from '@/components/(test)/Test/Data/sampleQuestions'
 
 interface MatchedQuestion {
