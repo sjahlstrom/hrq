@@ -41,7 +41,7 @@ const FinalAnalysis: React.FC<FinalAnalysisProps> = ({
                 <NextSteps totalSummedValues={totalSummedValues} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2  gpp-4 py-2 p-4">
-                <div className="w-full px-1">
+                <div className=" w-full px-1">
                     <BChart scales={scales} />
                 </div>
                 <div className="w-full px-1">
