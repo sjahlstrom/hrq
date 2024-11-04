@@ -1,5 +1,4 @@
 import React from 'react'
-
 export const ScaleEnums = Object.freeze({
     AGR: 1,
     ALT: 2,

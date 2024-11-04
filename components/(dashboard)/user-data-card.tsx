@@ -18,7 +18,7 @@ export default function UserDataCard(props: UserDataCardProps) {
                     height={50}
                     src={props.image || defaultImage}
                     alt="avatar"
-                    style={{ objectFit: 'cover' }} // Ensures the image scales properly within the bounds
+                    style={{ objectFit: 'cover' }} // Ensures the image Scales.tsx properly within the bounds
                 />
                 <div className="text-sm ">
                     <p>{props.name}</p>
