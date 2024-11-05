@@ -11,7 +11,7 @@ export const cannedScaleStatements = [
         scale: "1",
         low: 10.1,
         high: 20,
-        statement: 'ou are in the middle percentiles for warmth, friendliness and tact. You are probably mixed in optimism and may or may not consistently get along with others. You also may not be high or low in the following: trusting, moral, altruistic, cooperative, modest and sympathetic.'
+        statement: 'You are in the middle percentiles for warmth, friendliness and tact. You are probably mixed in optimism and may or may not consistently get along with others. You also may not be high or low in the following: trusting, moral, altruistic, cooperative, modest and sympathetic.'
     },
     {
         name: 'AGR',
@@ -39,7 +39,7 @@ export const cannedScaleStatements = [
         scale: "2",
         low: 20.1,
         high: 30,
-        statement: 'ou tend to elevate the welfare, happiness, interests or even the survival of others, sometimes even above your own. This practice of disinterested and selfless concern for the well-being of others is very positive, unless taken to extremes (co-dependence, rescuing, enabling).'
+        statement: 'You tend to elevate the welfare, happiness, interests or even the survival of others, sometimes even above your own. This practice of disinterested and selfless concern for the well-being of others is very positive, unless taken to extremes (co-dependence, rescuing, enabling).'
     },
     {
         name: 'AUT',
@@ -152,14 +152,14 @@ export const cannedScaleStatements = [
         scale: "8",
         low: 0,
         high: 10,
-        statement: ' You have not much capability to recognize emotions, discern between different feelings and label them appropriately, and then to use this information to guide thinking and behavior.   Your skill in this area is low so does not add to your overall success in manifesting intelligence, social and professional skills.'
+        statement: 'You have not much capability to recognize emotions, discern between different feelings and label them appropriately, and then to use this information to guide thinking and behavior.   Your skill in this area is low so does not add to your overall success in manifesting intelligence, social and professional skills.'
     },
     {
         name: 'EMI',
         scale: "8",
         low: 10.1,
         high: 20,
-        statement: ' You are neither strong nor weak in the ability to recognize emotions, discern between different feelings and label them appropriately, and then to use this information to guide thinking and behavior.   Your abilities in this area are average so there will be no noticeable overall success or failure in manifesting intelligence, social and professional skills.'
+        statement: 'You are neither strong nor weak in the ability to recognize emotions, discern between different feelings and label them appropriately, and then to use this information to guide thinking and behavior.   Your abilities in this area are average so there will be no noticeable overall success or failure in manifesting intelligence, social and professional skills.'
     },
     {
         name: 'EMI',
@@ -187,7 +187,7 @@ export const cannedScaleStatements = [
         scale: "9",
         low: 20.1,
         high: 30,
-        statement: ' You have the ability to “walk a mile in someone else’s moccasins,” to “see the world through their eyes.”   You have the capability to put yourself in someone’s experience, not just feel as they do.   Because of this you have a deeper sense of another’s state, which paradoxically requires a deeper awareness of self—in this case used to more fully immerse yourself into other’s experiences without losing your “center.”'
+        statement: 'You have the ability to “walk a mile in someone else’s moccasins,” to “see the world through their eyes.”   You have the capability to put yourself in someone’s experience, not just feel as they do.   Because of this you have a deeper sense of another’s state, which paradoxically requires a deeper awareness of self—in this case used to more fully immerse yourself into other’s experiences without losing your “center.”'
     },
     {
         name: 'EXT',
@@ -201,7 +201,7 @@ export const cannedScaleStatements = [
         scale: "10",
         low: 10.1,
         high: 20,
-        statement: ' You are neither extroverted nor introverted.   The psychological term of this is Ambivert.   You are not prone to be or avoidant of being outgoing, sociable, expressive and/or assertive.'
+        statement: 'You are neither extroverted nor introverted.   The psychological term of this is Ambivert.   You are not prone to be or avoidant of being outgoing, sociable, expressive and/or assertive.'
 
     },
     {
@@ -231,11 +231,8 @@ export const cannedScaleStatements = [
         scale: "11",
         low: 20.1,
         high: 30,
-        statement: ' You have the ability to intentionally and voluntarily change your feelings and attitudes regarding an offender who has committed an offense.   You can also let go of negative emotions such as vengefulness, and understand foreswearing recompense from or punishing an offender, however legally or morally justified it might be.   You have a higher-than-normal ability to wish the offender well.'
+        statement: 'You have the ability to intentionally and voluntarily change your feelings and attitudes regarding an offender who has committed an offense.   You can also let go of negative emotions such as vengefulness, and understand foreswearing recompense from or punishing an offender, however legally or morally justified it might be.   You have a higher-than-normal ability to wish the offender well.'
     },
-
-
-
     {
         name: 'FNC',
         scale: "12",
@@ -256,7 +253,7 @@ export const cannedScaleStatements = [
         scale: "12",
         low: 20.1,
         high: 30,
-        statement: ' You have the ability to enjoy the moment with self or others; the ability to de-emphasize self-awareness and to fully experience something entertaining, either spontaneously or by plan.   This loosely overlaps with other personality traits: openness and spontaneity.   You have the ability to enjoy social relationships where our capacity to have fun enlivens and introduces novelty.'
+        statement: 'You have the ability to enjoy the moment with self or others; the ability to de-emphasize self-awareness and to fully experience something entertaining, either spontaneously or by plan.   This loosely overlaps with other personality traits: openness and spontaneity.   You have the ability to enjoy social relationships where our capacity to have fun enlivens and introduces novelty.'
     },
 
     {
