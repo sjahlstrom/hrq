@@ -17,15 +17,17 @@ export default function CTA() {
                 </p>
                     </h1>
                 <div className="flex flex-col sm:flex-row gap-4 text-dark">
-                        <Button asChild size="lg" variant="secondary">
-                            <Link href="/signup">
-                                Get Started
-                                <ArrowRight className="ml-2 h-5 w-5" />
-                            </Link>
-                        </Button>
+                        {/*<Button asChild size="lg" variant="secondary">*/}
+                        {/*    <Link href="/signup">*/}
+                        {/*        Get Started*/}
+                        {/*        <ArrowRight className="ml-2 h-5 w-5" />*/}
+                        {/*    </Link>*/}
+                        {/*</Button>*/}
+                    <div>
                         <Button asChild size="lg" variant="outline" className="rounded text-dark">
                             <Link href="/about">Learn More</Link>
                         </Button>
+                    </div>
                     </div>
                 </div>
             </div>
