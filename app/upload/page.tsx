@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import Breadcrumb from '@/components/common/bread-crumb'
-import ImageUploader from '@/components/ImageUploader'
+import ImageUploader from '@/components/image-uploader'
 
 export const metadata: Metadata = {
     title: "Upload"
