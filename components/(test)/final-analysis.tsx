@@ -17,6 +17,7 @@ import {
     scales11,
     scales12,
 } from '@/components/(test)/Analysis/Data/Constants/Scales'
+import { Button } from '@/components/ui/button'
 
 interface FinalAnalysisProps {
     lieAnalysis: string
@@ -76,6 +77,7 @@ const FinalAnalysis: React.FC<FinalAnalysisProps> = ({
                     <BChart scales={scales12} />
                 </div>
             </div>
+            <Button>Generate PDF</Button>
         </>
     )
 }

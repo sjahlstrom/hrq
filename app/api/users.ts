@@ -3,36 +3,58 @@
 import { db } from '@/lib/db'
 import { clerkClient, currentUser } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
+import { cache } from 'react'
 
-export const calculateTestResponseAverage = async (
-    userId: string
-): Promise<number> => {
-    // Fetch the user's testResponse array from the User model
-    const user = await db.user.findUnique({
-        where: { externalUserId: userId },
-        select: { testResponse: true },
-    })
+type UserCacheType = {
+    [userId: string]: {
+        testResponse: number[];
+        associatedScale: number[];
+        role: string | null;
+        testCompleted: boolean;
+        summedTotal: number | null;
+    }
+}
+const userCache: UserCacheType = {}
 
-    if (!user || !user.testResponse || user.testResponse.length === 0) {
-        // Handle the case where the user is not found or testResponse is empty
-        return 0
+const getCachedUserData = cache(async (userId: string) => {
+    if (userCache[userId]) {
+        return userCache[userId]
     }
 
-    // Calculate the average of the testResponse array
-    return user.testResponse.reduce((sum, value) => sum + value, 0)
+    const userData = await db.user.findUnique({
+        where: { externalUserId: userId },
+        select: {
+            testResponse: true,
+            associatedScale: true,
+            role: true,
+            testCompleted: true,
+            summedTotal: true,
+        },
+    })
+
+    if (userData) {
+        userCache[userId] = {
+            ...userData,
+            summedTotal: userData.summedTotal ?? null,
+        }
+    }
+
+    return userCache[userId] || null
+})
+
+export const calculateTestResponseAverage = async (userId: string): Promise<number> => {
+    const userData = await getCachedUserData(userId)
+    if (!userData || userData.testResponse.length === 0) return 0
+    return userData.testResponse.reduce((sum, value) => sum + value, 0) / userData.testResponse.length
 }
 
 export const getUsers = async () => {
     const user = await currentUser()
+    if (!user) throw new Error('No user is currently logged in.')
 
     try {
         return await db.user.findMany({
-            // do not include the current user in the results
-            where: {
-                externalUserId: {
-                    not: user?.id, // Exclude current user's externalUserId
-                },
-            },
+            where: { externalUserId: { not: user.id } },
             select: {
                 username: true,
                 id: true,
@@ -48,8 +70,6 @@ export const getUsers = async () => {
     } catch (error) {
         console.error('Error fetching users:', error)
         return []
-    } finally {
-        await db.$disconnect()
     }
 }
 
@@ -58,76 +78,62 @@ export interface UpdateTestUserProps {
     associatedScale: number
 }
 
-export const updateTestResponse = async ({
-    testResponse,
-    associatedScale,
-}: UpdateTestUserProps): Promise<void> => {
+export const updateTestResponse = async ({ testResponse, associatedScale }: UpdateTestUserProps): Promise<void> => {
     const user = await currentUser()
-
-    if (!user) {
-        console.error('No user found')
-        return
-    }
+    if (!user) throw new Error('No user found')
 
     try {
         await db.user.update({
             where: { externalUserId: user.id },
             data: {
-                testResponse: {
-                    push: testResponse, // Push values to testResponse array
-                },
-                associatedScale: {
-                    push: [associatedScale], // Push value to associatedScale array
-                },
+                testResponse: { push: testResponse },
+                associatedScale: { push: [associatedScale] },
             },
         })
+        delete userCache[user.id]
     } catch (error) {
         console.error('Error updating user:', error)
     }
 }
 
-// Used for testing and eventually as an admin
-export const deleteUserTestResponsesAndAssociatedScales =
-    async (): Promise<void> => {
-        const user = await currentUser()
+export const deleteUserTestResponsesAndAssociatedScales = async (): Promise<void> => {
+    const user = await currentUser()
+    if (!user) throw new Error('No user found')
 
-        if (!user) {
-            console.error('No user found')
-            return
-        }
-        try {
-            await db.user.update({
-                where: { externalUserId: user.id },
-                data: {
-                    testResponse: { set: [] },
-                    associatedScale: { set: [] },
-                    summedTotal: 0,
-                    testCompleted: false,
-                },
-            })
-            console.log(
-                'User test responses and associated Scales.tsx deleted successfully'
-            )
-        } catch (error) {
-            console.error(
-                'Error deleting user test responses and associated Scales.tsx:',
-                error
-            )
-        }
+    try {
+        await db.user.update({
+            where: { externalUserId: user.id },
+            data: {
+                testResponse: { set: [] },
+                associatedScale: { set: [] },
+                summedTotal: 0,
+                testCompleted: false,
+            },
+        })
+        delete userCache[user.id]
+        console.log('User test responses and associated Scales deleted successfully')
+    } catch (error) {
+        console.error('Error deleting user test responses and associated Scales:', error)
     }
+}
 
 export const setTestCompleted = async (): Promise<boolean> => {
     const user = await currentUser()
+    if (!user) return false
 
-    if (!user) {
-        console.error('No user found')
-        return false
-    }
     try {
+        // Update database first
         await db.user.update({
             where: { externalUserId: user.id },
             data: { testCompleted: true },
         })
+
+        // Safely update cache with proper type checking
+        const cachedUser = userCache[user.id]
+        if (cachedUser) {
+            cachedUser.testCompleted = true
+        }
+
         return true
     } catch (error) {
         console.error('Error setting test completed flag:', error)
@@ -137,30 +143,26 @@ export const setTestCompleted = async (): Promise<boolean> => {
 
 export const setSummedTotals = async (average: number): Promise<boolean> => {
     const user = await currentUser()
-
-    if (!user) {
-        console.error('No user found')
-        return false
-    }
+    if (!user) return false
 
     try {
-        // Fetch the user data to check if testCompleted is true
-        const userData = await db.user.findUnique({
-            where: { externalUserId: user.id },
-            select: { testCompleted: true },
-        })
-
-        // Check if testCompleted is true
+        const userData = await getCachedUserData(user.id)
         if (!userData?.testCompleted) {
             console.error('Cannot set test average: Test not completed.')
             return false
         }
 
-        // Update the testAverage field in the database with the provided average
+        // Update database first
         await db.user.update({
             where: { externalUserId: user.id },
-            data: { summedTotal: average }, // Use the provided average value
+            data: { summedTotal: average },
         })
+
+        // Type-safe cache update
+        const cachedUserData = userCache[user.id]
+        if (typeof cachedUserData !== 'undefined') {
+            cachedUserData.summedTotal = average
+        }
 
         return true
     } catch (error) {
@@ -169,89 +171,43 @@ export const setSummedTotals = async (average: number): Promise<boolean> => {
     }
 }
 
-export const getTestResponseLength = async (
-    userId: string
-): Promise<number | null> => {
-    try {
-        const user = await db.user.findUnique({
-            where: { externalUserId: userId },
-            select: {
-                testResponse: true,
-            },
-        })
-
-        return user?.testResponse.length ?? null
-    } catch (error) {
-        console.error('Error fetching user:', error)
-        return null
-    }
+export const getTestResponseLength = async (userId: string): Promise<number> => {
+    const userData = await getCachedUserData(userId)
+    return userData?.testResponse.length ?? 0
 }
 
-
 export const getTestResponses = async (): Promise<number[]> => {
-    try {
-        const user = await currentUser()
+    const user = await currentUser()
+    if (!user) throw new Error('No user is currently logged in.')
 
-        if (!user) {
-            console.error('No user is currently logged in.')
-            throw new Error('No user is currently logged in.')
-        }
-
-        const responses = await db.user.findUnique({
-            where: { externalUserId: user.id }, // Assuming 'externalUserId' is the key in the DB
-            select: { testResponse: true },
-        })
-        return responses?.testResponse || []
-    } catch (error) {
-        console.error('Error retrieving test responses:', error)
-        throw error
-    }
+    const userData = await getCachedUserData(user.id)
+    return userData?.testResponse ?? []
 }
 
 export const getUserRole = async (): Promise<string | null> => {
     const user = await currentUser()
+    if (!user) return null
 
-    if (!user) {
-        console.error('No user found')
-        return null
-    }
-
-    try {
-        const userData = await db.user.findUnique({
-            where: { externalUserId: user.id }, // Assuming 'externalUserId' is the key
-            select: { role: true }, // Assuming 'role' is the field in the DB
-        })
-
-        return userData?.role || null
-    } catch (error) {
-        console.error('Error retrieving user role:', error)
-        return null
-    }
+    const userData = await getCachedUserData(user.id)
+    return userData?.role ?? null
 }
 
 export const banUser = async (externalUserId: string) => {
-    if (!externalUserId) {
-        throw new Error('No externalUserId provided')
-    }
+    if (!externalUserId) throw new Error('No externalUserId provided')
 
     try {
         const userToBan = await db.user.findUnique({
             where: { externalUserId: externalUserId },
         })
+        if (!userToBan) throw new Error('User not found')
 
-        if (!userToBan) {
-            throw new Error('User not found')
-        }
-
-        // Ban user
         await clerkClient.users.banUser(externalUserId)
-        revalidatePath('/users')
-
-        // ban user in Prisma database
         await db.user.update({
             where: { externalUserId: externalUserId },
             data: { banned: true },
         })
+        delete userCache[externalUserId]
+        revalidatePath('/users')
         return true
     } catch (error) {
         console.error('Error banning user:', error)
@@ -260,23 +216,18 @@ export const banUser = async (externalUserId: string) => {
 
 export const unBanUser = async (externalUserId: string) => {
     try {
-        const userToBan = await db.user.findUnique({
+        const userToUnban = await db.user.findUnique({
             where: { externalUserId: externalUserId },
         })
+        if (!userToUnban) throw new Error('User not found')
 
-        if (!userToBan) {
-            throw new Error('User not found')
-        }
-
-        // Ban user
         await clerkClient.users.unbanUser(externalUserId)
-        revalidatePath('/users')
-
-        // ban user in Prisma database
         await db.user.update({
             where: { externalUserId: externalUserId },
             data: { banned: false },
         })
+        delete userCache[externalUserId]
+        revalidatePath('/users')
         return true
     } catch (error) {
         console.error('Error unBanning user:', error)
@@ -284,37 +235,26 @@ export const unBanUser = async (externalUserId: string) => {
 }
 
 export const sumTestResponsesAtPositions = async (positions: [number, number]): Promise<number> => {
-    try {
-        const user = await currentUser()
+    const user = await currentUser()
+    if (!user) throw new Error('No user is currently logged in.')
 
-        if (!user) {
-            console.error('No user is currently logged in.')
-            throw new Error('No user is currently logged in.')
-        }
-
-        const responses = await db.user.findUnique({
-            where: { externalUserId: user.id },
-            select: { testResponse: true },
-        })
-
-        if (!responses || !responses.testResponse) {
-            console.error('No test responses found for the user.')
-            throw new Error('No test responses found for the user.')
-        }
-
-        const [index1, index2] = positions
-        const value1 = responses.testResponse[index1]
-        const value2 = responses.testResponse[index2]
-
-        if (typeof value1 !== 'number' || typeof value2 !== 'number') {
-            console.error('Invalid test response values at the specified positions.')
-            throw new Error('Invalid test response values at the specified positions.')
-        }
-
-        return value1 + value2
-    } catch (error) {
-        console.error('Error summing test responses:', error)
-        throw error
+    const userData = await getCachedUserData(user.id)
+    if (!userData || userData.testResponse.length === 0) {
+        throw new Error('No test responses found for the user.')
     }
+
+    const [index1, index2] = positions
+    const value1 = userData.testResponse[index1]
+    const value2 = userData.testResponse[index2]
+
+    if (typeof value1 !== 'number' || typeof value2 !== 'number') {
+        throw new Error('Invalid test response values at the specified positions.')
+    }
+
+    return value1 + value2
 }
 
+export const clearUserResponseCache = async (userId: string): Promise<void> => {
+    delete userCache[userId]
+    await new Promise(resolve => setTimeout(resolve, 0))
+}
