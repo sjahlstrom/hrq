@@ -22,17 +22,22 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-
-//   Added ... not part of the default - sja
-    "noUncheckedIndexedAccess" : true,
-
+    "noUncheckedIndexedAccess": true,
     "jsx": "preserve",
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "target": "ES2017"
+    "target": "ES2017",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true
   },
   "include": [
     "next-env.d.ts",
@@ -44,4 +49,3 @@
     "node_modules"
   ]
 }
-

@@ -1,4 +1,6 @@
-const testQuestions = [
+import { TestQuestion } from '@/types/types'
+
+const testQuestions: TestQuestion[] = [
    {
       question: "If a clerk gave me too much change back, I wouldn't tell",
       scale: 13,
@@ -1234,5 +1236,6 @@ const testQuestions = [
       options: { left: "", middle: "", right: "" },
    },
 ]
+
 
 export default testQuestions
