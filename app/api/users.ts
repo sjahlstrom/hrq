@@ -234,27 +234,42 @@ export const unBanUser = async (externalUserId: string) => {
     }
 }
 
-export const sumTestResponsesAtPositions = async (positions: [number, number]): Promise<number> => {
-    const user = await currentUser()
-    if (!user) throw new Error('No user is currently logged in.')
 
-    const userData = await getCachedUserData(user.id)
-    if (!userData || userData.testResponse.length === 0) {
-        throw new Error('No test responses found for the user.')
+interface UserData {
+    testResponse: number[];
+}
+let cachedUserData: UserData | null = null;
+
+let x = 0;
+export const sumTestResponsesAtPositions = async (positions: [number, number]): Promise<number> => {
+    if (!cachedUserData) {
+        const user = await currentUser();
+
+        if (process.env.NODE_ENV === 'development') {
+            console.log("In sumTestResponsesAtPositions ", x);
+        }
+
+        if (!user) throw new Error('No user is currently logged in.');
+
+        cachedUserData = await getCachedUserData(user.id);
+        if (!cachedUserData || cachedUserData.testResponse.length === 0) {
+            throw new Error('No test responses found for the user.');
+        }
     }
 
-    const [index1, index2] = positions
-    const value1 = userData.testResponse[index1]
-    const value2 = userData.testResponse[index2]
+    const [index1, index2] = positions;
+    const value1 = cachedUserData.testResponse[index1];
+    const value2 = cachedUserData.testResponse[index2];
 
     if (typeof value1 !== 'number' || typeof value2 !== 'number') {
-        throw new Error('Invalid test response values at the specified positions.')
+        throw new Error('Invalid test response values at the specified positions.');
     }
 
-    return value1 + value2
-}
+    return value1 + value2;
+};
 
 export const clearUserResponseCache = async (userId: string): Promise<void> => {
     delete userCache[userId]
     await new Promise(resolve => setTimeout(resolve, 0))
 }
+
