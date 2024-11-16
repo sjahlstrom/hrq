@@ -89,6 +89,7 @@ const PDFDocument: React.FC<PDFDocumentProps> = ({
                         <Text style={styles.cardTitle}>
                             Chart {index + 1}: {scales[index]?.[0]?.name || `Scale ${index + 1}`} Scale
                         </Text>
+                        {/* eslint-disable-next-line jsx-a11y/alt-text */}
                         <Image style={styles.chartImage} src={chartImage} />
                         <Text style={styles.text}>
                             {chartData[index]?.statement || 'No statement available for this scale.'}

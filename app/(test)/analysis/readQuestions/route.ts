@@ -7,7 +7,7 @@ import path from 'path';
 export async function GET() {
     try {
         // Logging to confirm file path
-        const filePath = path.join(process.cwd(), 'components', 'test', 'questions.json');
+        const filePath = path.join(process.cwd(), 'components', '(test)', 'Test/Data/testQuestions.json');
         console.log('Attempting to read file from:', filePath);
 
         // Check if file exists
@@ -20,7 +20,7 @@ export async function GET() {
         const data = JSON.parse(fileContent);
 
         // Log data to confirm structure
-        console.log('Data successfully read from file:', data);
+        // console.log('Data successfully read from file:', data);
 
         return NextResponse.json(data);
     } catch (error) {
