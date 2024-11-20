@@ -124,7 +124,12 @@ export default function TestAnalysis() {
                     transition-opacity duration-700 ease-in-out`}
                                 >
                                     <p className="text-gray-800">
-                                        {result.analysis}
+                                        Summed Result {result.summedResult} -- Scale: {result.scale} -- Positions: {result.positions.join(', ')} -- Raw: {result.answers} -- Answers: {result.answers.join(', ')} <br /> {result.analysis}
+                                        {result.scale === 100
+                                            ? ' (100%)'
+                                            : result.scale === 0
+                                            ? ' (0%)'
+                                            : ''}
                                     </p>
                                 </div>
                             ))}

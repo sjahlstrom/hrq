@@ -1,4 +1,4 @@
-import { Arimo, Laila, Nunito, Telex } from 'next/font/google'
+import { Arimo, Laila, Nunito, Telex, Noto_Sans } from 'next/font/google'
 
 export const nunito = Nunito({
     subsets: ['latin'],
@@ -25,5 +25,11 @@ export const telex = Telex({
     subsets: ['latin'],
     display: 'swap',
     variable: '--font-telex',
+    weight: ['400'],
+})
+export const notoSans = Noto_Sans({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-noto-sans',
     weight: ['400'],
 })

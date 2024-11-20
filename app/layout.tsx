@@ -1,6 +1,6 @@
 import { arimo, laila, nunito, telex } from '@/app/ui/fonts'
 import { ClerkProvider } from '@clerk/nextjs'
-import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes'
+
 import { Providers } from './providers'
 import Footer from '@/components/common/Footer/footer'
 import Header from '@/components/common/Header/header'
@@ -13,7 +13,6 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 
 import Toaster from '@/components/ui/toast'
 import React from 'react'
-import { black } from 'next/dist/lib/picocolors'
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://hrq.vercel.app'),
