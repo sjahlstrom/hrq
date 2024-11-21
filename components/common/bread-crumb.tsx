@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { arimo, telex } from '@/app/ui/fonts'
+import { arimo} from '@/app/ui/fonts'
 
 const Breadcrumb = ({
                         pageName,

@@ -1,5 +1,4 @@
 import Breadcrumb from '@/components/common/bread-crumb'
-import ContactForm from '@/components/(menu)/Contact/contact'
 import { Metadata } from 'next'
 import React from 'react'
 import Privacy from '@/components/(menu)/Privacy/privacy'

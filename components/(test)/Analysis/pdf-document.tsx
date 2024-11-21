@@ -165,8 +165,24 @@ const PDFDocument: React.FC<PDFDocumentProps> = ({
     const currentDate = new Date().toLocaleDateString();
     const nextStepsText = getNextStepsText(totalSummedValues);
 
+    // Helper function to chunk array into groups of n
+    const chunkArray = <T,>(array: T[], size: number): T[][] => {
+        return array.reduce((acc, _, i) => {
+            if (i % size === 0) {
+                acc.push(array.slice(i, i + size));
+            }
+            return acc;
+        }, [] as T[][]);
+    };
+
+    // Create chunks of chart data, with first 4 items on initial page
+    const firstChunk = chartData.slice(0, 4);
+    const remainingData = chartData.slice(4);
+    const remainingChunks = chunkArray(remainingData, 4);
+
     return (
         <Document>
+            {/* First Page */}
             <Page size="A4" style={styles.page}>
                 {/* Header */}
                 <View style={styles.section}>
@@ -199,6 +215,14 @@ const PDFDocument: React.FC<PDFDocumentProps> = ({
                     ))}
                 </View>
 
+                <Text style={styles.footer}>
+                    This report is confidential and should be handled accordingly.
+                </Text>
+                <Text style={styles.pageNumber}>Page 1</Text>
+            </Page>
+
+            {/* Second Page */}
+            <Page size="A4" style={styles.page}>
                 {/* Total Score */}
                 <View style={styles.card}>
                     <Text style={styles.subHeader}>Total Score</Text>
@@ -226,7 +250,14 @@ const PDFDocument: React.FC<PDFDocumentProps> = ({
                     </View>
                 ))}
 
-                {/* Chart Data Table */}
+                <Text style={styles.footer}>
+                    This report is confidential and should be handled accordingly.
+                </Text>
+                <Text style={styles.pageNumber}>Page 2</Text>
+            </Page>
+
+            {/* Third Page - First 4 Detailed Scores */}
+            <Page size="A4" style={styles.page}>
                 <View style={styles.section}>
                     <Text style={styles.subHeader}>Detailed Scores</Text>
                     <View style={[styles.tableRow, styles.tableHeader]}>
@@ -234,7 +265,7 @@ const PDFDocument: React.FC<PDFDocumentProps> = ({
                         <Text style={styles.tableCell}>Score</Text>
                         <Text style={styles.tableCell}>Statement</Text>
                     </View>
-                    {chartData.map((item, index) => (
+                    {firstChunk.map((item, index) => (
                         <View key={index} style={styles.tableRow}>
                             <Text style={styles.tableCell}>{item.scale}</Text>
                             <Text style={styles.tableCell}>{item.score.toFixed(1)}</Text>
@@ -243,12 +274,36 @@ const PDFDocument: React.FC<PDFDocumentProps> = ({
                     ))}
                 </View>
 
-                {/* Footer */}
                 <Text style={styles.footer}>
                     This report is confidential and should be handled accordingly.
                 </Text>
-                <Text style={styles.pageNumber}>Page 1</Text>
+                <Text style={styles.pageNumber}>Page 3</Text>
             </Page>
+
+            {/* Additional Pages for Remaining Detailed Scores */}
+            {remainingChunks.map((chunk, pageIndex) => (
+                <Page key={pageIndex} size="A4" style={styles.page}>
+                    <View style={styles.section}>
+                        <View style={[styles.tableRow, styles.tableHeader]}>
+                            <Text style={styles.tableCell}>Scale</Text>
+                            <Text style={styles.tableCell}>Score</Text>
+                            <Text style={styles.tableCell}>Statement</Text>
+                        </View>
+                        {chunk.map((item, index) => (
+                            <View key={index} style={styles.tableRow}>
+                                <Text style={styles.tableCell}>{item.scale}</Text>
+                                <Text style={styles.tableCell}>{item.score.toFixed(1)}</Text>
+                                <Text style={styles.tableCell}>{item.statement}</Text>
+                            </View>
+                        ))}
+                    </View>
+
+                    <Text style={styles.footer}>
+                        This report is confidential and should be handled accordingly.
+                    </Text>
+                    <Text style={styles.pageNumber}>Page {pageIndex + 4}</Text>
+                </Page>
+            ))}
         </Document>
     );
 };

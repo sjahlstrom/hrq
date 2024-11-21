@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import {
     getTestResponses,
-    calculateTestResponseAverage,
-    setSummedTotals,
 } from '@/app/api/users'
 import { TestQuestion } from '@/types/types'
 import testQuestions from '@/components/(test)/Test/Data/testQuestions'

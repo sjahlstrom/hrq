@@ -2,8 +2,6 @@
 
 import { nunito, telex } from '@/app/ui/fonts'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import AuthButton from '@/components/Hero/auth-button'
 
 export default function Hero() {

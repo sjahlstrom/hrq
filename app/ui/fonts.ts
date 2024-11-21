@@ -27,9 +27,4 @@ export const telex = Telex({
     variable: '--font-telex',
     weight: ['400'],
 })
-export const notoSans = Noto_Sans({
-    subsets: ['latin'],
-    display: 'swap',
-    variable: '--font-noto-sans',
-    weight: ['400'],
-})
+
