@@ -1,4 +1,4 @@
-import { Arimo, Laila, Nunito, Telex, Noto_Sans } from 'next/font/google'
+import { Arimo, Laila, Nunito, Telex} from 'next/font/google'
 
 export const nunito = Nunito({
     subsets: ['latin'],

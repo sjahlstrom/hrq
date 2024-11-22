@@ -103,10 +103,9 @@ function evaluateResults(answers: number[]): Result[] {
 function calculateLieValues(answers: number[]): string {
     const lieValues = LIES.map((index) => answers[index] || 0)
     const totalLieValue = lieValues.reduce((acc, value) => acc + value, 0)
-    const analysis =
+    return (
         lieScale.find(
             (entry) =>
                 totalLieValue >= entry.low && totalLieValue <= entry.high
-        )?.analysis || 'No analysis available.'
-    return analysis
+        )?.analysis || 'No analysis available.')
 }
