@@ -9,84 +9,196 @@ import findPositionsForScale from '@/components/(test)/Analysis/Charts/positions
 import { sumTestResponsesAtPositions } from '@/app/api/users';
 import rawCannedScaleStatements from '@/components/(test)/Analysis/Data/Constants/scaleCannedStatements';
 
-// Types and Interfaces
-export interface Scale {
+// Types
+type Scale = {
     number: number;
     name: string;
-}
+};
 
-interface ScaleStatement {
+type ScaleStatement = {
     name: string;
     scale: string;
     low: number;
     high: number;
     statement: string;
-}
+};
 
-interface ChartDataItem {
+type ChartDataItem = {
     scale: string;
     score: number;
     tooltipContent: string;
     color: string;
     statement: string;
-}
+};
 
-interface BChartProps {
+type BChartProps = {
     scales: Scale[] | { [key: string]: Scale };
-}
+};
 
 // Constants
-const CHART_CONFIG: ChartConfig = { score: { label: 'Score', color: 'hsl(var(--chart-2))' } };
-const BATCH_SIZE = 3;
-const BATCH_DELAY = 2000;
-const RETRY_DELAY = 1000;
-const MAX_RETRIES = 3;
-const SCORE_THRESHOLDS = {
-    LOW: 10,
-    MEDIUM: 20
-} as const;
-const COLORS = {
-    LOW: '#FF6B6B',
-    MEDIUM: '#F7F751',
-    HIGH: '#4CAF50'
-} as const;
-
-// Cache Initialization
-const positionsCache = new Map<number, [number, number]>();
-const responseCache = new Map<string, number>();
-const statementsLookup = new Map<string, ScaleStatement[]>();
-
-// Initialize statements lookup
-rawCannedScaleStatements.forEach((statement: ScaleStatement) => {
-    if (!statementsLookup.has(statement.name)) {
-        statementsLookup.set(statement.name, []);
+const CONSTANTS = {
+    CHART_CONFIG: { score: { label: 'Score', color: 'hsl(var(--chart-2))' } } as const,
+    THRESHOLDS: {
+        LOW: 10,
+        MEDIUM: 20
+    } as const,
+    COLORS: {
+        LOW: '#FF6B6B',
+        MEDIUM: '#F7F751',
+        HIGH: '#4CAF50'
+    } as const,
+    FETCH: {
+        RETRY_DELAY: 1000,
+        MAX_RETRIES: 3
     }
-    statementsLookup.get(statement.name)!.push(statement);
-});
+} as const;
+
+// Create statements Map during module initialization
+const STATEMENTS_MAP = rawCannedScaleStatements.reduce((acc, statement) => {
+    const statements = acc.get(statement.name) || [];
+    acc.set(statement.name, [...statements, statement]);
+    return acc;
+}, new Map<string, ScaleStatement[]>());
 
 // Utility functions
 const getColor = (score: number): string => {
-    if (score <= SCORE_THRESHOLDS.LOW) return COLORS.LOW;
-    if (score <= SCORE_THRESHOLDS.MEDIUM) return COLORS.MEDIUM;
+    const { THRESHOLDS, COLORS } = CONSTANTS;
+    if (score <= THRESHOLDS.LOW) return COLORS.LOW;
+    if (score <= THRESHOLDS.MEDIUM) return COLORS.MEDIUM;
     return COLORS.HIGH;
 };
 
 const getStatement = (scaleName: string, score: number): string => {
-    const statements = statementsLookup.get(scaleName);
-    if (!statements) return 'No statement available for this score.';
-    return statements.find(s => score > s.low && score <= s.high)?.statement ??
-        'No statement available for this score.';
+    const statements = STATEMENTS_MAP.get(scaleName);
+    if (!statements?.length) return 'No statement available for this score.';
+
+    const matchingStatement = statements.find(s => score > s.low && score <= s.high);
+    return matchingStatement?.statement ?? 'No statement available for this score.';
 };
 
-// Memoized Components
-const CustomTooltip = React.memo<TooltipProps<number, string>>(({ active, payload, label }) => {
-    if (!active || !payload?.length || !payload[0]?.payload) return null;
+// Request queue for deduplication
+const requestQueue = new Map<string, Promise<number>>();
+
+// Custom hook for data fetching
+const useScaleData = (scalesArray: Scale[]) => {
+    const [state, setState] = useState<{
+        chartData: ChartDataItem[];
+        loading: boolean;
+        error: string | null;
+    }>({
+        chartData: [],
+        loading: true,
+        error: null
+    });
+
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    // Helper function to fetch or get queued result
+    const fetchOrQueueRequest = async (
+        positions: [number, number],
+        signal: AbortSignal
+    ): Promise<number> => {
+        const key = `${positions[0]},${positions[1]}`;
+
+        if (requestQueue.has(key)) {
+            return await requestQueue.get(key)!;
+        }
+
+        const promise = (async () => {
+            try {
+                return await sumTestResponsesAtPositions(positions);
+            } finally {
+                requestQueue.delete(key);
+            }
+        })();
+
+        requestQueue.set(key, promise);
+        return await promise;
+    };
+
+    const fetchData = useCallback(async (signal: AbortSignal): Promise<ChartDataItem[]> => {
+        const results = new Map<number, { positions: [number, number]; response: number }>();
+
+        // Create fetch promises for all scales
+        const fetchPromises = scalesArray.map(async scale => {
+            const positions = findPositionsForScale(scale.number);
+            if (positions.length !== 2) {
+                throw new Error(`Invalid positions for scale ${scale.name}`);
+            }
+
+            try {
+                const response = await fetchOrQueueRequest(
+                    [positions[0], positions[1]],
+                    signal
+                );
+                results.set(scale.number, {
+                    positions: [positions[0], positions[1]],
+                    response
+                });
+            } catch (error) {
+                if (signal.aborted) throw new Error('Aborted');
+                throw error;
+            }
+        });
+
+        // Wait for all requests to complete
+        await Promise.all(fetchPromises);
+
+        // Transform results into chart data
+        return scalesArray.map(scale => {
+            const result = results.get(scale.number);
+            if (!result) {
+                throw new Error(`No response found for scale ${scale.name}`);
+            }
+
+            const score = result.response / 2;
+
+            return {
+                scale: scale.name,
+                score,
+                tooltipContent: getStatement(scale.name, score),
+                color: getColor(score),
+                statement: getStatement(scale.name, score)
+            };
+        });
+    }, [scalesArray]);
+
+    useEffect(() => {
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
+
+        fetchData(controller.signal)
+            .then(data => setState({ chartData: data, loading: false, error: null }))
+            .catch(err => {
+                if (!controller.signal.aborted) {
+                    setState(prev => ({
+                        ...prev,
+                        loading: false,
+                        error: err instanceof Error ? err.message : 'Failed to load chart data'
+                    }));
+                }
+            });
+
+        return () => {
+            controller.abort();
+            requestQueue.clear();
+        };
+    }, [fetchData]);
+
+    return state;
+};
+
+// Memoized components
+const CustomTooltip = React.memo<TooltipProps<number, string>>(({ active, payload }) => {
+    if (!active || !payload?.[0]?.payload) return null;
+
+    const data = payload[0].payload as ChartDataItem;
 
     return (
         <div className="rounded-lg bg-gray-500 p-2 shadow-md">
-            <p>{label}</p>
-            <p className="mt-2">{payload[0].payload.tooltipContent}</p>
-            <p className="mt-1">Score: {payload[0].payload.score.toFixed(2)}</p>
+            <p>{data.scale}</p>
+            <p className="mt-2">{data.tooltipContent}</p>
+            <p className="mt-1">Score: {data.score.toFixed(2)}</p>
         </div>
     );
 });
@@ -108,147 +220,20 @@ ScaleCard.displayName = 'ScaleCard';
 
 // Main component
 export function BChart({ scales }: BChartProps) {
-    const [chartData, setChartData] = useState<ChartDataItem[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const abortControllerRef = useRef<AbortController | null>(null);
-
     const scalesArray = useMemo(() =>
             Array.isArray(scales) ? scales : Object.values(scales),
         [scales]
     );
 
-    const fetchWithRetry = useCallback(async (
-        pair: [number, number],
-        retries = MAX_RETRIES,
-        signal?: AbortSignal
-    ): Promise<number> => {
-        try {
-            return await sumTestResponsesAtPositions(pair);
-        } catch (error) {
-            if (signal?.aborted) throw new Error('Aborted');
-            if (retries > 0) {
-                await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
-                return fetchWithRetry(pair, retries - 1, signal);
-            }
-            throw error;
-        }
-    }, []);
-
-    const processBatch = useCallback(async (
-        batch: [number, number][],
-        signal: AbortSignal
-    ): Promise<void> => {
-        const responses = await Promise.all(
-            batch.map(pair => fetchWithRetry(pair, MAX_RETRIES, signal))
-        );
-
-        batch.forEach((pair, index) => {
-            const response = responses[index];
-            if (typeof response === 'number') {
-                responseCache.set(`${pair[0]},${pair[1]}`, response);
-            }
-        });
-    }, [fetchWithRetry]);
-
-    const fetchData = useCallback(async (signal: AbortSignal): Promise<ChartDataItem[]> => {
-        const positionsMap = new Map<number, [number, number]>();
-        const positionPairsToFetch: Array<[number, number]> = [];
-
-        // Prepare positions and identify missing data
-        for (const scale of scalesArray) {
-            if (!positionsCache.has(scale.number)) {
-                const positions = findPositionsForScale(scale.number);
-                if (positions.length !== 2) {
-                    throw new Error(`Invalid positions for scale ${scale.name}`);
-                }
-                positionsCache.set(scale.number, [positions[0], positions[1]]);
-            }
-            const positions = positionsCache.get(scale.number)!;
-            positionsMap.set(scale.number, positions);
-
-            const pairKey = `${positions[0]},${positions[1]}`;
-            if (!responseCache.has(pairKey)) {
-                positionPairsToFetch.push(positions);
-            }
-        }
-
-        // Fetch missing data in batches
-        for (let i = 0; i < positionPairsToFetch.length; i += BATCH_SIZE) {
-            if (signal.aborted) throw new Error('Aborted');
-
-            const batch = positionPairsToFetch.slice(i, i + BATCH_SIZE);
-            await processBatch(batch, signal);
-
-            if (i + BATCH_SIZE < positionPairsToFetch.length) {
-                await new Promise(resolve => setTimeout(resolve, BATCH_DELAY));
-            }
-        }
-
-        // Process and return final data
-        return scalesArray.map(scale => {
-            const positions = positionsMap.get(scale.number)!;
-            const response = responseCache.get(`${positions[0]},${positions[1]}`)!;
-            const score = response / 2;
-            return {
-                scale: scale.name,
-                score,
-                tooltipContent: getStatement(scale.name, score),
-                color: getColor(score),
-                statement: getStatement(scale.name, score),
-            };
-        });
-    }, [scalesArray, processBatch]);
-
-    useEffect(() => {
-        const controller = new AbortController();
-        abortControllerRef.current = controller;
-
-        setLoading(true);
-        setError(null);
-
-        fetchData(controller.signal)
-            .then(setChartData)
-            .catch(err => {
-                if (!controller.signal.aborted) {
-                    setError(err instanceof Error ? err.message : 'Failed to load chart data');
-                }
-            })
-            .finally(() => {
-                if (!controller.signal.aborted) {
-                    setLoading(false);
-                }
-            });
-
-        return () => controller.abort();
-    }, [fetchData]);
+    const { chartData, loading, error } = useScaleData(scalesArray);
 
     if (loading) return <div>Loading...</div>;
+
     if (error) {
         return (
             <div className="text-center">
                 <p className="text-red-500 mb-4">Error: {error}</p>
-                <Button
-                    onClick={() => {
-                        setLoading(true);
-                        setError(null);
-                        const controller = new AbortController();
-                        abortControllerRef.current = controller;
-
-                        fetchData(controller.signal)
-                            .then(setChartData)
-                            .catch(err => {
-                                if (!controller.signal.aborted) {
-                                    setError(err instanceof Error ? err.message : 'Failed to load chart data');
-                                }
-                            })
-                            .finally(() => {
-                                if (!controller.signal.aborted) {
-                                    setLoading(false);
-                                }
-                            });
-                    }}
-                >
+                <Button onClick={() => window.location.reload()}>
                     Retry
                 </Button>
             </div>
@@ -262,7 +247,7 @@ export function BChart({ scales }: BChartProps) {
                     <CardTitle>Colorized Scale Scores</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <ChartContainer config={CHART_CONFIG}>
+                    <ChartContainer config={CONSTANTS.CHART_CONFIG}>
                         <BarChart
                             data={chartData}
                             margin={{ top: 20, right: 30, left: 30, bottom: 5 }}
