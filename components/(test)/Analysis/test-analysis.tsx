@@ -182,7 +182,9 @@ export default function TestAnalysis() {
                             <div className="mt-8 flex justify-center">
                                 <Button
                                     onClick={handlePDFDownload}
-                                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                                    variant="outline"
+                                    size="icon"
+                                    className="rounded-2xl w-[240px] bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300"
                                 >
                                     Download PDF Report
                                 </Button>
