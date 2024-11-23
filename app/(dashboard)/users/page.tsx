@@ -13,7 +13,7 @@ import SearchBar from '@/components/(dashboard)/search-bar'
 import UsersPagination from '@/components/(dashboard)/user-pagination'
 import Breadcrumb from '@/components/common/bread-crumb'
 
-export default function UsersComponent() {
+export default function Users() {
     const { users = [], loading, banUser, unBanUser } = useUsers()
     const [searchQuery, setSearchQuery] = useState('')
     const [selectedUser, setSelectedUser] = useState<User | null>(null)

@@ -134,7 +134,7 @@ export default function TestAnalysis() {
         >
             <section className="py-12 bg-gradient-to-br from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100">
                 <div className="container mx-auto px-4">
-                    <h1 className="text-3xl font-bold text-gray-800 mb-6">
+                    <h1 className="animate-fade-in text-3xl font-bold text-gray-800 mb-6">
                         Analysis Results
                     </h1>
                     {analysisData.uniqueResults.length > 0 ? (
@@ -142,15 +142,15 @@ export default function TestAnalysis() {
                             {analysisData.uniqueResults.map((result, index) => (
                                 <div
                                     key={result.scale}
-                                    className={`p-4 shadow-lg rounded-lg border border-gray-200 ${
+                                    className={`p-4 shadow-lg rounded-2xl border border-dark ${
                                         index % 2 === 0
                                             ? 'bg-hrqColors-skyBlue-400'
-                                            : 'bg-hrqColors-skyBlue-600'
+                                            : 'bg-hrqColors-skyBlue-500'
                                     } 
                     ${fadeIn ? 'opacity-100' : 'opacity-0'} 
                     transition-opacity duration-700 ease-in-out`}
                                 >
-                                    <p className="text-gray-800">
+                                    <p className="text-gray-800 animate-fade-in">
                                         Summed Result {result.summedResult} -- Scale: {result.scale} -- Positions: {result.positions.join(', ')} -- Raw: {result.answers} -- Answers: {result.answers.join(', ')} <br /> {result.analysis}
                                         {result.scale === 100
                                             ? ' (100%)'
@@ -182,8 +182,9 @@ export default function TestAnalysis() {
                             <div className="mt-8 flex justify-center">
                                 <Button
                                     onClick={handlePDFDownload}
-                                    className="bg-blue-600 hover:bg-blue-700 text-white"
-                                >
+                                    variant="outline"
+                                    size="icon"
+                                    className="rounded-full w-[240px] bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300"                                >
                                     Download PDF Report
                                 </Button>
                             </div>
@@ -193,4 +194,6 @@ export default function TestAnalysis() {
             </section>
         </ErrorBoundary>
     );
+
+
 }

@@ -29,7 +29,7 @@ export default function Hero() {
                             High Relationship Quotient
                         </h1>
                         <p
-                            className={`${telex.className} animate-slideUp text-[#FCF7E7] mb-12 text-sm font-semibold leading-relaxed sm:text-base md:text-lg lg:text-xl`}
+                            className={`${telex.className} animate-slideUp text-rose-600 mb-12 text-sm font-semibold leading-relaxed sm:text-base md:text-lg lg:text-xl`}
                         >
                             Life is a balancing act. <br />
                             Find out how to get yours in balance and improve all of your relationships.
