@@ -33,7 +33,7 @@ export default function BarChart({ data }: BarChartProps) {
                         padding={{ top: 10, bottom: 10}}
                         tickFormatter={(value) => `${value}`}
                     />
-                    <Bar dataKey={"total"} radius={[5, 5, 0, 0]} stroke='black' fill='black' />
+                    <Bar dataKey={"total"} radius={[5, 5, 0, 0]} stroke='black' fill='green' />
                 </BarGraph>
             </ResponsiveContainer>
         </div>
