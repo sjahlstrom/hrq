@@ -3,6 +3,7 @@
 import { nunito, telex } from '@/app/ui/fonts'
 import Image from 'next/image'
 import AuthButton from '@/components/Hero/auth-button'
+import React from 'react'
 
 export default function Hero() {
     return (
@@ -36,7 +37,11 @@ export default function Hero() {
                         </p>
                     </div>
                 </div>
-                <AuthButton />
+                <div className=" flex justify-center items-center">
+                    <div className=" mt-40 flex items-center justify-between">
+                        <AuthButton />
+                    </div>
+                </div>
             </div>
         </section>
     )
