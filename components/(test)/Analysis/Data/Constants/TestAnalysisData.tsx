@@ -1717,7 +1717,7 @@ const testAnalysisData = [
         position: 1,
         low: 11,
         high: 20,
-        analysis: '',
+        analysis: 'You are neither prone nor not prone to use a critical style in your communication. Critical style reflects an underlying psychological posture that damages relationships. It involves "put downs" and statements of disapproval. It is the opposite of openness and acceptance. In this area, you are in the middle of the spectrum, suggesting sometimes you will and sometimes you will not be too critical.',
     },
     {
         question: "I'm a 'control freak'",

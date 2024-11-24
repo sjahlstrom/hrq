@@ -2,7 +2,7 @@ import React from 'react'
 import { DashboardCard, DashboardCardContent } from '@/components/(dashboard)/dashboard-card'
 import UserDataCard, { UserDataCardProps } from '@/components/(dashboard)/user-data-card'
 import { db } from '@/lib/db'
-import { Calendar, CreditCard, DollarSign, PersonStanding, UserPlus, UserRoundCheck } from 'lucide-react'
+import { Calendar, DollarSign, PersonStanding, UserPlus, UserRoundCheck } from 'lucide-react'
 import { eachMonthOfInterval, endOfMonth, format, formatDistanceToNow, startOfMonth } from 'date-fns'
 import UserPurchaseCard, { UserPurchaseProps } from '@/components/(dashboard)/user-purchase-card'
 import BarChart from '@/app/(admin)/stats/_components/barchart'
@@ -179,7 +179,7 @@ const Dashboard = async () => {
                                     <DashboardCardContent>
                                         <section className="flex justify-between gap-2 pb-2">
                                             <p>Recent Sales</p>
-                                            <CreditCard className="h-4 w-4" />
+                                            <DollarSign className="h-4 w-4" />
                                         </section>
                                         {PurchaseData.map((data, index) => (
                                             <UserPurchaseCard key={index} {...data} />

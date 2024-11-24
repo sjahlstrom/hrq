@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis, Cell, Tooltip, TooltipProps } from 'recharts';
-import { ChartConfig, ChartContainer } from '@/components/ui/chart';
+import { ChartContainer } from '@/components/ui/chart';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import findPositionsForScale from '@/components/(test)/Analysis/Charts/positions';

@@ -17,10 +17,10 @@ export default function AdminDashboard() {
         </div>
     <div className="flex h-screen">
         <CheckUserRole />
-        <aside className="w-64 bg-card text-card-foreground border-r">
+        <aside className="bg-gradient-to-br from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100 w-64 bg-card text-card-foreground border-r">
             <div className="p-4">
-                <h2 className="text-lg font-semibold mb-4">Admin Dashboard</h2>
-                <Command className="rounded-lg border shadow-md">
+                <h2 className="text-lg text-dark font-semibold mb-4">Admin Dashboard</h2>
+                <Command className="rounded-xl border text-dark shadow-md">
                         <CommandList>
                             <CommandEmpty>No results found.</CommandEmpty>
                             <CommandGroup heading="Navigation">
@@ -37,14 +37,14 @@ export default function AdminDashboard() {
                     </Command>
                 </div>
                 <div className="p-4 mt-8">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-dark">
                         Other functionality may come later
                     </p>
                 </div>
             </aside>
-            <main className="flex-1 p-8">
+            <main className="bg-gradient-to-br from-gray-200 to-gray-600  flex-1 p-8">
                 <header className="mb-8">
-                    <h1 className="text-3xl font-bold text-foreground">Welcome to the Admin Dashboard</h1>
+                    <h1 className=" text-dark text-3xl font-bold ">Welcome to the Admin Dashboard</h1>
                 </header>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Add your dashboard content here */}

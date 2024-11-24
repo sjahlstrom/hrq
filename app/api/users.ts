@@ -65,6 +65,7 @@ export const getUsers = async () => {
                 testResponse: true,
                 summedTotal: true,
                 paid_rq: true,
+                paid_cq: true,
             },
         })
     } catch (error) {
@@ -201,16 +202,23 @@ export const banUser = async (externalUserId: string) => {
         })
         if (!userToBan) throw new Error('User not found')
 
-        await clerkClient.users.banUser(externalUserId)
+        // Update database first
         await db.user.update({
             where: { externalUserId: externalUserId },
             data: { banned: true },
         })
+
+        // Use the correct Clerk method
+        await clerkClient().users.updateUser(externalUserId, {
+            publicMetadata: { banned: true }
+        })
+
         delete userCache[externalUserId]
         revalidatePath('/users')
         return true
     } catch (error) {
         console.error('Error banning user:', error)
+        throw error
     }
 }
 
@@ -221,19 +229,27 @@ export const unBanUser = async (externalUserId: string) => {
         })
         if (!userToUnban) throw new Error('User not found')
 
-        await clerkClient.users.unbanUser(externalUserId)
+        // Update database first
         await db.user.update({
             where: { externalUserId: externalUserId },
             data: { banned: false },
         })
+
+        // Use the correct Clerk method
+        await clerkClient().users.updateUser(externalUserId, {
+            publicMetadata: { banned: false }
+        })
+
         delete userCache[externalUserId]
         revalidatePath('/users')
         return true
     } catch (error) {
         console.error('Error unBanning user:', error)
+        throw error
     }
 }
 
+// ... rest of the code remains the same ...
 
 interface UserData {
     testResponse: number[];
@@ -272,4 +288,3 @@ export const clearUserResponseCache = async (userId: string): Promise<void> => {
     delete userCache[userId]
     await new Promise(resolve => setTimeout(resolve, 0))
 }
-
