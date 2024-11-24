@@ -25,6 +25,7 @@ import {
     SavePreferencesResult,
 } from '@/app/actions/update-preferences'
 import { toast } from 'sonner'
+import { isDevelopment } from '@/app/utils/environment'
 
 const formSchema = z.object({
     education: z.string().min(1, 'Please select education level.'),
@@ -139,6 +140,7 @@ const educationOptions = [
 ]
 
 export default function PreferencesForm({ initialData }: PreferencesFormProps) {
+
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -161,8 +163,21 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
     })
 
     const [isSubmitting, setIsSubmitting] = React.useState(false)
-
+    if (!isDevelopment) {
+        return (
+            <div className="flex items-center justify-center h-screen bg-custom-radial from-hrqColors-peach-500 to-hrqColors-skyBlue-400 p-6">
+                <div className="text-center text-black">
+                    <h2 className="text-2xl font-bold mb-2">Development Mode Only</h2>
+                    <p>This feature is only available in development mode.</p>
+                </div>
+            </div>
+        )
+    }
     async function onSubmit(values: FormValues) {
+        if (!isDevelopment) {
+            toast.error('This feature is only available in development mode')
+            return
+        }
         setIsSubmitting(true)
         const formData = new FormData()
 
@@ -207,7 +222,7 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                         >
-                            <SelectTrigger className="border-2 border-black focus:ring-black focus:border-black">
+                            <SelectTrigger className="rounded border-2 border-black focus:ring-black focus:border-black">
                                 <SelectValue placeholder={`${label}`} />
                             </SelectTrigger>
                             <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
@@ -217,7 +232,7 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
                                         value={option
                                             .toLowerCase()
                                             .replace(/\s+/g, '-')}
-                                        className="focus:bg-coolGray-600 focus:text-white"
+                                        className="round focus:bg-coolGray-600 focus:text-white"
                                     >
                                         {option}
                                     </SelectItem>
