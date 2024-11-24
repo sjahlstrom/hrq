@@ -5,16 +5,40 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { format } from 'date-fns'
-import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react'
+import {
+    Calendar as CalendarIcon,
+    ChevronLeft,
+    ChevronRight,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover'
 import { updateProfile } from '@/app/actions/update-profile'
 import { toast } from 'sonner'
+import { DevelopmentGuard } from '@/components/DevelopmentGuard'
+import {isDevelopment} from '@/app/utils/environment'
 
 const formSchema = z.object({
     occupation: z
@@ -148,6 +172,7 @@ const educationOptions = [
 ]
 
 export default function ProfileForm({ initialData }: ProfileFormProps) {
+
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -185,6 +210,10 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
     const [isSubmitting, setIsSubmitting] = React.useState(false)
 
     async function onSubmit(values: FormValues) {
+        if (!isDevelopment) {
+            toast.error('This feature is only available in development mode')
+            return
+        }
         setIsSubmitting(true)
         const formData = new FormData()
 
@@ -203,7 +232,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
             } else {
                 toast.error(
                     result.message ||
-                    'An error occurred while updating the profile'
+                        'An error occurred while updating the profile'
                 )
             }
         } catch (error) {
@@ -238,21 +267,28 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
             name={name}
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel className="font-bold text-black">{label}</FormLabel>
+                    <FormLabel className="font-bold text-black">
+                        {label}
+                    </FormLabel>
                     <FormControl>
                         {options || name === 'education' ? (
                             <Select
                                 onValueChange={field.onChange}
                                 defaultValue={field.value as string}
                             >
-                                <SelectTrigger className="border-2 border-black focus:ring-black focus:border-black">
+                                <SelectTrigger className="rounded border-2 border-black focus:ring-black focus:border-black">
                                     <SelectValue placeholder={`${label}`} />
                                 </SelectTrigger>
                                 <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                    {(name === 'education' ? educationOptions : options)?.map((option) => (
+                                    {(name === 'education'
+                                        ? educationOptions
+                                        : options
+                                    )?.map((option) => (
                                         <SelectItem
                                             key={option}
-                                            value={option.toLowerCase().replace(/\s+/g, '-')}
+                                            value={option
+                                                .toLowerCase()
+                                                .replace(/\s+/g, '-')}
                                             className="focus:bg-coolGray-600 focus:text-white"
                                         >
                                             {option}
@@ -265,8 +301,14 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                 {...field}
                                 value={field.value as string}
                                 placeholder={placeholder}
-                                className="border-2 border-black focus:ring-black focus:border-black"
-                                maxLength={name === 'postalCode' ? 10 : name === 'areaCode' ? 8 : undefined}
+                                className="rounded border-2 border-black focus:ring-black focus:border-black"
+                                maxLength={
+                                    name === 'postalCode'
+                                        ? 10
+                                        : name === 'areaCode'
+                                          ? 8
+                                          : undefined
+                                }
                             />
                         )}
                     </FormControl>
@@ -280,195 +322,324 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
     )
 
     return (
-        <div className="bg-custom-radial from-hrqColors-sunsetOrange-100 to-hrqColors-sunsetOrange-400 p-6">
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField('occupation', 'Occupation', 'Your occupation')}
-                        {renderFormField('education', 'Education', 'Select your education')}
-                        {renderFormField('incomeRange', 'Income Range', 'Select income range', [
-                            'Less than $25,000',
-                            '$25,000 - $35,000',
-                            '$35,000 - $50,000',
-                            '$50,000 - $75,000',
-                            '$75,000 - $100,000',
-                            '$100,000 - $150,000',
-                            '$150,000+',
-                        ])}
-                    </div>
+        <DevelopmentGuard>
+            <div className="bg-custom-radial from-hrqColors-sunsetOrange-100 to-hrqColors-sunsetOrange-400 p-6">
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="space-y-8"
+                    >
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {renderFormField(
+                                'occupation',
+                                'Occupation',
+                                'Your occupation'
+                            )}
+                            {renderFormField(
+                                'education',
+                                'Education',
+                                'Select your education'
+                            )}
+                            {renderFormField(
+                                'incomeRange',
+                                'Income Range',
+                                'Select income range',
+                                [
+                                    'Less than $25,000',
+                                    '$25,000 - $35,000',
+                                    '$35,000 - $50,000',
+                                    '$50,000 - $75,000',
+                                    '$75,000 - $100,000',
+                                    '$100,000 - $150,000',
+                                    '$150,000+',
+                                ]
+                            )}
+                        </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField('postalCode', 'Postal Code', 'Postal Code')}
-                        {renderFormField('areaCode', 'Area Code', '1+ ')}
-                        <FormField
-                            control={form.control}
-                            name="birthday"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="font-bold text-black">Birthday</FormLabel>
-                                    <FormControl>
-                                        <Popover>
-                                            <PopoverTrigger asChild>
-                                                <Button
-                                                    variant={'outline'}
-                                                    className={`w-full pl-3 text-left font-normal border-2 border-black focus:ring-black focus:border-black ${
-                                                        !field.value && 'text-muted-foreground'
-                                                    }`}
-                                                >
-                                                    {field.value ? format(field.value, 'MM/dd/yyyy') : <span>Pick a date</span>}
-                                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                                </Button>
-                                            </PopoverTrigger>
-                                            <PopoverContent
-                                                className="w-auto p-0 border-2 border-black focus:ring-black focus:border-black bg-hrqColors-sunsetOrange-400"
-                                                align="start"
-                                            >
-                                                <div className="flex justify-between p-2 border-b border-black">
-                                                    <Select
-                                                        onValueChange={(value) => {
-                                                            const year = Number(value)
-                                                            setSelectedYear(year)
-                                                            setCurrentMonth(
-                                                                new Date(
-                                                                    year,
-                                                                    currentMonth.getMonth()
-                                                                )
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {renderFormField(
+                                'postalCode',
+                                'Postal Code',
+                                'Postal Code'
+                            )}
+                            {renderFormField('areaCode', 'Area Code', '1+ ')}
+                            <FormField
+                                control={form.control}
+                                name="birthday"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="font-bold text-black">
+                                            Birthday
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <Button
+                                                        variant={'outline'}
+                                                        className={`rounded  w-full pl-3 text-left font-normal border-2 border-black focus:ring-black focus:border-black ${
+                                                            !field.value &&
+                                                            'text-muted-foreground'
+                                                        }`}
+                                                    >
+                                                        {field.value ? (
+                                                            format(
+                                                                field.value,
+                                                                'MM/dd/yyyy'
                                                             )
-                                                            if (field.value) {
-                                                                const newDate = new Date(field.value)
-                                                                newDate.setFullYear(year)
-                                                                field.onChange(newDate)
+                                                        ) : (
+                                                            <span>Pick a date</span>
+                                                        )}
+                                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                    </Button>
+                                                </PopoverTrigger>
+                                                <PopoverContent
+                                                    className="w-auto p-0 border-2 border-black focus:ring-black focus:border-black bg-hrqColors-sunsetOrange-400"
+                                                    align="start"
+                                                >
+                                                    <div className="flex justify-between p-2 border-b border-black">
+                                                        <Select
+                                                            onValueChange={(
+                                                                value
+                                                            ) => {
+                                                                const year =
+                                                                    Number(value)
+                                                                setSelectedYear(
+                                                                    year
+                                                                )
+                                                                setCurrentMonth(
+                                                                    new Date(
+                                                                        year,
+                                                                        currentMonth.getMonth()
+                                                                    )
+                                                                )
+                                                                if (field.value) {
+                                                                    const newDate =
+                                                                        new Date(
+                                                                            field.value
+                                                                        )
+                                                                    newDate.setFullYear(
+                                                                        year
+                                                                    )
+                                                                    field.onChange(
+                                                                        newDate
+                                                                    )
+                                                                }
+                                                            }}
+                                                            value={selectedYear.toString()}
+                                                        >
+                                                            <SelectTrigger className="rounded w-[120px] border-2 border-black">
+                                                                <SelectValue placeholder="Select Year" />
+                                                            </SelectTrigger>
+                                                            <SelectContent className="bg-hrqColors-coolGray-600 [&>div]:bbg-hrqColors-coolGray-600">
+                                                                {years.map(
+                                                                    (year) => (
+                                                                        <SelectItem
+                                                                            key={
+                                                                                year
+                                                                            }
+                                                                            value={year.toString()}
+                                                                            className="focus:bg-coolGray-600 focus:text-white"
+                                                                        >
+                                                                            {year}
+                                                                        </SelectItem>
+                                                                    )
+                                                                )}
+                                                            </SelectContent>
+                                                        </Select>
+                                                        <div className="flex items-center space-x-2">
+                                                            <Button
+                                                                variant="outline"
+                                                                size="icon"
+                                                                className="h-7 w-7 border-black"
+                                                                onClick={() =>
+                                                                    handleMonthChange(
+                                                                        false
+                                                                    )
+                                                                }
+                                                            >
+                                                                <ChevronLeft className="h-4 w-4" />
+                                                            </Button>
+                                                            <Button
+                                                                variant="outline"
+                                                                size="icon"
+                                                                className="h-7 w-7 border-black"
+                                                                onClick={() =>
+                                                                    handleMonthChange(
+                                                                        true
+                                                                    )
+                                                                }
+                                                            >
+                                                                <ChevronRight className="h-4 w-4" />
+                                                            </Button>
+                                                        </div>
+                                                    </div>
+                                                    <Calendar
+                                                        mode="single"
+                                                        selected={field.value}
+                                                        onSelect={(date) => {
+                                                            field.onChange(date)
+                                                            if (date) {
+                                                                setSelectedYear(
+                                                                    date.getFullYear()
+                                                                )
+                                                                setCurrentMonth(
+                                                                    date
+                                                                )
                                                             }
                                                         }}
-                                                        value={selectedYear.toString()}
-                                                    >
-                                                        <SelectTrigger className="w-[120px] border-2 border-black">
-                                                            <SelectValue placeholder="Select Year" />
-                                                        </SelectTrigger>
-                                                        <SelectContent className="bg-hrqColors-coolGray-600 [&>div]:bbg-hrqColors-coolGray-600">
-                                                            {years.map((year) => (
-                                                                <SelectItem
-                                                                    key={year}
-                                                                    value={year.toString()}
-                                                                    className="focus:bg-coolGray-600 focus:text-white"
-                                                                >
-                                                                    {year}
-                                                                </SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                    <div className="flex items-center space-x-2">
-                                                        <Button
-                                                            variant="outline"
-                                                            size="icon"
-                                                            className="h-7 w-7 border-black"
-                                                            onClick={() => handleMonthChange(false)}
-                                                        >
-                                                            <ChevronLeft className="h-4 w-4" />
-                                                        </Button>
-                                                        <Button
-                                                            variant="outline"
-                                                            size="icon"
-                                                            className="h-7 w-7 border-black"
-                                                            onClick={() => handleMonthChange(true)}
-                                                        >
-                                                            <ChevronRight className="h-4 w-4" />
-                                                        </Button>
-                                                    </div>
-                                                </div>
-                                                <Calendar
-                                                    mode="single"
-                                                    selected={field.value}
-                                                    onSelect={(date) => {
-                                                        field.onChange(date)
-                                                        if (date) {
-                                                            setSelectedYear(date.getFullYear())
-                                                            setCurrentMonth(date)
+                                                        month={currentMonth}
+                                                        onMonthChange={
+                                                            setCurrentMonth
                                                         }
-                                                    }}
+                                                        disabled={(date) =>
+                                                            date > new Date() ||
+                                                            date <
+                                                            new Date(
+                                                                '1900-01-01'
+                                                            )
+                                                        }
+                                                        initialFocus
+                                                    />
+                                                </PopoverContent>
+                                            </Popover>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
 
-                                                    month={currentMonth}
-                                                    onMonthChange={setCurrentMonth}
-                                                    disabled={(date) =>
-                                                        date > new Date() ||
-                                                        date < new Date('1900-01-01')
-                                                    }
-                                                    initialFocus
-                                                />
-                                            </PopoverContent>
-                                        </Popover>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {renderFormField(
+                                'maritalStatus',
+                                'Marital Status',
+                                'Select status',
+                                [
+                                    'Single',
+                                    'Married',
+                                    'Divorced',
+                                    'Widowed',
+                                    'Other',
+                                ]
+                            )}
+                            {renderFormField(
+                                'relationshipTypeWanted',
+                                'Relationship Type Wanted',
+                                'Select type',
+                                [
+                                    'Hang out',
+                                    'Long-Term',
+                                    'Dating',
+                                    'Sexual',
+                                    'Just Friends',
+                                ]
+                            )}
+                            {renderFormField(
+                                'biologicalSex',
+                                'Your Biological Sex',
+                                'Select sex',
+                                ['Male', 'Female']
+                            )}
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {renderFormField(
+                                'gender',
+                                'Your Gender',
+                                'Select gender',
+                                ['Male', 'Female', 'Non-Binary', 'Other']
+                            )}
+                            {renderFormField(
+                                'race',
+                                'Your Race',
+                                'Select your race',
+                                races
+                            )}
+                            {renderFormField(
+                                'smoker',
+                                'Smoker',
+                                'Select option',
+                                smokerOptions
+                            )}
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {renderFormField(
+                                'alcohol',
+                                'Alcohol',
+                                'Select option',
+                                alcoholOptions
+                            )}
+                            {renderFormField(
+                                'drugs',
+                                'Drugs',
+                                'Select option',
+                                drugOptions
+                            )}
+                            {renderFormField(
+                                'haveChildren',
+                                'Do you have children?',
+                                'Select option',
+                                haveChildrenOptions
+                            )}
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {renderFormField(
+                                'religion',
+                                'Religion',
+                                'Select your religion',
+                                religionOptions
+                            )}
+                            {renderFormField(
+                                'primaryLanguage',
+                                'Your Primary Language',
+                                'Select your primary language',
+                                languageOptions
+                            )}
+                            {renderFormField(
+                                'otherLanguages',
+                                'Other Languages',
+                                'Select other languages',
+                                languageOptions
+                            )}
+                        </div>
+
+                        <FormField
+                            control={form.control}
+                            name="aboutYourself"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="font-bold text-black">
+                                        Tell Us About Yourself
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Textarea
+                                            placeholder="Share a bit about yourself..."
+                                            className="rounded resize-none border-2 border-black focus:ring-black focus:border-black"
+                                            {...field}
+                                            maxLength={10000}
+                                        />
                                     </FormControl>
+                                    <FormDescription className="text-xs text-black">
+                                        Maximum 10000 characters
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField('maritalStatus', 'Marital Status', 'Select status', [
-                            'Single',
-                            'Married',
-                            'Divorced',
-                            'Widowed',
-                            'Other',
-                        ])}
-                        {renderFormField('relationshipTypeWanted', 'Relationship Type Wanted', 'Select type', [
-                            'Hang out',
-                            'Long-Term',
-                            'Dating',
-                            'Sexual',
-                            'Just Friends',
-                        ])}
-                        {renderFormField('biologicalSex', 'Your Biological Sex', 'Select sex', ['Male', 'Female'])}
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField('gender', 'Your Gender', 'Select gender', ['Male', 'Female', 'Non-Binary', 'Other'])}
-                        {renderFormField('race', 'Your Race', 'Select your race', races)}
-                        {renderFormField('smoker', 'Smoker', 'Select option', smokerOptions)}
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField('alcohol', 'Alcohol', 'Select option', alcoholOptions)}
-                        {renderFormField('drugs', 'Drugs', 'Select option', drugOptions)}
-                        {renderFormField('haveChildren', 'Do you have children?', 'Select option', haveChildrenOptions)}
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {renderFormField('religion', 'Religion', 'Select your religion', religionOptions)}
-                        {renderFormField('primaryLanguage', 'Your Primary Language', 'Select your primary language', languageOptions)}
-                        {renderFormField('otherLanguages', 'Other Languages', 'Select other languages', languageOptions)}
-                    </div>
-
-                    <FormField
-                        control={form.control}
-                        name="aboutYourself"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className="font-bold text-black">Tell Us About Yourself</FormLabel>
-                                <FormControl>
-                                    <Textarea
-                                        placeholder="Share a bit about yourself..."
-                                        className="resize-none border-2 border-black focus:ring-black focus:border-black"
-                                        {...field}
-                                        maxLength={10000}
-                                    />
-                                </FormControl>
-                                <FormDescription className="text-xs text-black">Maximum 10000 characters</FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <Button
-                        type="submit"
-                        className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting ? 'Submitting...' : 'Submit'}
-                    </Button>
-                </form>
-            </Form>
-        </div>
+                        <Button
+                            type="submit"
+                            className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? 'Submitting...' : 'Submit'}
+                        </Button>
+                    </form>
+                </Form>
+            </div>
+        </DevelopmentGuard>
     )
 }
+
