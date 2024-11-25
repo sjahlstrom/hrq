@@ -4,12 +4,13 @@ import { db } from '@/lib/db'
 import { clerkClient, currentUser } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
 import { cache } from 'react'
+import { UserRole } from '@prisma/client'
 
 type UserCacheType = {
     [userId: string]: {
         testResponse: number[];
         associatedScale: number[];
-        role: string | null;
+        role: UserRole | null;
         testCompleted: boolean;
         summedTotal: number | null;
     }
@@ -66,6 +67,7 @@ export const getUsers = async () => {
                 summedTotal: true,
                 paid_rq: true,
                 paid_cq: true,
+                role: true,
             },
         })
     } catch (error) {
@@ -123,13 +125,11 @@ export const setTestCompleted = async (): Promise<boolean> => {
     if (!user) return false
 
     try {
-        // Update database first
         await db.user.update({
             where: { externalUserId: user.id },
             data: { testCompleted: true },
         })
 
-        // Safely update cache with proper type checking
         const cachedUser = userCache[user.id]
         if (cachedUser) {
             cachedUser.testCompleted = true
@@ -153,13 +153,11 @@ export const setSummedTotals = async (average: number): Promise<boolean> => {
             return false
         }
 
-        // Update database first
         await db.user.update({
             where: { externalUserId: user.id },
             data: { summedTotal: average },
         })
 
-        // Type-safe cache update
         const cachedUserData = userCache[user.id]
         if (typeof cachedUserData !== 'undefined') {
             cachedUserData.summedTotal = average
@@ -185,12 +183,41 @@ export const getTestResponses = async (): Promise<number[]> => {
     return userData?.testResponse ?? []
 }
 
-export const getUserRole = async (): Promise<string | null> => {
+export const getUserRole = async (): Promise<UserRole | null> => {
     const user = await currentUser()
     if (!user) return null
 
     const userData = await getCachedUserData(user.id)
     return userData?.role ?? null
+}
+
+export const setUserAdmin = async (externalUserId: string, isAdmin: boolean) => {
+    if (!externalUserId) throw new Error('No externalUserId provided')
+
+    try {
+        const userToUpdate = await db.user.findUnique({
+            where: { externalUserId: externalUserId },
+        })
+        if (!userToUpdate) throw new Error('User not found')
+
+        await db.user.update({
+            where: { externalUserId: externalUserId },
+            data: {
+                role: isAdmin ? UserRole.ADMIN : UserRole.USER
+            },
+        })
+
+        await clerkClient().users.updateUser(externalUserId, {
+            publicMetadata: { role: isAdmin ? 'ADMIN' : 'USER' }
+        })
+
+        delete userCache[externalUserId]
+        revalidatePath('/users')
+        return true
+    } catch (error) {
+        console.error('Error updating user admin status:', error)
+        throw error
+    }
 }
 
 export const banUser = async (externalUserId: string) => {
@@ -202,13 +229,11 @@ export const banUser = async (externalUserId: string) => {
         })
         if (!userToBan) throw new Error('User not found')
 
-        // Update database first
         await db.user.update({
             where: { externalUserId: externalUserId },
             data: { banned: true },
         })
 
-        // Use the correct Clerk method
         await clerkClient().users.updateUser(externalUserId, {
             publicMetadata: { banned: true }
         })
@@ -229,13 +254,11 @@ export const unBanUser = async (externalUserId: string) => {
         })
         if (!userToUnban) throw new Error('User not found')
 
-        // Update database first
         await db.user.update({
             where: { externalUserId: externalUserId },
             data: { banned: false },
         })
 
-        // Use the correct Clerk method
         await clerkClient().users.updateUser(externalUserId, {
             publicMetadata: { banned: false }
         })
@@ -248,8 +271,6 @@ export const unBanUser = async (externalUserId: string) => {
         throw error
     }
 }
-
-// ... rest of the code remains the same ...
 
 interface UserData {
     testResponse: number[];
