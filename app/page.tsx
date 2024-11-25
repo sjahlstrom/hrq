@@ -1,20 +1,33 @@
-import ScrollUp from '@/components/common/scroll-up'
-import Hero from '@/components/Hero/hero'
-import CTA from '@/components/CTA/cta'
-import { Metadata } from 'next'
+'use client'
 
-export const metadata: Metadata = {
-    title: 'Home - High Relationship Quotient',
-    description:
-        'Discover how to improve your relationships and find balance in life with High Relationship Quotient.',
-}
+import React, { useState } from 'react'
+
+import Hero from '@/components/Hero/hero' // If it's in its own folder
+
+import CTA from '@/components/CTA/cta'
+import ScrollUp from '@/components/common/scroll-up'
+import { ExtendedUser } from '@/types/ExtenderUser'
 
 export default function Home() {
+    const [selectedUser, setSelectedUser] = useState<ExtendedUser | null>(null)
+
+    const handleCloseUserCard = () => {
+        setSelectedUser(null)
+    }
+
     return (
         <>
             <Hero />
-            <CTA />
-
+            {selectedUser ? (
+                <CTA
+                    selectedUser={selectedUser}
+                    closeUserCard={handleCloseUserCard}
+                    onUpdate={() => {
+                        // Add any update logic here if needed
+                        // For example, refetching user data
+                    }}
+                />
+            ) : null}
             <ScrollUp />
         </>
     )

@@ -1,35 +1,114 @@
-import Link from 'next/link'
-import { Button } from "@/components/ui/button"
+'use client'
 
-export default function CTA() {
+import React from 'react'
+import { User } from '@/hooks/useUsers'
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { X } from "lucide-react"
+import { setUserAdmin } from '@/app/api/users'
+import { toast } from "sonner"
+import { UserRole } from '@prisma/client'
+
+interface ExtendedUser extends User {
+    role?: UserRole | null;
+}
+
+interface UserCardProps {
+    selectedUser: ExtendedUser
+    closeUserCard: () => void
+    onUpdate?: () => void
+}
+
+const UserCard: React.FC<UserCardProps> = ({ selectedUser, closeUserCard, onUpdate }) => {
+    const [isUpdating, setIsUpdating] = React.useState(false)
+
+    const handleAdminToggle = async (checked: boolean) => {
+        try {
+            setIsUpdating(true)
+            await setUserAdmin(selectedUser.externalUserId, checked)
+
+            toast.success('Success', {
+                description: `Admin status ${checked ? 'granted' : 'removed'} successfully`,
+            })
+
+            // Trigger refresh of user list if callback provided
+            if (onUpdate) {
+                onUpdate()
+            }
+        } catch (error) {
+            toast.error('Error', {
+                description: 'Failed to update admin status',
+            })
+        } finally {
+            setIsUpdating(false)
+        }
+    }
+
     return (
-        <section className="bg-gradient-to-br from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100 py-8 ">
-            <div className="container mx-auto px-4">
-                <div className="flex flex-col items-center text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-dark mb-4">
-                        Ready to Improve Your Relationships?
-                    </h2>
-                    <h1>
-                        <p className="text-lg md:text-xl text-white mb-8 max-w-2xl text-dark/60">
-                            Discover your High Relationship Quotient and learn how to enhance all aspects of your
-                            personal and professional interactions.
-                </p>
-                    </h1>
-                <div className="flex flex-col sm:flex-row gap-4 text-dark">
-                        {/*<Button asChild size="lg" variant="secondary">*/}
-                        {/*    <Link href="/signup">*/}
-                        {/*        Get Started*/}
-                        {/*        <ArrowRight className="ml-2 h-5 w-5" />*/}
-                        {/*    </Link>*/}
-                        {/*</Button>*/}
-                    <div>
-                        <Button asChild size="lg" variant="outline" className="rounded text-dark">
-                            <Link href="/about">Learn More</Link>
-                        </Button>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <Card className="bg-sky-300/80 text-2xl w-full max-w-md">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="font-bold">User Details</CardTitle>
+                    <Button variant="ghost" size="icon" onClick={closeUserCard}>
+                        <X className="h-4 w-4" />
+                        <span className="sr-only">Close</span>
+                    </Button>
+                </CardHeader>
+                <CardContent>
+                    <div className="space-y-4">
+                        <div>
+                            <h3 className="text-dark text-lg font-semibold">Username</h3>
+                            <p>{selectedUser.username || 'N/A'}</p>
+                        </div>
+                        <div>
+                            <h3 className="text-dark text-lg font-semibold">Email</h3>
+                            <p>{selectedUser.email || 'N/A'}</p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                            <h3 className="text-dark text-lg font-semibold">Admin</h3>
+                            <Checkbox
+                                checked={selectedUser.role === UserRole.ADMIN}
+                                disabled={isUpdating}
+                                onCheckedChange={handleAdminToggle}
+                                aria-label="Toggle admin status"
+                            />
+                        </div>
+                        <div>
+                            <h3 className="text-dark text-lg font-semibold">Paid RQ</h3>
+                            <p>{selectedUser.paid_rq ? 'Yes' : 'No'}</p>
+                        </div>
+                        <div>
+                            <h3 className="text-dark text-lg font-semibold">Paid CQ</h3>
+                            <p>{selectedUser.paid_cq ? 'Yes' : 'No'}</p>
+                        </div>
+                        <div>
+                            <h3 className="text-dark text-lg font-semibold">Banned</h3>
+                            <p>{selectedUser.banned ? 'Yes' : 'No'}</p>
+                        </div>
+                        <div>
+                            <h3 className="text-dark text-lg font-semibold">Test Completed</h3>
+                            <p>{selectedUser.testCompleted ? 'Yes' : 'No'}</p>
+                        </div>
+                        <div>
+                            <h3 className="text-dark text-lg font-semibold">Summed Total</h3>
+                            <p>{selectedUser.summedTotal !== null ? selectedUser.summedTotal : 'N/A'}</p>
+                        </div>
+                        <div>
+                            <h3 className="text-dark text-lg font-semibold">External User ID</h3>
+                            <p className="text-sm">{selectedUser.externalUserId}</p>
+                        </div>
+                        {selectedUser.testResponse && (
+                            <div>
+                                <h3 className="text-dark text-lg font-semibold">Test Response</h3>
+                                <p>{selectedUser.testResponse.join(', ')}</p>
+                            </div>
+                        )}
                     </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                </CardContent>
+            </Card>
+        </div>
     )
 }
+
+export default UserCard
