@@ -60,6 +60,14 @@
 //         color: '#4B5563',
 //         marginBottom: 10,
 //     },
+//
+//     scoreText: {
+//         fontSize: 12,
+//         lineHeight: 1.5,
+//         color: '#aa0000',
+//         marginBottom: 10,
+//     },
+//
 //     card: {
 //         backgroundColor: '#e0f2fe',
 //         borderRadius: 8,
@@ -73,9 +81,9 @@
 //     scoreTable: { marginVertical: 20 },
 //     tableRow: {
 //         flexDirection: 'row',
-//         borderBottomWidth: 1,
-//         borderBottomColor: '#E5E7EB',
-//         borderColor: '#FF0000',
+//         // borderBottomWidth: 1,
+//         // borderBottomColor: '#E5E7EB',
+//         // borderColor: '#FF0000',
 //         paddingVertical: 8,
 //     },
 //     tableHeader: {
@@ -86,7 +94,7 @@
 //     tableCell: {
 //         flex: 1,
 //         padding: 8,
-//         fontSize: 10,
+//         fontSize: 12,
 //     },
 //     tableCellHeader: {
 //         flex: 1,
@@ -110,45 +118,6 @@
 //         right: 30,
 //         fontSize: 10,
 //         color: '#6B7280',
-//     },
-//     nextSteps: {
-//         marginTop: 20,
-//         padding: 20,
-//         backgroundColor: '#F9FAFB',
-//         borderRadius: 8,
-//         borderWidth: 1,
-//         borderColor: '#AA0000',
-//     },
-//     nextStepsTitle: {
-//         fontSize: 20,
-//         fontFamily: 'Helvetica-Bold',
-//         color: '#1F2937',
-//         marginBottom: 12,
-//     },
-//     nextStepsSubtext: {
-//         fontSize: 12,
-//         color: '#4B5563',
-//         marginBottom: 16,
-//     },
-//     nextStepsList: {
-//         marginLeft: 15,
-//     },
-//     nextStepsListItem: {
-//         fontSize: 12,
-//         color: '#4B5563',
-//         marginBottom: 8,
-//         flexDirection: 'row',
-//     },
-//     nextStepsListBullet: {
-//         width: 10,
-//         marginRight: 5,
-//     },
-//     nextStepsScoreHighlight: {
-//         fontSize: 12,
-//         fontFamily: 'Helvetica-Bold',
-//         // color: '#1F2937',
-//         color: '#FF0000',
-//         marginBottom: 8,
 //     },
 // })
 //
@@ -220,38 +189,37 @@
 //     </>
 // )
 //
-// const ChunkTable = ({ data }: { data: ChartData[] }) => (
+// const ChunkTable = ({ data, isFirstPage }: { data: ChartData[], isFirstPage?: boolean }) => (
 //     <>
+//         {isFirstPage && (
+//             <View style={[styles.tableRow]}>
+//                 <Text style={[styles.tableCell, { textAlign: 'center', marginBottom: 10 }]}>
+//                     The following is a narrative of your test scores
+//                 </Text>
+//             </View>
+//         )}
 //         <View style={[styles.tableRow, styles.tableHeader]}>
-//             <Text style={styles.tableCell}>Scale</Text>
-//             <Text style={styles.tableCell}>Score</Text>
-//             <Text style={styles.tableCell}>Statement</Text>
+//             <Text style={[styles.tableCell, { textAlign: 'center' }]}>Statements</Text>
 //         </View>
 //         {data.map((item, index) => (
-//             <View key={index} style={styles.tableRow}>
-//                 <Text style={styles.tableCell}>{item.scale}</Text>
-//                 <Text style={styles.tableCell}>{item.score.toFixed(1)}</Text>
-//                 <Text style={styles.tableCell}>{item.statement}</Text>
+//             <View key={index} style={[styles.tableRow]}>
+//                 <Text style={[styles.tableCell, { textAlign: 'left' }]}>{item.statement}</Text>
 //             </View>
 //         ))}
 //     </>
 // )
 //
+//
 // const PDFDocument: React.FC<PDFDocumentProps> = ({
 //     lieAnalysis,
 //     totalSummedValues,
 //     chartData,
-//     scales,
-//     chartImages,
 // }) => {
 //     const currentDate = new Date().toLocaleDateString()
-//     const firstChunk = chartData.slice(0, 4)
-//     const remainingChunks = chartData
-//         .slice(4)
-//         .reduce<ChartData[][]>((acc, _, i) => {
-//             if (i % 4 === 0) acc.push(chartData.slice(i + 4, i + 8))
-//             return acc
-//         }, [])
+//     const chunks = chartData.reduce<ChartData[][]>((acc, _, i) => {
+//         if (i % 7 === 0) acc.push(chartData.slice(i, i + 7))
+//         return acc
+//     }, [])
 //
 //     return (
 //         <Document>
@@ -261,7 +229,7 @@
 //                     <Text style={styles.text}>Generated on {currentDate}</Text>
 //                 </View>
 //                 <View style={styles.card}>
-//                     <Text style={styles.subHeader}>Analysis Summary</Text>
+//                     <Text style={styles.subHeader}>Test Validity</Text>
 //                     <Text style={styles.text}>{lieAnalysis}</Text>
 //                 </View>
 //                 <View style={styles.scoreTable}>
@@ -270,6 +238,13 @@
 //                     </Text>
 //                     <ScoreClassificationTable data={scoreClassificationData} />
 //                 </View>
+//
+//                 <View>
+//                     <Text style={styles.scoreText}>
+//                         Your total score is: {totalSummedValues.toFixed(1)}
+//                     </Text>
+//                 </View>
+//
 //                 <Text style={styles.footer}>
 //                     This report is confidential and should be handled
 //                     accordingly.
@@ -277,149 +252,20 @@
 //                 <Text style={styles.pageNumber}>Page 1</Text>
 //             </Page>
 //
-//             <Page size="A4" style={styles.page}>
-//                 {/*<View style={styles.card}>*/}
-//                 {/*    <Text style={styles.subHeader}>Total Score</Text>*/}
-//                 {/*    <Text style={styles.text}>*/}
-//                 {/*        Your total score: {totalSummedValues.toFixed(1)}*/}
-//                 {/*    </Text>*/}
-//                 {/*</View>*/}
 //
-//                 <View style={styles.nextSteps}>
-//                     <Text style={styles.nextStepsTitle}>Next Steps</Text>
-//                     <Text style={styles.nextStepsSubtext}>
-//                         Thank you for completing your analysis. Based on your
-//                         results, we recommend the following actions to help you
-//                         move forward:
-//                     </Text>
-//                     <View style={styles.nextStepsList}>
-//                         <View style={styles.nextStepsListItem}>
-//                             <Text style={styles.nextStepsListBullet}>•</Text>
-//                             <Text style={styles.nextStepsScoreHighlight}>
-//                                 Your Total Composite Score is{' '}
-//                                 {totalSummedValues.toFixed(1)}
-//                             </Text>
-//                         </View>
-//                         <View style={styles.nextStepsListItem}>
-//                             <Text style={styles.nextStepsListBullet}>•</Text>
-//                             <Text>
-//                                 Identify key areas where improvements are
-//                                 needed.
-//                             </Text>
-//                         </View>
-//
-//                         <View style={styles.nextStepsListItem}>
-//                             <Text style={styles.nextStepsListBullet}>•</Text>
-//                             <Text>
-//                                 Reflect on which relationships need attention
-//                                 (e.g., family, friends, colleagues, romantic
-//                                 partners).
-//                             </Text>
-//                         </View>
-//
-//                         <View style={styles.nextStepsListItem}>
-//                             <Text style={styles.nextStepsListBullet}>•</Text>
-//                             <Text>
-//                                 Actively listen to others without interrupting
-//                                 or judging.
-//                             </Text>
-//                         </View>
-//
-//                         <View style={styles.nextStepsListItem}>
-//                             <Text style={styles.nextStepsListBullet}>•</Text>
-//                             <Text>
-//                                 Use &apos;I&apos; statements (e.g., &apos;I
-//                                 feel&apos; rather than &apos;You always&apos;)
-//                                 to express your emotions constructively.
-//                             </Text>
-//                         </View>
-//
-//                         <View style={styles.nextStepsListItem}>
-//                             <Text style={styles.nextStepsListBullet}>•</Text>
-//                             <Text>
-//                                 Spend quality time doing things that strengthen
-//                                 your bond, such as shared hobbies, outings, or
-//                                 traditions.
-//                             </Text>
-//                         </View>
-//
-//                         <View style={styles.nextStepsListItem}>
-//                             <Text style={styles.nextStepsListBullet}>•</Text>
-//                             <Text>
-//                                 Address disagreements calmly and focus on
-//                                 solutions rather than assigning blame.
-//                             </Text>
-//                         </View>
-//
-//                         <View style={styles.nextStepsListItem}>
-//                             <Text style={styles.nextStepsListBullet}>•</Text>
-//                             <Text>
-//                                 Agree to disagree when necessary to maintain
-//                                 harmony.
-//                             </Text>
-//                         </View>
-//
-//                         <View style={styles.nextStepsListItem}>
-//                             <Text style={styles.nextStepsListBullet}>•</Text>
-//                             <Text>
-//                                 Relationship improvements take time. Stay
-//                                 consistent in your efforts to build trust and
-//                                 connection.
-//                             </Text>
-//                         </View>
-//
-//                         <View style={styles.nextStepsListItem}>
-//                             <Text style={styles.nextStepsListBullet}>•</Text>
-//                             <Text>
-//                                 Remember, proactive steps today can lead to
-//                                 significant improvements tomorrow.
-//                             </Text>
-//                         </View>
-//                     </View>
-//                 </View>
-//
-//                 {chartImages.map((src, index) => (
-//                     <View key={index} style={styles.chartContainer}>
-//                         <Text style={styles.subHeader}>
-//                             Scale {scales[index]?.[0]?.number}:{' '}
-//                             {scales[index]?.[0]?.name}
-//                         </Text>
-//                         <Image style={styles.chart} src={src} />
-//                     </View>
-//                 ))}
-//                 <Text style={styles.footer}>
-//                     This report is confidential and should be handled
-//                     accordingly.
-//                 </Text>
-//                 <Text style={styles.pageNumber}>Page 2</Text>
-//             </Page>
-//
-//             <Page size="A4" style={styles.page}>
-//                 <View style={styles.section}>
-//                     <Text style={styles.subHeader}>Detailed Scores</Text>
-//                     <ChunkTable data={firstChunk} />
-//                 </View>
-//                 <Text style={styles.footer}>
-//                     This report is confidential and should be handled
-//                     accordingly.
-//                 </Text>
-//                 <Text style={styles.pageNumber}>Page 3</Text>
-//             </Page>
-//
-//             {remainingChunks.map((chunk, i) => (
+//             {chunks.map((chunk, i) => (
 //                 <Page key={i} size="A4" style={styles.page}>
-//                     <ChunkTable data={chunk} />
+//                     <ChunkTable data={chunk} isFirstPage={i === 0} />
 //                     <Text style={styles.footer}>
-//                         This report is confidential and should be handled
-//                         accordingly.
+//                         This report is confidential and should be handled accordingly.
 //                     </Text>
-//                     <Text style={styles.pageNumber}>Page {i + 4}</Text>
+//                     <Text style={styles.pageNumber}>Page {i + 2}</Text>
 //                 </Page>
 //             ))}
+//
 //         </Document>
 //     )
 // }
-//
 // export default PDFDocument
 
 import React from 'react'
@@ -484,14 +330,12 @@ const styles = StyleSheet.create({
         color: '#4B5563',
         marginBottom: 10,
     },
-
     scoreText: {
         fontSize: 12,
         lineHeight: 1.5,
         color: '#aa0000',
         marginBottom: 10,
     },
-
     card: {
         backgroundColor: '#e0f2fe',
         borderRadius: 8,
@@ -505,9 +349,6 @@ const styles = StyleSheet.create({
     scoreTable: { marginVertical: 20 },
     tableRow: {
         flexDirection: 'row',
-        // borderBottomWidth: 1,
-        // borderBottomColor: '#E5E7EB',
-        // borderColor: '#FF0000',
         paddingVertical: 8,
     },
     tableHeader: {
@@ -591,8 +432,8 @@ const scoreClassificationData: ScoreClassification[] = [
 ]
 
 const ScoreClassificationTable = ({
-    data,
-}: {
+                                      data,
+                                  }: {
     data: ScoreClassification[]
 }) => (
     <>
@@ -613,7 +454,15 @@ const ScoreClassificationTable = ({
     </>
 )
 
-const ChunkTable = ({ data, isFirstPage }: { data: ChartData[], isFirstPage?: boolean }) => (
+const ChunkTable = ({
+                        data,
+                        isFirstPage,
+                        isLastPage
+                    }: {
+    data: ChartData[],
+    isFirstPage?: boolean,
+    isLastPage?: boolean
+}) => (
     <>
         {isFirstPage && (
             <View style={[styles.tableRow]}>
@@ -622,26 +471,32 @@ const ChunkTable = ({ data, isFirstPage }: { data: ChartData[], isFirstPage?: bo
                 </Text>
             </View>
         )}
-        <View style={[styles.tableRow, styles.tableHeader]}>
-            <Text style={[styles.tableCell, { textAlign: 'center' }]}>Statements</Text>
-        </View>
+        {isFirstPage && (
+            <View style={[styles.tableRow, styles.tableHeader]}>
+                <Text style={[styles.tableCell, { textAlign: 'center' }]}>Statements</Text>
+            </View>
+        )}
         {data.map((item, index) => (
             <View key={index} style={[styles.tableRow]}>
                 <Text style={[styles.tableCell, { textAlign: 'left' }]}>{item.statement}</Text>
             </View>
         ))}
+        {isLastPage && (
+            <Text style={styles.footer}>
+                This report is confidential and should be handled accordingly.
+            </Text>
+        )}
     </>
 )
 
-
 const PDFDocument: React.FC<PDFDocumentProps> = ({
-    lieAnalysis,
-    totalSummedValues,
-    chartData,
-}) => {
+                                                     lieAnalysis,
+                                                     totalSummedValues,
+                                                     chartData,
+                                                 }) => {
     const currentDate = new Date().toLocaleDateString()
     const chunks = chartData.reduce<ChartData[][]>((acc, _, i) => {
-        if (i % 7 === 0) acc.push(chartData.slice(i, i + 7))
+        if (i % 8 === 0) acc.push(chartData.slice(i, i + 8))
         return acc
     }, [])
 
@@ -669,25 +524,31 @@ const PDFDocument: React.FC<PDFDocumentProps> = ({
                     </Text>
                 </View>
 
-                <Text style={styles.footer}>
-                    This report is confidential and should be handled
-                    accordingly.
-                </Text>
                 <Text style={styles.pageNumber}>Page 1</Text>
             </Page>
 
-
             {chunks.map((chunk, i) => (
                 <Page key={i} size="A4" style={styles.page}>
-                    <ChunkTable data={chunk} isFirstPage={i === 0} />
-                    <Text style={styles.footer}>
-                        This report is confidential and should be handled accordingly.
-                    </Text>
+                    <ChunkTable
+                        data={chunk}
+                        isFirstPage={i === 0}
+                        isLastPage={false}
+                    />
                     <Text style={styles.pageNumber}>Page {i + 2}</Text>
                 </Page>
             ))}
 
+            <Page size="A4" style={styles.page}>
+                <View style={[styles.tableRow, styles.tableHeader]}>
+                    <Text style={[styles.tableCell, { textAlign: 'center' }]}>Recommendations</Text>
+                </View>
+                <Text style={styles.footer}>
+                    This report is confidential and should be handled accordingly.
+                </Text>
+                <Text style={styles.pageNumber}>Page {chunks.length + 2}</Text>
+            </Page>
         </Document>
     )
 }
+
 export default PDFDocument
