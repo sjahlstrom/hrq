@@ -308,16 +308,16 @@ export function BChart({ scales }: BChartProps) {
                     <div className="leading-none text-muted-foreground">
                         <div className="leading-none text-muted-foreground">
                             <span style={{ color: '#ff6b6b' }}>Red</span>{' '}
-                            <span style={{ color: '#ff6b6b' }}> &le; 10,</span>{' '}
+                            <span style={{ color: '#ff6b6b' }}> = Low,</span>{' '}
                             <span style={{ color: '#FFD700' }}>Yellow</span>
                             <span style={{ color: '#FFD700' }}>
                                 {' '}
-                                11-20,
+                                = Medium,
                             </span>{' '}
                             <span style={{ color: '#00A000' }}>Green</span>
                             <span style={{ color: '#00A000' }}>
                                 {' '}
-                                &ge; 21
+                                = High
                             </span>{' '}
                         </div>
                     </div>
