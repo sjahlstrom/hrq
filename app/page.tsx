@@ -18,16 +18,9 @@ export default function Home() {
     return (
         <>
             <Hero />
-            {selectedUser ? (
-                <CTA
-                    selectedUser={selectedUser}
-                    closeUserCard={handleCloseUserCard}
-                    onUpdate={() => {
-                        // Add any update logic here if needed
-                        // For example, refetching user data
-                    }}
-                />
-            ) : null}
+
+            <CTA />
+
             <ScrollUp />
         </>
     )
