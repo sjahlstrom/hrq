@@ -1,250 +1,262 @@
 'use client'
 
-import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react';
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis, Cell, Tooltip, TooltipProps } from 'recharts';
-import { ChartContainer } from '@/components/ui/chart';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import findPositionsForScale from '@/components/(test)/Analysis/Charts/positions';
-import { sumTestResponsesAtPositions } from '@/app/api/users';
-import rawCannedScaleStatements from '@/components/(test)/Analysis/Data/Constants/scaleCannedStatements';
+import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react'
+import {
+    Bar,
+    BarChart,
+    CartesianGrid,
+    LabelList,
+    XAxis,
+    YAxis,
+    Cell,
+    Tooltip,
+    TooltipProps,
+} from 'recharts'
+import { ChartContainer } from '@/components/ui/chart'
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    CardFooter,
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import findPositionsForScale from '@/components/(test)/Analysis/Charts/positions'
+import { sumTestResponsesAtPositions } from '@/app/api/users'
+import rawCannedScaleStatements from '@/components/(test)/Analysis/Data/Constants/scaleCannedStatements'
 
 // Types
 type Scale = {
-    number: number;
-    name: string;
-};
+    number: number
+    name: string
+}
 
 type ScaleStatement = {
-    name: string;
-    scale: string;
-    low: number;
-    high: number;
-    statement: string;
-};
+    name: string
+    scale: string
+    low: number
+    high: number
+    statement: string
+}
 
 type ChartDataItem = {
-    scale: string;
-    score: number;
-    tooltipContent: string;
-    color: string;
-    statement: string;
-};
+    scale: string
+    score: number
+    tooltipContent: string
+    color: string
+    statement: string
+}
 
 type BChartProps = {
-    scales: Scale[] | { [key: string]: Scale };
-};
+    scales: Scale[] | { [key: string]: Scale }
+}
 
 // Constants
 const CONSTANTS = {
-    CHART_CONFIG: { score: { label: 'Score', color: 'hsl(var(--chart-2))' } } as const,
+    CHART_CONFIG: {
+        score: { label: 'Score', color: 'hsl(var(--chart-2))' },
+    } as const,
     THRESHOLDS: {
         LOW: 10,
-        MEDIUM: 20
+        MEDIUM: 20,
     } as const,
     COLORS: {
         LOW: '#FF6B6B',
         MEDIUM: '#F7F751',
-        HIGH: '#4CAF50'
+        HIGH: '#4CAF50',
     } as const,
     FETCH: {
         RETRY_DELAY: 1000,
-        MAX_RETRIES: 3
-    }
-} as const;
+        MAX_RETRIES: 3,
+    },
+} as const
 
 // Create statements Map during module initialization
 const STATEMENTS_MAP = rawCannedScaleStatements.reduce((acc, statement) => {
-    const statements = acc.get(statement.name) || [];
-    acc.set(statement.name, [...statements, statement]);
-    return acc;
-}, new Map<string, ScaleStatement[]>());
+    const statements = acc.get(statement.name) || []
+    acc.set(statement.name, [...statements, statement])
+    return acc
+}, new Map<string, ScaleStatement[]>())
 
 // Utility functions
 const getColor = (score: number): string => {
-    const { THRESHOLDS, COLORS } = CONSTANTS;
-    if (score <= THRESHOLDS.LOW) return COLORS.LOW;
-    if (score <= THRESHOLDS.MEDIUM) return COLORS.MEDIUM;
-    return COLORS.HIGH;
-};
+    const { THRESHOLDS, COLORS } = CONSTANTS
+    if (score <= THRESHOLDS.LOW) return COLORS.LOW
+    if (score <= THRESHOLDS.MEDIUM) return COLORS.MEDIUM
+    return COLORS.HIGH
+}
 
 const getStatement = (scaleName: string, score: number): string => {
-    const statements = STATEMENTS_MAP.get(scaleName);
-    if (!statements?.length) return 'No statement available for this score.';
+    const statements = STATEMENTS_MAP.get(scaleName)
+    if (!statements?.length) return 'No statement available for this score.'
 
-    const matchingStatement = statements.find(s => score > s.low && score <= s.high);
-    return matchingStatement?.statement ?? 'No statement available for this score.';
-};
+    const matchingStatement = statements.find(
+        (s) => score > s.low && score <= s.high
+    )
+    return (
+        matchingStatement?.statement ?? 'No statement available for this score.'
+    )
+}
 
 // Request queue for deduplication
-const requestQueue = new Map<string, Promise<number>>();
+const requestQueue = new Map<string, Promise<number>>()
 
 // Custom hook for data fetching
 const useScaleData = (scalesArray: Scale[]) => {
     const [state, setState] = useState<{
-        chartData: ChartDataItem[];
-        loading: boolean;
-        error: string | null;
+        chartData: ChartDataItem[]
+        loading: boolean
+        error: string | null
     }>({
         chartData: [],
         loading: true,
-        error: null
-    });
+        error: null,
+    })
 
-    const abortControllerRef = useRef<AbortController | null>(null);
+    const abortControllerRef = useRef<AbortController | null>(null)
 
     // Helper function to fetch or get queued result
     const fetchOrQueueRequest = async (
         positions: [number, number],
         signal: AbortSignal
     ): Promise<number> => {
-        const key = `${positions[0]},${positions[1]}`;
+        const key = `${positions[0]},${positions[1]}`
 
         if (requestQueue.has(key)) {
-            return await requestQueue.get(key)!;
+            return await requestQueue.get(key)!
         }
 
         const promise = (async () => {
             try {
-                return await sumTestResponsesAtPositions(positions);
+                return await sumTestResponsesAtPositions(positions)
             } finally {
-                requestQueue.delete(key);
+                requestQueue.delete(key)
             }
-        })();
+        })()
 
-        requestQueue.set(key, promise);
-        return await promise;
-    };
+        requestQueue.set(key, promise)
+        return await promise
+    }
 
-    const fetchData = useCallback(async (signal: AbortSignal): Promise<ChartDataItem[]> => {
-        const results = new Map<number, { positions: [number, number]; response: number }>();
+    const fetchData = useCallback(
+        async (signal: AbortSignal): Promise<ChartDataItem[]> => {
+            const results = new Map<
+                number,
+                { positions: [number, number]; response: number }
+            >()
 
-        // Create fetch promises for all scales
-        const fetchPromises = scalesArray.map(async scale => {
-            const positions = findPositionsForScale(scale.number);
-            if (positions.length !== 2) {
-                throw new Error(`Invalid positions for scale ${scale.name}`);
-            }
+            // Create fetch promises for all scales
+            const fetchPromises = scalesArray.map(async (scale) => {
+                const positions = findPositionsForScale(scale.number)
+                if (positions.length !== 2) {
+                    throw new Error(`Invalid positions for scale ${scale.name}`)
+                }
 
-            try {
-                const response = await fetchOrQueueRequest(
-                    [positions[0], positions[1]],
-                    signal
-                );
-                results.set(scale.number, {
-                    positions: [positions[0], positions[1]],
-                    response
-                });
-            } catch (error) {
-                if (signal.aborted) throw new Error('Aborted');
-                throw error;
-            }
-        });
+                try {
+                    const response = await fetchOrQueueRequest(
+                        [positions[0], positions[1]],
+                        signal
+                    )
+                    results.set(scale.number, {
+                        positions: [positions[0], positions[1]],
+                        response,
+                    })
+                } catch (error) {
+                    if (signal.aborted) throw new Error('Aborted')
+                    throw error
+                }
+            })
 
-        // Wait for all requests to complete
-        await Promise.all(fetchPromises);
+            // Wait for all requests to complete
+            await Promise.all(fetchPromises)
 
-        // Transform results into chart data
-        return scalesArray.map(scale => {
-            const result = results.get(scale.number);
-            if (!result) {
-                throw new Error(`No response found for scale ${scale.name}`);
-            }
+            // Transform results into chart data
+            return scalesArray.map((scale) => {
+                const result = results.get(scale.number)
+                if (!result) {
+                    throw new Error(`No response found for scale ${scale.name}`)
+                }
 
-            const score = result.response / 2;
+                const score = result.response / 2
 
-            return {
-                scale: scale.name,
-                score,
-                tooltipContent: getStatement(scale.name, score),
-                color: getColor(score),
-                statement: getStatement(scale.name, score)
-            };
-        });
-    }, [scalesArray]);
+                return {
+                    scale: scale.name,
+                    score,
+                    tooltipContent: getStatement(scale.name, score),
+                    color: getColor(score),
+                    statement: getStatement(scale.name, score),
+                }
+            })
+        },
+        [scalesArray]
+    )
 
     useEffect(() => {
-        const controller = new AbortController();
-        abortControllerRef.current = controller;
+        const controller = new AbortController()
+        abortControllerRef.current = controller
 
         fetchData(controller.signal)
-            .then(data => setState({ chartData: data, loading: false, error: null }))
-            .catch(err => {
+            .then((data) =>
+                setState({ chartData: data, loading: false, error: null })
+            )
+            .catch((err) => {
                 if (!controller.signal.aborted) {
-                    setState(prev => ({
+                    setState((prev) => ({
                         ...prev,
                         loading: false,
-                        error: err instanceof Error ? err.message : 'Failed to load chart data'
-                    }));
+                        error:
+                            err instanceof Error
+                                ? err.message
+                                : 'Failed to load chart data',
+                    }))
                 }
-            });
+            })
 
         return () => {
-            controller.abort();
-            requestQueue.clear();
-        };
-    }, [fetchData]);
+            controller.abort()
+            requestQueue.clear()
+        }
+    }, [fetchData])
 
-    return state;
-};
-
-// Memoized components
-const CustomTooltip = React.memo<TooltipProps<number, string>>(({ active, payload }) => {
-    if (!active || !payload?.[0]?.payload) return null;
-
-    const data = payload[0].payload as ChartDataItem;
-
-    return (
-        <div className="rounded-lg bg-gray-500 p-2 shadow-md">
-            <p>{data.scale}</p>
-            <p className="mt-2">{data.tooltipContent}</p>
-            <p className="mt-1">Score: {data.score.toFixed(2)}</p>
-        </div>
-    );
-});
-
-CustomTooltip.displayName = 'CustomTooltip';
+    return state
+}
 
 const ScaleCard = React.memo<{ item: ChartDataItem }>(({ item }) => (
-    <Card className="bg-hrqColors-skyBlue-600 border-hrqColors-sunsetOrange-500 rounded-2xl shadow-xl">
-        <CardHeader>
-            <CardTitle className="text-hrqColors-skyBlue-900">{item.scale} Scale</CardTitle>
-        </CardHeader>
+    <Card className="bg-hrqColors-skyBlue-700 border-hrqColors-sunsetOrange-500 rounded-2xl shadow-xl">
+
         <CardContent>
-            <p className="text-primary">{item.statement}</p>
+            <p className="text-primary mt-4">{item.statement}</p>
         </CardContent>
     </Card>
-));
+))
 
-ScaleCard.displayName = 'ScaleCard';
+ScaleCard.displayName = 'ScaleCard'
 
 // Main component
 export function BChart({ scales }: BChartProps) {
-    const scalesArray = useMemo(() =>
-            Array.isArray(scales) ? scales : Object.values(scales),
+    const scalesArray = useMemo(
+        () => (Array.isArray(scales) ? scales : Object.values(scales)),
         [scales]
-    );
+    )
 
-    const { chartData, loading, error } = useScaleData(scalesArray);
+    const { chartData, loading, error } = useScaleData(scalesArray)
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div>Loading...</div>
 
     if (error) {
         return (
             <div className="text-center">
                 <p className="text-red-500 mb-4">Error: {error}</p>
-                <Button onClick={() => window.location.reload()}>
-                    Retry
-                </Button>
+                <Button onClick={() => window.location.reload()}>Retry</Button>
             </div>
-        );
+        )
     }
 
     return (
         <div>
             <Card className="bg-hrqColors-coolGray-600 border-hrqColors-sunsetOrange-300 rounded-2xl shadow-xl">
                 <CardHeader>
-                    <CardTitle>Colorized Scale Scores</CardTitle>
+                    <CardTitle>Scale Scores</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <ChartContainer config={CONSTANTS.CHART_CONFIG}>
@@ -266,7 +278,7 @@ export function BChart({ scales }: BChartProps) {
                                 axisLine
                                 tickMargin={10}
                             />
-                            <Tooltip content={<CustomTooltip />} />
+                            {/*<Tooltip content={<CustomTooltip />} />*/}
                             <Bar dataKey="score" radius={4}>
                                 {chartData.map((entry, index) => (
                                     <Cell
@@ -280,18 +292,34 @@ export function BChart({ scales }: BChartProps) {
                                     offset={5}
                                     fill="#333"
                                     fontSize={12}
-                                    formatter={(value: number) => value.toFixed(2)}
+                                    formatter={(value: number) =>
+                                        value.toFixed(2)
+                                    }
                                 />
                             </Bar>
                         </BarChart>
                     </ChartContainer>
                 </CardContent>
+
                 <CardFooter className="text-dark flex-col items-start gap-2 text-sm">
-                    <div className="flex gap-2 font-medium leading-none">
+                    <div className="text-hrqColors-coolGray-100 flex gap-2 font-medium leading-none">
                         Color indicates score level
                     </div>
                     <div className="leading-none text-muted-foreground">
-                        Red: ≤&nbsp;10, Grey: 11-20, Green: &gt;&nbsp;20
+                        <div className="leading-none text-muted-foreground">
+                            <span style={{ color: '#ff6b6b' }}>Red</span>{' '}
+                            <span style={{ color: '#ff6b6b' }}> &le; 10,</span>{' '}
+                            <span style={{ color: '#FFD700' }}>Yellow</span>
+                            <span style={{ color: '#FFD700' }}>
+                                {' '}
+                                11-20,
+                            </span>{' '}
+                            <span style={{ color: '#00A000' }}>Green</span>
+                            <span style={{ color: '#00A000' }}>
+                                {' '}
+                                &ge; 21
+                            </span>{' '}
+                        </div>
                     </div>
                 </CardFooter>
             </Card>
@@ -301,5 +329,5 @@ export function BChart({ scales }: BChartProps) {
                 ))}
             </div>
         </div>
-    );
+    )
 }

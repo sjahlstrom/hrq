@@ -1,7 +1,7 @@
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
-import ProfileForm from '@/components/Profile/ProfileForm'
+import ProfileForm from '@/components/(dating)/Profile/ProfileForm'
 import Breadcrumb from '@/components/common/bread-crumb'
 import { Metadata } from 'next'
 
