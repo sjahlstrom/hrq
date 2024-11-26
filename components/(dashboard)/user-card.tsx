@@ -78,32 +78,32 @@ const UserCard: React.FC<UserCardProps> = ({ selectedUser, closeUserCard, onUpda
                 <CardContent>
                     <div className="space-y-4">
                         <div>
-                            <h3 className="text-dark text-lg font-semibold">Username</h3>
-                            <p>{selectedUser.username || 'N/A'}</p>
+                            <h3 className="text-dark font-semibold">Username</h3>
+                            <p className="text-sm">{selectedUser.username || 'N/A'}</p>
                         </div>
                         <div>
                             <h3 className="text-dark text-lg font-semibold">Email</h3>
-                            <p>{selectedUser.email || 'N/A'}</p>
+                            <p className="text-sm">{selectedUser.email || 'N/A'}</p>
                         </div>
                         <div>
                             <h3 className="text-dark text-lg font-semibold">Paid RQ</h3>
-                            <p>{selectedUser.paid_rq ? 'Yes' : 'No'}</p>
+                            <p className="text-sm">{selectedUser.paid_rq ? 'Yes' : 'No'}</p>
                         </div>
                         <div>
                             <h3 className="text-dark text-lg font-semibold">Paid CQ</h3>
-                            <p>{selectedUser.paid_cq ? 'Yes' : 'No'}</p>
+                            <p className="text-sm">{selectedUser.paid_cq ? 'Yes' : 'No'}</p>
                         </div>
                         <div>
                             <h3 className="text-dark text-lg font-semibold">Banned</h3>
-                            <p>{selectedUser.banned ? 'Yes' : 'No'}</p>
+                            <p className="text-sm">{selectedUser.banned ? 'Yes' : 'No'}</p>
                         </div>
                         <div>
                             <h3 className="text-dark text-lg font-semibold">Test Completed</h3>
-                            <p>{selectedUser.testCompleted ? 'Yes' : 'No'}</p>
+                            <p className="text-sm">{selectedUser.testCompleted ? 'Yes' : 'No'}</p>
                         </div>
                         <div>
                             <h3 className="text-dark text-lg font-semibold">Summed Total</h3>
-                            <p>{selectedUser.summedTotal !== null ? selectedUser.summedTotal : 'N/A'}</p>
+                            <p className="text-sm">{selectedUser.summedTotal !== null ? selectedUser.summedTotal : 'N/A'}</p>
                         </div>
                         <div>
                             <h3 className="text-dark text-lg font-semibold">External User ID</h3>
