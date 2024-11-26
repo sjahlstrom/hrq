@@ -1,3 +1,4 @@
+
 import React from 'react'
 import {
     Document,
@@ -60,14 +61,12 @@ const styles = StyleSheet.create({
         color: '#4B5563',
         marginBottom: 10,
     },
-
     scoreText: {
         fontSize: 12,
         lineHeight: 1.5,
         color: '#aa0000',
         marginBottom: 10,
     },
-
     card: {
         backgroundColor: '#e0f2fe',
         borderRadius: 8,
@@ -81,9 +80,6 @@ const styles = StyleSheet.create({
     scoreTable: { marginVertical: 20 },
     tableRow: {
         flexDirection: 'row',
-        // borderBottomWidth: 1,
-        // borderBottomColor: '#E5E7EB',
-        // borderColor: '#FF0000',
         paddingVertical: 8,
     },
     tableHeader: {
@@ -167,8 +163,8 @@ const scoreClassificationData: ScoreClassification[] = [
 ]
 
 const ScoreClassificationTable = ({
-    data,
-}: {
+                                      data,
+                                  }: {
     data: ScoreClassification[]
 }) => (
     <>
@@ -189,7 +185,15 @@ const ScoreClassificationTable = ({
     </>
 )
 
-const ChunkTable = ({ data, isFirstPage }: { data: ChartData[], isFirstPage?: boolean }) => (
+const ChunkTable = ({
+                        data,
+                        isFirstPage,
+                        isLastPage
+                    }: {
+    data: ChartData[],
+    isFirstPage?: boolean,
+    isLastPage?: boolean
+}) => (
     <>
         {isFirstPage && (
             <View style={[styles.tableRow]}>
@@ -198,26 +202,32 @@ const ChunkTable = ({ data, isFirstPage }: { data: ChartData[], isFirstPage?: bo
                 </Text>
             </View>
         )}
-        <View style={[styles.tableRow, styles.tableHeader]}>
-            <Text style={[styles.tableCell, { textAlign: 'center' }]}>Statements</Text>
-        </View>
+        {isFirstPage && (
+            <View style={[styles.tableRow, styles.tableHeader]}>
+                <Text style={[styles.tableCell, { textAlign: 'center' }]}>Statements</Text>
+            </View>
+        )}
         {data.map((item, index) => (
             <View key={index} style={[styles.tableRow]}>
                 <Text style={[styles.tableCell, { textAlign: 'left' }]}>{item.statement}</Text>
             </View>
         ))}
+        {isLastPage && (
+            <Text style={styles.footer}>
+                This report is confidential and should be handled accordingly.
+            </Text>
+        )}
     </>
 )
 
-
 const PDFDocument: React.FC<PDFDocumentProps> = ({
-    lieAnalysis,
-    totalSummedValues,
-    chartData,
-}) => {
+                                                     lieAnalysis,
+                                                     totalSummedValues,
+                                                     chartData,
+                                                 }) => {
     const currentDate = new Date().toLocaleDateString()
     const chunks = chartData.reduce<ChartData[][]>((acc, _, i) => {
-        if (i % 7 === 0) acc.push(chartData.slice(i, i + 7))
+        if (i % 8 === 0) acc.push(chartData.slice(i, i + 8))
         return acc
     }, [])
 
@@ -245,25 +255,31 @@ const PDFDocument: React.FC<PDFDocumentProps> = ({
                     </Text>
                 </View>
 
-                <Text style={styles.footer}>
-                    This report is confidential and should be handled
-                    accordingly.
-                </Text>
                 <Text style={styles.pageNumber}>Page 1</Text>
             </Page>
 
-
             {chunks.map((chunk, i) => (
                 <Page key={i} size="A4" style={styles.page}>
-                    <ChunkTable data={chunk} isFirstPage={i === 0} />
-                    <Text style={styles.footer}>
-                        This report is confidential and should be handled accordingly.
-                    </Text>
+                    <ChunkTable
+                        data={chunk}
+                        isFirstPage={i === 0}
+                        isLastPage={false}
+                    />
                     <Text style={styles.pageNumber}>Page {i + 2}</Text>
                 </Page>
             ))}
 
+            <Page size="A4" style={styles.page}>
+                <View style={[styles.tableRow, styles.tableHeader]}>
+                    <Text style={[styles.tableCell, { textAlign: 'center' }]}>Recommendations</Text>
+                </View>
+                <Text style={styles.footer}>
+                    This report is confidential and should be handled accordingly.
+                </Text>
+                <Text style={styles.pageNumber}>Page {chunks.length + 2}</Text>
+            </Page>
         </Document>
     )
 }
+
 export default PDFDocument
