@@ -145,19 +145,19 @@ const Dashboard = async () => {
                             <DashboardCard
                                 label="Total Paid Subscriptions"
                                 Icon={Calendar}
-                                amount={`+${salesCount}`}
+                                amount={`${salesCount}`}
                                 description="All Time"
                             />
                             <DashboardCard
                                 label="Total Users"
                                 Icon={PersonStanding}
-                                amount={`+${userCount}`}
+                                amount={`${userCount}`}
                                 description="All Time"
                             />
                             <DashboardCard
                                 label="Users This Month"
                                 Icon={UserPlus}
-                                amount={`+${userCountMonth}`}
+                                amount={`${userCountMonth}`}
                                 description="This Month"
                             />
                         </section>

@@ -37,18 +37,18 @@ export const metadata: Metadata = {
     ],
     title: {
         default:
-            'High Relationship Quotient (Hi ghRQ)- Improve your relationships. Life is a balancing act. Find out how to get yours in balance and improve all of your relationships, work, social, romance.',
+            'High Relationship Quotient (HighRQ)- Improve your relationships. Life is a balancing act. Find how to get yours in balance and improve all of your relationships, work, social, romance.',
         template: '%s - High Relationship Quotient',
     },
     alternates: {
         canonical: '/',
     },
     description:
-        'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships, work, social, romance.',
+        'Life is a balancing act. Find how to get yours in balance and improve all of your relationships, work, social, romance.',
     openGraph: {
         title: 'High Relationship Quotient',
         description:
-            'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships, work, social, romance.',
+            'Life is a balancing act. Find how to get yours in balance and improve all of your relationships, work, social, romance.',
         url: 'https://hrq.vercel.app',
         siteName: 'High Relationship Quotient',
         images: [
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: 'High Relationship Quotient',
         description:
-            'Life is a balancing act. Find out how to get yours in balance and improve all of your relationships, work, social, romance.',
+            'Life is a balancing act. Find how to get yours in balance and improve all of your relationships, work, social, romance.',
         images: ['https://hrq.vercel.app/twitter-image.jpg'],
     },
 }

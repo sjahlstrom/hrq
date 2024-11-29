@@ -1,4 +1,142 @@
-// prisma/schema.prisma
+// // prisma/schema.prisma
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+//
+// generator client {
+//   provider = "prisma-client-js"
+// }
+//
+// enum UserRole {
+//   ADMIN
+//   USER
+// }
+//
+// model User {
+//   id              String       @id @default(cuid())
+//   externalUserId  String       @unique
+//   username        String?      @unique
+//   testResponse    Int[]
+//   associatedScale Int[]
+//   testCompleted   Boolean      @default(false)
+//   summedTotal     Float?
+//   paid_rq         Boolean      @default(false)
+//   paid_cq         Boolean      @default(false)
+//   banned          Boolean      @default(false)
+//   email           String?      @unique
+//   image           String?      @db.Text
+//   role            UserRole     @default(USER)
+//   accounts        Account[]
+//   preferences     Preferences?
+//   bio             Profile? // One-to-one relation to profile
+//
+//   createdAt DateTime    @default(now())
+//   updatedAt DateTime    @updatedAt
+//   Purchased Purchased[]
+// }
+//
+// model Profile {
+//   id                     String    @id @default(cuid())
+//   userId                 String    @unique
+//   user                   User      @relation(fields: [userId], references: [id])
+//   occupation             String?
+//   education              String?
+//   incomeRange            String?
+//   postalCode             String?
+//   areaCode               String?
+//   birthday               DateTime?
+//   maritalStatus          String?
+//   relationshipTypeWanted String?
+//   biologicalSex          String?
+//   gender                 String?
+//   race                   String?
+//   smoker                 String?
+//   alcohol                String?
+//   drugs                  String?
+//   haveChildren           String?
+//   religion               String?
+//   primaryLanguage        String?
+//   otherLanguages         String?
+//   aboutYourself          String?
+//   createdAt              DateTime  @default(now())
+//   updatedAt              DateTime  @updatedAt
+// }
+//
+// model Preferences {
+//   id                     String   @id @default(cuid())
+//   user                   User     @relation(fields: [userId], references: [id])
+//   userId                 String   @unique
+//   education              String?
+//   incomeRange            String?
+//   maritalStatus          String?
+//   relationshipTypeWanted String?
+//   biologicalSex          String?
+//   gender                 String?
+//   race                   String?
+//   age                    String?
+//   dateSmoker             String?
+//   dateDrinker            String?
+//   dateMarijuanaUser      String?
+//   dateSomeoneWithKids    String?
+//   primaryLanguage        String?
+//   hasChildren            String?
+//   religion               String?
+//   createdAt              DateTime @default(now())
+//   updatedAt              DateTime @updatedAt
+// }
+//
+// model Account {
+//   id                String  @id @default(cuid())
+//   userId            String
+//   type              String
+//   provider          String
+//   providerAccountId String
+//   refresh_token     String? @db.Text
+//   access_token      String? @db.Text
+//   expires_at        Int?
+//   token_type        String?
+//   scope             String?
+//   id_token          String? @db.Text
+//   session_state     String?
+//
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+//
+//   @@unique([provider, providerAccountId])
+// }
+//
+// model Test {
+//   id          String     @id @default(cuid())
+//   userId      String
+//   title       String     @db.Text
+//   description String     @db.Text
+//   price       Float?
+//   purchases   Purchase[] // This is the relation field
+//
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+//
+// model Purchased {
+//   id        Int             @id @default(autoincrement())
+//   userId    Int
+//   createdAt DateTime        @default(now())
+//   updatedAt DateTime        @updatedAt
+//   user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   items     PurchasedItem[] // Relation to PurchasedItem
+// }
+//
+// model PurchasedItem {
+//   id          Int       @id @default(autoincrement())
+//   purchasedId Int // Foreign key to Purchased model
+//   productName String
+//   quantity    Int
+//   price       Float
+//   purchased   Purchased @relation(fields: [purchasedId], references: [id], onDelete: Cascade)
+//
+//   @@index([purchasedId]) // Index to optimize queries based on purchasedId
+// }
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -30,16 +168,16 @@ model User {
   accounts        Account[]
   preferences     Preferences?
   bio             Profile? // One-to-one relation to profile
+  purchased       Purchased[] // Added relation field
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  Purchase  Purchase[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Profile {
   id                     String    @id @default(cuid())
   userId                 String    @unique
-  user                   User      @relation(fields: [userId], references: [id])
+  user                   User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   occupation             String?
   education              String?
   incomeRange            String?
@@ -65,7 +203,7 @@ model Profile {
 
 model Preferences {
   id                     String   @id @default(cuid())
-  user                   User     @relation(fields: [userId], references: [id])
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId                 String   @unique
   education              String?
   incomeRange            String?
@@ -106,37 +244,34 @@ model Account {
 }
 
 model Test {
-  id          String     @id @default(cuid())
+  id          String @id @default(cuid())
   userId      String
-  title       String     @db.Text
-  description String     @db.Text
+  title       String @db.Text
+  description String @db.Text
   price       Float?
-  purchases   Purchase[] // This is the relation field
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Purchase {
-  id        String   @id @default(cuid())
+model Purchased {
+  id        String         @id @default(cuid())
   userId    String
-  testId    String? // Ensure testId is included here as well
-  amount    Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     PurchaseItem[]
 
-  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  test Test? @relation(fields: [testId], references: [id])
-
-  @@unique([userId, testId]) // Add this line to create a unique constraint
+  @@index([userId])
 }
 
-model StripeCustomer {
-  id               String  @id @default(cuid())
-  userId           String  @unique
-  email            String? @unique
-  stripeCustomerId String  @unique
+model PurchaseItem {
+  id          String    @id @default(cuid())
+  purchasedId String
+  productName String
+  quantity    Int
+  price       Float
+  purchased   Purchased @relation(fields: [purchasedId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  @@index([purchasedId])
 }

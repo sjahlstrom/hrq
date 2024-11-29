@@ -8,7 +8,7 @@ const FaqPage = () => {
       <>
          <section
             id="faq"
-            className="relative z-10 bg-wild-blue overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px]"
+            className="relative mt-8 z-10 bg-wild-blue overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px]"
          >
             <div className="container">
                <div className="-mx-4 flex flex-wrap -mt-32">
@@ -19,7 +19,7 @@ const FaqPage = () => {
 
                         <div className="px-8 space-y-8 mb-4">
                            <FaqItem
-                              question="OK, so I take the test and find out my RQ. So what?"
+                              question="OK, so I take the test and find my RQ. So what?"
                               answer="Have you ever asked the same question about your IQ? You’ve wondered about your IQ and maybe had it tested. Why? Because it's about finding out who you are. If you have a high IQ, you’ll hang out with brighter people and think about college and career. It's no different with the RQ. You now can know your RQ and those traits you have or don’t that make up your relationship skill set. This is what EVERYONE wants when they think about their partners or partners-to-be. We all want to be in a relationship with someone who has high relationship skills. It starts with finding out your RQ, your relationship skills and how many of those skills you have."
                            />
                         </div>

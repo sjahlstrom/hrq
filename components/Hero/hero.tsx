@@ -33,7 +33,7 @@ export default function Hero() {
                             className={`${telex.className} animate-slideUp text-white mb-12 text-sm font-semibold leading-relaxed sm:text-base md:text-lg lg:text-xl`}
                         >
                             Life is a balancing act. <br />
-                            Find out how to get yours in balance and improve all of your relationships.
+                            Find how to get yours in balance and improve all of your relationships.
                         </p>
                     </div>
                 </div>

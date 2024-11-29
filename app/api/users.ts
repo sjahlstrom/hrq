@@ -305,7 +305,46 @@ export const sumTestResponsesAtPositions = async (positions: [number, number]): 
     return value1 + value2;
 };
 
+export const addPaymentToSummedTotal = async (paymentAmount: number): Promise<boolean> => {
+    const user = await currentUser()
+    if (!user) return false
+
+    try {
+        // Get current user data
+        const userData = await getCachedUserData(user.id)
+        const currentTotal = userData?.summedTotal || 0
+
+        // Calculate new total
+        const newTotal = currentTotal + paymentAmount
+
+        // Update database
+        await db.user.update({
+            where: { externalUserId: user.id },
+            data: { summedTotal: newTotal },
+        })
+
+        // Update cache
+        const cachedUserData = userCache[user.id]
+        if (typeof cachedUserData !== 'undefined') {
+            cachedUserData.summedTotal = newTotal
+        }
+
+        return true
+    } catch (error) {
+        console.error('Error updating summedTotal with payment:', error)
+        return false
+    }
+}
+
 export const clearUserResponseCache = async (userId: string): Promise<void> => {
     delete userCache[userId]
     await new Promise(resolve => setTimeout(resolve, 0))
 }
+
+// Example usage
+// const success = await addPaymentToSummedTotal(9.95);
+// if (success) {
+//     console.log('Payment added to summed total successfully');
+// } else {
+//     console.log('Failed to add payment to summed total');
+// }

@@ -8,40 +8,40 @@ const ServicesPage = () => {
       <>
          <section
             id="tos"
-            className="relative z-10 bg-laurel-green overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px]"
+            className="relative z-10 bg-hrqColors-slateBlue-600 overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px]"
          >
             <div className="container">
                <div className="-mx-4 flex flex-wrap">
-                  <div className="w-full px-4">
+                  <div className=" -mt-8 w-full px-4">
                      <div
                         className="mx-auto max-w-[800px] "
                      >
-                        <h1 className="mb-2 text-3xl font-bold leading-tight text-black dark:text-green-800 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
+                        <h1 className="mb-16 -mt-18 text-3xl font-bold leading-tight text-black dark:text-green-400 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
                            Our Services
                         </h1>
 
-                        <h1 className="font-bold text-black text-left mb-4">
+                        <h1 className="font-bold text-black text-left mb-8">
                            Congratulations! You have come to High RQ’s website.
                            It’s new and revolutionary. This site will tell you
                            about the next development in measuring human
                            potential, especially for relationships.
                         </h1>
 
-                        <div className="px-8 space-y-8 mb-4">
+                        <div className="px-8 space-y-8 mb-10">
                            <FaqItem
                               question="Level 1 Services"
                               answer="Sign up, provide an email address, pay the fee.   You will get an email that has a link.  Click on the link to open up the HighRQ test.  Take the test, click submit, then wait for your individual report to arrive in your email.   Level 1 services is quick and easy.   You can stop there if you want.  You’ll know your RQ and have bragging rights.   You’ll also know your strengths in a relationship,   You’ll also know where you need work.   You can take these to the bank when it comes to meeting that next someone special.   This score is invaluable to employers who want higher quality applicants, for ANY position.   If you want to go further, soon, we’ll have the next level of service up and running."
                            />
                         </div>
 
-                        <div className="px-8 space-y-8 mb-4">
+                        <div className="px-8 space-y-8 mb-10">
                            <FaqItem
                               question="Level 2 Services"
                               answer="Now you have your RQ results and where you are strong (or?).   Do you want to compare your scores with someone else?   A partner or someone you just met?   We will do that for you.   That person has to do what you just did, take the test, provide the needed information (plus a special CQ code to only link you and another person) and pay the fee.   The fee will be reduced for the second person, so if you both agree to do this before hand, both of you will pay less.   The ensuing report will provide a CQ, or Compatibility Quotient."
                            />
                         </div>
 
-                        <div className="px-8 space-y-8 mb-4">
+                        <div className="px-8 space-y-8 mb-14">
                            <FaqItem
                               question="Level 3 Services"
                               answer="This service will follow the roll-out of the CQ.   What if you don’t know the person of interest but would like to know their RQ before going on that first date?   What if you want greater selection in potential mates and want the RQ information to work for you beforehand?  Level 3 Services will be a dating site based on the RQ scores, again, not the superficial stuff.   Matches will be made on the basis of the RQ configuration primarily, plus we’ll add demographic testQuestions (location, age, straight/gay/trans/ race, height, income, etc.)   These 40 additional dimensions are important, from a practical point of view because some qualities in others we know will be objectionable.   We understand that, so we ask ahead of time, eliminate them as obstacles, and then look at compatibility after that using the RQ’s.   Level 3 Services will provide the same CQ analysis as Level 2 Services, but with strangers–those people seeking high quality relationships without yet knowing each other.  We haven’t worked on this yet, but there is potential to give the RQ test to a group, say employees in a company, and then look at the relationship between any two people.  Who knows how far this might go?  This gets into some good psychological stuff, so If you want any of this, you have to read and sign the legal disclaimers."
