@@ -12,10 +12,10 @@ import CheckUserRole from '@/components/check-user-role'
 import Breadcrumb from '@/components/common/bread-crumb'
 import { Metadata } from 'next'
 
-
 export const metadata: Metadata = {
     title: "Stats"
 }
+
 const Dashboard = async () => {
     const currentDate = new Date()
 
@@ -39,32 +39,51 @@ const Dashboard = async () => {
                 },
             },
         }),
-        db.purchase.count(),
-        db.purchase.aggregate({
-            _sum: { amount: true },
+        db.purchased.count(),
+        db.purchaseItem.aggregate({
+            _sum: {
+                price: true,
+            },
         }),
         db.user.findMany({
             orderBy: { createdAt: 'desc' },
             take: 7,
         }),
-        db.purchase.findMany({
+        db.purchased.findMany({
             orderBy: { createdAt: 'desc' },
             take: 5,
-            include: { user: true },
+            include: {
+                user: true,
+                items: true,
+            },
+            where: {
+                createdAt: {
+                    gte: new Date(new Date().setMonth(new Date().getMonth() - 6))
+                }
+            }
         }),
         db.user.groupBy({
             by: ['createdAt'],
-            _count: { createdAt: true },
+            _count: true,  // This returns { _count: number }
             orderBy: { createdAt: 'asc' },
+            where: {
+                createdAt: {
+                    gte: new Date(new Date().setMonth(new Date().getMonth() - 6))
+                }
+            }
         }),
-        db.purchase.groupBy({
-            by: ['createdAt'],
-            _sum: { amount: true },
-            orderBy: { createdAt: 'asc' },
-        }),
-    ])
+        // For sales data, we'll query purchase items and group them
+        db.purchaseItem.groupBy({
+            by: ['purchasedId'],
+            _sum: {
+                price: true
+            },
+            orderBy: { purchasedId: 'asc' },
+        })
+    ]);
 
-    const totalAmount = salesTotal._sum.amount || 0
+    const totalAmount = salesTotal._sum.price || 0;
+
     const goalAmount = 1000
     const goalProgress = (totalAmount / goalAmount) * 100
 
@@ -78,19 +97,17 @@ const Dashboard = async () => {
         }),
     }))
 
-    // Map purchase data to UserPurchaseProps type
+    // Map purchase data with corrected total calculation
     const PurchaseData: UserPurchaseProps[] = recentSales.map((purchase) => ({
         name: purchase.user.username || 'Unknown',
         email: purchase.user.email || 'Unknown',
         image: purchase.user.image || '/images/dashboard/mesh.png',
-        saleAmount: `$${(purchase.amount || 0).toFixed(2)}`,
-    }))
+        saleAmount: `$${purchase.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}`,
+    }));
 
-    // Prepare Monthly Users Data
+    // Prepare Monthly Users Data - Last 6 months
     const monthlyUsersData = eachMonthOfInterval({
-        start: startOfMonth(
-            new Date(usersThisMonth[0]?.createdAt || new Date())
-        ),
+        start: new Date(new Date().setMonth(new Date().getMonth() - 6)),
         end: endOfMonth(currentDate),
     }).map((month) => {
         const monthString = format(month, 'MMM')
@@ -99,48 +116,45 @@ const Dashboard = async () => {
                 (user) =>
                     format(new Date(user.createdAt), 'MMM') === monthString
             )
-            .reduce((total, user) => total + user._count.createdAt, 0)
+            .reduce((total, user) => total + user._count, 0) // Changed from user._count.createdAt
         return { month: monthString, total: userMonthly }
     })
 
-    // Prepare Monthly Sales Data
+    // Prepare Monthly Sales Data - Last 6 months
     const monthlySalesData = eachMonthOfInterval({
-        start: startOfMonth(
-            new Date(salesThisMonth[0]?.createdAt || new Date())
-        ),
+        start: new Date(new Date().setMonth(new Date().getMonth() - 6)),
         end: endOfMonth(currentDate),
     }).map((month) => {
         const monthString = format(month, 'MMM')
-        const salesInMonth = salesThisMonth
-            .filter(
-                (sales) =>
-                    format(new Date(sales.createdAt), 'MMM') === monthString
-            )
-            .reduce((total, sale) => total + (sale._sum.amount || 0), 0)
+        // Calculate total sales for this month from recentSales
+        const salesInMonth = recentSales
+            .filter(sale => format(new Date(sale.createdAt), 'MMM') === monthString)
+            .reduce((total, sale) => {
+                const saleTotal = sale.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+                return total + saleTotal
+            }, 0)
+
         return { month: monthString, total: salesInMonth }
-    })
+    });
 
     return (
         <>
             <div className="bg-gray-600">
                 <Breadcrumb
                     pageName="Stats Page"
-                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
+                    description="View your dashboard statistics and analytics."
                 />
             </div>
             <CheckUserRole />
-            <div className=" bg-first flex flex-col gap-8 w-full">
-
+            <div className="bg-first flex flex-col gap-8 w-full">
                 <div className="container mx-auto py-8">
                     <div className="flex flex-col gap-5 w-full">
-                        <section
-                            className="grid w-full grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 gap-x-8 transition-all">
+                        <section className="grid w-full grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 gap-x-8 transition-all">
                             <DashboardCard
                                 label="Total Revenue"
                                 Icon={DollarSign}
                                 amount={`$${totalAmount.toFixed(2)}`}
                                 description="All Time"
-
                             />
                             <DashboardCard
                                 label="Total Paid Subscriptions"
@@ -163,7 +177,7 @@ const Dashboard = async () => {
                         </section>
 
                         <div className="container mx-auto px-4 max-w-7xl">
-                            <div className=" -ml-4 flex flex-col lg:flex-row justify-between gap-4">
+                            <div className="-ml-4 flex flex-col lg:flex-row justify-between gap-4">
                                 <section className="w-full lg:w-[calc(50%-1rem)]">
                                     <DashboardCardContent>
                                         <section className="flex justify-between gap-2 pb-2">
@@ -188,10 +202,12 @@ const Dashboard = async () => {
                                 </section>
                             </div>
                         </div>
+
                         <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 transition-all">
                             <BarChart data={monthlyUsersData} />
                             <LineGraph data={monthlySalesData} />
                         </section>
+
                         <GoalDataCard goal={goalAmount} value={goalProgress} />
                     </div>
                 </div>
