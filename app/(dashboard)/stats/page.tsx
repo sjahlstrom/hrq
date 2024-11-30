@@ -1,19 +1,43 @@
 import React from 'react'
-import { DashboardCard, DashboardCardContent } from '@/components/(dashboard)/dashboard-card'
-import UserDataCard, { UserDataCardProps } from '@/components/(dashboard)/user-data-card'
-import { db } from '@/lib/db'
-import { Calendar, DollarSign, PersonStanding, UserPlus, UserRoundCheck } from 'lucide-react'
-import { eachMonthOfInterval, endOfMonth, format, formatDistanceToNow, startOfMonth } from 'date-fns'
-import UserPurchaseCard, { UserPurchaseProps } from '@/components/(dashboard)/user-purchase-card'
+import {
+    DashboardCard,
+    DashboardCardContent,
+} from '@/components/(dashboard)/dashboard-card'
+import UserDataCard, {
+    UserDataCardProps,
+} from '@/components/(dashboard)/user-data-card'
+import UserPurchaseCard, {
+    UserPurchaseProps,
+} from '@/components/(dashboard)/user-purchase-card'
+import {
+    Calendar,
+    DollarSign,
+    PersonStanding,
+    UserPlus,
+    UserRoundCheck,
+} from 'lucide-react'
 import BarChart from '@/app/(dashboard)/stats/_components/barchart'
 import LineGraph from '@/app/(dashboard)/stats/_components/line-graph'
 import GoalDataCard from '@/app/(dashboard)/stats/_components/goal'
-import CheckUserRole from '@/components/check-user-role'
+import { db } from '@/lib/db'
+import {
+    eachMonthOfInterval,
+    endOfMonth,
+    format,
+    formatDistanceToNow,
+    startOfMonth,
+} from 'date-fns'
 import Breadcrumb from '@/components/common/bread-crumb'
+import CheckUserRole from '@/components/check-user-role'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
     title: "Stats"
+}
+
+interface ChartData {
+    month: string
+    total: number
 }
 
 const Dashboard = async () => {
@@ -58,34 +82,34 @@ const Dashboard = async () => {
             },
             where: {
                 createdAt: {
-                    gte: new Date(new Date().setMonth(new Date().getMonth() - 6))
-                }
-            }
+                    gte: new Date(
+                        new Date().setMonth(new Date().getMonth() - 6)
+                    ),
+                },
+            },
         }),
         db.user.groupBy({
             by: ['createdAt'],
-            _count: true,  // This returns { _count: number }
+            _count: true,
             orderBy: { createdAt: 'asc' },
             where: {
                 createdAt: {
-                    gte: new Date(new Date().setMonth(new Date().getMonth() - 6))
-                }
-            }
+                    gte: new Date(
+                        new Date().setMonth(new Date().getMonth() - 6)
+                    ),
+                },
+            },
         }),
-        // For sales data, we'll query purchase items and group them
         db.purchaseItem.groupBy({
             by: ['purchasedId'],
             _sum: {
-                price: true
+                price: true,
             },
             orderBy: { purchasedId: 'asc' },
-        })
-    ]);
+        }),
+    ])
 
-    const totalAmount = salesTotal._sum.price || 0;
-
-    const goalAmount = 1000
-    const goalProgress = (totalAmount / goalAmount) * 100
+    const totalAmount = salesTotal._sum.price || 0
 
     // Map data for User and Purchase cards
     const UserData: UserDataCardProps[] = recentUsers.map((account) => ({
@@ -97,15 +121,15 @@ const Dashboard = async () => {
         }),
     }))
 
-    // Map purchase data with corrected total calculation
+    // Map purchase data
     const PurchaseData: UserPurchaseProps[] = recentSales.map((purchase) => ({
         name: purchase.user.username || 'Unknown',
         email: purchase.user.email || 'Unknown',
         image: purchase.user.image || '/images/dashboard/mesh.png',
         saleAmount: `$${purchase.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}`,
-    }));
+    }))
 
-    // Prepare Monthly Users Data - Last 6 months
+    // Prepare Monthly Users Data
     const monthlyUsersData = eachMonthOfInterval({
         start: new Date(new Date().setMonth(new Date().getMonth() - 6)),
         end: endOfMonth(currentDate),
@@ -116,26 +140,33 @@ const Dashboard = async () => {
                 (user) =>
                     format(new Date(user.createdAt), 'MMM') === monthString
             )
-            .reduce((total, user) => total + user._count, 0) // Changed from user._count.createdAt
+            .reduce((total, user) => total + user._count, 0)
         return { month: monthString, total: userMonthly }
     })
 
-    // Prepare Monthly Sales Data - Last 6 months
+    // Prepare Monthly Sales Data
     const monthlySalesData = eachMonthOfInterval({
         start: new Date(new Date().setMonth(new Date().getMonth() - 6)),
         end: endOfMonth(currentDate),
     }).map((month) => {
         const monthString = format(month, 'MMM')
-        // Calculate total sales for this month from recentSales
         const salesInMonth = recentSales
-            .filter(sale => format(new Date(sale.createdAt), 'MMM') === monthString)
+            .filter(
+                (sale) =>
+                    format(new Date(sale.createdAt), 'MMM') === monthString
+            )
             .reduce((total, sale) => {
-                const saleTotal = sale.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+                const saleTotal = sale.items.reduce(
+                    (sum, item) => sum + item.price * item.quantity,
+                    0
+                )
                 return total + saleTotal
             }, 0)
-
         return { month: monthString, total: salesInMonth }
-    });
+    })
+
+    const goalAmount = 1000
+    const goalProgress = (totalAmount / goalAmount) * 100
 
     return (
         <>
@@ -146,69 +177,81 @@ const Dashboard = async () => {
                 />
             </div>
             <CheckUserRole />
-            <div className="bg-first flex flex-col gap-8 w-full">
+            <div className="bg-first">
                 <div className="container mx-auto py-8">
-                    <div className="flex flex-col gap-5 w-full">
-                        <section className="grid w-full grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 gap-x-8 transition-all">
-                            <DashboardCard
-                                label="Total Revenue"
-                                Icon={DollarSign}
-                                amount={`$${totalAmount.toFixed(2)}`}
-                                description="All Time"
-                            />
-                            <DashboardCard
-                                label="Total Paid Subscriptions"
-                                Icon={Calendar}
-                                amount={`${salesCount}`}
-                                description="All Time"
-                            />
-                            <DashboardCard
-                                label="Total Users"
-                                Icon={PersonStanding}
-                                amount={`${userCount}`}
-                                description="All Time"
-                            />
-                            <DashboardCard
-                                label="Users This Month"
-                                Icon={UserPlus}
-                                amount={`${userCountMonth}`}
-                                description="This Month"
-                            />
-                        </section>
+                    {/* Main content div */}
+                    <div className="flex flex-col space-y-6">
+                        {/* Two columns container */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            {/* Sales Data Column */}
+                            <div className="flex flex-col space-y-6">
+                                <h2 className="text-xl font-semibold">Sales Data</h2>
+                                <div className="grid gap-6">
+                                    <DashboardCard
+                                        label="Total Revenue"
+                                        Icon={DollarSign}
+                                        amount={`$${totalAmount.toFixed(2)}`}
+                                        description="All Time"
+                                    />
+                                    <DashboardCard
+                                        label="Total Paid Subscriptions (Dating)"
+                                        Icon={Calendar}
+                                        amount={String(salesCount)}
+                                        description="All Time"
+                                    />
+                                    <DashboardCard
+                                        label="Total Paid RQ"
+                                        Icon={Calendar}
+                                        amount={String(salesCount)}
+                                        description="All Time"
+                                    />
+                                </div>
 
-                        <div className="container mx-auto px-4 max-w-7xl">
-                            <div className="-ml-4 flex flex-col lg:flex-row justify-between gap-4">
-                                <section className="w-full lg:w-[calc(50%-1rem)]">
-                                    <DashboardCardContent>
-                                        <section className="flex justify-between gap-2 pb-2">
-                                            <p>Recent Users</p>
-                                            <UserRoundCheck className="h-4 w-4" />
-                                        </section>
-                                        {UserData.map((data, index) => (
-                                            <UserDataCard key={index} {...data} />
-                                        ))}
-                                    </DashboardCardContent>
-                                </section>
-                                <section className="w-full lg:w-[calc(50%-1rem)]">
-                                    <DashboardCardContent>
-                                        <section className="flex justify-between gap-2 pb-2">
-                                            <p>Recent Sales</p>
-                                            <DollarSign className="h-4 w-4" />
-                                        </section>
-                                        {PurchaseData.map((data, index) => (
-                                            <UserPurchaseCard key={index} {...data} />
-                                        ))}
-                                    </DashboardCardContent>
-                                </section>
+                                <DashboardCardContent>
+                                    <section className="flex justify-between gap-2 pb-2">
+                                        <p>Recent Sales</p>
+                                        <DollarSign className="h-4 w-4" />
+                                    </section>
+                                    {PurchaseData.map((data: UserPurchaseProps, index: number) => (
+                                        <UserPurchaseCard key={index} {...data} />
+                                    ))}
+                                </DashboardCardContent>
+
+                                <LineGraph data={monthlySalesData} />
+                            </div>
+
+                            {/* User Data Column */}
+                            <div className="flex flex-col space-y-6">
+                                <h2 className="text-xl font-semibold">User Data</h2>
+                                <div className="grid gap-6">
+                                    <DashboardCard
+                                        label="Total Users"
+                                        Icon={PersonStanding}
+                                        amount={String(userCount)}
+                                        description="All Time"
+                                    />
+                                    <DashboardCard
+                                        label="Users This Month"
+                                        Icon={UserPlus}
+                                        amount={String(userCountMonth)}
+                                        description="This Month"
+                                    />
+                                </div>
+
+                                <DashboardCardContent>
+                                    <section className="flex justify-between gap-2 pb-2">
+                                        <p>Recent Users</p>
+                                        <UserRoundCheck className="h-4 w-4" />
+                                    </section>
+                                    {UserData.map((data: UserDataCardProps, index: number) => (
+                                        <UserDataCard key={index} {...data} />
+                                    ))}
+                                </DashboardCardContent>
+
+                                <BarChart data={monthlyUsersData} />
+                                <GoalDataCard goal={goalAmount} value={goalProgress} />
                             </div>
                         </div>
-
-                        <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 transition-all">
-                            <BarChart data={monthlyUsersData} />
-                            <LineGraph data={monthlySalesData} />
-                        </section>
-
-                        <GoalDataCard goal={goalAmount} value={goalProgress} />
                     </div>
                 </div>
             </div>

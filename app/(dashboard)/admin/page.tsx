@@ -32,9 +32,17 @@ export default function AdminDashboard() {
                                     <BarChart className="mr-2 h-4 w-4" />
                                     <Link href="/stats">Stats</Link>
                                 </CommandItem>
+
+                                <CommandItem>
+                                    <BarChart className="mr-2 h-4 w-4" />
+                                    <Link href="/items">Items</Link>
+                                </CommandItem>
+
                             </CommandGroup>
                         </CommandList>
                     </Command>
+
+
                 </div>
                 <div className="p-4 mt-8">
                     <p className="text-sm text-dark">
