@@ -26,6 +26,7 @@ import {
     format,
     formatDistanceToNow,
     startOfMonth,
+    subMonths,
 } from 'date-fns'
 import Breadcrumb from '@/components/common/bread-crumb'
 import CheckUserRole from '@/components/check-user-role'
@@ -35,13 +36,22 @@ export const metadata: Metadata = {
     title: "Stats"
 }
 
-interface ChartData {
+export interface ChartData {
     month: string
     total: number
 }
 
 const Dashboard = async () => {
     const currentDate = new Date()
+    const monthStart = startOfMonth(currentDate)
+    const monthEnd = endOfMonth(currentDate)
+    const sixMonthsAgo = subMonths(currentDate, 6)
+
+    // Date range for queries
+    const dateRange = {
+        gte: sixMonthsAgo,
+        lte: currentDate,
+    }
 
     // Fetch data
     const [
@@ -58,13 +68,13 @@ const Dashboard = async () => {
         db.user.count({
             where: {
                 createdAt: {
-                    gte: startOfMonth(currentDate),
-                    lte: endOfMonth(currentDate),
+                    gte: monthStart,
+                    lte: monthEnd,
                 },
             },
         }),
         db.purchased.count(),
-        db.purchaseItem.aggregate({
+        db.purchaseItemRelation.aggregate({
             _sum: {
                 price: true,
             },
@@ -78,14 +88,14 @@ const Dashboard = async () => {
             take: 5,
             include: {
                 user: true,
-                items: true,
+                items: {
+                    include: {
+                        item: true
+                    }
+                },
             },
             where: {
-                createdAt: {
-                    gte: new Date(
-                        new Date().setMonth(new Date().getMonth() - 6)
-                    ),
-                },
+                createdAt: dateRange,
             },
         }),
         db.user.groupBy({
@@ -93,14 +103,10 @@ const Dashboard = async () => {
             _count: true,
             orderBy: { createdAt: 'asc' },
             where: {
-                createdAt: {
-                    gte: new Date(
-                        new Date().setMonth(new Date().getMonth() - 6)
-                    ),
-                },
+                createdAt: dateRange,
             },
         }),
-        db.purchaseItem.groupBy({
+        db.purchaseItemRelation.groupBy({
             by: ['purchasedId'],
             _sum: {
                 price: true,
@@ -110,6 +116,11 @@ const Dashboard = async () => {
     ])
 
     const totalAmount = salesTotal._sum.price || 0
+
+    // Helper function to calculate sale total
+    const calculateSaleTotal = (items: any[]) =>
+        items.reduce((total, itemRel) =>
+            total + itemRel.price * itemRel.quantity, 0)
 
     // Map data for User and Purchase cards
     const UserData: UserDataCardProps[] = recentUsers.map((account) => ({
@@ -126,42 +137,33 @@ const Dashboard = async () => {
         name: purchase.user.username || 'Unknown',
         email: purchase.user.email || 'Unknown',
         image: purchase.user.image || '/images/dashboard/mesh.png',
-        saleAmount: `$${purchase.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}`,
+        saleAmount: `$${calculateSaleTotal(purchase.items).toFixed(2)}`,
     }))
 
+    // Generate months array for the interval
+    const months = eachMonthOfInterval({
+        start: sixMonthsAgo,
+        end: monthEnd,
+    })
+
+    // Helper function to format month
+    const getMonthString = (date: Date) => format(date, 'MMM')
+
     // Prepare Monthly Users Data
-    const monthlyUsersData = eachMonthOfInterval({
-        start: new Date(new Date().setMonth(new Date().getMonth() - 6)),
-        end: endOfMonth(currentDate),
-    }).map((month) => {
-        const monthString = format(month, 'MMM')
+    const monthlyUsersData: ChartData[] = months.map((month) => {
+        const monthString = getMonthString(month)
         const userMonthly = usersThisMonth
-            .filter(
-                (user) =>
-                    format(new Date(user.createdAt), 'MMM') === monthString
-            )
+            .filter(user => getMonthString(new Date(user.createdAt)) === monthString)
             .reduce((total, user) => total + user._count, 0)
         return { month: monthString, total: userMonthly }
     })
 
     // Prepare Monthly Sales Data
-    const monthlySalesData = eachMonthOfInterval({
-        start: new Date(new Date().setMonth(new Date().getMonth() - 6)),
-        end: endOfMonth(currentDate),
-    }).map((month) => {
-        const monthString = format(month, 'MMM')
+    const monthlySalesData: ChartData[] = months.map((month) => {
+        const monthString = getMonthString(month)
         const salesInMonth = recentSales
-            .filter(
-                (sale) =>
-                    format(new Date(sale.createdAt), 'MMM') === monthString
-            )
-            .reduce((total, sale) => {
-                const saleTotal = sale.items.reduce(
-                    (sum, item) => sum + item.price * item.quantity,
-                    0
-                )
-                return total + saleTotal
-            }, 0)
+            .filter(sale => getMonthString(new Date(sale.createdAt)) === monthString)
+            .reduce((total, sale) => total + calculateSaleTotal(sale.items), 0)
         return { month: monthString, total: salesInMonth }
     })
 
@@ -179,9 +181,7 @@ const Dashboard = async () => {
             <CheckUserRole />
             <div className="bg-first">
                 <div className="container mx-auto py-8">
-                    {/* Main content div */}
                     <div className="flex flex-col space-y-6">
-                        {/* Two columns container */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             {/* Sales Data Column */}
                             <div className="flex flex-col space-y-6">

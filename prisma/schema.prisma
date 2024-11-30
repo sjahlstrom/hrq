@@ -12,6 +12,7 @@ enum UserRole {
   USER
 }
 
+// Update User model to include purchases
 model User {
   id              String       @id @default(cuid())
   externalUserId  String       @unique
@@ -28,7 +29,8 @@ model User {
   role            UserRole     @default(USER)
   accounts        Account[]
   preferences     Preferences?
-  bio             Profile? // One-to-one relation to profile
+  bio             Profile?
+  purchases       Purchased[] // Add this line to establish the relation
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
 }
@@ -102,24 +104,41 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-// model Test {
-//   id          String @id @default(cuid())
-//   userId      String
-//   title       String @db.Text
-//   description String @db.Text
-//   price       Float?
-//
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
+model Purchased {
+  id        String                 @id @default(cuid())
+  userId    String
+  user      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     PurchaseItemRelation[]
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
 
-model PurchaseItem {
-  id          String   @id @default(cuid())
-  productName String   @unique
+  @@index([userId])
+}
+
+model PurchaseItemRelation {
+  id          String    @id @default(cuid())
+  purchasedId String
+  purchased   Purchased @relation(fields: [purchasedId], references: [id], onDelete: Cascade)
+  itemId      String
+  item        Item      @relation(fields: [itemId], references: [id])
+  quantity    Int       @default(1)
+  price       Float // Store the price at time of purchase
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([purchasedId])
+  @@index([itemId])
+}
+
+// Update Item model to include the purchase relation
+model Item {
+  id          String                 @id @default(cuid())
+  productName String                 @unique
   price       Float
   itemType    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  purchases   PurchaseItemRelation[]
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
 
   @@map("purchase_items")
 }

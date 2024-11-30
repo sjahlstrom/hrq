@@ -1,8 +1,8 @@
-// app/api/purchase-items/route.ts
+// app/api/items/route.ts
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { z } from 'zod'
-import type { PurchaseItem } from '@prisma/client'
+import type { Item } from '@prisma/client'  // Update type import
 
 const purchaseItemSchema = z.object({
     productName: z.string(),
@@ -13,7 +13,7 @@ const purchaseItemSchema = z.object({
 interface ApiResponse {
     error?: string;
     details?: any;
-    data?: PurchaseItem;
+    data?: Item;  // Update type
 }
 
 export async function POST(request: Request) {
@@ -23,8 +23,8 @@ export async function POST(request: Request) {
         // Validate and parse the incoming data
         const data = purchaseItemSchema.parse(rawData)
 
-        // Create a simple purchase item without any purchase relation
-        const purchaseItem = await db.purchaseItem.create({
+        // Use Item model instead of purchaseItem
+        const purchaseItem = await db.item.create({
             data: {
                 productName: data.productName,
                 price: data.price,
@@ -51,7 +51,8 @@ export async function POST(request: Request) {
 
 export async function GET() {
     try {
-        const purchaseItems = await db.purchaseItem.findMany()
+        // Use Item model instead of purchaseItem
+        const purchaseItems = await db.item.findMany()
         return NextResponse.json({ data: purchaseItems })
     } catch (error) {
         console.error('Failed to fetch purchase items:', error)

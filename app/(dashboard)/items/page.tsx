@@ -16,7 +16,7 @@ import {
 import CheckUserRole from '@/components/check-user-role'
 import Breadcrumb from '@/components/common/bread-crumb'
 
-interface PurchaseItem {
+interface Item {
     productName: string
     price: number
     itemType: string
@@ -75,7 +75,7 @@ export default function Page() {
             return
         }
 
-        const purchaseItem: PurchaseItem = {
+        const item: Item = {
             productName: formData.productName,
             price: parseFloat(formData.price),
             itemType: formData.itemType,
@@ -83,19 +83,19 @@ export default function Page() {
 
         setIsLoading(true)
         try {
-            const response = await fetch('/api/purchase-items', {
+            const response = await fetch('/api/items', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(purchaseItem),
+                body: JSON.stringify(item),
             })
 
             if (!response.ok) {
-                throw new Error('Failed to save purchase item')
+                throw new Error('Failed to save item')
             }
 
-            toast.success('Purchase item has been added successfully')
+            toast.success('Item has been added successfully')
 
             // Reset form after successful submission
             setFormData({
@@ -104,8 +104,8 @@ export default function Page() {
                 itemType: '',
             })
         } catch (error) {
-            console.error('Error submitting purchase item:', error)
-            toast.error('Failed to add purchase item. Please try again.')
+            console.error('Error submitting item:', error)
+            toast.error('Failed to add item. Please try again.')
         } finally {
             setIsLoading(false)
         }
@@ -154,7 +154,7 @@ export default function Page() {
             <div className="container mx-auto px-4 py-8">
                 <Card className="w-full mt-12 bg-gray-500 max-w-md mx-auto">
                     <CardHeader>
-                        <CardTitle>Add Purchase Item</CardTitle>
+                        <CardTitle>Add Item</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-4">
@@ -226,7 +226,7 @@ export default function Page() {
                                 className="w-full"
                                 disabled={isLoading}
                             >
-                                {isLoading ? 'Adding...' : 'Add Purchase Item'}
+                                {isLoading ? 'Adding...' : 'Add Item'}
                             </Button>
                         </form>
                     </CardContent>

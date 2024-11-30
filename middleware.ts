@@ -13,6 +13,8 @@ export const isPublicRoute = createRouteMatcher(
 const isProtectedRoute = createRouteMatcher([
     '/admin',
     '/users',
+    '/stats',
+    '/item'
 ]); // Update clerkMiddleware to manually protect routes
 
 export default clerkMiddleware((auth, req) => {
