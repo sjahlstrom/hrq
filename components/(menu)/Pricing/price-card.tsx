@@ -9,6 +9,9 @@ import { getRQPrice } from '@/lib/price-utils';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
+// Define the item ID for RQ test
+const RQ_TEST_ITEM_ID = "rq_test"; // Replace with your actual item ID from the database
+
 const PriceCard = () => {
     const [showCheckout, setShowCheckout] = useState(false);
     const [amount, setAmount] = useState<number>(9.95);
@@ -28,6 +31,14 @@ const PriceCard = () => {
     const handleSuccess = () => {
         router.push(`/success?amount=${amount}`);
     };
+
+    // Define purchase items
+    const purchaseItems = [
+        {
+            itemId: RQ_TEST_ITEM_ID,
+            quantity: 1
+        }
+    ];
 
     return (
         <section
@@ -84,7 +95,7 @@ const PriceCard = () => {
                             <div className="w-full h-full flex flex-col">
                                 {/* Card Header */}
                                 <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-4">
-                                    <h2 className="text-white text-xl font-bold text-center">Complete Purchase</h2>
+                                    <h2 className="text-white text-xl font-bold text-center">Complete Purchase to Access Your Results</h2>
                                 </div>
 
                                 {/* Card Content */}
@@ -97,7 +108,11 @@ const PriceCard = () => {
                                             currency: 'usd',
                                         }}
                                     >
-                                        <CheckoutPage amount={amount} onSuccess={handleSuccess} />
+                                        <CheckoutPage
+                                            amount={amount}
+                                            items={purchaseItems}
+                                            onSuccess={handleSuccess}
+                                        />
                                     </Elements>
                                 </div>
 

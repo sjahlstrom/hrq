@@ -11,10 +11,14 @@ import { Button } from '@/components/ui/button';
 
 interface CheckoutPageProps {
     amount: number;
+    items: Array<{
+        itemId: string;
+        quantity: number;
+    }>;
     onSuccess?: () => void;
 }
 
-const CheckoutPage = ({ amount, onSuccess }: CheckoutPageProps) => {
+const CheckoutPage = ({ amount, items, onSuccess }: CheckoutPageProps) => {
     const stripe = useStripe();
     const elements = useElements();
     const [errorMessage, setErrorMessage] = useState<string>();
@@ -36,6 +40,38 @@ const CheckoutPage = ({ amount, onSuccess }: CheckoutPageProps) => {
                 setErrorMessage("Failed to initialize payment. Please try again.");
             });
     }, [amount]);
+
+    const handleSuccessfulPayment = async (paymentIntentId: string) => {
+        try {
+            console.log('Sending payment success request with:', {
+                paymentIntentId,
+                amount,
+                items
+            });
+
+            const response = await fetch('/api/payment-success', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    paymentIntentId,
+                    amount,
+                    items: items || [], // Ensure items is always an array
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.text();
+                throw new Error(`Failed to process successful payment: ${errorData}`);
+            }
+
+            onSuccess?.();
+        } catch (error) {
+            console.error('Error handling successful payment:', error);
+            setErrorMessage('Payment successful but failed to complete purchase. Please contact support.');
+        }
+    };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -69,7 +105,7 @@ const CheckoutPage = ({ amount, onSuccess }: CheckoutPageProps) => {
             console.error("Payment error:", error);
         } else if (paymentIntent && paymentIntent.status === 'succeeded') {
             // Payment successful and no redirect was required
-            onSuccess?.();
+            await handleSuccessfulPayment(paymentIntent.id);
         }
 
         setLoading(false);
@@ -93,7 +129,7 @@ const CheckoutPage = ({ amount, onSuccess }: CheckoutPageProps) => {
     return (
         <form onSubmit={handleSubmit} className="max-w-md mx-auto">
             <div className="bg-white p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Complete Your Purchase</h2>
+                {/*<h2 className="text-xl font-bold text-gray-900 mb-4">Complete Your Purchase</h2>*/}
 
                 {clientSecret && (
                     <div className="space-y-4">

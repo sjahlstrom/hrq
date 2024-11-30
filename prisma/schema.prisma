@@ -12,7 +12,6 @@ enum UserRole {
   USER
 }
 
-// Update User model to include purchases
 model User {
   id              String       @id @default(cuid())
   externalUserId  String       @unique
@@ -30,7 +29,7 @@ model User {
   accounts        Account[]
   preferences     Preferences?
   bio             Profile?
-  purchases       Purchased[] // Add this line to establish the relation
+  purchases       Purchase[] // Changed from Purchased[] to Purchase[]
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
 }
@@ -104,33 +103,36 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Purchased {
-  id        String                 @id @default(cuid())
-  userId    String
-  user      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items     PurchaseItemRelation[]
-  createdAt DateTime               @default(now())
-  updatedAt DateTime               @updatedAt
+model Purchase {
+  id              String                 @id @default(cuid())
+  userId          String
+  user            User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount          Float
+  paymentIntentId String
+  status          String
+  purchaseDate    DateTime
+  items           PurchaseItemRelation[]
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
 
   @@index([userId])
 }
 
 model PurchaseItemRelation {
-  id          String    @id @default(cuid())
-  purchasedId String
-  purchased   Purchased @relation(fields: [purchasedId], references: [id], onDelete: Cascade)
-  itemId      String
-  item        Item      @relation(fields: [itemId], references: [id])
-  quantity    Int       @default(1)
-  price       Float // Store the price at time of purchase
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id         String   @id @default(cuid())
+  purchaseId String
+  purchase   Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+  itemId     String
+  item       Item     @relation(fields: [itemId], references: [id])
+  quantity   Int      @default(1)
+  price      Float // Store the price at time of purchase
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  @@index([purchasedId])
+  @@index([purchaseId])
   @@index([itemId])
 }
 
-// Update Item model to include the purchase relation
 model Item {
   id          String                 @id @default(cuid())
   productName String                 @unique
