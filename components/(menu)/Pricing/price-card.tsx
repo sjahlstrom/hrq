@@ -9,8 +9,8 @@ import { getRQPrice } from '@/lib/price-utils';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-// Define the item ID for RQ test
-const RQ_TEST_ITEM_ID = "rq_test"; // Replace with your actual item ID from the database
+// Replace this with your actual RQ test item ID from the database
+const RQ_TEST_ITEM_ID = "rq_test";
 
 const PriceCard = () => {
     const [showCheckout, setShowCheckout] = useState(false);
@@ -31,14 +31,6 @@ const PriceCard = () => {
     const handleSuccess = () => {
         router.push(`/success?amount=${amount}`);
     };
-
-    // Define purchase items
-    const purchaseItems = [
-        {
-            itemId: RQ_TEST_ITEM_ID,
-            quantity: 1
-        }
-    ];
 
     return (
         <section
@@ -110,7 +102,12 @@ const PriceCard = () => {
                                     >
                                         <CheckoutPage
                                             amount={amount}
-                                            items={purchaseItems}
+                                            items={[
+                                                {
+                                                    itemId: RQ_TEST_ITEM_ID,
+                                                    quantity: 1
+                                                }
+                                            ]}
                                             onSuccess={handleSuccess}
                                         />
                                     </Elements>

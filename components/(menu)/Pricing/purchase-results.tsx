@@ -1,33 +1,36 @@
-'use client'
+"use client"
 
-import { Elements } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js'
-import CheckoutPage from '@/components/(stripe)/checkout'
-import convertToSubcurrency from '@/lib/convert-to-subcurrency'
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
+import CheckoutPage from "@/components/(stripe)/checkout"
+import convertToSubcurrency from "@/lib/convert-to-subcurrency"
 
-if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === undefined) {
-    throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not defined')
-}
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+// Replace this with your actual RQ test item ID from your database
+const RQ_TEST_ITEM_ID = "rq_test"
 
-const PurchaseResults = () => {
-    const amount = 9.95
+export default function PurchaseResults({ amount }: { amount: number }) {
     return (
-        <main className="max-w-6xl mx-auto p-20 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-blue-500 to-purple-500">
-
+        <main>
             <Elements
                 stripe={stripePromise}
                 options={{
-                    mode: 'payment',
+                    mode: 'payment' as const,
                     amount: convertToSubcurrency(amount),
                     currency: 'usd',
                 }}
             >
-                <CheckoutPage amount={amount} />
+                <CheckoutPage
+                    amount={amount}
+                    items={[
+                        {
+                            itemId: RQ_TEST_ITEM_ID,
+                            quantity: 1
+                        }
+                    ]}
+                />
             </Elements>{' '}
         </main>
     )
 }
-
-export default PurchaseResults

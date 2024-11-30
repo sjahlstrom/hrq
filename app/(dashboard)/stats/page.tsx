@@ -47,13 +47,11 @@ const Dashboard = async () => {
     const monthEnd = endOfMonth(currentDate)
     const sixMonthsAgo = subMonths(currentDate, 6)
 
-    // Date range for queries
     const dateRange = {
         gte: sixMonthsAgo,
         lte: currentDate,
     }
 
-    // Fetch data
     const [
         userCount,
         userCountMonth,
@@ -73,7 +71,7 @@ const Dashboard = async () => {
                 },
             },
         }),
-        db.purchased.count(),
+        db.purchase.count(),
         db.purchaseItemRelation.aggregate({
             _sum: {
                 price: true,
@@ -83,7 +81,7 @@ const Dashboard = async () => {
             orderBy: { createdAt: 'desc' },
             take: 7,
         }),
-        db.purchased.findMany({
+        db.purchase.findMany({
             orderBy: { createdAt: 'desc' },
             take: 5,
             include: {
@@ -107,22 +105,22 @@ const Dashboard = async () => {
             },
         }),
         db.purchaseItemRelation.groupBy({
-            by: ['purchasedId'],
+            by: ['purchaseId'],
             _sum: {
                 price: true,
             },
-            orderBy: { purchasedId: 'asc' },
+            orderBy: { purchaseId: 'asc' },
         }),
     ])
 
     const totalAmount = salesTotal._sum.price || 0
+    const goalAmount = 1000
+    const goalProgress = (totalAmount / goalAmount) * 100
 
-    // Helper function to calculate sale total
     const calculateSaleTotal = (items: any[]) =>
         items.reduce((total, itemRel) =>
             total + itemRel.price * itemRel.quantity, 0)
 
-    // Map data for User and Purchase cards
     const UserData: UserDataCardProps[] = recentUsers.map((account) => ({
         name: account.username || 'Unknown',
         email: account.email || 'Unknown',
@@ -132,7 +130,6 @@ const Dashboard = async () => {
         }),
     }))
 
-    // Map purchase data
     const PurchaseData: UserPurchaseProps[] = recentSales.map((purchase) => ({
         name: purchase.user.username || 'Unknown',
         email: purchase.user.email || 'Unknown',
@@ -140,16 +137,13 @@ const Dashboard = async () => {
         saleAmount: `$${calculateSaleTotal(purchase.items).toFixed(2)}`,
     }))
 
-    // Generate months array for the interval
     const months = eachMonthOfInterval({
         start: sixMonthsAgo,
         end: monthEnd,
     })
 
-    // Helper function to format month
     const getMonthString = (date: Date) => format(date, 'MMM')
 
-    // Prepare Monthly Users Data
     const monthlyUsersData: ChartData[] = months.map((month) => {
         const monthString = getMonthString(month)
         const userMonthly = usersThisMonth
@@ -158,7 +152,6 @@ const Dashboard = async () => {
         return { month: monthString, total: userMonthly }
     })
 
-    // Prepare Monthly Sales Data
     const monthlySalesData: ChartData[] = months.map((month) => {
         const monthString = getMonthString(month)
         const salesInMonth = recentSales
@@ -166,9 +159,6 @@ const Dashboard = async () => {
             .reduce((total, sale) => total + calculateSaleTotal(sale.items), 0)
         return { month: monthString, total: salesInMonth }
     })
-
-    const goalAmount = 1000
-    const goalProgress = (totalAmount / goalAmount) * 100
 
     return (
         <>
