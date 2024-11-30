@@ -51,7 +51,6 @@ export async function POST(request: Request) {
 
 export async function GET() {
     try {
-        // Use Item model instead of purchaseItem
         const purchaseItems = await db.item.findMany()
         return NextResponse.json({ data: purchaseItems })
     } catch (error) {
