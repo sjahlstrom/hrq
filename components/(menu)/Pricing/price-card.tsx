@@ -5,27 +5,26 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useRouter } from 'next/navigation';
 import CheckoutPage from '@/components/(stripe)/checkout';
 import convertToSubcurrency from '@/lib/convert-to-subcurrency';
-import { getRQPrice } from '@/lib/price-utils';
+import { getRQTestItem } from '@/lib/price-utils';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
-
-// Replace this with your actual RQ test item ID from the database
-const RQ_TEST_ITEM_ID = "rq_test";
 
 const PriceCard = () => {
     const [showCheckout, setShowCheckout] = useState(false);
     const [amount, setAmount] = useState<number>(9.95);
+    const [itemId, setItemId] = useState<string>('');
     const router = useRouter();
 
     useEffect(() => {
-        const fetchPrice = async () => {
-            const priceString = await getRQPrice();
-            // Remove '$' and convert to number
-            const priceNumber = parseFloat(priceString.replace('$', ''));
-            setAmount(priceNumber);
+        const fetchData = async () => {
+            const testItem = await getRQTestItem();
+            if (testItem) {
+                setAmount(testItem.price);
+                setItemId(testItem.id);
+            }
         };
 
-        fetchPrice();
+        fetchData();
     }, []);
 
     const handleSuccess = () => {
@@ -104,7 +103,7 @@ const PriceCard = () => {
                                             amount={amount}
                                             items={[
                                                 {
-                                                    itemId: RQ_TEST_ITEM_ID,
+                                                    itemId: itemId,
                                                     quantity: 1
                                                 }
                                             ]}

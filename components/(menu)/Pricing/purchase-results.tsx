@@ -2,15 +2,31 @@
 
 import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
+import { useEffect, useState } from "react"
 import CheckoutPage from "@/components/(stripe)/checkout"
 import convertToSubcurrency from "@/lib/convert-to-subcurrency"
+import { getRQTestItem } from "@/lib/price-utils"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
-// Replace this with your actual RQ test item ID from your database
-const RQ_TEST_ITEM_ID = "rq_test"
-
 export default function PurchaseResults({ amount }: { amount: number }) {
+    const [itemId, setItemId] = useState<string>('');
+
+    useEffect(() => {
+        const fetchItem = async () => {
+            const testItem = await getRQTestItem();
+            if (testItem) {
+                setItemId(testItem.id);
+            }
+        };
+
+        fetchItem();
+    }, []);
+
+    if (!itemId) {
+        return <div>Loading...</div>; // Or your preferred loading state
+    }
+
     return (
         <main>
             <Elements
@@ -25,12 +41,12 @@ export default function PurchaseResults({ amount }: { amount: number }) {
                     amount={amount}
                     items={[
                         {
-                            itemId: RQ_TEST_ITEM_ID,
+                            itemId: itemId,
                             quantity: 1
                         }
                     ]}
                 />
-            </Elements>{' '}
+            </Elements>
         </main>
     )
 }

@@ -76,14 +76,18 @@ export function AddItemForm({ onItemAdded }: AddItemFormProps) {
                 body: JSON.stringify(item),
             })
 
-            if (!response.ok) throw new Error('Failed to save item')
+            const data = await response.json()
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to save item')
+            }
 
             toast.success('Item has been added successfully')
             onItemAdded()
             resetForm()
         } catch (error) {
-            console.error('Error submitting item:', error)
-            toast.error('Failed to add item. Please try again.')
+            const errorMessage = error instanceof Error ? error.message : 'Failed to add item'
+            toast.error(errorMessage)
         } finally {
             setIsLoading(false)
         }

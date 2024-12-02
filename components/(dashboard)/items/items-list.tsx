@@ -19,6 +19,7 @@ interface Item {
 export const ItemsList = forwardRef((props, ref) => {
     const [items, setItems] = useState<Item[]>([])
     const [editingItem, setEditingItem] = useState<Item | null>(null)
+    const [isDeleting, setIsDeleting] = useState(false)
 
     const fetchItems = async () => {
         try {
@@ -27,7 +28,6 @@ export const ItemsList = forwardRef((props, ref) => {
             const { data } = await response.json()
             setItems(Array.isArray(data) ? data : [])
         } catch (error) {
-            console.error('Error fetching items:', error)
             toast.error('Failed to load items')
             setItems([])
         }
@@ -56,20 +56,48 @@ export const ItemsList = forwardRef((props, ref) => {
                 body: JSON.stringify(editingItem),
             })
 
-            if (!response.ok) throw new Error('Failed to update item')
+            const data = await response.json()
 
-            const { data: updatedItem } = await response.json()
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to update item')
+            }
+
             setItems(prevItems =>
                 prevItems.map(item =>
-                    item.id === editingItem.id ? updatedItem : item
+                    item.id === editingItem.id ? data.data : item
                 )
             )
 
             toast.success('Item updated successfully')
             setEditingItem(null)
         } catch (error) {
-            console.error('Error updating item:', error)
-            toast.error('Failed to update item')
+            const errorMessage = error instanceof Error ? error.message : 'Failed to update item'
+            toast.error(errorMessage)
+        }
+    }
+
+    const handleDelete = async (itemId: string) => {
+        if (isDeleting) return
+
+        setIsDeleting(true)
+        try {
+            const response = await fetch(`/api/items/${itemId}`, {
+                method: 'DELETE',
+            })
+
+            const data = await response.json()
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to delete item')
+            }
+
+            setItems(prevItems => prevItems.filter(item => item.id !== itemId))
+            toast.success('Item deleted successfully')
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'Failed to delete item'
+            toast.error(errorMessage)
+        } finally {
+            setIsDeleting(false)
         }
     }
 
@@ -98,7 +126,6 @@ export const ItemsList = forwardRef((props, ref) => {
             <CardContent>
                 {Array.isArray(items) && items.length > 0 ? (
                     <div className="space-y-2">
-                        {/* Header */}
                         <div className="grid grid-cols-4 gap-4 py-2 px-4 bg-gray-600 rounded-md font-semibold">
                             <div>Name</div>
                             <div>Type</div>
@@ -106,7 +133,6 @@ export const ItemsList = forwardRef((props, ref) => {
                             <div className="text-right">Actions</div>
                         </div>
 
-                        {/* Items */}
                         {items.map((item) => (
                             editingItem?.id === item.id ? (
                                 <form key={item.id} onSubmit={handleUpdate} className="bg-gray-700 p-4 rounded-md">
@@ -174,13 +200,23 @@ export const ItemsList = forwardRef((props, ref) => {
                                     <div>{item.productName}</div>
                                     <div>{item.itemType}</div>
                                     <div>${item.price.toFixed(2)}</div>
-                                    <div className="flex justify-end">
+                                    <div className="flex justify-end space-x-2">
                                         <Button
                                             onClick={() => handleEdit(item)}
                                             size="sm"
                                             variant="ghost"
                                         >
                                             Edit
+                                        </Button>
+                                        <Button
+                                            onClick={() => handleDelete(item.id)}
+                                            size="sm"
+                                            variant="ghost"
+                                            className="text-red-500 hover:text-red-600 hover:bg-red-100/10 disabled:opacity-50"
+                                            disabled={isDeleting || item.itemType.toLowerCase() === 'rq_test'}
+                                            title={item.itemType.toLowerCase() === 'rq_test' ? 'RQ Test items cannot be deleted' : ''}
+                                        >
+                                            Delete
                                         </Button>
                                     </div>
                                 </div>
