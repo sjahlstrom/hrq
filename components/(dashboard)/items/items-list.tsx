@@ -50,10 +50,20 @@ export const ItemsList = forwardRef((props, ref) => {
         if (!editingItem) return
 
         try {
+            // For RQ_TEST items, only allow price updates
+            const updateData = editingItem.itemType.toLowerCase() === 'rq_test'
+                ? {
+                    id: editingItem.id,
+                    price: editingItem.price,
+                    productName: editingItem.productName, // Keep original
+                    itemType: editingItem.itemType // Keep original
+                }
+                : editingItem
+
             const response = await fetch(`/api/items/${editingItem.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(editingItem),
+                body: JSON.stringify(updateData),
             })
 
             const data = await response.json()
@@ -118,6 +128,8 @@ export const ItemsList = forwardRef((props, ref) => {
         }))
     }
 
+    const isRQTestItem = (item: Item) => item.itemType.toLowerCase() === 'rq_test'
+
     return (
         <Card className="w-full bg-gray-500">
             <CardHeader>
@@ -145,6 +157,8 @@ export const ItemsList = forwardRef((props, ref) => {
                                                 value={editingItem.productName}
                                                 onChange={handleEditChange}
                                                 className="bg-gray-600"
+                                                disabled={isRQTestItem(item)}
+                                                title={isRQTestItem(item) ? "RQ Test items' names cannot be modified" : ""}
                                             />
                                         </div>
                                         <div className="w-full">
@@ -152,8 +166,12 @@ export const ItemsList = forwardRef((props, ref) => {
                                             <Select
                                                 value={editingItem.itemType}
                                                 onValueChange={handleEditTypeChange}
+                                                disabled={isRQTestItem(item)}
                                             >
-                                                <SelectTrigger className="bg-gray-600">
+                                                <SelectTrigger
+                                                    className="bg-gray-600"
+                                                    title={isRQTestItem(item) ? "RQ Test items' types cannot be modified" : ""}
+                                                >
                                                     <SelectValue />
                                                 </SelectTrigger>
                                                 <SelectContent className="bg-slate-500">
@@ -213,8 +231,8 @@ export const ItemsList = forwardRef((props, ref) => {
                                             size="sm"
                                             variant="ghost"
                                             className="text-red-500 hover:text-red-600 hover:bg-red-100/10 disabled:opacity-50"
-                                            disabled={isDeleting || item.itemType.toLowerCase() === 'rq_test'}
-                                            title={item.itemType.toLowerCase() === 'rq_test' ? 'RQ Test items cannot be deleted' : ''}
+                                            disabled={isDeleting || isRQTestItem(item)}
+                                            title={isRQTestItem(item) ? 'RQ Test items cannot be deleted' : ''}
                                         >
                                             Delete
                                         </Button>
