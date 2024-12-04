@@ -58,40 +58,66 @@ export function AddItemForm({ onItemAdded }: AddItemFormProps) {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        if (!validateForm()) return
+        if (!validateForm()) return;
 
         const item = {
             productName: formData.productName,
             price: parseFloat(formData.price),
             itemType: formData.itemType,
+        };
+
+        // Prevent duplicate `rq_test`
+        if (formData.itemType === 'rq_test') {
+            try {
+                const response = await fetch('/api/items', { method: 'GET' }); // Assuming a GET endpoint exists
+                if (!response.ok) {
+                    throw new Error('Failed to fetch existing items');
+                }
+
+                const existingItems = await response.json();
+                const duplicate = existingItems.some(
+                    (existingItem: { itemType: string }) => existingItem.itemType === 'rq_test'
+                );
+
+                if (duplicate) {
+                    toast.error("An item with 'rq_test' type already exists.");
+                    setFormData({ productName: '', price: '0.00', itemType: '' }); // Clear the form
+                    return; // Stop submission
+                }
+            } catch (error) {
+                toast.error('Failed to check for duplicates. Please try again.');
+                setFormData({ productName: '', price: '0.00', itemType: '' }); // Clear the form
+                return;
+            }
         }
 
-        setIsLoading(true)
+        setIsLoading(true);
         try {
             const response = await fetch('/api/items', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(item),
-            })
+            });
 
-            const data = await response.json()
+            const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || 'Failed to save item')
+                throw new Error(data.error || 'Failed to save item');
             }
 
-            toast.success('Item has been added successfully')
-            onItemAdded()
-            resetForm()
+            toast.success('Item added successfully');
+            setFormData({ productName: '', price: '0.00', itemType: '' }); // Clear the form
+            onItemAdded();
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Failed to add item'
-            toast.error(errorMessage)
+            toast.error(error instanceof Error ? error.message : 'An unexpected error occurred');
+            setFormData({ productName: '', price: '0.00', itemType: '' }); // Clear the form
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
+
 
     const resetForm = () => {
         setFormData({
