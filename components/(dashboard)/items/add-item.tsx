@@ -22,7 +22,7 @@ interface FormErrors {
 }
 
 interface AddItemProps {
-    onItemAdded: () => void
+    onItemAdded: () => Promise<void>
 }
 
 const initialFormState: FormData = {

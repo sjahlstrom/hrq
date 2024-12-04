@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, forwardRef, useImperativeHandle, Ref } from 'react'
+import { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -20,12 +20,14 @@ export interface ItemsListRef {
     fetchItems: () => Promise<void>
 }
 
-export const EditItems = forwardRef<ItemsListRef, {}>((_, ref) => {
+export const ItemsList = forwardRef<ItemsListRef, {}>((_, ref) => {
     const [items, setItems] = useState<Item[]>([])
     const [editingItem, setEditingItem] = useState<Item | null>(null)
     const [isDeleting, setIsDeleting] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     const fetchItems = async () => {
+        setIsLoading(true)
         try {
             const response = await fetch('/api/items')
             if (!response.ok) throw new Error('Failed to fetch items')
@@ -34,6 +36,8 @@ export const EditItems = forwardRef<ItemsListRef, {}>((_, ref) => {
         } catch (error) {
             toast.error('Failed to load items')
             setItems([])
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -59,8 +63,8 @@ export const EditItems = forwardRef<ItemsListRef, {}>((_, ref) => {
                 ? {
                     id: editingItem.id,
                     price: editingItem.price,
-                    productName: editingItem.productName, // Keep original
-                    itemType: editingItem.itemType // Keep original
+                    productName: editingItem.productName,
+                    itemType: editingItem.itemType
                 }
                 : editingItem
 
@@ -134,6 +138,21 @@ export const EditItems = forwardRef<ItemsListRef, {}>((_, ref) => {
 
     const isRQTestItem = (item: Item) => item.itemType.toLowerCase() === 'rq_test'
 
+    if (isLoading) {
+        return (
+            <Card>
+                <CardHeader>
+                    <CardTitle>Items List</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="h-32 flex items-center justify-center">
+                        <p className="text-muted-foreground">Loading items...</p>
+                    </div>
+                </CardContent>
+            </Card>
+        )
+    }
+
     return (
         <Card>
             <CardHeader>
@@ -199,6 +218,7 @@ export const EditItems = forwardRef<ItemsListRef, {}>((_, ref) => {
                                                 name="price"
                                                 type="number"
                                                 step="0.01"
+                                                min="0"
                                                 value={editingItem.price}
                                                 onChange={handleEditChange}
                                             />
@@ -250,11 +270,13 @@ export const EditItems = forwardRef<ItemsListRef, {}>((_, ref) => {
                         ))}
                     </div>
                 ) : (
-                    <p className="text-center text-muted-foreground py-8">No items found</p>
+                    <div className="py-8 text-center">
+                        <p className="text-muted-foreground">No items found</p>
+                    </div>
                 )}
             </CardContent>
         </Card>
     )
 })
 
-EditItems.displayName = 'EditItems'
+ItemsList.displayName = 'ItemsList'
