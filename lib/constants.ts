@@ -1,3 +1,1 @@
-// lib/constants.ts
-export const ITEM_TYPES = ['eBook', 'rq_test'] as const
-
+export const ITEM_TYPES = ['ebook', 'RQ_TEST'] as const

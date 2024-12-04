@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
+import { useState, useEffect, forwardRef, useImperativeHandle, Ref } from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -16,7 +16,11 @@ interface Item {
     itemType: string
 }
 
-export const ItemsList = forwardRef((props, ref) => {
+export interface ItemsListRef {
+    fetchItems: () => Promise<void>
+}
+
+export const EditItems = forwardRef<ItemsListRef, {}>((_, ref) => {
     const [items, setItems] = useState<Item[]>([])
     const [editingItem, setEditingItem] = useState<Item | null>(null)
     const [isDeleting, setIsDeleting] = useState(false)
@@ -131,37 +135,40 @@ export const ItemsList = forwardRef((props, ref) => {
     const isRQTestItem = (item: Item) => item.itemType.toLowerCase() === 'rq_test'
 
     return (
-        <Card className="w-full bg-gray-500">
+        <Card>
             <CardHeader>
-                <CardTitle>Edit Items</CardTitle>
+                <CardTitle>Items List</CardTitle>
             </CardHeader>
             <CardContent>
-                {Array.isArray(items) && items.length > 0 ? (
-                    <div className="space-y-2">
-                        <div className="grid grid-cols-4 gap-4 py-2 px-4 bg-gray-600 rounded-md font-semibold">
+                {items.length > 0 ? (
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-4 gap-4 py-2 px-4 bg-secondary/50 rounded-md font-semibold">
                             <div>Name</div>
                             <div>Type</div>
-                            <div>Amount</div>
+                            <div>Price</div>
                             <div className="text-right">Actions</div>
                         </div>
 
                         {items.map((item) => (
                             editingItem?.id === item.id ? (
-                                <form key={item.id} onSubmit={handleUpdate} className="bg-gray-700 p-4 rounded-md">
-                                    <div className="flex flex-col items-center space-y-4 w-full max-w-md mx-auto">
-                                        <div className="w-full">
+                                <form
+                                    key={item.id}
+                                    onSubmit={handleUpdate}
+                                    className="bg-secondary/20 p-4 rounded-md"
+                                >
+                                    <div className="flex flex-col space-y-4 w-full max-w-md mx-auto">
+                                        <div>
                                             <Label htmlFor={`edit-name-${item.id}`}>Name</Label>
                                             <Input
                                                 id={`edit-name-${item.id}`}
                                                 name="productName"
                                                 value={editingItem.productName}
                                                 onChange={handleEditChange}
-                                                className="bg-gray-600"
                                                 disabled={isRQTestItem(item)}
                                                 title={isRQTestItem(item) ? "RQ Test items' names cannot be modified" : ""}
                                             />
                                         </div>
-                                        <div className="w-full">
+                                        <div>
                                             <Label htmlFor={`edit-type-${item.id}`}>Type</Label>
                                             <Select
                                                 value={editingItem.itemType}
@@ -169,12 +176,11 @@ export const ItemsList = forwardRef((props, ref) => {
                                                 disabled={isRQTestItem(item)}
                                             >
                                                 <SelectTrigger
-                                                    className="bg-gray-600"
                                                     title={isRQTestItem(item) ? "RQ Test items' types cannot be modified" : ""}
                                                 >
                                                     <SelectValue />
                                                 </SelectTrigger>
-                                                <SelectContent className="bg-slate-500">
+                                                <SelectContent>
                                                     {ITEM_TYPES.map((type) => (
                                                         <SelectItem
                                                             key={type}
@@ -186,7 +192,7 @@ export const ItemsList = forwardRef((props, ref) => {
                                                 </SelectContent>
                                             </Select>
                                         </div>
-                                        <div className="w-full">
+                                        <div>
                                             <Label htmlFor={`edit-price-${item.id}`}>Price</Label>
                                             <Input
                                                 id={`edit-price-${item.id}`}
@@ -195,13 +201,9 @@ export const ItemsList = forwardRef((props, ref) => {
                                                 step="0.01"
                                                 value={editingItem.price}
                                                 onChange={handleEditChange}
-                                                className="bg-gray-600"
                                             />
                                         </div>
-                                        <div className="flex justify-center space-x-2 mt-4">
-                                            <Button type="submit" size="sm">
-                                                Save
-                                            </Button>
+                                        <div className="flex justify-end space-x-2 pt-2">
                                             <Button
                                                 type="button"
                                                 variant="outline"
@@ -210,11 +212,17 @@ export const ItemsList = forwardRef((props, ref) => {
                                             >
                                                 Cancel
                                             </Button>
+                                            <Button type="submit" size="sm">
+                                                Save Changes
+                                            </Button>
                                         </div>
                                     </div>
                                 </form>
                             ) : (
-                                <div key={item.id} className="grid grid-cols-4 gap-4 py-2 px-4 bg-gray-700 rounded-md items-center">
+                                <div
+                                    key={item.id}
+                                    className="grid grid-cols-4 gap-4 py-3 px-4 bg-secondary/20 rounded-md items-center"
+                                >
                                     <div>{item.productName}</div>
                                     <div>{item.itemType}</div>
                                     <div>${item.price.toFixed(2)}</div>
@@ -230,7 +238,7 @@ export const ItemsList = forwardRef((props, ref) => {
                                             onClick={() => handleDelete(item.id)}
                                             size="sm"
                                             variant="ghost"
-                                            className="text-red-500 hover:text-red-600 hover:bg-red-100/10 disabled:opacity-50"
+                                            className="text-destructive hover:text-destructive hover:bg-destructive/10 disabled:opacity-50"
                                             disabled={isDeleting || isRQTestItem(item)}
                                             title={isRQTestItem(item) ? 'RQ Test items cannot be deleted' : ''}
                                         >
@@ -242,11 +250,11 @@ export const ItemsList = forwardRef((props, ref) => {
                         ))}
                     </div>
                 ) : (
-                    <p className="text-center text-gray-300">No items found</p>
+                    <p className="text-center text-muted-foreground py-8">No items found</p>
                 )}
             </CardContent>
         </Card>
     )
 })
 
-ItemsList.displayName = 'ItemsList'
+EditItems.displayName = 'EditItems'

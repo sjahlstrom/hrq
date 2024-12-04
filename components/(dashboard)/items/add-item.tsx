@@ -21,18 +21,25 @@ interface FormErrors {
     itemType?: string
 }
 
-interface AddItemFormProps {
+interface AddItemProps {
     onItemAdded: () => void
 }
 
-export function AddItemForm({ onItemAdded }: AddItemFormProps) {
-    const [formData, setFormData] = useState<FormData>({
-        productName: '',
-        price: '0.00',
-        itemType: '',
-    })
+const initialFormState: FormData = {
+    productName: '',
+    price: '0.00',
+    itemType: '',
+}
+
+export function AddItem({ onItemAdded }: AddItemProps) {
+    const [formData, setFormData] = useState<FormData>(initialFormState)
     const [errors, setErrors] = useState<FormErrors>({})
     const [isLoading, setIsLoading] = useState(false)
+
+    const resetForm = () => {
+        setFormData(initialFormState)
+        setErrors({})
+    }
 
     const validateForm = (): boolean => {
         const newErrors: FormErrors = {}
@@ -58,73 +65,64 @@ export function AddItemForm({ onItemAdded }: AddItemFormProps) {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        if (!validateForm()) return;
+        if (!validateForm()) return
 
         const item = {
             productName: formData.productName,
             price: parseFloat(formData.price),
             itemType: formData.itemType,
-        };
+        }
 
         // Prevent duplicate `rq_test`
         if (formData.itemType === 'rq_test') {
             try {
-                const response = await fetch('/api/items', { method: 'GET' }); // Assuming a GET endpoint exists
+                const response = await fetch('/api/items')
                 if (!response.ok) {
-                    throw new Error('Failed to fetch existing items');
+                    throw new Error('Failed to fetch existing items')
                 }
 
-                const existingItems = await response.json();
+                const existingItems = await response.json()
                 const duplicate = existingItems.some(
                     (existingItem: { itemType: string }) => existingItem.itemType === 'rq_test'
-                );
+                )
 
                 if (duplicate) {
-                    toast.error("An item with 'rq_test' type already exists.");
-                    setFormData({ productName: '', price: '0.00', itemType: '' }); // Clear the form
-                    return; // Stop submission
+                    toast.error("An item with 'rq_test' type already exists.")
+                    resetForm()
+                    return
                 }
             } catch (error) {
-                toast.error('Failed to check for duplicates. Please try again.');
-                setFormData({ productName: '', price: '0.00', itemType: '' }); // Clear the form
-                return;
+                toast.error('Failed to check for duplicates. Please try again.')
+                resetForm()
+                return
             }
         }
 
-        setIsLoading(true);
+        setIsLoading(true)
         try {
             const response = await fetch('/api/items', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(item),
-            });
+            })
 
-            const data = await response.json();
+            const data = await response.json()
 
             if (!response.ok) {
-                throw new Error(data.error || 'Failed to save item');
+                throw new Error(data.error || 'Failed to save item')
             }
 
-            toast.success('Item added successfully');
-            setFormData({ productName: '', price: '0.00', itemType: '' }); // Clear the form
-            onItemAdded();
+            toast.success('Item added successfully')
+            resetForm()
+            onItemAdded()
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : 'An unexpected error occurred');
-            setFormData({ productName: '', price: '0.00', itemType: '' }); // Clear the form
+            toast.error(error instanceof Error ? error.message : 'An unexpected error occurred')
+            resetForm()
         } finally {
-            setIsLoading(false);
+            setIsLoading(false)
         }
-    };
-
-
-    const resetForm = () => {
-        setFormData({
-            productName: '',
-            price: '0.00',
-            itemType: '',
-        })
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,7 +141,7 @@ export function AddItemForm({ onItemAdded }: AddItemFormProps) {
     }
 
     return (
-        <Card className="w-full bg-gray-500">
+        <Card>
             <CardHeader>
                 <CardTitle>Add Item</CardTitle>
             </CardHeader>
@@ -156,21 +154,26 @@ export function AddItemForm({ onItemAdded }: AddItemFormProps) {
                             name="productName"
                             value={formData.productName}
                             onChange={handleChange}
-                            className={errors.productName ? 'border-red-500' : ''}
+                            className={errors.productName ? 'border-destructive' : ''}
                             placeholder="Enter product name"
                         />
                         {errors.productName && (
-                            <p className="text-sm text-red-500">{errors.productName}</p>
+                            <p className="text-sm text-destructive">{errors.productName}</p>
                         )}
                     </div>
 
                     <div className="space-y-2">
                         <Label htmlFor="itemType">Item Type</Label>
-                        <Select value={formData.itemType} onValueChange={handleTypeChange}>
-                            <SelectTrigger className={errors.itemType ? 'border-red-500' : ''}>
+                        <Select
+                            value={formData.itemType}
+                            onValueChange={handleTypeChange}
+                        >
+                            <SelectTrigger
+                                className={errors.itemType ? 'border-destructive' : ''}
+                            >
                                 <SelectValue placeholder="Select item type" />
                             </SelectTrigger>
-                            <SelectContent className="bg-slate-500">
+                            <SelectContent>
                                 {ITEM_TYPES.map((type) => (
                                     <SelectItem key={type} value={type.toLowerCase()}>
                                         {type}
@@ -179,7 +182,7 @@ export function AddItemForm({ onItemAdded }: AddItemFormProps) {
                             </SelectContent>
                         </Select>
                         {errors.itemType && (
-                            <p className="text-sm text-red-500">{errors.itemType}</p>
+                            <p className="text-sm text-destructive">{errors.itemType}</p>
                         )}
                     </div>
 
@@ -192,15 +195,19 @@ export function AddItemForm({ onItemAdded }: AddItemFormProps) {
                             step="0.01"
                             value={formData.price}
                             onChange={handleChange}
-                            className={errors.price ? 'border-red-500' : ''}
+                            className={errors.price ? 'border-destructive' : ''}
                             placeholder="Enter price"
                         />
                         {errors.price && (
-                            <p className="text-sm text-red-500">{errors.price}</p>
+                            <p className="text-sm text-destructive">{errors.price}</p>
                         )}
                     </div>
 
-                    <Button type="submit" className="w-full" disabled={isLoading}>
+                    <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={isLoading}
+                    >
                         {isLoading ? 'Adding...' : 'Add Item'}
                     </Button>
                 </form>

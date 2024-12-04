@@ -4,8 +4,8 @@ import { useRef } from 'react'
 import { Toaster } from 'sonner'
 import Breadcrumb from '@/components/common/bread-crumb'
 import CheckUserRole from '@/components/check-user-role'
-import { AddItemForm } from '@/components/(dashboard)/items/add-item-form'
-import { ItemsList } from '@/components/(dashboard)/items/items-list'
+import { AddItem } from '@/components/(dashboard)/items/add-item'
+import { EditItems } from '@/components/(dashboard)/items/edit-items'
 
 export default function Page() {
     const itemsListRef = useRef<{ fetchItems: () => void } | null>(null)
@@ -28,8 +28,8 @@ export default function Page() {
 
             <div className="container mx-auto px-4 py-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <AddItemForm onItemAdded={handleItemAdded} />
-                    <ItemsList ref={itemsListRef} />
+                    <AddItem onItemAdded={handleItemAdded} />
+                    <EditItems ref={itemsListRef} />
                 </div>
             </div>
         </div>
