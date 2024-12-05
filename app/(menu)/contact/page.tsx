@@ -8,15 +8,15 @@ export const metadata: Metadata = {
 
 const ContactPage = () => {
     return (
-        <div>
+
             <div className="bg-hrqColors-skyBlue-100">
                 <Breadcrumb
                     pageName="Contact"
-                    description="Got questions? &nbsp;Want to send feedback? &nbsp;Let us know."
+                    description="Have questions? Want to send feedback? Let us know."
                 />
                 <ContactForm />
             </div>
-        </div>
+
     )
 }
 

@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { AddItem } from '@/components/(dashboard)/items/add-item'
-import { ItemsList, type ItemsListRef } from '@/components/(dashboard)/items/edit-items'
+import { EditItemsList, type ItemsListRef } from '@/components/(dashboard)/items/edit-items'
 
 export default function ItemsManagement() {
     const itemsListRef = useRef<ItemsListRef>(null)
@@ -14,7 +14,7 @@ export default function ItemsManagement() {
     return (
         <div className="space-y-6 p-6">
             <AddItem onItemAdded={handleItemAdded} />
-            <ItemsList ref={itemsListRef} />
+            <EditItemsList ref={itemsListRef} />
         </div>
     )
 }

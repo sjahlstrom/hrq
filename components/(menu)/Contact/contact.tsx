@@ -1,115 +1,181 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import { useUser } from '@clerk/nextjs'
-import { nunito, telex } from '@/app/ui/fonts'
-import { Button } from '@/components/ui/button'
+import React from 'react';
+import { useAuth, useUser } from '@clerk/nextjs';
+import { nunito, telex } from '@/app/ui/fonts';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Loader2 } from 'lucide-react';
 
-const schema = z.object({
-    name: z.string().min(2, { message: "Name must be at least 2 characters long" }),
-    email: z.string().email({ message: "Invalid email address" }),
-    message: z.string().min(10, { message: "Message must be at least 10 characters long" })
-})
+interface FormData {
+    name: string;
+    email: string;
+    message: string;
+}
 
-type FormData = z.infer<typeof schema>
+interface FormErrors {
+    name?: string;
+    email?: string;
+    message?: string;
+}
 
-export default function Contact() {
-    const [isSubmitting, setIsSubmitting] = useState(false)
-    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-    const { user, isLoaded } = useUser()
+interface FormStatus {
+    type: 'idle' | 'loading' | 'success' | 'error';
+    message: string;
+}
 
-    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>({
-        resolver: zodResolver(schema)
-    })
+function ContactForm() {
+    const { isLoaded, userId } = useAuth();
+    const { user } = useUser();
+    const [formData, setFormData] = React.useState<FormData>({
+        name: '',
+        email: '',
+        message: ''
+    });
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (isLoaded && user) {
-            setValue('name', user.fullName || user.username || '')
-            setValue('email', user.primaryEmailAddress?.emailAddress || '')
+            setFormData(prev => ({
+                ...prev,
+                name: user.username || user.firstName || '',
+                email: user.primaryEmailAddress?.emailAddress || ''
+            }));
         }
-    }, [isLoaded, user, setValue])
+    }, [isLoaded, user]);
 
-    const onSubmit = async (data: FormData) => {
-        setIsSubmitting(true)
-        setSubmitStatus('idle')
+    const [errors, setErrors] = React.useState<FormErrors>({});
+    const [status, setStatus] = React.useState<FormStatus>({ type: 'idle', message: '' });
+
+    const validateForm = () => {
+        const newErrors: FormErrors = {};
+        if (formData.name.length < 2) newErrors.name = "Name must be at least 2 characters";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "Invalid email address";
+        if (formData.message.length < 10) newErrors.message = "Message must be at least 10 characters";
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!validateForm()) return;
+
+        setStatus({ type: 'loading', message: '' });
         try {
             const response = await fetch('/api/sendMail', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
 
-            if (response.ok) {
-                setSubmitStatus('success')
-                reset()
-            } else {
-                throw new Error('Failed to send email')
-            }
-        } catch (error) {
-            setSubmitStatus('error')
-        } finally {
-            setIsSubmitting(false)
+            if (!response.ok) throw new Error();
+
+            setStatus({ type: 'success', message: 'Message sent successfully!' });
+            setFormData({ name: '', email: '', message: '' });
+        } catch {
+            setStatus({ type: 'error', message: 'Failed to send message' });
         }
-    }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+        if (errors[name as keyof FormErrors]) {
+            setErrors(prev => ({ ...prev, [name]: '' }));
+        }
+    };
 
     return (
-        <section className="bg-white dark:bg-gray-900">
-            <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-                <h2 className={`${nunito.className} mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white`}>Contact Us</h2>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-                    <div>
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your email</label>
-                        <input
-                            {...register('email')}
-                            type="email"
-                            id="email"
-                            placeholder=""
-                            className={`${telex.className} shadow-sm bg-gray-50 border text-white text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 ${errors.email ? "border-red-500" : "border-gray-300"} focus:ring-primary-500 focus:border-primary-500`}
-                        />
-                        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-                    </div>
-                    <div>
-                        <label htmlFor="name" className={`${telex.className}block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300`}>Your Name</label>
-                        <input
-                            {...register('name')}
-                            type="text"
-                            id="name"
-                            placeholder=""
-                            className={`block p-3 w-full text-sm text-white bg-gray-50 rounded-lg border ${errors.name ? "border-red-500" : "border-gray-300"} shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700`}
-                        />
-                        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
-                    </div>
-                    <div className="sm:col-span-2">
-                        <label htmlFor="message" className={`${telex.className}block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400`}>Your message</label>
-                        <textarea
-                            {...register('message')}
-                            id="message"
-                            rows={6}
-                            placeholder="Leave a comment..."
-                            className={`block p-2.5 w-full text-sm text-white bg-gray-50 rounded-lg border ${errors.message ? "border-red-500" : "border-gray-300"} shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700`}
-                        />
-                        {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
-                    </div>
-                    <Button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="py-3 px-5 text-sm font-medium text-center text-white bg-primary-700 rounded-lg sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700"
-                    >
-                        {isSubmitting ? 'Sending...' : 'Send message'}
-                    </Button>
-                </form>
-                {submitStatus === 'success' && (
-                    <p className="mt-4 text-green-500 text-center">Message sent successfully!</p>
-                )}
-                {submitStatus === 'error' && (
-                    <p className="mt-4 text-red-500 text-center">Failed to send message. Please try again.</p>
-                )}
+        <section className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
+            <div className="container mx-auto px-4 py-16">
+                <Card className="max-w-2xl mx-auto bg-gray-900/50 backdrop-blur-sm border-gray-800">
+                    <CardHeader className="space-y-1">
+                        <CardTitle className={`${nunito.className} text-3xl font-bold text-center text-white`}>
+                            Get in Touch
+                        </CardTitle>
+                        <p className={`${telex.className} text-gray-400 text-center`}>
+                            We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
+                        </p>
+                    </CardHeader>
+                    <CardContent>
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="space-y-2">
+                                <label className={`${telex.className} text-sm font-medium text-gray-200`}>
+                                    Your Name
+                                </label>
+                                <Input
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    className="bg-gray-800/50 border-gray-700 text-white"
+                                    placeholder="John Doe"
+                                />
+                                {errors.name && <p className="text-red-400 text-sm">{errors.name}</p>}
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className={`${telex.className} text-sm font-medium text-gray-200`}>
+                                    Email Address
+                                </label>
+                                <Input
+                                    name="email"
+                                    type="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className="bg-gray-800/50 border-gray-700 text-white"
+                                    placeholder="john@example.com"
+                                />
+                                {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className={`${telex.className} text-sm font-medium text-gray-200`}>
+                                    Message
+                                </label>
+                                <Textarea
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    className="bg-gray-800/50 border-gray-700 text-white min-h-[150px]"
+                                    placeholder="Your message here..."
+                                />
+                                {errors.message && <p className="text-red-400 text-sm">{errors.message}</p>}
+                            </div>
+
+                            {status.type !== 'idle' && (
+                                <Alert className={`${
+                                    status.type === 'success' ? 'bg-green-900/50 border-green-800' :
+                                        status.type === 'error' ? 'bg-red-900/50 border-red-800' :
+                                            'bg-blue-900/50 border-blue-800'
+                                }`}>
+                                    <AlertDescription>{status.message}</AlertDescription>
+                                </Alert>
+                            )}
+
+                            <Button
+                                type="submit"
+                                disabled={status.type === 'loading'}
+                                className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+                            >
+                                {status.type === 'loading' ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Sending...
+                                    </>
+                                ) : (
+                                    'Send Message'
+                                )}
+                            </Button>
+                        </form>
+                    </CardContent>
+                </Card>
             </div>
         </section>
-    )
+    );
+}
+
+export default function Contact() {
+    return <ContactForm />;
 }

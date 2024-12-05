@@ -1,9 +1,12 @@
 'use client'
 
-import { useRef } from 'react'
-import CheckUserRole from '@/components/check-user-role'
+import React, { useRef } from 'react'
 import { AddItem } from '@/components/(dashboard)/items/add-item'
-import { ItemsList, type ItemsListRef } from '@/components/(dashboard)/items/edit-items'
+import {
+    EditItemsList,
+    type ItemsListRef,
+} from '@/components/(dashboard)/items/edit-items'
+import Breadcrumb from '@/components/common/bread-crumb'
 
 export default function Page() {
     const itemsListRef = useRef<ItemsListRef>(null)
@@ -13,12 +16,12 @@ export default function Page() {
     }
 
     return (
-        <div className="container mx-auto">
+        <div className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 ">
+            <Breadcrumb pageName="Item Management" description="" />
             <div className="py-8">
-                <h1 className="text-2xl font-bold mb-8">Items Management</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <AddItem onItemAdded={handleItemAdded} />
-                    <ItemsList ref={itemsListRef} />
+                    <EditItemsList ref={itemsListRef} />
                 </div>
             </div>
         </div>
