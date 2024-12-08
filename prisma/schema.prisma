@@ -13,25 +13,26 @@ enum UserRole {
 }
 
 model User {
-  id              String       @id @default(cuid())
-  externalUserId  String       @unique
-  username        String?      @unique
-  testResponse    Int[]
-  associatedScale Int[]
-  testCompleted   Boolean      @default(false)
-  summedTotal     Float?
-  paid_rq         Boolean      @default(false)
-  paid_cq         Boolean      @default(false)
-  banned          Boolean      @default(false)
-  email           String?      @unique
-  image           String?      @db.Text
-  role            UserRole     @default(USER)
-  accounts        Account[]
-  preferences     Preferences?
-  bio             Profile?
-  purchases       Purchase[] // Changed from Purchased[] to Purchase[]
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  id               String       @id @default(cuid())
+  externalUserId   String       @unique
+  accounts         Account[]
+  stripeCustomerId String?
+  username         String?      @unique
+  email            String?      @unique
+  testResponse     Int[]
+  associatedScale  Int[]
+  testCompleted    Boolean      @default(false)
+  paid_rq          Boolean      @default(false)
+  paid_cq          Boolean      @default(false)
+  summedTotal      Float?
+  banned           Boolean      @default(false)
+  image            String?      @db.Text
+  role             UserRole     @default(USER)
+  preferences      Preferences?
+  bio              Profile?
+  purchases        Purchase[]
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
 }
 
 model Profile {
