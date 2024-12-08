@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import CheckoutPage from '@/components/(stripe)/checkout';
 import convertToSubcurrency from '@/lib/convert-to-subcurrency';
 import { getRQTestItem } from '@/lib/price-utils';
+import { useAuth } from '@clerk/nextjs';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -13,6 +14,7 @@ const PriceCard = () => {
     const [showCheckout, setShowCheckout] = useState(false);
     const [amount, setAmount] = useState<number>(9.95);
     const [itemId, setItemId] = useState<string>('');
+    const { isSignedIn } = useAuth(); // Clerk's authentication hook
     const router = useRouter();
 
     useEffect(() => {
@@ -30,6 +32,25 @@ const PriceCard = () => {
     const handleSuccess = () => {
         router.push(`/success?amount=${amount}`);
     };
+
+    if (!isSignedIn) {
+        return (
+            <section
+                id="Pricing"
+                className="bg-gradient-to-b from-hrqColors-slateBlue-400 to-hrqColors-slateBlue-200 py-16 md:py-24 lg:py-32 min-h-screen"
+            >
+                <div className="flex flex-col items-center justify-center space-y-6">
+                    <h2 className="text-2xl font-bold text-gray-900">You must be logged in to make a purchase.</h2>
+                    <Button
+                        className="bg-gray-900 text-white py-2 px-4 rounded-lg hover:bg-gray-700"
+                        onClick={() => router.push('/sign-in')}
+                    >
+                        Sign In to Purchase
+                    </Button>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section
@@ -104,8 +125,8 @@ const PriceCard = () => {
                                             items={[
                                                 {
                                                     itemId: itemId,
-                                                    quantity: 1
-                                                }
+                                                    quantity: 1,
+                                                },
                                             ]}
                                             onSuccess={handleSuccess}
                                         />

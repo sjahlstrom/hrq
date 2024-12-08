@@ -1,25 +1,29 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-export const isPublicRoute = createRouteMatcher(
-    [
-        '/', '/sign-in(.*)',
-        '/sign-up(.*)',
-        '/components/Analysis(.*)',
-        "/api/webhook/clerk(.*)",
-    ]
-);
+// Define routes that are publicly accessible
+export const isPublicRoute = createRouteMatcher([
+    '/',
+    '/sign-in(.*)',
+    '/sign-up(.*)',
+    '/components/Analysis(.*)',
+    '/api/webhook/clerk(.*)', // Public webhook route
+]);
 
-// Define routes that should be protected
+// Define routes that require authentication
 const isProtectedRoute = createRouteMatcher([
     '/admin',
     '/users',
     '/stats',
-    '/item'
-]); // Update clerkMiddleware to manually protect routes
+    '/item',
+    '/api/checkout', // Protect checkout API
+    '/api/createPaymentIntent', // Protect payment intent creation
+    '/components/Pricing(.*)', // Protect the pricing or purchase UI
+]);
 
+// Middleware to enforce authentication
 export default clerkMiddleware((auth, req) => {
     if (isProtectedRoute(req)) {
-        auth().protect(); // Protect the route if it matches the defined criteria
+        auth().protect(); // Protect the route if it matches the criteria
     }
 });
 
