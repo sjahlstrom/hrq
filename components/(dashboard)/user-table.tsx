@@ -18,7 +18,6 @@ export const UserTable: React.FC<UserTableProps> = ({
     handleUsernameClick,
     handleBanUser,
     sortConfig,
-    isClient,
 }) => {
     const userFields: (keyof User)[] = [
         'username',

@@ -35,7 +35,7 @@ export default function SignUpPage() {
                     <Label htmlFor="tos" className="text-sm text-white">
                         I have read and agree to the{' '}
                         <a
-                            href="/terms"
+                            href="/tos"
                             className="text-hrqColors-sunsetOrange-300 hover:underline"
                             target="_blank"
                             rel="noopener noreferrer"

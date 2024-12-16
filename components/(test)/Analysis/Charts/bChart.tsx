@@ -9,8 +9,6 @@ import {
     XAxis,
     YAxis,
     Cell,
-    Tooltip,
-    TooltipProps,
 } from 'recharts'
 import { ChartContainer } from '@/components/ui/chart'
 import {

@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
 import { LucideIcon } from 'lucide-react'
+import { HTMLAttributes } from 'react'
 
 interface DashboardCardProps {
     label: string
@@ -28,7 +29,7 @@ export const DashboardCard = ({
     )
 }
 
-export function DashboardCardContent(props: React.HTMLAttributes<HTMLDivElement>) {
+export function DashboardCardContent(props: HTMLAttributes<HTMLDivElement>) {
     return (
         <div
             {...props}

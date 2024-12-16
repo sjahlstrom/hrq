@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
+import { useState, useEffect, forwardRef, useImperativeHandle, FormEvent, ChangeEvent } from 'react'
 import {
     Card,
     CardHeader,
@@ -66,7 +66,7 @@ export const EditItemsList = forwardRef<ItemsListRef, {}>((_, ref) => {
         setEditingItem(item);
     };
 
-    const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!editingItem) return;
 
@@ -136,7 +136,7 @@ export const EditItemsList = forwardRef<ItemsListRef, {}>((_, ref) => {
         }
     };
 
-    const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleEditChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (!editingItem) return;
         const { name, value } = e.target;
         setEditingItem((prev) => ({

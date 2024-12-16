@@ -89,12 +89,28 @@ const SampleAnalysis: React.FC = () => {
     })
 
     return (
-        // <section className="p-6 bg-gradient-radial from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100 min-h-screen">
         <section className="py-12 bg-gradient-to-br from-hrqColors-skyBlue-500 to-hrqColors-skyBlue-100">
 
             <h1 className="text-3xl font-bold text-gray-800 mb-6 px-2">
                 Analysis...
             </h1>
+
+            <div
+                className="mb-4 bg-custom-radial from-hrqColors-sunsetOrange-400 to-hrqColors-sunsetOrange-200 shadow-md rounded-lg border border-gray-200 p-6">
+                <p className="text-gray-50">
+                    A mini-report, based on whether you score high, medium or
+                    low, on the questions. The above questions represent only
+                    one question for each trait or quality. The actual test has
+                    more than one question for each and measures other
+                    characters than the ones here. This is a sample report, only
+                    one page of probably ten or fifteen for the actual test
+                    report. It is offered to give you a feel for what will
+                    follow, should you take the HighRQ test, which is much more
+                    comprehensive. According to your scores, based upon a
+                    comparison to norms, the following is likely true.
+                </p>
+            </div>
+
             {loading ? (
                 <p className="text-gray-600">Loading...</p>
             ) : matchedQuestions.length > 0 ? (
@@ -119,21 +135,21 @@ const SampleAnalysis: React.FC = () => {
                 <p className="text-gray-600">No matching questions found.</p>
             )}
 
-            <div
-                className="mt-8 bg-custom-radial from-hrqColors-sunsetOrange-400 to-hrqColors-sunsetOrange-200 shadow-md rounded-lg border border-gray-200 p-6">
-                <p className="text-gray-50">
-                    A mini-report, based on whether you score high, medium or
-                    low, on the questions. The above questions represent only
-                    one question for each trait or quality. The actual test has
-                    more than one question for each and measures other
-                    characters than the ones here. This is a sample report, only
-                    one page of probably ten or fifteen for the actual test
-                    report. It is offered to give you a feel for what will
-                    follow, should you take the HighRQ test, which is much more
-                    comprehensive. According to your scores, based upon a
-                    comparison to norms, the following is likely true.
-                </p>
-            </div>
+            {/*<div*/}
+            {/*    className="mt-8 bg-custom-radial from-hrqColors-sunsetOrange-400 to-hrqColors-sunsetOrange-200 shadow-md rounded-lg border border-gray-200 p-6">*/}
+            {/*    <p className="text-gray-50">*/}
+            {/*        A mini-report, based on whether you score high, medium or*/}
+            {/*        low, on the questions. The above questions represent only*/}
+            {/*        one question for each trait or quality. The actual test has*/}
+            {/*        more than one question for each and measures other*/}
+            {/*        characters than the ones here. This is a sample report, only*/}
+            {/*        one page of probably ten or fifteen for the actual test*/}
+            {/*        report. It is offered to give you a feel for what will*/}
+            {/*        follow, should you take the HighRQ test, which is much more*/}
+            {/*        comprehensive. According to your scores, based upon a*/}
+            {/*        comparison to norms, the following is likely true.*/}
+            {/*    </p>*/}
+            {/*</div>*/}
         </section>
     )
 }
