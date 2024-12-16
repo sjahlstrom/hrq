@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
+const CONTACT_EMAIL = process.env.CONTACT_EMAIL!
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
@@ -9,11 +10,11 @@ export async function POST(req: Request) {
 
         const { data, error } = await resend.emails.send({
             from: 'hrq@humanrq.com',
-            to: email,
+            to: CONTACT_EMAIL,
             subject: `New message from ${name}`,
             text: message,
         })
-
+console.log("Contact Email:", CONTACT_EMAIL)
         if (error) {
             return NextResponse.json({ success: false, error: error.message }, { status: 400 })
         }

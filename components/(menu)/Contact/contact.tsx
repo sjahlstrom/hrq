@@ -90,7 +90,7 @@ function ContactForm() {
     return (
         <section className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
             <div className="container mx-auto px-4 py-16">
-                <Card className="max-w-2xl mx-auto bg-gray-900/50 backdrop-blur-sm border-gray-800">
+                <Card className=" max-w-2xl mx-auto bg-gray-900/50 backdrop-blur-sm border-white">
                     <CardHeader className="space-y-1">
                         <CardTitle className={`${nunito.className} text-3xl font-bold text-center text-white`}>
                             Get in Touch
@@ -103,13 +103,13 @@ function ContactForm() {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
                                 <label className={`${telex.className} text-sm font-medium text-gray-200`}>
-                                    Your Name
+                                    Your User Name
                                 </label>
                                 <Input
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
-                                    className="bg-gray-800/50 border-gray-700 text-white"
+                                    className="bg-gray-800/50 border-gray-700 text-white placeholder:text-hrqColors-coolGray-600 placeholder:focus:text-transparent"
                                     placeholder="John Doe"
                                 />
                                 {errors.name && <p className="text-red-400 text-sm">{errors.name}</p>}
@@ -117,14 +117,14 @@ function ContactForm() {
 
                             <div className="space-y-2">
                                 <label className={`${telex.className} text-sm font-medium text-gray-200`}>
-                                    Email Address
+                                    Your Email Address
                                 </label>
                                 <Input
                                     name="email"
                                     type="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="bg-gray-800/50 border-gray-700 text-white"
+                                    className="bg-gray-800/50 border-gray-700 text-white placeholder:text-hrqColors-coolGray-600 placeholder:focus:text-transparent"
                                     placeholder="john@example.com"
                                 />
                                 {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
@@ -132,13 +132,13 @@ function ContactForm() {
 
                             <div className="space-y-2">
                                 <label className={`${telex.className} text-sm font-medium text-gray-200`}>
-                                    Message
+                                    Your Message
                                 </label>
                                 <Textarea
                                     name="message"
                                     value={formData.message}
                                     onChange={handleChange}
-                                    className="bg-gray-800/50 border-gray-700 text-white min-h-[150px]"
+                                    className="bg-gray-800/50 border-gray-700 text-white placeholder:text-hrqColors-coolGray-600 placeholder:focus:text-transparent"
                                     placeholder="Your message here..."
                                 />
                                 {errors.message && <p className="text-red-400 text-sm">{errors.message}</p>}
