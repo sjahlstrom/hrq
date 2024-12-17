@@ -105,11 +105,10 @@ export default function Component() {
                                     }`}
                                 />
                             </Button>
-
                             <nav
                                 ref={dropdownRef}
                                 id="navbarCollapse"
-                                className={`navbar absolute right-1 z-30 w-[150px] py-4 px-6 duration-300 rounded-lg border border-white ${
+                                className={`navbar absolute right-1 z-30 w-[150px] py-4 px-6 duration-300 rounded-lg border border-white lg:ml-[260px] ${
                                     navbarOpen
                                         ? 'visible top-full opacity-100 bg-blue-500 bg-opacity-60'
                                         : 'invisible top-[120%] opacity-0'
@@ -125,7 +124,7 @@ export default function Component() {
                                             {menuItem.path ? (
                                                 <Link
                                                     href={menuItem.path}
-                                                    className="flex py-2 text-base text-white lg:text-hrqColors-coolGray-700 group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
+                                                    className="flex py-2 text-base text-hrqColors-coral-500  group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
                                                     onClick={() =>
                                                         setNavbarOpen(false)
                                                     }
@@ -172,7 +171,10 @@ export default function Component() {
                                                                     (isSignedIn &&
                                                                         isAdmin)) && (
                                                                     <Link
-                                                                        href={submenuItem.path || '#'}
+                                                                        href={
+                                                                            submenuItem.path ||
+                                                                            '#'
+                                                                        }
                                                                         key={
                                                                             submenuItem.id
                                                                         }
