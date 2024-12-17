@@ -19,8 +19,8 @@ const NotFoundPage = () => {
     return (
 <>
         <Breadcrumb
-            pageName="About"
-            description="I'm wandering around aimlessly and I'm hopelessly lost"        />
+            pageName="I'm lost!"
+            description="I'm wandering around aimlessly and hopelessly lost"        />
 
         <section className="bg-white dark:bg-gray-900">
             <div className="container min-h-screen px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12">
