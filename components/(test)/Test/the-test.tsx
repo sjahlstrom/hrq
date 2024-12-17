@@ -241,6 +241,7 @@ export default function Component({
                         </div>
                     </div>
                     <SliderOptions options={currentQuestion.options} />
+                    <div className="mt-6 justify-center text-center">The slider is an incremental scale, move the handle to the most appropriate position</div>
                 </div>
 
                 <div className="w-full max-w-3xl flex justify-center mb-8 md:mb-12 -mt-24">

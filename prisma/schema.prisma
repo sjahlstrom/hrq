@@ -104,6 +104,12 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+model Sample {
+  id        String   @id @default(cuid())
+  email     String?  @unique
+  createdAt DateTime @default(now())
+}
+
 model Purchase {
   id              String                 @id @default(cuid())
   userId          String

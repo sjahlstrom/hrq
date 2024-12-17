@@ -6,7 +6,6 @@ const Footer = () => {
         <footer>
             <div className="bg-custom-radial from-hrqColors-skyBlue-800 to-hrqColors-skyBlue-400">
                 <div className="container px-6 py-8 mx-auto">
-
                     <Link href="/public" className="cursor-pointer">
                         <div className=" flex flex-col items-center -mt-2 text-center ">
                             <div className={telex.className}>
@@ -45,17 +44,19 @@ const Footer = () => {
                     <hr className="my-6 md:my-4 border-hrqColors-sunsetOrange-300" />
 
                     <div
-                        className={`flex flex-col items-center sm:flex-row sm:justify-between ${laila.className}`}
+                        className={`flex flex-col items-center ${laila.className}`}
                     >
-                        <p className="text-xs text-blue-100">
-                            Copyright © Pending, 06/22/2019. HighRQ, Inc. All
-                            Rights Reserved. HighRQ, Relationship quotient (RQ),
-                            Compatibility Quotient (CQ), and several other
-                            marks, colors, and images are registered and common
-                            law trademarks of HighRQ, Inc.
+                        <p className="justify-center text-center text-xs text-blue-100">
+                            Copyright 2024. HighRQ, Inc. All Rights Reserved.
+                        </p>
+
+                        <p className="justify-center text-center text-xs text-blue-100">
+                            HighRQ, Relationship quotient (RQ), Compatibility
+                            Quotient (CQ), and several other marks, colors, and
+                            images are registered and common law trademarks of
+                            HighRQ, LLC.
                         </p>
                     </div>
-
                     <div className="flex -mx-2">
                         <a
                             href="#"
