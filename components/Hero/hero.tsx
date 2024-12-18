@@ -25,7 +25,7 @@ export default function Hero() {
                 <div className="-mt-12 relative w-full">
                     <div className="mx-auto max-w-[800px] text-center">
                         <h1
-                            className={`${nunito.className} animate-fade-in text-dark  mb-3 text-2xl font-bold leading-tight sm:text-3xl md:text-4xl lg:text-6xl xl:text-6xl`}
+                            className={`${nunito.className} animate-fade-in text-hrqColors-skyBlue-200  mb-3 text-2xl font-bold leading-tight sm:text-3xl md:text-4xl lg:text-6xl xl:text-6xl`}
                         >
                             High Relationship Quotient<br/>
                             <div className="font-medium text-2xl">(HRQ)</div>
@@ -34,7 +34,7 @@ export default function Hero() {
                             className={`${telex.className} animate-slideUp text-white mb-12 text-sm font-semibold leading-relaxed sm:text-base md:text-lg lg:text-xl`}
                         >
                             Ready to find your ideal partner? <br />
-                            Learn more about gaining a Highest Relationship Quotient.
+                            Learn more about gaining a High Relationship Quotient.
                         </p>
                     </div>
                 </div>

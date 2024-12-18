@@ -33,7 +33,7 @@
 /* Component-specific styles */
 @layer components {
     .hero-background {
-        background-image: url('../public/images/hero/landing.jpg');
+        background-image: url('../public/images/hero/landing2.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;

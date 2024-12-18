@@ -137,6 +137,9 @@ export default function TestAnalysis() {
                     <h1 className="animate-fade-in text-3xl font-bold text-gray-800 mb-6">
                         Analysis Results
                     </h1>
+
+
+
                     {analysisData.uniqueResults.length > 0 ? (
                         <div className="space-y-6">
                             {analysisData.uniqueResults.map((result, index) => (
@@ -151,7 +154,8 @@ export default function TestAnalysis() {
                     transition-opacity duration-700 ease-in-out`}
                                 >
                                     <p className="text-gray-800 animate-fade-in">
-                                        Summed Result {result.summedResult} -- Scale: {result.scale} -- Positions: {result.positions.join(', ')} -- Raw: {result.answers} -- Answers: {result.answers.join(', ')} <br /> {result.analysis}
+                                        {/*Summed Result {result.summedResult} -- Scale: {result.scale} -- Positions: {result.positions.join(', ')} -- Raw: {result.answers} -- Answers: {result.answers.join(', ')} <br /> */}
+                                        {result.analysis}
                                         {result.scale === 100
                                             ? ' (100%)'
                                             : result.scale === 0
@@ -171,6 +175,8 @@ export default function TestAnalysis() {
                     />
                     {currentPage === totalPages && analysisData.lieAnalysis && (
                         <>
+                            {/*Your Total Composite Score is {analysisData.totalSummedValues + analysisData.totalLie / 10}*/}
+
                             <FinalAnalysis
                                 lieAnalysis={analysisData.lieAnalysis}
                                 totalSummedValues={
@@ -178,6 +184,7 @@ export default function TestAnalysis() {
                                     analysisData.totalLie / 10
                                 }
                                 chartData={analysisData.chartData}
+
                             />
                             <div className="mt-8 flex justify-center">
                                 <Button
@@ -187,6 +194,7 @@ export default function TestAnalysis() {
                                     className="rounded-full w-[240px] bg-hrqColors-skyBlue-400 hover:bg-hrqColors-skyBlue-600 active:bg-hrqColors-skyBlue-700 border border-hrqColors-skyBlue-700 transition-colors duration-300"                                >
                                     Download PDF Report
                                 </Button>
+
                             </div>
                         </>
                     )}

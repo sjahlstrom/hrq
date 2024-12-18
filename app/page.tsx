@@ -1,9 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-
-import Hero from '@/components/Hero/hero' // If it's in its own folder
-
+import Hero from '@/components/Hero/hero'
 import CTA from '@/components/CTA/cta'
 import ScrollUp from '@/components/common/scroll-up'
 import { ExtendedUser } from '@/types/ExtenderUser'

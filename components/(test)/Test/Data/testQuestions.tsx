@@ -907,7 +907,7 @@ const testQuestions: TestQuestion[] = [
 
    {
       question:
-          "I tend to think more about what's coming up or what already happened in the past rather than what's going on now",
+          "I tend to think more about what's coming up or what already happened rather than what's going on now",
       scale: 20,
       position: 94,
       reverse: true,

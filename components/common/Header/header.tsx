@@ -108,10 +108,10 @@ export default function Component() {
                             <nav
                                 ref={dropdownRef}
                                 id="navbarCollapse"
-                                className={`navbar absolute right-1 z-30 w-[150px] py-4 px-6 duration-300 rounded-lg border border-white lg:ml-[260px] ${
+                                className={`navbar absolute right-1 z-30 w-[150px] py-4 px-6 duration-300 rounded-lg border border-white ml-[160px] ${
                                     navbarOpen
                                         ? 'visible top-full opacity-100 bg-blue-500 bg-opacity-60'
-                                        : 'invisible top-[120%] opacity-0'
+                                        : 'invisible top-[120%] -mt-10 opacity-0'
                                 } lg:visible lg:static lg:w-auto lg:border-none lg:!transparent lg:p-0 lg:opacity-100`}
                             >
                                 <ul className="block lg:flex lg:space-x-12">
@@ -124,7 +124,7 @@ export default function Component() {
                                             {menuItem.path ? (
                                                 <Link
                                                     href={menuItem.path}
-                                                    className="flex py-2 text-base text-hrqColors-coral-500  group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
+                                                    className="flex py-2 text-base text-white group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
                                                     onClick={() =>
                                                         setNavbarOpen(false)
                                                     }
@@ -137,7 +137,7 @@ export default function Component() {
                                                         onClick={() =>
                                                             handleSubmenu(index)
                                                         }
-                                                        className="flex cursor-pointer items-center justify-between py-2 text-base text-white lg:text-dark group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
+                                                        className="flex cursor-pointer items-center justify-between py-2 text-base text-white lg:text-hrqColors-sunsetOrange-600 group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
                                                     >
                                                         {menuItem.title}
                                                         <span className="pl-3">
@@ -161,7 +161,7 @@ export default function Component() {
                                                         } ${
                                                             navbarOpen
                                                                 ? ''
-                                                                : 'lg:rounded-lg lg:border lg:border-white lg:bg-blue-500 lg:bg-opacity-60'
+                                                                : 'lg:rounded-lg lg:border lg:border-white lg:bg-blue-500 lg:bg-opacity-95'
                                                         } lg:invisible lg:absolute lg:top-[110%] lg:block lg:w-[150px] lg:p-4 lg:opacity-0 lg:shadow-lg lg:group-hover:visible lg:group-hover:top-full`}
                                                     >
                                                         {menuItem.submenu?.map(
@@ -221,7 +221,7 @@ export default function Component() {
                                             <Button
                                                 onClick={handleSignInClick}
                                                 size="sm"
-                                                className="rounded-xl bg-[#fc6a4a] text-gray-700"
+                                                className="rounded-xl bg-[#fc6a4a] text-dark hover:bg-[#fc6a4a]/60 hover:text-white"
                                             >
                                                 Login
                                             </Button>
