@@ -37,18 +37,18 @@ export const metadata: Metadata = {
     ],
     title: {
         default:
-            'High Relationship Quotient (HighRQ)- Improve your relationships. Life is a balancing act. Find how to get yours in balance and improve all of your relationships, work, social, romance.',
+            'Ready to find your ideal partner? Learn more about gaining a High Relationship Quotient.',
         template: '%s - High Relationship Quotient',
     },
     alternates: {
         canonical: '/',
     },
     description:
-        'Life is a balancing act. Find how to get yours in balance and improve all of your relationships, work, social, romance.',
+        'Ready to find your ideal partner? Learn more about gaining a High Relationship Quotient.',
     openGraph: {
         title: 'High Relationship Quotient',
         description:
-            'Life is a balancing act. Find how to get yours in balance and improve all of your relationships, work, social, romance.',
+            'Ready to find your ideal partner? Learn more about gaining a High Relationship Quotient.',
         url: 'https://hrq.vercel.app',
         siteName: 'High Relationship Quotient',
         images: [
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: 'High Relationship Quotient',
         description:
-            'Life is a balancing act. Find how to get yours in balance and improve all of your relationships, work, social, romance.',
+            'Ready to find your ideal partner? Learn more about gaining a High Relationship Quotient.',
         images: ['https://hrq.vercel.app/twitter-image.jpg'],
     },
 }
@@ -117,7 +117,8 @@ export default function RootLayout({
                     />
                     <meta name="robots" content="all" />
                     <title>
-                        High Relationship Quotient - Life is a balancing act.
+                        High Relationship Quotient - Ready to find your ideal partner? Learn more about gaining a High Relationship Quotient.
+
                     </title>
                 </head>
                 <body className="min-h-screen flex flex-col">

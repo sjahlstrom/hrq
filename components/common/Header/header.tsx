@@ -60,7 +60,7 @@ export default function Component() {
             }`}
         >
             <div className="container h-full">
-                <div className="relative mx-4 flex items-center justify-between h-full">
+                <div className="relative mx-4  -ml-12 flex items-center justify-between h-full">
                     <div className="w-40 max-w-full px-4 xl:mr-12 relative h-[60px]">
                         <Link
                             href="/public"
@@ -83,7 +83,7 @@ export default function Component() {
                                 onClick={navbarToggleHandler}
                                 id="navbarToggler"
                                 aria-label="Mobile Menu"
-                                className="absolute -right-12 top-1/2 block translate-y-[-50%] rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
+                                className="absolute -mt-4  -right-12 top-1/2 block translate-y-[-50%] rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
                             >
                                 <span
                                     className={`relative my-1.5 block h-0.5 w-[30px] bg-hrqColors-coral-500 transition-all duration-300 ${
@@ -202,7 +202,7 @@ export default function Component() {
                                 </ul>
                             </nav>
                         </div>
-                        <div className="flex items-center justify-end pr-4 lg:pr-0">
+                        <div className="flex -mt-8 items-center justify-end pr-4 lg:pr-0">
                             <div>
                                 {isSignedIn ? (
                                     <>
@@ -221,7 +221,7 @@ export default function Component() {
                                             <Button
                                                 onClick={handleSignInClick}
                                                 size="sm"
-                                                className="rounded-xl bg-[#fc6a4a] text-dark hover:bg-[#fc6a4a]/60 hover:text-white"
+                                                className="rounded-xl  bg-[#fc6a4a] text-dark hover:bg-[#fc6a4a]/60 hover:text-white"
                                             >
                                                 Login
                                             </Button>
