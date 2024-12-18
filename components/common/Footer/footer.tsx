@@ -47,12 +47,11 @@ const Footer = () => {
                         className={`flex flex-col items-center ${laila.className}`}
                     >
                         <p className="justify-center text-center text-xs text-blue-100">
-                            Copyright 2024. HighRQ, Inc. All Rights Reserved.
-                        </p>
+                            Copyright © 2024. HighRQ, Inc. All Rights Reserved.                        </p>
 
                         <p className="justify-center text-center text-xs text-blue-100">
                             HighRQ, Relationship quotient (RQ), Compatibility
-                            Quotient (CQ), and several other marks, colors, and
+                            Quotient (CQ), and other marks, colors, and
                             images are registered and common law trademarks of
                             HighRQ, LLC.
                         </p>

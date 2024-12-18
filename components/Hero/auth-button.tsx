@@ -11,13 +11,13 @@ export default function AuthButton() {
         return null
     }
 
-    // return (
-    //     <div className="-mt-[340px] w-full">
-    //         <div className="justify-center">
-    //             <Button asChild size="lg" variant="outline" className="border-4 rounded-xl font-extrabold w-full text-hrqColors-sunsetOrange-600">
-    //                 <Link href="/sign-in">LET&apos;S GET STARTED</Link>
-    //             </Button>
-    //         </div>
-    //     </div>
-    // )
+    return (
+        <div className="mt-[340px] w-full">
+            <div className="justify-center">
+                <Button asChild size="lg" variant="outline" className="border-4 border-hrqColors-coral-200 rounded-xl font-extrabold w-full text-white">
+                    <Link href="/test">LET&apos;S GET STARTED</Link>
+                </Button>
+            </div>
+        </div>
+    )
 }
