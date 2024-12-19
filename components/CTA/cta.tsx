@@ -13,7 +13,7 @@ export function CTA() {
                         <p className="text-lg md:text-xl text-white mb-8 max-w-2xl text-dark/60">
                             Discover your High Relationship Quotient and learn
                             how to enhance all aspects of your personal and
-                            professional interactions.
+                            romantic relationships.
                         </p>
                     </h1>
                     <div className="flex flex-col sm:flex-row gap-4 text-dark">
