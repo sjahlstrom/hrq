@@ -80,12 +80,29 @@ const Dashboard = async () => {
         db.user.findMany({
             orderBy: { createdAt: 'desc' },
             take: 7,
+            include: {
+                images: {
+                    take: 1,
+                    orderBy: {
+                        createdAt: 'desc'
+                    }
+                }
+            }
         }),
         db.purchase.findMany({
             orderBy: { createdAt: 'desc' },
             take: 5,
             include: {
-                user: true,
+                user: {
+                    include: {
+                        images: {
+                            take: 1,
+                            orderBy: {
+                                createdAt: 'desc'
+                            }
+                        }
+                    }
+                },
                 items: {
                     include: {
                         item: true
@@ -113,7 +130,7 @@ const Dashboard = async () => {
         }),
     ])
 
-    const totalAmount = salesTotal._sum.price || 0
+    const totalAmount = salesTotal._sum.price ?? 0
     const goalAmount = 1000
     const goalProgress = (totalAmount / goalAmount) * 100
 
@@ -122,18 +139,18 @@ const Dashboard = async () => {
             total + itemRel.price * itemRel.quantity, 0)
 
     const UserData: UserDataCardProps[] = recentUsers.map((account) => ({
-        name: account.username || 'Unknown',
-        email: account.email || 'Unknown',
-        image: account.image || '/images/dashboard/mesh.png',
+        name: account.username ?? 'Unknown',
+        email: account.email ?? 'Unknown',
+        image: account.images[0]?.url ?? '/images/dashboard/mesh.png',
         time: formatDistanceToNow(new Date(account.createdAt), {
             addSuffix: true,
         }),
     }))
 
     const PurchaseData: UserPurchaseProps[] = recentSales.map((purchase) => ({
-        name: purchase.user.username || 'Unknown',
-        email: purchase.user.email || 'Unknown',
-        image: purchase.user.image || '/images/dashboard/mesh.png',
+        name: purchase.user.username ?? 'Unknown',
+        email: purchase.user.email ?? 'Unknown',
+        image: purchase.user.images[0]?.url ?? '/images/dashboard/mesh.png',
         saleAmount: `$${calculateSaleTotal(purchase.items).toFixed(2)}`,
     }))
 
