@@ -53,7 +53,7 @@ export default async function PreferencesPage() {
         <div className="container mx-auto px-4 py-8">
             <Breadcrumb
                 pageName="Preferences"
-                description="The main 'thrust' is to focus on helping people to find their potential and increasing their satisfaction in their relationship."
+                description="The main 'thrust' is to focus on helping people to find their potential and increasing satisfaction in their relationships."
             />
             <div className="mt-8">
                 <PreferencesForm initialData={preferencesData} />

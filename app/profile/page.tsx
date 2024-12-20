@@ -28,7 +28,7 @@ export default async function ProfilePage() {
             <div>
                 <Breadcrumb
                     pageName="Profile"
-                    description="The main 'thrust' is to focus on helping people to find their potential and increasing their satisfaction in their relationship."
+                    description="The main 'thrust' is to focus on helping people to find their potential and increasing satisfaction in their relationships."
                 />
                 <ProfileForm initialData={bioData} />
             </div>

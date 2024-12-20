@@ -1,6 +1,12 @@
 'use client'
 
-import React, { useState, useCallback, useEffect, useMemo, KeyboardEvent } from 'react'
+import React, {
+    useState,
+    useCallback,
+    useEffect,
+    useMemo,
+    KeyboardEvent,
+} from 'react'
 import 'rc-slider/assets/index.css'
 import ReverseSlider from '@/components/Slider/reverse-slider'
 import ForwardSlider from '@/components/Slider/forward-slider'
@@ -40,12 +46,12 @@ const SliderOptions: React.FC<{ options: Option }> = ({ options }) => (
                 className={`
         absolute top-1/2 -translate-y-1/2 text-xs sm:text-sm
         ${
-                    index === 0
-                        ? 'left-4'
-                        : index === 1
-                            ? 'left-[calc(50%-12px)] -translate-x-1/2'
-                            : 'right-4'
-                }
+            index === 0
+                ? 'left-4'
+                : index === 1
+                  ? 'left-[calc(50%-12px)] -translate-x-1/2'
+                  : 'right-4'
+        }
       `}
             >
                 {value}
@@ -55,10 +61,10 @@ const SliderOptions: React.FC<{ options: Option }> = ({ options }) => (
 )
 
 export default function Component({
-                                      questionData = [],
-                                      fireworksIndex = 0,
-                                      questionNumber = 0,
-                                  }: TheTestProps) {
+    questionData = [],
+    fireworksIndex = 0,
+    questionNumber = 0,
+}: TheTestProps) {
     const [state, setState] = useState({
         questionIndex: questionNumber,
         sliderValue: 15,
@@ -173,23 +179,37 @@ export default function Component({
         [currentQuestion.reverse]
     )
 
-    const handleKeyPress = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === 'Enter' || event.key === 'Return') {
-            if (isLastQuestion) {
-                handleShowAnalysis()
-            } else if (state.isSliderUsed) {
-                advanceToNextQuestion()
+    const handleKeyPress = useCallback(
+        (event: KeyboardEvent<HTMLDivElement>) => {
+            if (event.key === 'Enter' || event.key === 'Return') {
+                if (isLastQuestion) {
+                    handleShowAnalysis()
+                } else if (state.isSliderUsed) {
+                    advanceToNextQuestion()
+                }
             }
-        }
-    }, [isLastQuestion, handleShowAnalysis, state.isSliderUsed, advanceToNextQuestion])
+        },
+        [
+            isLastQuestion,
+            handleShowAnalysis,
+            state.isSliderUsed,
+            advanceToNextQuestion,
+        ]
+    )
 
     useEffect(() => {
         // Add event listener
-        document.addEventListener('keydown', handleKeyPress as unknown as EventListener)
+        document.addEventListener(
+            'keydown',
+            handleKeyPress as unknown as EventListener
+        )
 
         // Remove event listener on cleanup
         return () => {
-            document.removeEventListener('keydown', handleKeyPress as unknown as EventListener)
+            document.removeEventListener(
+                'keydown',
+                handleKeyPress as unknown as EventListener
+            )
         }
     }, [handleKeyPress])
 
@@ -226,7 +246,8 @@ export default function Component({
 
                 <div className=" w-full max-w-3xl mb-8 md:mb-64 overflow-hidden mx-auto ">
                     <div className="w-full max-w-full ">
-                        <div className="w-[95%] -ml-5 mx-auto ">
+                        <div className="w-[95%] -ml-2 mx-auto ">
+
                             {currentQuestion.reverse ? (
                                 <ReverseSlider
                                     value={state.reverseSliderValue}
@@ -241,7 +262,10 @@ export default function Component({
                         </div>
                     </div>
                     <SliderOptions options={currentQuestion.options} />
-                    <div className="mt-6 justify-center text-center">The slider is an incremental scale, move the handle to the most appropriate position</div>
+                    <div className="mt-6 justify-center text-center">
+                        The slider is an incremental scale, move the handle to
+                        the most appropriate position
+                    </div>
                 </div>
 
                 <div className="w-full max-w-3xl flex justify-center mb-8 md:mb-12 -mt-24">
@@ -250,8 +274,8 @@ export default function Component({
                             isLastQuestion
                                 ? 'bg-hrqColors-skyBlue-500 hover:bg-hrqColors-skyBlue-800 group'
                                 : !state.isSliderUsed
-                                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
-                                    : 'bg-hrqColors-skyBlue-600 text-gray-100 hover:bg-hrqColors-skyBlue-800 group'
+                                  ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                                  : 'bg-hrqColors-skyBlue-600 text-gray-100 hover:bg-hrqColors-skyBlue-800 group'
                         }`}
                         onClick={
                             isLastQuestion
