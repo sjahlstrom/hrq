@@ -8,6 +8,10 @@ const nextConfig = {
                 port: '',
                 pathname: '/**',
             },
+            {
+                protocol: 'https',
+                hostname: '*.public.blob.vercel-storage.com',
+            },
             // Add any other remote patterns you need to allow
         ],
     },
