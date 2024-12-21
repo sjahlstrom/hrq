@@ -1,6 +1,8 @@
 'use client'
 
 import * as React from 'react'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -38,7 +40,7 @@ import {
 import { updateProfile } from '@/app/actions/update-profile'
 import { toast } from 'sonner'
 import { DevelopmentGuard } from '@/components/DevelopmentGuard'
-import {isDevelopment} from '@/app/utils/environment'
+import { isDevelopment } from '@/app/utils/environment'
 
 const formSchema = z.object({
     occupation: z
@@ -75,7 +77,6 @@ const formSchema = z.object({
         .max(6144, 'Your description must not exceed 6144 characters.')
         .min(1, 'Please provide a description about yourself.'),
 })
-
 type FormValues = z.infer<typeof formSchema>
 
 interface ProfileData {
@@ -107,7 +108,6 @@ interface ProfileData {
 interface ProfileFormProps {
     initialData: ProfileData | null
 }
-
 const races = [
     'African-American',
     'Asian',
@@ -172,6 +172,9 @@ const educationOptions = [
 ]
 
 export default function ProfileForm({ initialData }: ProfileFormProps) {
+    const router = useRouter()
+    const [isSubmitted, setIsSubmitted] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
@@ -198,7 +201,6 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
         },
         mode: 'onSubmit',
     })
-
     const [selectedYear, setSelectedYear] = React.useState<number>(
         initialData?.birthday
             ? initialData.birthday.getFullYear()
@@ -207,7 +209,6 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
     const [currentMonth, setCurrentMonth] = React.useState(
         initialData?.birthday || new Date()
     )
-    const [isSubmitting, setIsSubmitting] = React.useState(false)
 
     async function onSubmit(values: FormValues) {
         if (!isDevelopment) {
@@ -229,10 +230,11 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
             const result = await updateProfile(formData)
             if (result.success) {
                 toast.success(result.message)
+                setIsSubmitted(true)
             } else {
                 toast.error(
                     result.message ||
-                        'An error occurred while updating the profile'
+                    'An error occurred while updating the profile'
                 )
             }
         } catch (error) {
@@ -255,7 +257,6 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
         setCurrentMonth(newMonth)
         setSelectedYear(newMonth.getFullYear())
     }
-
     const renderFormField = (
         name: keyof FormValues,
         label: string,
@@ -281,8 +282,8 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                 </SelectTrigger>
                                 <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
                                     {(name === 'education'
-                                        ? educationOptions
-                                        : options
+                                            ? educationOptions
+                                            : options
                                     )?.map((option) => (
                                         <SelectItem
                                             key={option}
@@ -306,8 +307,8 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                     name === 'postalCode'
                                         ? 10
                                         : name === 'areaCode'
-                                          ? 8
-                                          : undefined
+                                            ? 8
+                                            : undefined
                                 }
                             />
                         )}
@@ -376,7 +377,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                 <PopoverTrigger asChild>
                                                     <Button
                                                         variant={'outline'}
-                                                        className={`rounded  w-full pl-3 text-left font-normal border-2 border-black focus:ring-black focus:border-black ${
+                                                        className={`rounded w-full pl-3 text-left font-normal border-2 border-black focus:ring-black focus:border-black ${
                                                             !field.value &&
                                                             'text-muted-foreground'
                                                         }`}
@@ -398,14 +399,9 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                 >
                                                     <div className="flex justify-between p-2 border-b border-black">
                                                         <Select
-                                                            onValueChange={(
-                                                                value
-                                                            ) => {
-                                                                const year =
-                                                                    Number(value)
-                                                                setSelectedYear(
-                                                                    year
-                                                                )
+                                                            onValueChange={(value) => {
+                                                                const year = Number(value)
+                                                                setSelectedYear(year)
                                                                 setCurrentMonth(
                                                                     new Date(
                                                                         year,
@@ -413,16 +409,9 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                                     )
                                                                 )
                                                                 if (field.value) {
-                                                                    const newDate =
-                                                                        new Date(
-                                                                            field.value
-                                                                        )
-                                                                    newDate.setFullYear(
-                                                                        year
-                                                                    )
-                                                                    field.onChange(
-                                                                        newDate
-                                                                    )
+                                                                    const newDate = new Date(field.value)
+                                                                    newDate.setFullYear(year)
+                                                                    field.onChange(newDate)
                                                                 }
                                                             }}
                                                             value={selectedYear.toString()}
@@ -430,20 +419,16 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                             <SelectTrigger className="rounded w-[120px] border-2 border-black">
                                                                 <SelectValue placeholder="Select Year" />
                                                             </SelectTrigger>
-                                                            <SelectContent className="bg-hrqColors-coolGray-600 [&>div]:bbg-hrqColors-coolGray-600">
-                                                                {years.map(
-                                                                    (year) => (
-                                                                        <SelectItem
-                                                                            key={
-                                                                                year
-                                                                            }
-                                                                            value={year.toString()}
-                                                                            className="focus:bg-coolGray-600 focus:text-white"
-                                                                        >
-                                                                            {year}
-                                                                        </SelectItem>
-                                                                    )
-                                                                )}
+                                                            <SelectContent className="bg-hrqColors-coolGray-600 [&>div]:bg-hrqColors-coolGray-600">
+                                                                {years.map((year) => (
+                                                                    <SelectItem
+                                                                        key={year}
+                                                                        value={year.toString()}
+                                                                        className="focus:bg-coolGray-600 focus:text-white"
+                                                                    >
+                                                                        {year}
+                                                                    </SelectItem>
+                                                                ))}
                                                             </SelectContent>
                                                         </Select>
                                                         <div className="flex items-center space-x-2">
@@ -451,11 +436,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                                 variant="outline"
                                                                 size="icon"
                                                                 className="h-7 w-7 border-black"
-                                                                onClick={() =>
-                                                                    handleMonthChange(
-                                                                        false
-                                                                    )
-                                                                }
+                                                                onClick={() => handleMonthChange(false)}
                                                             >
                                                                 <ChevronLeft className="h-4 w-4" />
                                                             </Button>
@@ -463,11 +444,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                                 variant="outline"
                                                                 size="icon"
                                                                 className="h-7 w-7 border-black"
-                                                                onClick={() =>
-                                                                    handleMonthChange(
-                                                                        true
-                                                                    )
-                                                                }
+                                                                onClick={() => handleMonthChange(true)}
                                                             >
                                                                 <ChevronRight className="h-4 w-4" />
                                                             </Button>
@@ -479,24 +456,15 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                                         onSelect={(date) => {
                                                             field.onChange(date)
                                                             if (date) {
-                                                                setSelectedYear(
-                                                                    date.getFullYear()
-                                                                )
-                                                                setCurrentMonth(
-                                                                    date
-                                                                )
+                                                                setSelectedYear(date.getFullYear())
+                                                                setCurrentMonth(date)
                                                             }
                                                         }}
                                                         month={currentMonth}
-                                                        onMonthChange={
-                                                            setCurrentMonth
-                                                        }
+                                                        onMonthChange={setCurrentMonth}
                                                         disabled={(date) =>
                                                             date > new Date() ||
-                                                            date <
-                                                            new Date(
-                                                                '1900-01-01'
-                                                            )
+                                                            date < new Date('1900-01-01')
                                                         }
                                                         initialFocus
                                                     />
@@ -514,25 +482,13 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                 'maritalStatus',
                                 'Marital Status',
                                 'Select status',
-                                [
-                                    'Single',
-                                    'Married',
-                                    'Divorced',
-                                    'Widowed',
-                                    'Other',
-                                ]
+                                ['Single', 'Married', 'Divorced', 'Widowed', 'Other']
                             )}
                             {renderFormField(
                                 'relationshipTypeWanted',
                                 'Relationship Type Wanted',
                                 'Select type',
-                                [
-                                    'Hang out',
-                                    'Long-Term',
-                                    'Dating',
-                                    'Sexual',
-                                    'Just Friends',
-                                ]
+                                ['Hang out', 'Long-Term', 'Dating', 'Sexual', 'Just Friends']
                             )}
                             {renderFormField(
                                 'biologicalSex',
@@ -549,12 +505,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                 'Select gender',
                                 ['Male', 'Female', 'Non-Binary', 'Other']
                             )}
-                            {renderFormField(
-                                'race',
-                                'Your Race',
-                                'Select your race',
-                                races
-                            )}
+                            {renderFormField('race', 'Your Race', 'Select your race', races)}
                             {renderFormField(
                                 'smoker',
                                 'Smoker',
@@ -570,12 +521,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                                 'Select option',
                                 alcoholOptions
                             )}
-                            {renderFormField(
-                                'drugs',
-                                'Drugs',
-                                'Select option',
-                                drugOptions
-                            )}
+                            {renderFormField('drugs', 'Drugs', 'Select option', drugOptions)}
                             {renderFormField(
                                 'haveChildren',
                                 'Do you have children?',
@@ -629,17 +575,28 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                             )}
                         />
 
-                        <Button
-                            type="submit"
-                            className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
-                            disabled={isSubmitting}
-                        >
-                            {isSubmitting ? 'Submitting...' : 'Submit'}
-                        </Button>
+                        <div className="space-y-4">
+                            <Button
+                                type="submit"
+                                className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? 'Submitting...' : 'Submit'}
+                            </Button>
+
+                            {isSubmitted && (
+                                <Button
+                                    type="button"
+                                    onClick={() => router.push('/profile/images')}
+                                    className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
+                                >
+                                    Upload Images
+                                </Button>
+                            )}
+                        </div>
                     </form>
                 </Form>
             </div>
         </DevelopmentGuard>
     )
 }
-

@@ -1,4 +1,4 @@
-import ImageUploader from '@/components/(dating)/images/image-uploader'
+import ImageUploader from '@/components/(dating)/Profile/images/multi-image-uploader'
 
 export default function Page() {
     return (
