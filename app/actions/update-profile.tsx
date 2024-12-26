@@ -29,7 +29,6 @@ export async function updateProfile(formData: FormData) {
     const biologicalSex = formData.get('biologicalSex') as string | null
     const gender = formData.get('gender') as string | null
     const race = formData.get('race') as string | null
-    const age = formData.get('are') as string | null
     const smoker = formData.get('smoker') as string | null
     const alcohol = formData.get('alcohol') as string | null
     const drugs = formData.get('drugs') as string | null
@@ -40,9 +39,38 @@ export async function updateProfile(formData: FormData) {
     const aboutYourself = formData.get('aboutYourself') as string | null
 
     try {
-        await db.user.update({
-            where: { externalUserId: userId },
-            data: {
+        // First, try to find or create the user
+        const user = await db.user.upsert({
+            where: {
+                externalUserId: userId
+            },
+            create: {
+                externalUserId: userId,
+                bio: {
+                    create: {
+                        occupation,
+                        education,
+                        incomeRange,
+                        postalCode,
+                        areaCode,
+                        birthday: birthday ? new Date(birthday) : null,
+                        maritalStatus,
+                        relationshipTypeWanted,
+                        biologicalSex,
+                        gender,
+                        race,
+                        smoker,
+                        alcohol,
+                        drugs,
+                        haveChildren,
+                        religion,
+                        primaryLanguage,
+                        otherLanguages,
+                        aboutYourself,
+                    }
+                }
+            },
+            update: {
                 bio: {
                     upsert: {
                         create: {
@@ -93,7 +121,7 @@ export async function updateProfile(formData: FormData) {
         })
 
         revalidatePath('/profile')
-        return { success: true, message: 'profile updated successfully' }
+        return { success: true, message: 'Profile updated successfully' }
     } catch (error) {
         console.error('Error updating profile:', error)
         return { success: false, message: 'Failed to update profile' }

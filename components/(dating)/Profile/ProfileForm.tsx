@@ -41,7 +41,6 @@ import { updateProfile } from '@/app/actions/update-profile'
 import { toast } from 'sonner'
 import { DevelopmentGuard } from '@/components/DevelopmentGuard'
 import { isDevelopment } from '@/app/utils/environment'
-
 const formSchema = z.object({
     occupation: z
         .string()
@@ -104,15 +103,16 @@ interface ProfileData {
     createdAt: Date
     updatedAt: Date
 }
-
 interface ProfileFormProps {
     initialData: ProfileData | null
 }
+
 const races = [
     'African-American',
     'Asian',
     'Black',
     'Caucasian',
+    'Jewish',
     'Indian',
     'Indigenous/Aboriginal',
     'Latin/Hispanic',
@@ -170,7 +170,6 @@ const educationOptions = [
     'Graduate Degree',
     'PhD / Post Doc',
 ]
-
 export default function ProfileForm({ initialData }: ProfileFormProps) {
     const router = useRouter()
     const [isSubmitted, setIsSubmitted] = useState(false)
@@ -201,6 +200,9 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
         },
         mode: 'onSubmit',
     })
+
+    const { isDirty } = form.formState
+
     const [selectedYear, setSelectedYear] = React.useState<number>(
         initialData?.birthday
             ? initialData.birthday.getFullYear()
@@ -209,7 +211,6 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
     const [currentMonth, setCurrentMonth] = React.useState(
         initialData?.birthday || new Date()
     )
-
     async function onSubmit(values: FormValues) {
         if (!isDevelopment) {
             toast.error('This feature is only available in development mode')
@@ -257,6 +258,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
         setCurrentMonth(newMonth)
         setSelectedYear(newMonth.getFullYear())
     }
+
     const renderFormField = (
         name: keyof FormValues,
         label: string,
@@ -321,7 +323,6 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
             )}
         />
     )
-
     return (
         <DevelopmentGuard>
             <div className="bg-custom-radial from-hrqColors-sunsetOrange-100 to-hrqColors-sunsetOrange-400 p-6">
@@ -576,15 +577,17 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                         />
 
                         <div className="space-y-4">
-                            <Button
-                                type="submit"
-                                className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? 'Submitting...' : 'Submit'}
-                            </Button>
+                            {isDirty && (
+                                <Button
+                                    type="submit"
+                                    className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? 'Submitting...' : 'Submit'}
+                                </Button>
+                            )}
 
-                            {isSubmitted && (
+                            {(isSubmitted || !isDirty) && (
                                 <Button
                                     type="button"
                                     onClick={() => router.push('/profile/images')}
