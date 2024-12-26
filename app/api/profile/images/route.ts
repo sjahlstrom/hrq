@@ -1,53 +1,80 @@
-import { NextResponse } from 'next/server';
+// app/api/profile/images/route.ts
 import { auth } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
     try {
         const { userId: clerkUserId } = auth();
         if (!clerkUserId) {
-            return new NextResponse('Unauthorized', { status: 401 });
+            return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        // Get the internal user id from external Clerk id
-        const user = await db.user.findUnique({
+        const { imageUrls } = await req.json();
+
+        // Find the user record using externalUserId
+        const dbUser = await db.user.findFirst({
             where: {
                 externalUserId: clerkUserId
             }
         });
 
-        if (!user) {
-            return new NextResponse('User not found', { status: 404 });
+        if (!dbUser) {
+            return new NextResponse("User not found", { status: 404 });
         }
 
-        const { imageUrls } = await request.json();
+        // Create the image entries using the database user.id
+        const newImages = await Promise.all(
+            imageUrls.map((url: string) => {
+                return db.userImage.create({
+                    data: {
+                        userId: dbUser.id,  // Use the database ID
+                        url,
+                    }
+                });
+            })
+        );
 
-        if (!Array.isArray(imageUrls) || imageUrls.length > 3) {
-            return new NextResponse('Invalid request - Maximum 3 images allowed', { status: 400 });
+        return NextResponse.json(newImages);
+
+    } catch (error) {
+        console.error('[PROFILE_IMAGES_POST]', error);
+        return new NextResponse("Internal Error", { status: 500 });
+    }
+}
+
+export async function GET() {
+    try {
+        const { userId: clerkUserId } = auth();
+        if (!clerkUserId) {
+            return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        // First, delete any existing images for this user
-        await db.userImage.deleteMany({
+        // Find the user record using externalUserId
+        const dbUser = await db.user.findFirst({
             where: {
-                userId: user.id
+                externalUserId: clerkUserId
             }
         });
 
-        // Then save the new image URLs
-        const savedImages = await db.userImage.createMany({
-            data: imageUrls.map(url => ({
-                userId: user.id,
-                url: url,
-                description: 'Profile Image' // Optional description
-            })),
+        if (!dbUser) {
+            return new NextResponse("User not found", { status: 404 });
+        }
+
+        // Use the database user.id to find images
+        const images = await db.userImage.findMany({
+            where: {
+                userId: dbUser.id  // Use the database ID
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
         });
 
-        return NextResponse.json({
-            success: true,
-            count: savedImages.count
-        });
+        return NextResponse.json(images);
+
     } catch (error) {
-        console.error('Error saving user images:', error);
-        return new NextResponse('Internal Server Error', { status: 500 });
+        console.error('[PROFILE_IMAGES_GET]', error);
+        return new NextResponse("Internal Error", { status: 500 });
     }
 }
