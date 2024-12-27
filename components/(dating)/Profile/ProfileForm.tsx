@@ -212,10 +212,10 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
         initialData?.birthday || new Date()
     )
     async function onSubmit(values: FormValues) {
-        if (!isDevelopment) {
-            toast.error('This feature is only available in development mode')
-            return
-        }
+        // if (!isDevelopment) {
+        //     toast.error('This feature is only available in development mode')
+        //     return
+        // }
         setIsSubmitting(true)
         const formData = new FormData()
 

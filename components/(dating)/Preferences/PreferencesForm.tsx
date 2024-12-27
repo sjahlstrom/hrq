@@ -163,21 +163,12 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
     })
 
     const [isSubmitting, setIsSubmitting] = React.useState(false)
-    if (!isDevelopment) {
-        return (
-            <div className="flex items-center justify-center h-screen bg-custom-radial from-hrqColors-peach-500 to-hrqColors-skyBlue-400 p-6">
-                <div className="text-center text-black">
-                    <h2 className="text-2xl font-bold mb-2">Development Mode Only</h2>
-                    <p>This feature is only available in development mode.</p>
-                </div>
-            </div>
-        )
-    }
+
     async function onSubmit(values: FormValues) {
-        if (!isDevelopment) {
-            toast.error('This feature is only available in development mode')
-            return
-        }
+        // if (!isDevelopment) {
+        //     toast.error('This feature is only available in development mode')
+        //     return
+        // }
         setIsSubmitting(true)
         const formData = new FormData()
 
