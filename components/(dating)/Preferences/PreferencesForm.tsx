@@ -1,3 +1,4 @@
+
 'use client'
 
 import * as React from 'react'
@@ -25,7 +26,6 @@ import {
     SavePreferencesResult,
 } from '@/app/actions/update-preferences'
 import { toast } from 'sonner'
-import { isDevelopment } from '@/app/utils/environment'
 
 const formSchema = z.object({
     education: z.string().min(1, 'Please select education level.'),
@@ -163,21 +163,7 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
     })
 
     const [isSubmitting, setIsSubmitting] = React.useState(false)
-    if (!isDevelopment) {
-        return (
-            <div className="flex items-center justify-center h-screen bg-custom-radial from-hrqColors-peach-500 to-hrqColors-skyBlue-400 p-6">
-                <div className="text-center text-black">
-                    <h2 className="text-2xl font-bold mb-2">Development Mode Only</h2>
-                    <p>This feature is only available in development mode.</p>
-                </div>
-            </div>
-        )
-    }
     async function onSubmit(values: FormValues) {
-        if (!isDevelopment) {
-            toast.error('This feature is only available in development mode')
-            return
-        }
         setIsSubmitting(true)
         const formData = new FormData()
 
@@ -193,7 +179,7 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
             } else {
                 toast.error(
                     result.error ||
-                        'An error occurred while updating the Preferences'
+                    'An error occurred while updating the Preferences'
                 )
             }
         } catch (error) {
@@ -222,32 +208,31 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                         >
-                            <SelectTrigger className="rounded border-2 border-black focus:ring-black focus:border-black">
-                                <SelectValue placeholder={`${label}`} />
+                            <SelectTrigger className="rounded border-2 border-black focus:ring-black focus:border-black text-dark">
+                                <SelectValue />
                             </SelectTrigger>
-                            <SelectContent className="bg-slate-500 [&>div]:bg-coolGray-500">
-                                {options.map((option) => (
-                                    <SelectItem
-                                        key={option}
-                                        value={option
-                                            .toLowerCase()
-                                            .replace(/\s+/g, '-')}
-                                        className="round focus:bg-coolGray-600 focus:text-white"
-                                    >
-                                        {option}
-                                    </SelectItem>
-                                ))}
+                            <SelectContent className="bg-dark [&>div]:bg-dark">                                {options.map((option) => (
+                                <SelectItem
+                                    key={option}
+                                    value={option
+                                        .toLowerCase()
+                                        .replace(/\s+/g, '-')}
+                                    className="round focus:bg-coolGray-600 focus:text-white"
+                                >
+                                    {option}
+                                </SelectItem>
+                            ))}
                             </SelectContent>
                         </Select>
                     </FormControl>
-                    <FormMessage className="absolute -bottom-6 left-0 text-red-600 text-sm font-medium" />
+                    <FormMessage className="absolute -bottom-6 left-0 text-red-200 text-sm font-telex" />
                 </FormItem>
             )}
         />
     )
 
     return (
-        <div className="bg-custom-radial from-hrqColors-peach-500 to-hrqColors-skyBlue-400 p-6">
+        <div className="bg-custom-radial from-hrqColors-sunsetOrange-00 to-hrqColors-sunsetOrange-600 p-6">
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -349,3 +334,4 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
         </div>
     )
 }
+

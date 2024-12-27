@@ -22,14 +22,6 @@ export async function POST(request: Request) {
             access: 'public',
         });
 
-        // You might want to save the URL to your database using Prisma here
-        // const savedImage = await prisma.image.create({
-        //   data: {
-        //     url: blob.url,
-        //     // ... other fields
-        //   }
-        // });
-
         return NextResponse.json(blob);
     } catch (error) {
         return NextResponse.json({ error: 'Error uploading file' }, { status: 500 });

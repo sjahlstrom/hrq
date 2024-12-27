@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 import Breadcrumb from '@/components/common/bread-crumb'
 import QuestionSection from '@/components/(test)/Test/the-test'
 import TermsOfService from '@/components/TermsOfService'
