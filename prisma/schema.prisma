@@ -24,6 +24,7 @@ model User {
   testCompleted    Boolean      @default(false)
   paid_rq          Boolean      @default(false)
   paid_cq          Boolean      @default(false)
+  tos              Boolean      @default(false)
   summedTotal      Float?
   banned           Boolean      @default(false)
   images           UserImage[] // Changed from image to images relation
@@ -72,17 +73,6 @@ model Profile {
   createdAt              DateTime  @default(now())
   updatedAt              DateTime  @updatedAt
 }
-
-// model ProfileImage {
-//   id        String   @id @default(cuid())
-//   userId    String
-//   url       String
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   user      User     @relation(fields: [userId], references: [id])
-//
-//   @@index([userId])
-// }
 
 model Preferences {
   id                     String   @id @default(cuid())

@@ -204,6 +204,7 @@ export default function Component() {
                         </div>
                         <div className="flex -mt-8 items-center justify-end pr-4 lg:pr-0">
                             <div>
+
                                 {isSignedIn ? (
                                     <>
                                         <UserButton />

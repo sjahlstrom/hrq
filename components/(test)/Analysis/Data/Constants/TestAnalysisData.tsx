@@ -2946,7 +2946,7 @@ const testAnalysisData = [
 
     {
         question:
-            "I tend to think more about what's coming up or what already happened rather than what's going on now",
+            "I tend to think more what's coming up or what already happened rather than what's going on now",
         scale: 20,
         answer: 95,
         position: 0,
@@ -2957,7 +2957,7 @@ const testAnalysisData = [
     },
     {
         question:
-            "I tend to think more about what's coming up or what already happened rather than what's going on now",
+            "I tend to think about what's coming up or what already happened rather than what's going on now",
         scale: 20,
         answer: 95,
         position: 1,
@@ -2968,7 +2968,7 @@ const testAnalysisData = [
     },
     {
         question:
-            "I tend to think more about what's coming up or what already happened rather than what's going on now",
+            "I tend to think about what's coming up or what already happened rather than what's going on now",
         scale: 20,
         answer: 95,
         position: 2,

@@ -60,7 +60,7 @@ const SliderOptions: React.FC<{ options: Option }> = ({ options }) => (
     </div>
 )
 
-export default function Component({
+export default function TheTest({
     questionData = [],
     fireworksIndex = 0,
     questionNumber = 0,
@@ -263,7 +263,7 @@ export default function Component({
                     </div>
                     <SliderOptions options={currentQuestion.options} />
                     <div className="mt-6 justify-center text-center">
-                        The slider is an incremental scale, move the handle to
+                        The slider is an incremental scale, move the handle, or click on the slider, to
                         the most appropriate position
                     </div>
                 </div>
