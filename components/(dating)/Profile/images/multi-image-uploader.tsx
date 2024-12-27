@@ -1,158 +1,165 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
-import { Loader2, Upload, X, ImagePlus } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
+import { Loader2, Upload, X, ImagePlus } from 'lucide-react'
+import { Card, CardContent } from '@/components/ui/card'
+import { Progress } from '@/components/ui/progress'
 
-const MAX_IMAGES = 3;
+const MAX_IMAGES = 3
 
 interface ImageItem {
-    id: string;
-    url: string;
+    id: string
+    url: string
 }
 
 export default function MultiImageUploader() {
-    const router = useRouter();
-    const [files, setFiles] = useState<File[]>([]);
-    const [uploading, setUploading] = useState(false);
-    const [uploadedImages, setUploadedImages] = useState<string[]>([]);
-    const [existingImages, setExistingImages] = useState<ImageItem[]>([]);
-    const [error, setError] = useState<string | null>(null);
-    const [saving, setSaving] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [dragActive, setDragActive] = useState(false);
+    const router = useRouter()
+    const [files, setFiles] = useState<File[]>([])
+    const [uploading, setUploading] = useState(false)
+    const [uploadedImages, setUploadedImages] = useState<string[]>([])
+    const [existingImages, setExistingImages] = useState<ImageItem[]>([])
+    const [error, setError] = useState<string | null>(null)
+    const [saving, setSaving] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const [dragActive, setDragActive] = useState(false)
 
     useEffect(() => {
         const fetchExistingImages = async () => {
             try {
-                const response = await fetch('/api/profile/images');
+                const response = await fetch('/api/profile/images')
                 if (response.ok) {
-                    const data = await response.json();
-                    setExistingImages(data);
+                    const data = await response.json()
+                    setExistingImages(data)
                 }
             } catch (error) {
-                console.error('Error fetching images:', error);
-                toast.error('Error loading existing images');
+                console.error('Error fetching images:', error)
+                toast.error('Error loading existing images')
             } finally {
-                setLoading(false);
+                setLoading(false)
             }
-        };
+        }
 
-        fetchExistingImages();
-    }, []);
+        fetchExistingImages()
+    }, [])
 
     const handleDrag = (e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault()
+        e.stopPropagation()
         if (e.type === 'dragenter' || e.type === 'dragover') {
-            setDragActive(true);
+            setDragActive(true)
         } else if (e.type === 'dragleave') {
-            setDragActive(false);
+            setDragActive(false)
         }
-    };
+    }
 
     const handleDrop = (e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDragActive(false);
+        e.preventDefault()
+        e.stopPropagation()
+        setDragActive(false)
 
-        const droppedFiles = Array.from(e.dataTransfer.files);
-        const imageFiles = droppedFiles.filter(file => file.type.startsWith('image/'));
-        const totalImages = files.length + imageFiles.length + existingImages.length;
+        const droppedFiles = Array.from(e.dataTransfer.files)
+        const imageFiles = droppedFiles.filter((file) =>
+            file.type.startsWith('image/')
+        )
+        const totalImages =
+            files.length + imageFiles.length + existingImages.length
 
         if (totalImages > MAX_IMAGES) {
-            toast.error(`You can only have up to ${MAX_IMAGES} images total`);
-            return;
+            toast.error(`You can only have up to ${MAX_IMAGES} images total`)
+            return
         }
 
-        setFiles(prev => [...prev, ...imageFiles]);
-    };
+        setFiles((prev) => [...prev, ...imageFiles])
+    }
 
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFiles = Array.from(e.target.files || []);
-        const totalImages = files.length + selectedFiles.length + existingImages.length;
+        const selectedFiles = Array.from(e.target.files || [])
+        const totalImages =
+            files.length + selectedFiles.length + existingImages.length
 
         if (totalImages > MAX_IMAGES) {
-            toast.error(`You can only have up to ${MAX_IMAGES} images total`);
-            return;
+            toast.error(`You can only have up to ${MAX_IMAGES} images total`)
+            return
         }
 
-        setFiles(prev => [...prev, ...selectedFiles]);
-    };
+        setFiles((prev) => [...prev, ...selectedFiles])
+    }
 
     const removeFile = (index: number) => {
-        setFiles(prev => prev.filter((_, i) => i !== index));
-    };
+        setFiles((prev) => prev.filter((_, i) => i !== index))
+    }
 
     const removeUploadedImage = (index: number) => {
-        setUploadedImages(prev => prev.filter((_, i) => i !== index));
-        toast.success('Image removed successfully');
-    };
+        setUploadedImages((prev) => prev.filter((_, i) => i !== index))
+        toast.success('Image removed successfully')
+    }
 
     const removeExistingImage = async (id: string) => {
         try {
             const response = await fetch(`/api/profile/images/${id}`, {
                 method: 'DELETE',
-            });
+            })
 
             if (!response.ok) {
-                throw new Error('Failed to delete image');
+                throw new Error('Failed to delete image')
             }
 
-            setExistingImages(prev => prev.filter(img => img.id !== id));
-            toast.success('Image deleted successfully');
+            setExistingImages((prev) => prev.filter((img) => img.id !== id))
+            toast.success('Image deleted successfully')
         } catch (error) {
-            toast.error('Error deleting image');
+            toast.error('Error deleting image')
         }
-    };
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!files.length) return;
+        e.preventDefault()
+        if (!files.length) return
 
-        setUploading(true);
-        setError(null);
-        const uploadedUrls: string[] = [];
+        setUploading(true)
+        setError(null)
+        const uploadedUrls: string[] = []
 
         try {
             for (const file of files) {
-                const filename = encodeURIComponent(file.name);
-                const formData = new FormData();
-                formData.append('file', file);
+                const filename = encodeURIComponent(file.name)
+                const formData = new FormData()
+                formData.append('file', file)
 
-                const response = await fetch(`/api/upload?filename=${filename}`, {
-                    method: 'POST',
-                    body: formData,
-                });
+                const response = await fetch(
+                    `/api/upload?filename=${filename}`,
+                    {
+                        method: 'POST',
+                        body: formData,
+                    }
+                )
 
                 if (!response.ok) {
-                    throw new Error('Upload failed');
+                    throw new Error('Upload failed')
                 }
 
-                const data = await response.json();
-                uploadedUrls.push(data.url);
+                const data = await response.json()
+                uploadedUrls.push(data.url)
             }
 
-            setUploadedImages(prev => [...prev, ...uploadedUrls]);
-            setFiles([]);
-            toast.success('Images uploaded successfully!');
+            setUploadedImages((prev) => [...prev, ...uploadedUrls])
+            setFiles([])
+            toast.success('Images uploaded successfully!')
         } catch (error) {
-            setError('Error uploading files. Please try again.');
-            toast.error('Error uploading files');
+            setError('Error uploading files. Please try again.')
+            toast.error('Error uploading files')
         } finally {
-            setUploading(false);
+            setUploading(false)
         }
-    };
+    }
 
     const handleDone = async () => {
-        if (!uploadedImages.length) return;
+        if (!uploadedImages.length) return
 
-        setSaving(true);
+        setSaving(true)
         try {
             const response = await fetch('/api/profile/images', {
                 method: 'POST',
@@ -160,37 +167,44 @@ export default function MultiImageUploader() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ imageUrls: uploadedImages }),
-            });
+            })
 
             if (!response.ok) {
-                throw new Error('Failed to save images');
+                throw new Error('Failed to save images')
             }
 
-            toast.success('Images saved successfully!');
-            router.refresh();
-            router.push('/profile');
+            toast.success('Images saved successfully!')
+            router.refresh()
+            router.push('/profile')
         } catch (error) {
-            toast.error('Error saving images. Please try again.');
+            toast.error('Error saving images. Please try again.')
         } finally {
-            setSaving(false);
+            setSaving(false)
         }
-    };
+    }
 
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <Loader2 className="h-12 w-12 animate-spin text-primary" />
             </div>
-        );
+        )
     }
 
-    const remainingSlots = MAX_IMAGES - (existingImages.length + files.length + uploadedImages.length);
-    const progress = ((existingImages.length + files.length + uploadedImages.length) / MAX_IMAGES) * 100;
+    const remainingSlots =
+        MAX_IMAGES -
+        (existingImages.length + files.length + uploadedImages.length)
+    const progress =
+        ((existingImages.length + files.length + uploadedImages.length) /
+            MAX_IMAGES) *
+        100
 
     return (
         <div className="max-w-3xl mx-auto p-8 space-y-8">
             <div className="space-y-4">
-                <h1 className="text-3xl font-bold tracking-tight">Image Gallery</h1>
+                <h1 className="text-3xl font-bold tracking-tight">
+                    Image Gallery
+                </h1>
                 <div className="flex items-center gap-4">
                     <Progress value={progress} className="w-full" />
                     <span className="text-sm text-gray-500 whitespace-nowrap">
@@ -202,10 +216,15 @@ export default function MultiImageUploader() {
             {existingImages.length > 0 && (
                 <Card>
                     <CardContent className="pt-6">
-                        <h2 className="text-xl text-dark font-semibold mb-4">Current Images</h2>
+                        <h2 className="text-xl text-dark font-semibold mb-4">
+                            Current Images
+                        </h2>
                         <div className="grid grid-cols-3 gap-4">
                             {existingImages.map((image) => (
-                                <div key={image.id} className="group relative rounded-lg overflow-hidden">
+                                <div
+                                    key={image.id}
+                                    className="group relative rounded-lg overflow-hidden"
+                                >
                                     <div className="relative h-48 w-full">
                                         <Image
                                             src={image.url}
@@ -219,7 +238,9 @@ export default function MultiImageUploader() {
                                         variant="destructive"
                                         size="icon"
                                         className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                                        onClick={() => removeExistingImage(image.id)}
+                                        onClick={() =>
+                                            removeExistingImage(image.id)
+                                        }
                                     >
                                         <X className="h-4 w-4" />
                                     </Button>
@@ -236,7 +257,9 @@ export default function MultiImageUploader() {
                         <CardContent className="pt-6">
                             <div
                                 className={`relative  p-8 transition-colors ${
-                                    dragActive ? 'border-primary bg-primary/5' : 'border-gray-200'
+                                    dragActive
+                                        ? 'border-primary bg-primary/5'
+                                        : 'border-gray-200'
                                 }`}
                                 onDragEnter={handleDrag}
                                 onDragLeave={handleDrag}
@@ -253,8 +276,12 @@ export default function MultiImageUploader() {
                                 />
                                 <div className="flex flex-col  items-center justify-center gap-2 text-center">
                                     <ImagePlus className="h-10 w-10 text-green-800" />
-                                    <p className="text-lg text-dark font-medium">Drag images here or click to browse</p>
-                                    <p className="text-sm text-gray-500">Supports: JPG, PNG, GIF</p>
+                                    <p className="text-lg text-dark font-medium">
+                                        Drag images here or click to browse
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                        Supports: JPG, PNG, GIF
+                                    </p>
                                 </div>
                             </div>
                         </CardContent>
@@ -264,10 +291,15 @@ export default function MultiImageUploader() {
                 {files.length > 0 && (
                     <Card>
                         <CardContent className="pt-6">
-                            <h2 className="text-xl font-semibold mb-4">Selected Images</h2>
+                            <h2 className="text-xl font-semibold mb-4">
+                                Selected Images
+                            </h2>
                             <div className="grid grid-cols-3 gap-4">
                                 {files.map((file, index) => (
-                                    <div key={index} className="group relative rounded-lg overflow-hidden">
+                                    <div
+                                        key={index}
+                                        className="group relative rounded-lg overflow-hidden"
+                                    >
                                         <div className="relative h-48 w-full">
                                             <Image
                                                 src={URL.createObjectURL(file)}
@@ -319,10 +351,15 @@ export default function MultiImageUploader() {
                 {uploadedImages.length > 0 && (
                     <Card>
                         <CardContent className="pt-6">
-                            <h2 className="text-xl font-semibold mb-4">Newly Uploaded Images</h2>
+                            <h2 className="text-xl font-semibold mb-4">
+                                Newly Uploaded Images
+                            </h2>
                             <div className="grid grid-cols-3 gap-4">
                                 {uploadedImages.map((url, index) => (
-                                    <div key={index} className="group relative rounded-lg overflow-hidden">
+                                    <div
+                                        key={index}
+                                        className="group relative rounded-lg overflow-hidden"
+                                    >
                                         <div className="relative h-48 w-full">
                                             <Image
                                                 src={url}
@@ -336,7 +373,9 @@ export default function MultiImageUploader() {
                                             variant="destructive"
                                             size="icon"
                                             className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                                            onClick={() => removeUploadedImage(index)}
+                                            onClick={() =>
+                                                removeUploadedImage(index)
+                                            }
                                         >
                                             <X className="h-4 w-4" />
                                         </Button>
@@ -364,5 +403,5 @@ export default function MultiImageUploader() {
                 )}
             </form>
         </div>
-    );
+    )
 }
