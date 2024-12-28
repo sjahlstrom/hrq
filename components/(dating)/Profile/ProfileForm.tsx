@@ -39,8 +39,7 @@ import {
 } from '@/components/ui/popover'
 import { updateProfile } from '@/app/actions/update-profile'
 import { toast } from 'sonner'
-import { DevelopmentGuard } from '@/components/DevelopmentGuard'
-import { isDevelopment } from '@/app/utils/environment'
+
 const formSchema = z.object({
     occupation: z
         .string()
@@ -212,10 +211,6 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
         initialData?.birthday || new Date()
     )
     async function onSubmit(values: FormValues) {
-        // if (!isDevelopment) {
-        //     toast.error('This feature is only available in development mode')
-        //     return
-        // }
         setIsSubmitting(true)
         const formData = new FormData()
 
@@ -324,7 +319,6 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
         />
     )
     return (
-        <DevelopmentGuard>
             <div className="bg-custom-radial from-hrqColors-sunsetOrange-100 to-hrqColors-sunsetOrange-400 p-6">
                 <Form {...form}>
                     <form
@@ -600,6 +594,5 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                     </form>
                 </Form>
             </div>
-        </DevelopmentGuard>
     )
 }

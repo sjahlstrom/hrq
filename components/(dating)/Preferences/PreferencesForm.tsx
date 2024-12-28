@@ -25,7 +25,6 @@ import {
     SavePreferencesResult,
 } from '@/app/actions/update-preferences'
 import { toast } from 'sonner'
-import { isDevelopment } from '@/app/utils/environment'
 
 const formSchema = z.object({
     education: z.string().min(1, 'Please select education level.'),
@@ -165,10 +164,6 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
     const [isSubmitting, setIsSubmitting] = React.useState(false)
 
     async function onSubmit(values: FormValues) {
-        // if (!isDevelopment) {
-        //     toast.error('This feature is only available in development mode')
-        //     return
-        // }
         setIsSubmitting(true)
         const formData = new FormData()
 
