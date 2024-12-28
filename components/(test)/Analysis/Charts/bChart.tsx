@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import findPositionsForScale from '@/components/(test)/Analysis/Charts/positions'
-import { sumTestResponsesAtPositions } from '@/app/api/users'
+import { sumTestResponsesAtPositions } from '@/lib/actions/users'
 import rawCannedScaleStatements from '@/components/(test)/Analysis/Data/Constants/scaleCannedStatements'
 
 // Types

@@ -15,7 +15,7 @@ import {
     setTestCompleted,
     updateTestResponse,
     UpdateTestUserProps,
-} from '@/app/api/users'
+} from '@/lib/actions/users'
 import { useRouter } from 'next/navigation'
 import { nunito } from '@/app/ui/fonts'
 

@@ -1,6 +1,6 @@
 import { currentUser } from '@clerk/nextjs/server'
-import { getTestResponseLength } from '@/app/api/users'
-import { db } from '@/lib/db'
+import { getTestResponseLength } from '@/lib/actions/users'
+import { db } from '@/lib/db/db'
 import TestPageClient from './TestPageClient'
 
 export const metadata = {

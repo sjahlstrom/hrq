@@ -52,8 +52,8 @@
 //     );
 //
 //     const renderBChart = useCallback(
-//         (scaleItem: ScaleArray, index: number) => (
-//             <div key={index} className="w-full px-1">
+//         (scaleItem: ScaleArray, db: number) => (
+//             <div key={db} className="w-full px-1">
 //                 <MemoizedBChart scales={scaleItem} />
 //             </div>
 //         ),

@@ -1,7 +1,7 @@
 'use server'
 
 import { auth } from '@clerk/nextjs/server'
-import { db } from '@/lib/db'
+import { db } from '@/lib/db/db'
 import { revalidatePath } from 'next/cache'
 
 export async function updateProfile(formData: FormData) {

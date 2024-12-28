@@ -1,8 +1,8 @@
-import { auth } from '@clerk/nextjs/server'
-import { redirect } from 'next/navigation'
-import { db } from '@/lib/db'
-import ProfileForm from '@/components/(dating)/Profile/ProfileForm'
+// app/(dating)/profile/page.tsx
+import { requireAuth, getAuthenticatedDbUser } from '@/utils/user'
+import { extractProfileData } from '@/types/user'
 import Breadcrumb from '@/components/common/bread-crumb'
+import ProfileForm from '@/components/(dating)/Profile/ProfileForm'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -10,29 +10,24 @@ export const metadata: Metadata = {
 }
 
 export default async function ProfilePage() {
-    const { userId } = auth()
+    await requireAuth()
 
-    if (!userId) {
-        redirect('/sign-in')
-    }
-
-    const user = await db.user.findUnique({
-        where: { externalUserId: userId },
-        include: { bio: true },
+    const user = await getAuthenticatedDbUser({
+        includeImages: true
     })
 
-    const bioData = user?.bio || null
-
     return (
-        <div>
-            <div>
-                <Breadcrumb
-                    pageName="Profile"
-                    description="The main 'thrust' is to focus on helping people to find their potential and increasing satisfaction in their relationships."
+        <div className="container mx-auto px-4 py-8">
+            <Breadcrumb
+                pageName="Profile"
+                description="Complete your profile to connect with others."
+            />
+            <div className="mt-8">
+                <ProfileForm
+                    initialData={extractProfileData(user)}
+                    imageCount={user.images?.length ?? 0}
                 />
-                <ProfileForm initialData={bioData} />
             </div>
         </div>
-    );
-
+    )
 }

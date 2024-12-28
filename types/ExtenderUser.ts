@@ -1,4 +1,4 @@
-// types/index.ts
+// types/db.ts
 import { User } from '@/hooks/useUsers'
 import { UserRole } from '@prisma/client'
 

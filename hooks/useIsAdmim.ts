@@ -1,6 +1,6 @@
 import { useUser } from '@clerk/nextjs'
 import { useEffect, useState } from 'react'
-import { getUserRole } from '@/app/api/users'
+import { getUserRole } from '@/lib/actions/users'
 
 export function useIsAdmin() {
     const { isSignedIn, isLoaded } = useUser()

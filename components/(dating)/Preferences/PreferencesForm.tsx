@@ -24,7 +24,7 @@ import {
 import {
     savePreferences,
     SavePreferencesResult,
-} from '@/app/actions/update-preferences'
+} from '@/lib/actions/update-preferences'
 import { toast } from 'sonner'
 
 const formSchema = z.object({
@@ -232,7 +232,7 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
     )
 
     return (
-        <div className="bg-custom-radial from-hrqColors-sunsetOrange-00 to-hrqColors-sunsetOrange-600 p-6">
+        <div className="bg-custom-radial from-hrqColors-peach-500 to-hrqColors-skyBlue-400 p-6">
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}

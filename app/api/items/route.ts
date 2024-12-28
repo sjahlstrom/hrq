@@ -1,6 +1,6 @@
 // app/api/items/route.ts
 import { NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { db } from '@/lib/db/db'
 import { z } from 'zod'
 import type { Item } from '@prisma/client'
 

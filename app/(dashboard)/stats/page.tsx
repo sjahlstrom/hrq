@@ -19,7 +19,7 @@ import {
 import BarChart from '@/app/(dashboard)/stats/_components/barchart'
 import LineGraph from '@/app/(dashboard)/stats/_components/line-graph'
 import GoalDataCard from '@/app/(dashboard)/stats/_components/goal'
-import { db } from '@/lib/db'
+import { db } from '@/lib/db/db'
 import {
     eachMonthOfInterval,
     endOfMonth,

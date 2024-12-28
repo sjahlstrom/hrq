@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { X, Loader2 } from "lucide-react"
-import { setUserAdmin } from '@/app/api/users'
+import { setUserAdmin } from '@/lib/actions/users'
 import { toast } from "sonner"
 import { UserRole } from '@prisma/client'
 

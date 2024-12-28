@@ -1,7 +1,7 @@
 // app/api/profile/images/route.ts
 import { auth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db } from '@/lib/db/db';
 
 export async function POST(req: Request) {
     try {

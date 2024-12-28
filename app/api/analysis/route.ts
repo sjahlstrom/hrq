@@ -1,14 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import {
-    getTestResponses,
-} from '@/app/api/users'
+import { getTestResponses } from '@/lib/actions/users'
 import { TestQuestion } from '@/types/types'
 import testQuestions from '@/components/(test)/Test/Data/testQuestions'
 import testAnalysisData from '@/components/(test)/Analysis/Data/Constants/TestAnalysisData'
 import lieScale from '@/components/(test)/Analysis/Data/Constants/LieScale'
 
-// Add this type assertion after the imports
-    const typedTestQuestions: TestQuestion[] = testQuestions;
+const typedTestQuestions: TestQuestion[] = testQuestions
 
 const LIES = [38, 45, 52, 57, 69, 79, 91, 102, 109, 125]
 
@@ -28,17 +25,25 @@ export async function GET(request: NextRequest) {
     const answers = await getTestResponses()
     const uniqueResults = evaluateResults(answers)
     const totalResults = uniqueResults.length
-    const paginatedResults = uniqueResults.slice((page - 1) * limit, page * limit)
+    const paginatedResults = uniqueResults.slice(
+        (page - 1) * limit,
+        page * limit
+    )
 
     const lieAnalysis = calculateLieValues(answers)
-    const totalSummedValues = uniqueResults.reduce((sum, result) => sum + result.summedResult, 0)
+    const totalSummedValues = uniqueResults.reduce(
+        (sum, result) => sum + result.summedResult,
+        0
+    )
     const totalLie = LIES.reduce((sum, index) => sum + (answers[index] || 0), 0)
 
-    const chartData = uniqueResults.map(result => ({
-       scale: typedTestQuestions.find(q => q.scale === result.scale)?.question || `Scale ${result.scale}`,
+    const chartData = uniqueResults.map((result) => ({
+        scale:
+            typedTestQuestions.find((q) => q.scale === result.scale)
+                ?.question || `Scale ${result.scale}`,
         score: result.summedResult,
         statement: result.analysis,
-}))
+    }))
 
     return NextResponse.json({
         uniqueResults: paginatedResults,
@@ -70,21 +75,20 @@ function evaluateResults(answers: number[]): Result[] {
                 matches.forEach((pos) => evaluatedPositions.add(pos))
 
                 const positions = [q.position, ...matches]
-                const answersValues = positions.map(
-                    (pos) => answers[pos] || 1
-                )
+                const answersValues = positions.map((pos) => answers[pos] || 1)
                 const sum = answersValues.reduce(
                     (total, value) => total + value,
                     0
                 )
                 const result = Math.floor(sum / 2)
 
-                const analysis = testAnalysisData.find(
-                    (data) =>
-                        data.scale === q.scale &&
-                        result >= data.low &&
-                        result <= data.high
-                )?.analysis || 'No analysis available.'
+                const analysis =
+                    testAnalysisData.find(
+                        (data) =>
+                            data.scale === q.scale &&
+                            result >= data.low &&
+                            result <= data.high
+                    )?.analysis || 'No analysis available.'
 
                 results.push({
                     scale: q.scale,
@@ -105,7 +109,7 @@ function calculateLieValues(answers: number[]): string {
     const totalLieValue = lieValues.reduce((acc, value) => acc + value, 0)
     return (
         lieScale.find(
-            (entry) =>
-                totalLieValue >= entry.low && totalLieValue <= entry.high
-        )?.analysis || 'No analysis available.')
+            (entry) => totalLieValue >= entry.low && totalLieValue <= entry.high
+        )?.analysis || 'No analysis available.'
+    )
 }

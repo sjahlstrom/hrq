@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { getUsers, banUser as apiBanUser, unBanUser as apiUnBanUser } from '@/app/api/users'
+import { getUsers, banUser as apiBanUser, unBanUser as apiUnBanUser } from '@/lib/actions/users'
 
 export interface User {
     id: string

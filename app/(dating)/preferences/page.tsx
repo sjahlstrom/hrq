@@ -1,6 +1,6 @@
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
-import { db } from '@/lib/db'
+import { db } from '@/lib/db/db'
 import Breadcrumb from '@/components/common/bread-crumb'
 import { Metadata } from 'next'
 import PreferencesForm, { PreferencesData } from '@/components/(dating)/Preferences/PreferencesForm'

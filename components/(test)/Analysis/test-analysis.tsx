@@ -8,7 +8,7 @@ import { pdf } from '@react-pdf/renderer';
 import Pagination from '@/components/(test)/pagination';
 import FinalAnalysis from '@/components/(test)/final-analysis';
 import { Button } from '@/components/ui/button';
-import { calculateTestResponseAverage, setSummedTotals } from '@/app/api/users';
+import { calculateTestResponseAverage, setSummedTotals } from '@/lib/actions/users';
 import PDFDocument from '@/components/(test)/Analysis/pdf-document';
 
 const ITEMS_PER_PAGE = 6;
