@@ -17,7 +17,7 @@ export default async function ProfilePage() {
     })
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="mx-auto">
             <Breadcrumb
                 pageName="Profile"
                 description="Complete your profile to connect with others."

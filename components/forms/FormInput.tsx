@@ -62,7 +62,7 @@ export function FormInput({
                             {description}
                         </p>
                     )}
-                    <FormMessage className="text-sm text-red-500" />
+                    <FormMessage className="text-sm text-red-600" />
                 </FormItem>
             )}
         />

@@ -109,6 +109,7 @@ export default function ProfileForm({
                             control={form.control}
                             options={FORM_OPTIONS.incomeRanges}
                             description="Not Displayed"
+                            descriptionClassName="text-xs text-black mt-1"
                         />
                     </div>
 
@@ -224,7 +225,7 @@ export default function ProfileForm({
                             label="Tell Us About Yourself"
                             control={form.control}
                         />
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-dark">
                             Maximum 10000 characters
                         </p>
                     </div>

@@ -199,7 +199,7 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
             control={form.control}
             name={name}
             render={({ field }) => (
-                <FormItem className="relative">
+                <FormItem className="relative p-2">
                     <FormLabel className="font-bold text-hrqColors-skyBlue-100">
                         {label}
                     </FormLabel>
@@ -232,7 +232,7 @@ export default function PreferencesForm({ initialData }: PreferencesFormProps) {
     )
 
     return (
-        <div className="bg-custom-radial from-hrqColors-peach-500 to-hrqColors-skyBlue-400 p-6">
+        <div className="-mt-8 bg-custom-radial from-hrqColors-peach-500 to-hrqColors-skyBlue-400 p-6" >
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}

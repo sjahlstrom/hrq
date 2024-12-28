@@ -3,15 +3,19 @@ import { redirect } from 'next/navigation'
 import { db } from '@/lib/db/db'
 import Breadcrumb from '@/components/common/bread-crumb'
 import { Metadata } from 'next'
-import PreferencesForm, { PreferencesData } from '@/components/(dating)/Preferences/PreferencesForm'
+import PreferencesForm, {
+    PreferencesData,
+} from '@/components/(dating)/Preferences/PreferencesForm'
 
 export const metadata: Metadata = {
-    title: "Preferences"
+    title: 'Preferences',
 }
 
 // Function to transform database result to PreferencesData
-function transformToPreferencesData(dbPreferences: any): PreferencesData | null {
-    if (!dbPreferences) return null;
+function transformToPreferencesData(
+    dbPreferences: any
+): PreferencesData | null {
+    if (!dbPreferences) return null
 
     return {
         id: dbPreferences.id,
@@ -31,8 +35,8 @@ function transformToPreferencesData(dbPreferences: any): PreferencesData | null 
         religion: dbPreferences.religion,
         primaryLanguage: dbPreferences.primaryLanguage,
         createdAt: dbPreferences.createdAt,
-        updatedAt: dbPreferences.updatedAt
-    };
+        updatedAt: dbPreferences.updatedAt,
+    }
 }
 
 export default async function PreferencesPage() {
@@ -50,14 +54,14 @@ export default async function PreferencesPage() {
     const preferencesData = transformToPreferencesData(user?.preferences)
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="mx-auto  -mt-8 py-8">
             <Breadcrumb
                 pageName="Preferences"
-                description="The main 'thrust' is to focus on helping people to find their potential and increasing satisfaction in their relationships."
+                description="What are your preferences for your romantic connection?  Help us find your perfect match based on your RQ scores, their scores, and your specific needs."
             />
             <div className="mt-8">
                 <PreferencesForm initialData={preferencesData} />
             </div>
         </div>
-    );
+    )
 }
