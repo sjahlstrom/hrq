@@ -39,8 +39,6 @@ import {
 } from '@/components/ui/popover'
 import { updateProfile } from '@/app/actions/update-profile'
 import { toast } from 'sonner'
-import { DevelopmentGuard } from '@/components/DevelopmentGuard'
-import { isDevelopment } from '@/app/utils/environment'
 
 const formSchema = z.object({
     occupation: z
@@ -325,306 +323,286 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
         />
     )
     return (
-        <DevelopmentGuard>
-            <div className="bg-custom-radial from-hrqColors-sunsetOrange-100 to-hrqColors-sunsetOrange-400 p-6">
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-8"
-                    >
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {renderFormField('occupation', 'Occupation')}
-                            {renderFormField('education', 'Education')}
-                            {renderFormField('incomeRange', 'Income Range', [
-                                'Less than $25,000',
-                                '$25,000 - $35,000',
-                                '$35,000 - $50,000',
-                                '$50,000 - $75,000',
-                                '$75,000 - $100,000',
-                                '$100,000 - $150,000',
-                                '$150,000+',
-                            ])}
-                        </div>
+        <div className="bg-custom-radial from-hrqColors-sunsetOrange-100 to-hrqColors-sunsetOrange-400 p-6">
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-8"
+                >
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {renderFormField('occupation', 'Occupation')}
+                        {renderFormField('education', 'Education')}
+                        {renderFormField('incomeRange', 'Income Range', [
+                            'Less than $25,000',
+                            '$25,000 - $35,000',
+                            '$35,000 - $50,000',
+                            '$50,000 - $75,000',
+                            '$75,000 - $100,000',
+                            '$100,000 - $150,000',
+                            '$150,000+',
+                        ])}
+                    </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {renderFormField('postalCode', 'Postal Code')}
-                            {renderFormField('areaCode', 'Area Code')}
-                            <FormField
-                                control={form.control}
-                                name="birthday"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="font-bold text-black">
-                                            Birthday
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Popover>
-                                                <PopoverTrigger asChild>
-                                                    <Button
-                                                        variant={'outline'}
-                                                        className={`rounded w-full pl-3 text-left font-normal border-2 border-black focus:ring-black focus:border-black ${
-                                                            !field.value &&
-                                                            'text-muted-foreground'
-                                                        }`}
-                                                    >
-                                                        {field.value ? (
-                                                            format(
-                                                                field.value,
-                                                                'MM/dd/yyyy'
-                                                            )
-                                                        ) : (
-                                                            <span>
-                                                                Select date
-                                                            </span>
-                                                        )}
-                                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                                    </Button>
-                                                </PopoverTrigger>
-                                                <PopoverContent
-                                                    className="w-auto p-0 border-2 border-black focus:ring-black focus:border-black bg-hrqColors-sunsetOrange-400"
-                                                    align="start"
-                                                >
-                                                    <div className="flex justify-between p-2 border-b border-black">
-                                                        <Select
-                                                            onValueChange={(
-                                                                value
-                                                            ) => {
-                                                                const year =
-                                                                    Number(
-                                                                        value
-                                                                    )
-                                                                setSelectedYear(
-                                                                    year
-                                                                )
-                                                                setCurrentMonth(
-                                                                    new Date(
-                                                                        year,
-                                                                        currentMonth.getMonth()
-                                                                    )
-                                                                )
-                                                                if (
-                                                                    field.value
-                                                                ) {
-                                                                    const newDate =
-                                                                        new Date(
-                                                                            field.value
-                                                                        )
-                                                                    newDate.setFullYear(
-                                                                        year
-                                                                    )
-                                                                    field.onChange(
-                                                                        newDate
-                                                                    )
-                                                                }
-                                                            }}
-                                                            value={selectedYear.toString()}
-                                                        >
-                                                            <SelectTrigger className="rounded w-[120px] border-2 border-black">
-                                                                <SelectValue />
-                                                            </SelectTrigger>
-                                                            <SelectContent className="bg-hrqColors-coolGray-600 [&>div]:bg-hrqColors-coolGray-600">
-                                                                {years.map(
-                                                                    (year) => (
-                                                                        <SelectItem
-                                                                            key={
-                                                                                year
-                                                                            }
-                                                                            value={year.toString()}
-                                                                            className="focus:bg-coolGray-600 focus:text-white"
-                                                                        >
-                                                                            {
-                                                                                year
-                                                                            }
-                                                                        </SelectItem>
-                                                                    )
-                                                                )}
-                                                            </SelectContent>
-                                                        </Select>
-                                                        <div className="flex items-center space-x-2">
-                                                            <Button
-                                                                variant="outline"
-                                                                size="icon"
-                                                                className="h-7 w-7 border-black"
-                                                                onClick={() =>
-                                                                    handleMonthChange(
-                                                                        false
-                                                                    )
-                                                                }
-                                                            >
-                                                                <ChevronLeft className="h-4 w-4" />
-                                                            </Button>
-                                                            <Button
-                                                                variant="outline"
-                                                                size="icon"
-                                                                className="h-7 w-7 border-black"
-                                                                onClick={() =>
-                                                                    handleMonthChange(
-                                                                        true
-                                                                    )
-                                                                }
-                                                            >
-                                                                <ChevronRight className="h-4 w-4" />
-                                                            </Button>
-                                                        </div>
-                                                    </div>
-                                                    <Calendar
-                                                        mode="single"
-                                                        selected={field.value}
-                                                        onSelect={(date) => {
-                                                            field.onChange(date)
-                                                            if (date) {
-                                                                setSelectedYear(
-                                                                    date.getFullYear()
-                                                                )
-                                                                setCurrentMonth(
-                                                                    date
-                                                                )
-                                                            }
-                                                        }}
-                                                        month={currentMonth}
-                                                        onMonthChange={
-                                                            setCurrentMonth
-                                                        }
-                                                        disabled={(date) =>
-                                                            date > new Date() ||
-                                                            date <
-                                                                new Date(
-                                                                    '1900-01-01'
-                                                                )
-                                                        }
-                                                        initialFocus
-                                                    />
-                                                </PopoverContent>
-                                            </Popover>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {renderFormField(
-                                'maritalStatus',
-                                'Marital Status',
-                                [
-                                    'Single',
-                                    'Married',
-                                    'Divorced',
-                                    'Widowed',
-                                    'Other',
-                                ]
-                            )}
-                            {renderFormField(
-                                'relationshipTypeWanted',
-                                'Relationship Type Wanted',
-                                [
-                                    'Hang out',
-                                    'Long-Term',
-                                    'Dating',
-                                    'Sexual',
-                                    'Just Friends',
-                                ]
-                            )}
-                            {renderFormField(
-                                'biologicalSex',
-                                'Your Biological Sex',
-                                ['Male', 'Female']
-                            )}
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {renderFormField('gender', 'Your Gender', [
-                                'Male',
-                                'Female',
-                                'Non-Binary',
-                                'Other',
-                            ])}
-                            {renderFormField('race', 'Your Race', races)}
-                            {renderFormField('smoker', 'Smoker', smokerOptions)}
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {renderFormField(
-                                'alcohol',
-                                'Alcohol',
-                                alcoholOptions
-                            )}
-                            {renderFormField('drugs', 'Drugs', drugOptions)}
-                            {renderFormField(
-                                'haveChildren',
-                                'Do you have children?',
-                                haveChildrenOptions
-                            )}
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {renderFormField(
-                                'religion',
-                                'Religion',
-                                religionOptions
-                            )}
-                            {renderFormField(
-                                'primaryLanguage',
-                                'Your Primary Language',
-                                languageOptions
-                            )}
-                            {renderFormField(
-                                'otherLanguages',
-                                'Other Languages',
-                                languageOptions
-                            )}
-                        </div>
-
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {renderFormField('postalCode', 'Postal Code')}
+                        {renderFormField('areaCode', 'Area Code')}
                         <FormField
                             control={form.control}
-                            name="aboutYourself"
+                            name="birthday"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="font-bold text-black">
-                                        Tell Us About Yourself
+                                        Birthday
                                     </FormLabel>
                                     <FormControl>
-                                        <Textarea
-                                            className="rounded resize-none border-2 border-black focus:ring-black focus:border-black"
-                                            {...field}
-                                            maxLength={10000}
-                                        />
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <Button
+                                                    variant={'outline'}
+                                                    className={`rounded w-full pl-3 text-left font-normal border-2 border-black focus:ring-black focus:border-black ${
+                                                        !field.value &&
+                                                        'text-muted-foreground'
+                                                    }`}
+                                                >
+                                                    {field.value ? (
+                                                        format(
+                                                            field.value,
+                                                            'MM/dd/yyyy'
+                                                        )
+                                                    ) : (
+                                                        <span>Select date</span>
+                                                    )}
+                                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                </Button>
+                                            </PopoverTrigger>
+                                            <PopoverContent
+                                                className="w-auto p-0 border-2 border-black focus:ring-black focus:border-black bg-hrqColors-sunsetOrange-400"
+                                                align="start"
+                                            >
+                                                <div className="flex justify-between p-2 border-b border-black">
+                                                    <Select
+                                                        onValueChange={(
+                                                            value
+                                                        ) => {
+                                                            const year =
+                                                                Number(value)
+                                                            setSelectedYear(
+                                                                year
+                                                            )
+                                                            setCurrentMonth(
+                                                                new Date(
+                                                                    year,
+                                                                    currentMonth.getMonth()
+                                                                )
+                                                            )
+                                                            if (field.value) {
+                                                                const newDate =
+                                                                    new Date(
+                                                                        field.value
+                                                                    )
+                                                                newDate.setFullYear(
+                                                                    year
+                                                                )
+                                                                field.onChange(
+                                                                    newDate
+                                                                )
+                                                            }
+                                                        }}
+                                                        value={selectedYear.toString()}
+                                                    >
+                                                        <SelectTrigger className="rounded w-[120px] border-2 border-black">
+                                                            <SelectValue />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-hrqColors-coolGray-600 [&>div]:bg-hrqColors-coolGray-600">
+                                                            {years.map(
+                                                                (year) => (
+                                                                    <SelectItem
+                                                                        key={
+                                                                            year
+                                                                        }
+                                                                        value={year.toString()}
+                                                                        className="focus:bg-coolGray-600 focus:text-white"
+                                                                    >
+                                                                        {year}
+                                                                    </SelectItem>
+                                                                )
+                                                            )}
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <div className="flex items-center space-x-2">
+                                                        <Button
+                                                            variant="outline"
+                                                            size="icon"
+                                                            className="h-7 w-7 border-black"
+                                                            onClick={() =>
+                                                                handleMonthChange(
+                                                                    false
+                                                                )
+                                                            }
+                                                        >
+                                                            <ChevronLeft className="h-4 w-4" />
+                                                        </Button>
+                                                        <Button
+                                                            variant="outline"
+                                                            size="icon"
+                                                            className="h-7 w-7 border-black"
+                                                            onClick={() =>
+                                                                handleMonthChange(
+                                                                    true
+                                                                )
+                                                            }
+                                                        >
+                                                            <ChevronRight className="h-4 w-4" />
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={field.value}
+                                                    onSelect={(date) => {
+                                                        field.onChange(date)
+                                                        if (date) {
+                                                            setSelectedYear(
+                                                                date.getFullYear()
+                                                            )
+                                                            setCurrentMonth(
+                                                                date
+                                                            )
+                                                        }
+                                                    }}
+                                                    month={currentMonth}
+                                                    onMonthChange={
+                                                        setCurrentMonth
+                                                    }
+                                                    disabled={(date) =>
+                                                        date > new Date() ||
+                                                        date <
+                                                            new Date(
+                                                                '1900-01-01'
+                                                            )
+                                                    }
+                                                    initialFocus
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
                                     </FormControl>
-                                    <FormDescription className="text-xs text-black">
-                                        Maximum 10000 characters
-                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
+                    </div>
 
-                        <div className="space-y-4">
-                            {isDirty && (
-                                <Button
-                                    type="submit"
-                                    className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
-                                    disabled={isSubmitting}
-                                >
-                                    {isSubmitting ? 'Submitting...' : 'Submit'}
-                                </Button>
-                            )}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {renderFormField('maritalStatus', 'Marital Status', [
+                            'Single',
+                            'Married',
+                            'Divorced',
+                            'Widowed',
+                            'Other',
+                        ])}
+                        {renderFormField(
+                            'relationshipTypeWanted',
+                            'Relationship Type Wanted',
+                            [
+                                'Hang out',
+                                'Long-Term',
+                                'Dating',
+                                'Sexual',
+                                'Just Friends',
+                            ]
+                        )}
+                        {renderFormField(
+                            'biologicalSex',
+                            'Your Biological Sex',
+                            ['Male', 'Female']
+                        )}
+                    </div>
 
-                            {(isSubmitted || !isDirty) && (
-                                <Button
-                                    type="button"
-                                    onClick={() =>
-                                        router.push('/profile/images')
-                                    }
-                                    className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
-                                >
-                                    Upload Images
-                                </Button>
-                            )}
-                        </div>
-                    </form>
-                </Form>
-            </div>
-        </DevelopmentGuard>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {renderFormField('gender', 'Your Gender', [
+                            'Male',
+                            'Female',
+                            'Non-Binary',
+                            'Other',
+                        ])}
+                        {renderFormField('race', 'Your Race', races)}
+                        {renderFormField('smoker', 'Smoker', smokerOptions)}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {renderFormField('alcohol', 'Alcohol', alcoholOptions)}
+                        {renderFormField('drugs', 'Drugs', drugOptions)}
+                        {renderFormField(
+                            'haveChildren',
+                            'Do you have children?',
+                            haveChildrenOptions
+                        )}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {renderFormField(
+                            'religion',
+                            'Religion',
+                            religionOptions
+                        )}
+                        {renderFormField(
+                            'primaryLanguage',
+                            'Your Primary Language',
+                            languageOptions
+                        )}
+                        {renderFormField(
+                            'otherLanguages',
+                            'Other Languages',
+                            languageOptions
+                        )}
+                    </div>
+
+                    <FormField
+                        control={form.control}
+                        name="aboutYourself"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="font-bold text-black">
+                                    Tell Us About Yourself
+                                </FormLabel>
+                                <FormControl>
+                                    <Textarea
+                                        className="rounded resize-none border-2 border-black focus:ring-black focus:border-black"
+                                        {...field}
+                                        maxLength={10000}
+                                    />
+                                </FormControl>
+                                <FormDescription className="text-xs text-black">
+                                    Maximum 10000 characters
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <div className="space-y-4">
+                        {isDirty && (
+                            <Button
+                                type="submit"
+                                className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? 'Submitting...' : 'Submit'}
+                            </Button>
+                        )}
+
+                        {(isSubmitted || !isDirty) && (
+                            <Button
+                                type="button"
+                                onClick={() => router.push('/profile/images')}
+                                className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
+                            >
+                                Upload Images
+                            </Button>
+                        )}
+                    </div>
+                </form>
+            </Form>
+        </div>
     )
 }
