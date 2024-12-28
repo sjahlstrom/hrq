@@ -3,15 +3,8 @@
 import { auth } from '@clerk/nextjs/server'
 import { db } from '@/lib/db'
 import { revalidatePath } from 'next/cache'
-import { isDevelopment } from '@/app/utils/environment'
 
 export async function updateProfile(formData: FormData) {
-    // if (!isDevelopment) {
-    //     return {
-    //         success: false,
-    //         message: 'This feature is only available in development mode'
-    //     }
-    // }
     const { userId } = auth()
 
     if (!userId) {
