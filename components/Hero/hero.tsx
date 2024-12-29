@@ -4,9 +4,11 @@ import { nunito, telex } from '@/app/ui/fonts'
 import Image from 'next/image'
 import AuthButton from '@/components/Hero/auth-button'
 import React from 'react'
+import Header from '@/components/common/Header/header'
 
 export default function Hero() {
     return (
+
         <section
             id="home"
             className="relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[160px] md:pb-[130px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] min-h-[84vh]"

@@ -3,14 +3,14 @@ import SectionTitle from '@/components/common/section-title'
 
 export default function Privacy() {
     return (
-        <section id="privacy" className="bg-hrqColors-sunsetOrange-400 py-16 md:py-20 lg:py-28">
+        <section id="privacy" className="-mt-20  bg-hrqColors-sunsetOrange-400 py-16 md:py-20 lg:py-28">
             <div className="container mx-auto px-4">
                 <SectionTitle
                     title="Privacy"
                     paragraph="What you tell us is between you and HighRQ. Your details will never be shared with anyone without your explicit and specific permission."
                     center
                 />
-                <Card className="mt-8 bg-white shadow-lg">
+                <Card className="-mt-16 bg-white shadow-lg">
                     <CardHeader className="bg-indigo-700 text-white">
                         <CardTitle className="text-2xl font-bold">HighRQ Privacy Policy</CardTitle>
                         <CardDescription className="text-indigo-100">Learn about how we protect your information and respect your privacy</CardDescription>

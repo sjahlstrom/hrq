@@ -1,16 +1,31 @@
 import Link from 'next/link'
-import { arimo} from '@/app/ui/fonts'
+import { arimo } from '@/app/ui/fonts'
+
+// const Breadcrumb = ({
+//     pageName,
+//     description,
+// }: {
+//     pageName: string
+//     description: string
+// }) => {
+//     return (
+//         <>
+//             <section className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 relative z-10 overflow-hidden pt-20 lg:pt-[100px] flex flex-col min-h-[300px]">
 
 const Breadcrumb = ({
-                        pageName,
-                        description,
-                    }: {
+    pageName,
+    description,
+    minHeight = 'min-h-[300px]', // Add height prop with default value
+}: {
     pageName: string
     description: string
+    minHeight?: string
 }) => {
     return (
         <>
-            <section className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 relative z-10 overflow-hidden pt-20 lg:pt-[100px] flex flex-col min-h-[300px]">
+            <section
+                className={`bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 relative z-10 overflow-hidden pt-20 lg:pt-[100px] flex flex-col ${minHeight}`}
+            >
                 <div className="container flex-grow flex flex-col">
                     <div className="-mx-4 flex flex-wrap items-center h-full">
                         <div className="w-full px-4 md:w-8/12 lg:w-7/12">

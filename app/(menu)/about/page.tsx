@@ -12,6 +12,7 @@ const AboutPage = () => {
             <div>
                 <Breadcrumb
                     pageName="About"
+                    minHeight="min-h-[220px]"
                     description="The main 'thrust' is to focus on helping people to find their potential and increasing satisfaction in their relationships."
                 />
                 <About />

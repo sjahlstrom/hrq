@@ -86,7 +86,7 @@ export default function ProfileForm({
     }
 
     return (
-        <div className="bg-custom-radial from-hrqColors-sunsetOrange-100 to-hrqColors-sunsetOrange-400 p-6">
+        <div className="-mt-8 bg-custom-radial from-hrqColors-sunsetOrange-100 to-hrqColors-sunsetOrange-400 p-6">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     {/* Basic Information */}

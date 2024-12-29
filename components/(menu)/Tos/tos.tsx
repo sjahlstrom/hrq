@@ -19,7 +19,7 @@ export default function TosPage() {
             id="tos"
             className="relative z-10 bg-slate-100 overflow-hidden pt-20 pb-16 md:pt-24 md:pb-20 lg:pt-28 lg:pb-24"
         >
-            <div className="container mx-auto px-4">
+            <div className="container -mt-20 mx-auto px-4">
                 <div className="flex flex-wrap -mx-4">
                     <div className="w-full px-4">
                         <Card className="mx-auto max-w-4xl bg-white shadow-lg">

@@ -230,7 +230,7 @@ export default function TheTest({
                 ></div>
             </div>
 
-            <div className="flex-grow flex flex-col justify-between items-center px-4 py-8 md:py-16">
+            <div className="-mt-12 flex-grow flex flex-col justify-between items-center px-4 py-8 md:py-16">
                 <div className="w-full max-w-3xl text-center mb-8 md:mb-12">
                     <h2
                         className={`${nunito.className} 

@@ -9,6 +9,8 @@ const PricingPage = () => {
         <div className="min-h-screen bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 ">
             <Breadcrumb
                 pageName="Pricing Page"
+                minHeight="min-h-[220px]"
+
                 description="Get access to your comprehensive test analysis and personalized improvement suggestions."
             />
 

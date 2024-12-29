@@ -64,6 +64,22 @@ export function extractProfileData(user: DbUser): Partial<ProfileFormValues> {
     }
 }
 
+export interface UserPreferences {
+    theme: 'light' | 'dark';
+    emailNotifications: boolean;
+    language: string;
+    timezone: string;
+    bio?: string;
+}
+
+export interface UserCardProps {
+    id: string;
+    name: string;
+    email: string;
+    imageUrl: string;
+    preferences: UserPreferences;
+}
+
 // Helper function to create a safe user response
 export function createSafeUserResponse(user: DbUser) {
     const { externalUserId, stripeCustomerId, ...safeUser } = user;

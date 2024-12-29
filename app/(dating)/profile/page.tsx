@@ -20,6 +20,8 @@ export default async function ProfilePage() {
         <div className="mx-auto">
             <Breadcrumb
                 pageName="Profile"
+                minHeight="min-h-[200px]"
+
                 description="Complete your profile to connect with others."
             />
             <div className="mt-8">

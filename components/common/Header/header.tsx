@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { useIsAdmin } from '@/hooks/useIsAdmim'
 import menuData from '@/components/common/Header/menuData'
 
-export default function Component() {
+export default function Header({ headerHeight = 'h-[84px]' }) {
     const [navbarOpen, setNavbarOpen] = useState(false)
     const [sticky, setSticky] = useState(false)
     const [openIndex, setOpenIndex] = useState(-1)

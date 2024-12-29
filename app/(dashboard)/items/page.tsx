@@ -17,7 +17,8 @@ export default function Page() {
 
     return (
         <div className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 ">
-            <Breadcrumb pageName="Item Management" description="" />
+            <Breadcrumb pageName="Item Management" description=""                 minHeight="min-h-[160px]"
+            />
             <div className="py-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <AddItem onItemAdded={handleItemAdded} />

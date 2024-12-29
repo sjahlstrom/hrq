@@ -20,10 +20,11 @@ const NotFoundPage = () => {
 <>
         <Breadcrumb
             pageName="I'm lost!"
+            minHeight="min-h-[200px]"
             description="I'm wandering around aimlessly and hopelessly lost"        />
 
         <section className="bg-white dark:bg-gray-900">
-            <div className="container min-h-screen px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12">
+            <div className="-mt-52 container min-h-screen px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12">
                 <div className="w-full lg:w-1/2">
                     <p className="text-sm font-medium text-blue-500 dark:text-blue-400">404 error</p>
                     <h1 className="mt-3 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">Page not

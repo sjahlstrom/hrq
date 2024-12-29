@@ -12,6 +12,8 @@ const FaqsPage = () => {
       <div className="bg-gray-600">
          <Breadcrumb
             pageName="Policies Page"
+            minHeight="min-h-[200px]"
+
             description = 'Here is all the long-winded "fine print".'
          />
          <Tos />

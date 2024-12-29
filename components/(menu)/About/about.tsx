@@ -20,7 +20,7 @@ export default function About() {
         >
             <div className="container mx-auto px-4 max-w-4xl xl:max-w-6xl">
                 <h1
-                    className={`${nunito.className} -mt-12 animate-fade-in text-dark mb-5 font-bold leading-tight sm:text-3xl md:text-4xl lg:text-6xl xl:text-6xl text-center mx-auto`}
+                    className={`${nunito.className} -mt-20 animate-fade-in text-dark mb-5 font-bold leading-tight sm:text-3xl md:text-4xl lg:text-6xl xl:text-6xl text-center mx-auto`}
                 >
                     Welcome to High Relationship Quotient
                 </h1>

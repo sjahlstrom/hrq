@@ -12,6 +12,8 @@ const TestimonialsPage = () => {
       <div className="bg-gray-600">
          <Breadcrumb
             pageName="Testimonials Page"
+            minHeight="min-h-[220px]"
+
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
          />
          <Testimonials />

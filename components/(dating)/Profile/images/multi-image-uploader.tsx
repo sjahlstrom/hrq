@@ -202,19 +202,20 @@ export default function MultiImageUploader() {
     return (
         <div className="max-w-3xl mx-auto p-8 space-y-8">
             <div className="space-y-4">
-                <h1 className="text-3xl font-bold tracking-tight">
+                <h1 className="text-3xl text-dark font-bold tracking-tight">
                     Image Gallery
                 </h1>
                 <div className="flex items-center gap-4">
                     <Progress value={progress} className="w-full" />
-                    <span className="text-sm text-gray-500 whitespace-nowrap">
+                    <span className="text-sm text-gray-700 whitespace-nowrap">
                         {remainingSlots} slots remaining
                     </span>
                 </div>
             </div>
 
             {existingImages.length > 0 && (
-                <Card>
+                <Card className="border-dark shadow-hrqColors-coral-500"
+                >
                     <CardContent className="pt-6">
                         <h2 className="text-xl text-dark font-semibold mb-4">
                             Current Images
@@ -253,7 +254,7 @@ export default function MultiImageUploader() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {remainingSlots > 0 && (
-                    <Card>
+                    <Card className="border-dark">
                         <CardContent className="pt-6">
                             <div
                                 className={`relative  p-8 transition-colors ${
@@ -279,7 +280,7 @@ export default function MultiImageUploader() {
                                     <p className="text-lg text-dark font-medium">
                                         Drag images here or click to browse
                                     </p>
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-sm text-gray-700">
                                         Supports: JPG, PNG, GIF
                                     </p>
                                 </div>
@@ -289,9 +290,9 @@ export default function MultiImageUploader() {
                 )}
 
                 {files.length > 0 && (
-                    <Card>
+                    <Card className="border-dark shadow-hrqColors-coral-500" >
                         <CardContent className="pt-6">
-                            <h2 className="text-xl font-semibold mb-4">
+                            <h2 className="text-xl text-dark font-semibold mb-4">
                                 Selected Images
                             </h2>
                             <div className="grid grid-cols-3 gap-4">
@@ -333,8 +334,9 @@ export default function MultiImageUploader() {
                                     </>
                                 ) : (
                                     <>
-                                        <Upload className="mr-2 h-4 w-4" />
-                                        Upload Images
+                                        <Upload className="text-green-700  mr-2 h-4 w-4" />
+                                        <span className="text-gray-900">Upload Images</span>
+
                                     </>
                                 )}
                             </Button>
@@ -351,7 +353,7 @@ export default function MultiImageUploader() {
                 {uploadedImages.length > 0 && (
                     <Card>
                         <CardContent className="pt-6">
-                            <h2 className="text-xl font-semibold mb-4">
+                            <h2 className="text-xl text-dark font-semibold mb-4">
                                 Newly Uploaded Images
                             </h2>
                             <div className="grid grid-cols-3 gap-4">

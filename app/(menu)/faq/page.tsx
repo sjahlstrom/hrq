@@ -4,21 +4,22 @@ import Faq from '@/components/(menu)/Faq/FAQ'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: "FAQ"
+    title: 'FAQ',
 }
 
 const FaqsPage = () => {
-   return (
-      <div className="bg-gray-600">
-         <Breadcrumb
-            pageName="FAQPage"
-            description=" The RQ concept is brand new, so people have lots of testQuestions.
+    return (
+        <div className="bg-gray-600">
+            <Breadcrumb
+                pageName="FAQPage"
+                minHeight="min-h-[240px]"
+                description=" The RQ concept is brand new, so people have lots of testQuestions.
                   There will be more, but here are some answers to the ones
                   we’ve gotten so far..."
-         />
-         <Faq />
-      </div>
-   );
-};
+            />
+            <Faq />
+        </div>
+    )
+}
 
-export default FaqsPage;
+export default FaqsPage

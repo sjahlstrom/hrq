@@ -43,6 +43,11 @@ const TestPageClient = ({ initialQuestionNumber = 0, tosAccepted = false }: Test
             <div className="bg-hrqColors-coolGray-700">
                 <Breadcrumb
                     pageName="Test Page"
+                    minHeight={
+                        isUserLoggedIn
+                            ? "min-h-[320px]"
+                            : "min-h-[220px]"
+                    }
                     description={
                         isUserLoggedIn
                             ? 'This test assesses qualities that make people good relationship partners. It\'s in-depth, takes about 25 minutes, and generates a personalized, detailed report. You\'ll learn about yourself, how you relate to others, and how others relate to you. Take your time and answer thoughtfully. Use the slider to select your response, then click "Next Question" to proceed. Once you answer, you can\'t go back, but you can quit and resume later.'

@@ -3,20 +3,19 @@ import ContactForm from '@/components/(menu)/Contact/contact'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: "Contact"
+    title: 'Contact',
 }
 
 const ContactPage = () => {
     return (
-
-            <div className="bg-hrqColors-skyBlue-100">
-                <Breadcrumb
-                    pageName="Contact"
-                    description="Have questions? Want to send feedback? Let us know."
-                />
-                <ContactForm />
-            </div>
-
+        <div className="bg-hrqColors-skyBlue-100">
+            <Breadcrumb
+                pageName="Contact"
+                minHeight="min-h-[200px]"
+                description="Have questions? Want to send feedback? Let us know."
+            />
+            <ContactForm />
+        </div>
     )
 }
 

@@ -12,6 +12,8 @@ const SampleAnalysisPage = () => {
         <div className="bg-green-200">
             <Breadcrumb
                 pageName="Sample Analysis"
+                minHeight="min-h-[200px]"
+
                 description="This is a sample, a mini-report."
             />
             <SampleAnalysis />
