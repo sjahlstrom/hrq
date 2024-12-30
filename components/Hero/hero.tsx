@@ -35,8 +35,9 @@ export default function Hero() {
                         <p
                             className={`${telex.className} animate-slideUp text-white mb-12 text-sm font-semibold leading-relaxed sm:text-base md:text-lg lg:text-xl`}
                         >
-                            Ready to find your ideal partner? <br />
-                            Learn more about gaining a High Relationship Quotient.
+                            {/*Ready to find your ideal partner? <br />*/}
+                            {/*Learn more about gaining a High Relationship Quotient.*/}
+                            Do you have one?  Do you know your strenghts?  Weaknewss? Are you a good catch?
                         </p>
                     </div>
                 </div>

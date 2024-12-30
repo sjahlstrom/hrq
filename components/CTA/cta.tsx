@@ -11,9 +11,10 @@ export function CTA() {
                     </h2>
                     <h1>
                         <p className="text-lg md:text-xl text-white mb-8 max-w-2xl text-dark/60">
-                            Discover your High Relationship Quotient and learn
-                            how to enhance all aspects of your personal and
-                            romantic relationships.
+                            {/*Discover your Relationship Quotient and learn*/}
+                            {/*how to enhance all aspects of your personal and*/}
+                            {/*romantic relationships.*/}
+                            To enhance personal and romantic relationships.
                         </p>
                     </h1>
                     <div className="flex flex-col sm:flex-row gap-4 text-dark">
