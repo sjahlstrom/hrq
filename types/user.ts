@@ -1,5 +1,5 @@
 // types/user.ts
-import { ProfileFormValues } from './form'
+import {ProfileFormValues} from '@/constants/form-options'
 
 export interface DbUser {
     id: string
@@ -15,73 +15,76 @@ export interface DbUser {
     tos: boolean
     summedTotal?: number | null
     banned: boolean
-    occupation?: string | null
-    education?: string | null
-    incomeRange?: string | null
-    postalCode?: string | null
-    areaCode?: string | null
-    birthday?: Date | null
-    maritalStatus?: string | null
-    relationshipTypeWanted?: string | null
-    biologicalSex?: string | null
-    gender?: string | null
-    race?: string | null
-    smoker?: string | null
-    alcohol?: string | null
-    drugs?: string | null
-    haveChildren?: string | null
-    religion?: string | null
-    primaryLanguage?: string | null
-    otherLanguages?: string | null
-    aboutYourself?: string | null
     images?: { id: string; url: string }[]
+    bio?: {
+        occupation?: string | null
+        education?: string | null
+        incomeRange?: string | null
+        postalCode?: string | null
+        areaCode?: string | null
+        birthday?: Date | null
+        maritalStatus?: string | null
+        relationshipTypeWanted?: string | null
+        biologicalSex?: string | null
+        gender?: string | null
+        race?: string | null
+        smoker?: string | null
+        alcohol?: string | null
+        drugs?: string | null
+        haveChildren?: string | null
+        religion?: string | null
+        primaryLanguage?: string | null
+        otherLanguages?: string | null
+        aboutYourself?: string | null
+    } | null
     createdAt: Date
     updatedAt: Date
 }
 
-// Helper function to safely extract profile data
 export function extractProfileData(user: DbUser): Partial<ProfileFormValues> {
-    return {
-        occupation: user.occupation || '',
-        education: user.education || '',
-        incomeRange: user.incomeRange || '',
-        postalCode: user.postalCode || '',
-        areaCode: user.areaCode || '',
-        birthday: user.birthday || undefined,
-        maritalStatus: user.maritalStatus || '',
-        relationshipTypeWanted: user.relationshipTypeWanted || '',
-        biologicalSex: user.biologicalSex || '',
-        gender: user.gender || '',
-        race: user.race || '',
-        smoker: user.smoker || '',
-        alcohol: user.alcohol || '',
-        drugs: user.drugs || '',
-        haveChildren: user.haveChildren || '',
-        religion: user.religion || '',
-        primaryLanguage: user.primaryLanguage || '',
-        otherLanguages: user.otherLanguages || '',
-        aboutYourself: user.aboutYourself || '',
+    if (!user || !user.bio) {
+        return {
+            occupation: '',
+            education: '',
+            incomeRange: '',
+            postalCode: '',
+            areaCode: '',
+            birthday: undefined,
+            maritalStatus: '',
+            relationshipTypeWanted: '',
+            biologicalSex: '',
+            gender: '',
+            race: '',
+            smoker: '',
+            alcohol: '',
+            drugs: '',
+            haveChildren: '',
+            religion: '',
+            primaryLanguage: '',
+            otherLanguages: '',
+            aboutYourself: '',
+        }
     }
-}
 
-export interface UserPreferences {
-    theme: 'light' | 'dark';
-    emailNotifications: boolean;
-    language: string;
-    timezone: string;
-    bio?: string;
-}
-
-export interface UserCardProps {
-    id: string;
-    name: string;
-    email: string;
-    imageUrl: string;
-    preferences: UserPreferences;
-}
-
-// Helper function to create a safe user response
-export function createSafeUserResponse(user: DbUser) {
-    const { externalUserId, stripeCustomerId, ...safeUser } = user;
-    return safeUser;
+    return {
+        occupation: user.bio.occupation || '',
+        education: user.bio.education || '',
+        incomeRange: user.bio.incomeRange || '',
+        postalCode: user.bio.postalCode || '',
+        areaCode: user.bio.areaCode || '',
+        birthday: user.bio.birthday || undefined,
+        maritalStatus: user.bio.maritalStatus || '',
+        relationshipTypeWanted: user.bio.relationshipTypeWanted || '',
+        biologicalSex: user.bio.biologicalSex || '',
+        gender: user.bio.gender || '',
+        race: user.bio.race || '',
+        smoker: user.bio.smoker || '',
+        alcohol: user.bio.alcohol || '',
+        drugs: user.bio.drugs || '',
+        haveChildren: user.bio.haveChildren || '',
+        religion: user.bio.religion || '',
+        primaryLanguage: user.bio.primaryLanguage || '',
+        otherLanguages: user.bio.otherLanguages || '',
+        aboutYourself: user.bio.aboutYourself || '',
+    }
 }

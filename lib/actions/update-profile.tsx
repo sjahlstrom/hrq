@@ -5,35 +5,16 @@ import { db } from '@/lib/db/db'
 import { revalidatePath } from 'next/cache'
 
 export async function updateProfile(formData: FormData) {
-    const { userId } = auth()
-
-    if (!userId) {
-        return { success: false, message: 'User not authenticated' }
-    }
-
-    const occupation = formData.get('occupation') as string | null
-    const education = formData.get('education') as string | null
-    const incomeRange = formData.get('incomeRange') as string | null
-    const postalCode = formData.get('postalCode') as string | null
-    const areaCode = formData.get('areaCode') as string | null
-    const birthday = formData.get('birthday') as string | null
-    const maritalStatus = formData.get('maritalStatus') as string | null
-    const relationshipTypeWanted = formData.get('relationshipTypeWanted') as string | null
-    const biologicalSex = formData.get('biologicalSex') as string | null
-    const gender = formData.get('gender') as string | null
-    const race = formData.get('race') as string | null
-    const smoker = formData.get('smoker') as string | null
-    const alcohol = formData.get('alcohol') as string | null
-    const drugs = formData.get('drugs') as string | null
-    const haveChildren = formData.get('haveChildren') as string | null
-    const religion = formData.get('religion') as string | null
-    const primaryLanguage = formData.get('primaryLanguage') as string | null
-    const otherLanguages = formData.get('otherLanguages') as string | null
-    const aboutYourself = formData.get('aboutYourself') as string | null
-
     try {
-        // First, try to find or create the user
-        const user = await db.user.upsert({
+        const { userId } = auth()
+
+        if (!userId) {
+            return { success: false, message: 'User not authenticated' }
+        }
+
+        const formDataObj = Object.fromEntries(formData.entries())
+
+        await db.user.upsert({
             where: {
                 externalUserId: userId
             },
@@ -41,25 +22,8 @@ export async function updateProfile(formData: FormData) {
                 externalUserId: userId,
                 bio: {
                     create: {
-                        occupation,
-                        education,
-                        incomeRange,
-                        postalCode,
-                        areaCode,
-                        birthday: birthday ? new Date(birthday) : null,
-                        maritalStatus,
-                        relationshipTypeWanted,
-                        biologicalSex,
-                        gender,
-                        race,
-                        smoker,
-                        alcohol,
-                        drugs,
-                        haveChildren,
-                        religion,
-                        primaryLanguage,
-                        otherLanguages,
-                        aboutYourself,
+                        ...formDataObj,
+                        birthday: formDataObj.birthday ? new Date(formDataObj.birthday as string) : null,
                     }
                 }
             },
@@ -67,46 +31,12 @@ export async function updateProfile(formData: FormData) {
                 bio: {
                     upsert: {
                         create: {
-                            occupation,
-                            education,
-                            incomeRange,
-                            postalCode,
-                            areaCode,
-                            birthday: birthday ? new Date(birthday) : null,
-                            maritalStatus,
-                            relationshipTypeWanted,
-                            biologicalSex,
-                            gender,
-                            race,
-                            smoker,
-                            alcohol,
-                            drugs,
-                            haveChildren,
-                            religion,
-                            primaryLanguage,
-                            otherLanguages,
-                            aboutYourself,
+                            ...formDataObj,
+                            birthday: formDataObj.birthday ? new Date(formDataObj.birthday as string) : null,
                         },
                         update: {
-                            occupation,
-                            education,
-                            incomeRange,
-                            postalCode,
-                            areaCode,
-                            birthday: birthday ? new Date(birthday) : null,
-                            maritalStatus,
-                            relationshipTypeWanted,
-                            biologicalSex,
-                            gender,
-                            race,
-                            smoker,
-                            alcohol,
-                            drugs,
-                            haveChildren,
-                            religion,
-                            primaryLanguage,
-                            otherLanguages,
-                            aboutYourself,
+                            ...formDataObj,
+                            birthday: formDataObj.birthday ? new Date(formDataObj.birthday as string) : null,
                         },
                     },
                 },
@@ -116,7 +46,9 @@ export async function updateProfile(formData: FormData) {
         revalidatePath('/profile')
         return { success: true, message: 'Profile updated successfully' }
     } catch (error) {
-        console.error('Error updating profile:', error)
-        return { success: false, message: 'Failed to update profile' }
+        return {
+            success: false,
+            message: error instanceof Error ? error.message : 'Failed to update profile'
+        }
     }
 }

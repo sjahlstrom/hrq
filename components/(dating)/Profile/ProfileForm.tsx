@@ -8,9 +8,9 @@ import { useImageCount } from '@/hooks/useImageCount'
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
-import { FormSelect } from '@/components/forms/FormSelect'
-import { FormInput } from '@/components/forms/FormInput'
-import { BirthdayField } from '@/components/forms/BirthdayField'
+import { FormSelect } from '@/components/Forms/FormSelect'
+import { FormInput } from '@/components/Forms/FormInput'
+import { BirthdayField } from '@/components/Forms/BirthdayField'
 import { FORM_OPTIONS } from '@/constants/form-options'
 import { profileFormSchema, type ProfileFormValues } from '@/types/form'
 import { updateProfile } from '@/lib/actions/update-profile'
@@ -21,9 +21,9 @@ interface ProfileFormProps {
 }
 
 export default function ProfileForm({
-                                        initialData,
-                                        imageCount: initialImageCount = 0,
-                                    }: ProfileFormProps) {
+    initialData,
+    imageCount: initialImageCount = 0,
+}: ProfileFormProps) {
     const router = useRouter()
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -75,7 +75,10 @@ export default function ProfileForm({
                 toast.success(result.message)
                 setIsSubmitted(true)
             } else {
-                toast.error(result.message || 'An error occurred while updating the profile')
+                toast.error(
+                    result.message ||
+                        'An error occurred while updating the profile'
+                )
             }
         } catch (error) {
             console.error('Error updating profile:', error)
@@ -88,7 +91,10 @@ export default function ProfileForm({
     return (
         <div className="-mt-8 bg-custom-radial from-hrqColors-sunsetOrange-100 to-hrqColors-sunsetOrange-400 p-6">
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-8"
+                >
                     {/* Basic Information */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <FormInput
@@ -232,21 +238,24 @@ export default function ProfileForm({
 
                     {/* Form Actions */}
                     <div className="space-y-4">
-                        {isDirty && (
-                            <Button
-                                type="submit"
-                                className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? 'Submitting...' : 'Submit'}
-                            </Button>
-                        )}
+                        {isDirty &&
+                            !isSubmitted && ( // Added !isSubmitted check here
+                                <Button
+                                    type="submit"
+                                    className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? 'Submitting...' : 'Submit'}
+                                </Button>
+                            )}
 
-                        {(isSubmitted || !isDirty) && (
+                        {(!isDirty || isSubmitted) && ( // Updated condition here
                             <div className="space-y-2">
                                 <Button
                                     type="button"
-                                    onClick={() => router.push('/profile/images')}
+                                    onClick={() =>
+                                        router.push('/profile/images')
+                                    }
                                     className="w-full bg-hrqColors-sunsetOrange-200 hover:bg-hrqColors-sunsetOrange-300 active:bg-hrqColors-sunsetOrange-400 text-black rounded"
                                 >
                                     {currentImageCount > 0
@@ -255,7 +264,8 @@ export default function ProfileForm({
                                 </Button>
                                 {currentImageCount === 0 && (
                                     <p className="text-sm text-center text-black">
-                                        Adding profile images increases your visibility
+                                        Adding profile images increases your
+                                        visibility
                                     </p>
                                 )}
                             </div>

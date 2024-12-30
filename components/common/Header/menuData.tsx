@@ -13,6 +13,12 @@ const menuData: Menu[] = [
       path: '/about',
       newTab: false,
    },
+   {
+      id: 3,
+      title: 'FAQs',
+      path: '/faq',
+      newTab: false,
+   },
    // {
    //    id: 4,
    //    title: 'Pricing',
@@ -42,12 +48,12 @@ const menuData: Menu[] = [
             path: '/privacy',
             newTab: false,
          },
-         {
-            id: 101,
-            title: 'FAQs',
-            path: '/faq',
-            newTab: false,
-         },
+         // {
+         //    id: 101,
+         //    title: 'FAQs',
+         //    path: '/faq',
+         //    newTab: false,
+         // },
          {
             id: 102,
             title: 'Services',

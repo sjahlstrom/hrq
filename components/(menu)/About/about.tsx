@@ -89,7 +89,7 @@ export default function About() {
                                     key={index}
                                     className="flex items-center text-lg"
                                 >
-                                    <CheckCircle className="mr-3 h-6 w-6 flex-shrink-0" />
+                                    <CheckCircle className="text-green-300 mr-3 h-6 w-6 flex-shrink-0" />
                                     <span>{benefit}</span>
                                 </li>
                             ))}
