@@ -99,11 +99,7 @@ export const UserTable: React.FC<UserTableProps> = ({
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 <div className="text-sm text-gray-500">
-                                    {typeof user.paid_cq === 'boolean'
-                                        ? user.paid_cq
-                                            ? 'Yes'
-                                            : 'No'
-                                        : 'No'}
+                                    {user.paid_cq ? 'Yes' : 'No'}
                                 </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
@@ -146,7 +142,7 @@ export const UserTable: React.FC<UserTableProps> = ({
                 </tbody>
             </table>
             <div className="text-center text-xs text-gray-500 mt-4">
-                Yellow background indicates User has started but not finished
+            Yellow background indicates User has started but not finished
                 the Test
             </div>
         </div>

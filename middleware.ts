@@ -14,11 +14,12 @@ const isProtectedRoute = createRouteMatcher([
     '/admin',
     '/users',
     '/stats',
-    '/item',
+    '/items',
     '/api/checkout', // Protect checkout API
     '/api/createPaymentIntent', // Protect payment intent creation
     '/components/Pricing(.*)', // Protect the pricing or purchase UI
-    '/profile'
+    '/profile',
+    '/profile(.*)'
 ]);
 
 // Middleware to enforce authentication

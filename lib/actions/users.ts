@@ -15,10 +15,11 @@ type UserCacheType = {
         summedTotal: number | null;
     }
 }
+
 const userCache: UserCacheType = {}
 
 const getCachedUserData = cache(async (userId: string) => {
-    if (userCache[userId]) {
+    if (userId in userCache) {
         return userCache[userId]
     }
 
@@ -38,15 +39,18 @@ const getCachedUserData = cache(async (userId: string) => {
             ...userData,
             summedTotal: userData.summedTotal ?? null,
         }
+        return userCache[userId]
     }
 
-    return userCache[userId] || null
+    return null
 })
 
 export const calculateTestResponseAverage = async (userId: string): Promise<number> => {
     const userData = await getCachedUserData(userId)
-    if (!userData || userData.testResponse.length === 0) return 0
-    return userData.testResponse.reduce((sum, value) => sum + value, 0) / userData.testResponse.length
+    if (!userData?.testResponse?.length) return 0
+
+    const responses = userData.testResponse
+    return responses.reduce((sum, value) => sum + value, 0) / responses.length
 }
 
 export const getUsers = async () => {
@@ -93,9 +97,14 @@ export const updateTestResponse = async ({ testResponse, associatedScale }: Upda
                 associatedScale: { push: [associatedScale] },
             },
         })
-        delete userCache[user.id]
+
+        // Invalidate cache for this user
+        if (user.id in userCache) {
+            delete userCache[user.id]
+        }
     } catch (error) {
         console.error('Error updating user:', error)
+        throw error
     }
 }
 
@@ -113,10 +122,14 @@ export const deleteUserTestResponsesAndAssociatedScales = async (): Promise<void
                 testCompleted: false,
             },
         })
-        delete userCache[user.id]
-        console.log('User test responses and associated Scales deleted successfully')
+
+        // Invalidate cache for this user
+        if (user.id in userCache) {
+            delete userCache[user.id]
+        }
     } catch (error) {
         console.error('Error deleting user test responses and associated Scales:', error)
+        throw error
     }
 }
 
@@ -130,9 +143,9 @@ export const setTestCompleted = async (): Promise<boolean> => {
             data: { testCompleted: true },
         })
 
-        const cachedUser = userCache[user.id]
-        if (cachedUser) {
-            cachedUser.testCompleted = true
+        const cacheEntry = userCache[user.id]
+        if (cacheEntry) {
+            cacheEntry.testCompleted = true
         }
 
         return true
@@ -158,9 +171,9 @@ export const setSummedTotals = async (average: number): Promise<boolean> => {
             data: { summedTotal: average },
         })
 
-        const cachedUserData = userCache[user.id]
-        if (typeof cachedUserData !== 'undefined') {
-            cachedUserData.summedTotal = average
+        const cacheEntry = userCache[user.id]
+        if (cacheEntry) {
+            cacheEntry.summedTotal = average
         }
 
         return true
@@ -172,7 +185,7 @@ export const setSummedTotals = async (average: number): Promise<boolean> => {
 
 export const getTestResponseLength = async (userId: string): Promise<number> => {
     const userData = await getCachedUserData(userId)
-    return userData?.testResponse.length ?? 0
+    return userData?.testResponse?.length ?? 0
 }
 
 export const getTestResponses = async (): Promise<number[]> => {
@@ -191,17 +204,17 @@ export const getUserRole = async (): Promise<UserRole | null> => {
     return userData?.role ?? null
 }
 
-export const setUserAdmin = async (externalUserId: string, isAdmin: boolean) => {
+export const setUserAdmin = async (externalUserId: string, isAdmin: boolean): Promise<boolean> => {
     if (!externalUserId) throw new Error('No externalUserId provided')
 
     try {
         const userToUpdate = await db.user.findUnique({
-            where: { externalUserId: externalUserId },
+            where: { externalUserId },
         })
         if (!userToUpdate) throw new Error('User not found')
 
         await db.user.update({
-            where: { externalUserId: externalUserId },
+            where: { externalUserId },
             data: {
                 role: isAdmin ? UserRole.ADMIN : UserRole.USER
             },
@@ -211,7 +224,11 @@ export const setUserAdmin = async (externalUserId: string, isAdmin: boolean) => 
             publicMetadata: { role: isAdmin ? 'ADMIN' : 'USER' }
         })
 
-        delete userCache[externalUserId]
+        // Invalidate cache for this user
+        if (externalUserId in userCache) {
+            delete userCache[externalUserId]
+        }
+
         revalidatePath('/users')
         return true
     } catch (error) {
@@ -220,17 +237,17 @@ export const setUserAdmin = async (externalUserId: string, isAdmin: boolean) => 
     }
 }
 
-export const banUser = async (externalUserId: string) => {
+export const banUser = async (externalUserId: string): Promise<boolean> => {
     if (!externalUserId) throw new Error('No externalUserId provided')
 
     try {
         const userToBan = await db.user.findUnique({
-            where: { externalUserId: externalUserId },
+            where: { externalUserId },
         })
         if (!userToBan) throw new Error('User not found')
 
         await db.user.update({
-            where: { externalUserId: externalUserId },
+            where: { externalUserId },
             data: { banned: true },
         })
 
@@ -238,7 +255,11 @@ export const banUser = async (externalUserId: string) => {
             publicMetadata: { banned: true }
         })
 
-        delete userCache[externalUserId]
+        // Invalidate cache for this user
+        if (externalUserId in userCache) {
+            delete userCache[externalUserId]
+        }
+
         revalidatePath('/users')
         return true
     } catch (error) {
@@ -247,15 +268,17 @@ export const banUser = async (externalUserId: string) => {
     }
 }
 
-export const unBanUser = async (externalUserId: string) => {
+export const unBanUser = async (externalUserId: string): Promise<boolean> => {
+    if (!externalUserId) throw new Error('No externalUserId provided')
+
     try {
         const userToUnban = await db.user.findUnique({
-            where: { externalUserId: externalUserId },
+            where: { externalUserId },
         })
         if (!userToUnban) throw new Error('User not found')
 
         await db.user.update({
-            where: { externalUserId: externalUserId },
+            where: { externalUserId },
             data: { banned: false },
         })
 
@@ -263,7 +286,11 @@ export const unBanUser = async (externalUserId: string) => {
             publicMetadata: { banned: false }
         })
 
-        delete userCache[externalUserId]
+        // Invalidate cache for this user
+        if (externalUserId in userCache) {
+            delete userCache[externalUserId]
+        }
+
         revalidatePath('/users')
         return true
     } catch (error) {
@@ -272,61 +299,50 @@ export const unBanUser = async (externalUserId: string) => {
     }
 }
 
-interface UserData {
-    testResponse: number[];
-}
-let cachedUserData: UserData | null = null;
-
-let x = 0;
 export const sumTestResponsesAtPositions = async (positions: [number, number]): Promise<number> => {
-    if (!cachedUserData) {
-        const user = await currentUser();
+    const user = await currentUser()
+    if (!user) throw new Error('No user is currently logged in.')
 
-        if (process.env.NODE_ENV === 'development') {
-            console.log("In sumTestResponsesAtPositions ", x);
-        }
-
-        if (!user) throw new Error('No user is currently logged in.');
-
-        cachedUserData = await getCachedUserData(user.id);
-        if (!cachedUserData || cachedUserData.testResponse.length === 0) {
-            throw new Error('No test responses found for the user.');
-        }
+    const userData = await getCachedUserData(user.id)
+    if (!userData?.testResponse) {
+        throw new Error('No test responses found for the user.')
     }
 
-    const [index1, index2] = positions;
-    const value1 = cachedUserData.testResponse[index1];
-    const value2 = cachedUserData.testResponse[index2];
+    const [index1, index2] = positions
+    const responses = userData.testResponse
 
-    if (typeof value1 !== 'number' || typeof value2 !== 'number') {
-        throw new Error('Invalid test response values at the specified positions.');
+    if (
+        index1 >= responses.length ||
+        index2 >= responses.length ||
+        responses[index1] === undefined ||
+        responses[index2] === undefined
+    ) {
+        throw new Error('Position indices out of bounds.')
     }
 
-    return value1 + value2;
-};
+    const value1 = responses[index1]
+    const value2 = responses[index2]
+
+    return value1 + value2
+}
 
 export const addPaymentToSummedTotal = async (paymentAmount: number): Promise<boolean> => {
     const user = await currentUser()
     if (!user) return false
 
     try {
-        // Get current user data
         const userData = await getCachedUserData(user.id)
-        const currentTotal = userData?.summedTotal || 0
-
-        // Calculate new total
+        const currentTotal = userData?.summedTotal ?? 0
         const newTotal = currentTotal + paymentAmount
 
-        // Update database
         await db.user.update({
             where: { externalUserId: user.id },
             data: { summedTotal: newTotal },
         })
 
-        // Update cache
-        const cachedUserData = userCache[user.id]
-        if (typeof cachedUserData !== 'undefined') {
-            cachedUserData.summedTotal = newTotal
+        const cacheEntry = userCache[user.id]
+        if (cacheEntry) {
+            cacheEntry.summedTotal = newTotal
         }
 
         return true
@@ -337,14 +353,8 @@ export const addPaymentToSummedTotal = async (paymentAmount: number): Promise<bo
 }
 
 export const clearUserResponseCache = async (userId: string): Promise<void> => {
-    delete userCache[userId]
+    if (userId in userCache) {
+        delete userCache[userId]
+    }
     await new Promise(resolve => setTimeout(resolve, 0))
 }
-
-// Example usage
-// const success = await addPaymentToSummedTotal(9.95);
-// if (success) {
-//     console.log('Payment added to summed total successfully');
-// } else {
-//     console.log('Failed to add payment to summed total');
-// }

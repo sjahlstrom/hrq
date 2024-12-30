@@ -1,115 +1,178 @@
-'use client'
-
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { getUserProfile } from '@/lib/actions/actions'
+import { format } from 'date-fns'
 import Image from 'next/image'
-import { Card } from '@/components/ui/card'
-import { UserCardProps } from '@/types/user'
 
-const defaultPreferences = {
-    theme: 'light' as const,
-    emailNotifications: false,
-    language: 'English',
-    timezone: 'UTC',
-    bio: '',
+interface UserCardProps {
+    userId: string
 }
 
-const UserCard = ({
-    id,
-    name,
-    email,
-    imageUrl,
-    preferences = defaultPreferences, // Provide default value
-}: UserCardProps) => {
-    const userPreferences = {
-        ...defaultPreferences,
-        ...preferences,
+const replaceHyphens = (str: string | null): string => {
+    if (!str) return 'Not specified'
+    return str.replace(/-/g, ' ')
+}
+
+const toTitleCase = (str: string | null): string => {
+    if (!str) return 'Not specified'
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+}
+
+async function UserCard({ userId }: UserCardProps) {
+    const profile = await getUserProfile(userId)
+
+    if (!profile) {
+        return <div>Profile not found</div>
     }
 
+    const formatDate = (date: Date | null) => {
+        if (!date) return 'Not specified'
+        return format(date, 'MMMM dd, yyyy')
+    }
+
+    const formatField = (field: string | null) => {
+        return toTitleCase(replaceHyphens(field))
+    }
+
+    const profileFields = [
+        {
+            label: 'Occupation',
+            value: formatField(profile.occupation),
+            paired: {
+                label: 'Education',
+                value: formatField(profile.education),
+            },
+        },
+        {
+            label: 'Postal Code',
+            value: formatField(profile.postalCode),
+            paired: {
+                label: 'Area Code',
+                value: formatField(profile.areaCode),
+            },
+        },
+        {
+            label: 'Birthday',
+            value: formatDate(profile.birthday),
+            paired: {
+                label: 'Marital Status',
+                value: formatField(profile.maritalStatus),
+            },
+        },
+        {
+            label: 'Relationship Type',
+            value: formatField(profile.relationshipTypeWanted),
+            paired: {
+                label: 'Biological Sex',
+                value: formatField(profile.biologicalSex),
+            },
+        },
+        {
+            label: 'Gender',
+            value: formatField(profile.gender),
+            paired: {
+                label: 'Smoker',
+                value: formatField(profile.smoker),
+            },
+        },
+        {
+            label: 'Alcohol',
+            value: formatField(profile.alcohol),
+            paired: {
+                label: 'Drugs',
+                value: formatField(profile.drugs),
+            },
+        },
+        {
+            label: 'Children',
+            value: formatField(profile.haveChildren),
+            paired: {
+                label: 'Religion',
+                value: formatField(profile.religion),
+            },
+        },
+    ]
+
     return (
-        <Card className="mt-8 w-full max-w-4xl mx-auto  relative z-10"> {/* Added relative z-10 */}
-                <div className="flex flex-col sm:flex-row">
-                    {/* Image column - 1/4 width */}
-                    <div className="w-full sm:w-1/4 p-4">
-                        <div className="relative w-32 h-32 mx-auto">
-                            <Image
-                                src={imageUrl}
-                                alt={`${name}'s profile`}
-                                fill
-                                className="rounded-full object-cover"
-                                priority
-                            />
-                        </div>
-                    </div>
-
-                    {/* User preferences column - 3/4 width */}
-                    <div className="w-full sm:w-3/4 p-6 border-l">
+        <Card className="w-full max-w-6xl">
+            <div className="grid grid-cols-4">
+                {/* Left Column - Images (1/4 width) */}
+                <div className="p-4 border-r">
+                    {profile.user?.images && profile.user.images.length > 0 && (
                         <div className="space-y-4">
-                            <div>
-                                <h2 className="text-2xl font-semibold">
-                                    {name}
-                                </h2>
-                                <p className="text-gray-500">{email}</p>
-                            </div>
-
-                            <div className="space-y-2">
-                                <h3 className="text-lg font-medium">
-                                    Preferences
-                                </h3>
-
-                                <div className="grid grid-cols-1 gap-3">
-                                    <div>
-                                        <span className="font-medium">
-                                            Theme:
-                                        </span>
-                                        <span className="ml-2 capitalize">
-                                            {userPreferences.theme}
-                                        </span>
-                                    </div>
-
-                                    <div>
-                                        <span className="font-medium">
-                                            Email Notifications:
-                                        </span>
-                                        <span className="ml-2">
-                                            {userPreferences.emailNotifications
-                                                ? 'Enabled'
-                                                : 'Disabled'}
-                                        </span>
-                                    </div>
-
-                                    <div>
-                                        <span className="font-medium">
-                                            Language:
-                                        </span>
-                                        <span className="ml-2">
-                                            {userPreferences.language}
-                                        </span>
-                                    </div>
-
-                                    <div>
-                                        <span className="font-medium">
-                                            Timezone:
-                                        </span>
-                                        <span className="ml-2">
-                                            {userPreferences.timezone}
-                                        </span>
-                                    </div>
-
-                                    {userPreferences.bio && (
-                                        <div>
-                                            <span className="font-medium">
-                                                Bio:
-                                            </span>
-                                            <p className="mt-1 text-gray-600">
-                                                {userPreferences.bio}
-                                            </p>
+                            <h3 className="font-semibold">Photos</h3>
+                            <div className="flex flex-col gap-4">
+                                {profile.user.images.map((image) => {
+                                    const isGif = image.url
+                                        .toLowerCase()
+                                        .endsWith('.gif')
+                                    return (
+                                        <div
+                                            key={image.id}
+                                            className="relative w-full aspect-square rounded-lg overflow-hidden bg-muted"
+                                        >
+                                            <Image
+                                                src={image.url}
+                                                alt="User uploaded photo"
+                                                fill
+                                                unoptimized={isGif}
+                                                className="object-cover hover:scale-105 transition-transform duration-200"
+                                                sizes="(max-width: 768px) 25vw, 200px"
+                                            />
                                         </div>
-                                    )}
-                                </div>
+                                    )
+                                })}
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
-            </Card>
+
+                {/* Right Column - Profile Info (3/4 width) */}
+                <div className="col-span-3">
+                    <CardHeader>
+                        <h2 className="text-2xl font-bold">
+                            {formatField(profile.user?.username) || 'Anonymous'}
+                        </h2>
+                    </CardHeader>
+
+                    <CardContent>
+                        <div className="grid grid-cols-1 gap-4">
+                            {profileFields.map((field, index) => (
+                                <div
+                                    key={index}
+                                    className="grid grid-cols-2 gap-8"
+                                >
+                                    <div className="flex">
+                                        <span className="w-40 font-medium whitespace-nowrap md:whitespace-normal">
+                                            {field.label}:
+                                        </span>
+                                        <span className="flex-1 text-muted-foreground">
+                                            {field.value}
+                                        </span>
+                                    </div>
+                                    <div className="flex">
+                                        <span className="w-40 font-medium whitespace-nowrap md:whitespace-normal">
+                                            {field.paired.label}:
+                                        </span>
+                                        <span className="flex-1 text-muted-foreground">
+                                            {field.paired.value}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        {profile.aboutYourself && (
+                            <div className="mt-6">
+                                <h3 className="font-semibold mb-2">About me</h3>
+                                <p className="text-sm text-muted-foreground">
+                                    {formatField(profile.aboutYourself)}
+                                </p>
+                                <hr className="my-4" />
+                            </div>
+                        )}
+                    </CardContent>
+                </div>
+            </div>
+        </Card>
     )
 }
 
