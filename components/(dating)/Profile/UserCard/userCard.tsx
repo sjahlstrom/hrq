@@ -93,7 +93,7 @@ async function UserCard({ userId }: UserCardProps) {
     ]
 
     return (
-        <Card className="w-full max-w-6xl">
+        <Card className="mt-28 w-full max-w-6xl">
             <div className="grid grid-cols-4">
                 {/* Left Column - Images (1/4 width) */}
                 <div className="p-4 border-r">
