@@ -18,9 +18,9 @@ export default function About() {
             id="about"
             className="bg-gradient-to-b from-hrqColors-slateBlue-400 to-hrqColors-slateBlue-200 py-16 md:py-24 lg:py-32 min-h-screen"
         >
-            <div className="container mx-auto px-4 max-w-4xl xl:max-w-6xl">
+            <div className="container mx-auto px-4 max-w-4xl xl:max-w-6xl pt-8 md:pt-12">
                 <h1
-                    className={`${nunito.className} -mt-20 animate-fade-in text-dark mb-5 font-bold leading-tight sm:text-3xl md:text-4xl lg:text-6xl xl:text-6xl text-center mx-auto`}
+                    className={`${nunito.className} animate-fade-in text-dark mb-5 font-bold leading-tight sm:text-3xl md:text-4xl lg:text-6xl xl:text-6xl text-center mx-auto`}
                 >
                     Welcome to High Relationship Quotient
                 </h1>
@@ -95,16 +95,14 @@ export default function About() {
                             ))}
                         </ul>
                     </CardContent>
-
                 </Card>
 
-                <div className=" flex justify-center items-center">
-                    <div className=" mt-4 flex items-center justify-between">
-                    <AuthButton />
+                <div className="flex justify-center items-center">
+                    <div className="mt-4 flex items-center justify-between">
+                        <AuthButton />
                     </div>
                 </div>
             </div>
-
         </section>
     )
 }

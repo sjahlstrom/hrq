@@ -96,9 +96,9 @@ export default function PreferencesCard({ preferences }: PreferencesCardProps) {
 
     return (
         <div className="w-full mt-4">
-            <Card className="bg-sky-300/80">
+            <Card className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 ">
                 <CardHeader>
-                    <CardTitle className="text-2xl font-bold">
+                    <CardTitle className="text-dark text-2xl font-bold">
                         My Perfect Match
                     </CardTitle>
                 </CardHeader>

@@ -25,7 +25,6 @@ export default function Hero() {
                 <div className="-mt-12 relative w-full ">
                     <div className="mx-auto -mt-16 max-w-[800px] text-center ">
                         <h1
-                            // className={`${nunito.className} animate-fade-in text-hrqColors-skyBlue-200  mb-3 text-2xl font-bold leading-tight  sm:text-3xl sm:mt-12 md:text-4xl lg:text-6xl xl:text-6xl`}
                             className={`${nunito.className} animate-fade-in text-hrqColors-skyBlue-200 mb-3 text-2xl font-bold leading-tight 
 [&:not(sm)]:mt-12 sm:text-3xl sm:mt-12 md:-mt-12 md:text-5xl lg:-mt-28 xl:text-6xl`}
                         >

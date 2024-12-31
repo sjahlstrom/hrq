@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { getUserProfile } from '@/lib/actions/actions'
-import {replaceHyphens, formatField, formatDate, toTitleCase  } from '@/utils/stringUtils'
+import {formatField, formatDate  } from '@/utils/stringUtils'
 
 import Image from 'next/image'
 
@@ -75,7 +75,7 @@ async function UserCard({ userId }: UserCardProps) {
     ]
 
     return (
-        <Card className="mt-28 w-full max-w-6xl">
+        <Card className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800  mt-28 w-full max-w-6xl">
             <div className="grid grid-cols-4">
                 {/* Left Column - Images (1/4 width) */}
                 <div className="p-4 border-r">
@@ -111,14 +111,14 @@ async function UserCard({ userId }: UserCardProps) {
                 {/* Right Column - Profile Info (3/4 width) */}
                 <div className="col-span-3">
                     <CardHeader>
-                        <h2 className="text-2xl font-bold">
+                        <h2 className="text-dark text-2xl font-bold">
                             {formatField(profile.user?.username) || 'Anonymous'}
                         </h2>
                     </CardHeader>
 
                     <CardContent>
-                        <div className="grid grid-cols-1 gap-4">
-                            {profileFields.map((field, index) => (
+                        <div className="grid grid-cols-1 text-dark gap-4">
+                              {profileFields.map((field, index) => (
                                 <div
                                     key={index}
                                     className="grid grid-cols-2 gap-8"
@@ -144,8 +144,8 @@ async function UserCard({ userId }: UserCardProps) {
                         </div>
                         {profile.aboutYourself && (
                             <div className="mt-6">
-                                <h3 className="font-semibold mb-2">About me</h3>
-                                <p className="text-sm text-muted-foreground">
+                                <h3 className="text-dark font-semibold mb-2">About me</h3>
+                                <p className="text-sm text-dark">
                                     {formatField(profile.aboutYourself)}
                                 </p>
                             </div>
