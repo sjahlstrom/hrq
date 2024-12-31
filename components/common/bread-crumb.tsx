@@ -1,17 +1,6 @@
 import Link from 'next/link'
 import { arimo } from '@/app/ui/fonts'
 
-// const Breadcrumb = ({
-//     pageName,
-//     description,
-// }: {
-//     pageName: string
-//     description: string
-// }) => {
-//     return (
-//         <>
-//             <section className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 relative z-10 overflow-hidden pt-20 lg:pt-[100px] flex flex-col min-h-[300px]">
-
 const Breadcrumb = ({
     pageName,
     description,

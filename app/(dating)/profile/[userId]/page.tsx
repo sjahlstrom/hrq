@@ -39,8 +39,8 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
                 minHeight="min-h-[200px]"
                 description="All about me and the partner I'm looking for"
             />
-            <div className="container mx-auto -mt-24">
-                <div className="space-y-6">
+            <div className=" mx-auto -mt-24">
+                <div className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800  space-y-6">
                     <UserCard userId={params.userId} />
                     <PreferencesCard preferences={preferences} />
                 </div>

@@ -75,13 +75,13 @@ async function UserCard({ userId }: UserCardProps) {
     ]
 
     return (
-        <Card className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800  mt-28 w-full max-w-6xl">
+        <Card className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 border-dark mt-24 w-full max-w-6xl">
             <div className="grid grid-cols-4">
                 {/* Left Column - Images (1/4 width) */}
-                <div className="p-4 border-r">
+                <div className="p-4 border-dark border-r">
                     {profile.user?.images && profile.user.images.length > 0 && (
                         <div className="space-y-4">
-                            <h3 className="font-semibold">Photos</h3>
+                            <h3 className="text-dark font-semibold">Photos</h3>
                             <div className="flex flex-col gap-4">
                                 {profile.user.images.map((image) => {
                                     const isGif = image.url

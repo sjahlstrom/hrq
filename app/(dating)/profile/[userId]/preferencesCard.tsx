@@ -34,7 +34,7 @@ export default function PreferencesCard({ preferences }: PreferencesCardProps) {
     if (!preferences) {
         return (
             <div className="w-full mt-4">
-                <Card className="bg-sky-300/80">
+                <Card >
                     <CardHeader>
                         <CardTitle>My Perfect Match</CardTitle>
                     </CardHeader>
@@ -48,7 +48,6 @@ export default function PreferencesCard({ preferences }: PreferencesCardProps) {
 
     const preferenceFields = [
         { label: 'Education:', value: formatField(preferences.education) },
-        // { label: 'Income Range:', value: formatField(preferences.incomeRange) },
         {
             label: 'Marital Status:',
             value: formatField(preferences.maritalStatus),
@@ -96,7 +95,7 @@ export default function PreferencesCard({ preferences }: PreferencesCardProps) {
 
     return (
         <div className="w-full mt-4">
-            <Card className="bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 ">
+            <Card className="border-dark bg-custom-radial from-hrqColors-skyBlue-400 to-hrqColors-skyBlue-800 ">
                 <CardHeader>
                     <CardTitle className="text-dark text-2xl font-bold">
                         My Perfect Match
@@ -104,7 +103,7 @@ export default function PreferencesCard({ preferences }: PreferencesCardProps) {
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                        <div className="space-y-4">
+                        <div className="space-y-4 ">
                             {leftFields.map((field) => (
                                 <div
                                     key={field.label}

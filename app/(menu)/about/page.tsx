@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 const AboutPage = () => {
     return (
-        <div>
-            <div>
+        <div >
+            <div >
                 <Breadcrumb
                     pageName="About"
                     minHeight="min-h-[225px]"

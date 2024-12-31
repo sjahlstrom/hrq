@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const ContactPage = () => {
     return (
-        <div className="bg-hrqColors-skyBlue-100">
+        <div >
             <Breadcrumb
                 pageName="Contact"
                 minHeight="min-h-[200px]"
