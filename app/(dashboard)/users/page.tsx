@@ -6,7 +6,7 @@ import { SortConfig, useSortableData } from '@/hooks/useSortableData'
 import { usePagination } from '@/hooks/usePagination'
 import { useClientSideEffect } from '@/hooks/useClientSideEffect'
 import CheckUserRole from '@/components/check-user-role'
-import UserCard from '@/components/(dashboard)/user-card'
+import AdminUserCard from '@/components/(dashboard)/admin-user-card'
 import { UserTable } from '@/components/(dashboard)/user-table'
 import { SkeletonUserTable } from '@/components/(dashboard)/skeleton-user-table'
 import SearchBar from '@/components/(dashboard)/search-bar'
@@ -107,7 +107,7 @@ export default function Users() {
                 </div>
             </div>
             {selectedUser && (
-                <UserCard
+                <AdminUserCard
                     selectedUser={selectedUser}
                     closeUserCard={closeUserCard}
                 />

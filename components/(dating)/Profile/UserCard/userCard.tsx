@@ -1,20 +1,11 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { getUserProfile } from '@/lib/actions/actions'
-import { format } from 'date-fns'
+import {replaceHyphens, formatField, formatDate, toTitleCase  } from '@/utils/stringUtils'
+
 import Image from 'next/image'
 
 interface UserCardProps {
     userId: string
-}
-
-const replaceHyphens = (str: string | null): string => {
-    if (!str) return 'Not specified'
-    return str.replace(/-/g, ' ')
-}
-
-const toTitleCase = (str: string | null): string => {
-    if (!str) return 'Not specified'
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
 }
 
 async function UserCard({ userId }: UserCardProps) {
@@ -23,16 +14,7 @@ async function UserCard({ userId }: UserCardProps) {
     if (!profile) {
         return <div>Profile not found</div>
     }
-
-    const formatDate = (date: Date | null) => {
-        if (!date) return 'Not specified'
-        return format(date, 'MMMM dd, yyyy')
-    }
-
-    const formatField = (field: string | null) => {
-        return toTitleCase(replaceHyphens(field))
-    }
-
+    
     const profileFields = [
         {
             label: 'Occupation',
@@ -166,7 +148,6 @@ async function UserCard({ userId }: UserCardProps) {
                                 <p className="text-sm text-muted-foreground">
                                     {formatField(profile.aboutYourself)}
                                 </p>
-                                <hr className="my-4" />
                             </div>
                         )}
                     </CardContent>

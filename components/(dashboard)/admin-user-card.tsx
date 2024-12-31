@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { User } from '@/hooks/useUsers'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { X, Loader2 } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { X, Loader2 } from 'lucide-react'
 import { setUserAdmin } from '@/lib/actions/users'
-import { toast } from "sonner"
+import { toast } from 'sonner'
 import { UserRole } from '@prisma/client'
 
 interface ExtendedUser extends User {
-    role?: UserRole | null;
+    role?: UserRole | null
 }
 
 interface UserCardProps {
@@ -18,17 +18,23 @@ interface UserCardProps {
     onUpdate?: () => void
 }
 
-const UserCard: React.FC<UserCardProps> = ({ selectedUser, closeUserCard, onUpdate }) => {
+const AdminUserCard: React.FC<UserCardProps> = ({
+    selectedUser,
+    closeUserCard,
+    onUpdate,
+}) => {
     const [isUpdating, setIsUpdating] = React.useState(false)
-    const [currentRole, setCurrentRole] = useState<UserRole | null>(selectedUser.role || null)
+    const [currentRole, setCurrentRole] = useState<UserRole | null>(
+        selectedUser.role || null
+    )
 
     const handleAdminToggle = async (checked: boolean) => {
-        const action = checked ? 'grant' : 'remove';
+        const action = checked ? 'grant' : 'remove'
         const confirmed = window.confirm(
             `Are you sure you want to ${action} admin rights for ${selectedUser.username}?`
-        );
+        )
 
-        if (!confirmed) return;
+        if (!confirmed) return
 
         try {
             setIsUpdating(true)
@@ -78,45 +84,83 @@ const UserCard: React.FC<UserCardProps> = ({ selectedUser, closeUserCard, onUpda
                 <CardContent>
                     <div className="space-y-4">
                         <div>
-                            <h3 className="text-dark font-semibold">Username</h3>
-                            <p className="text-sm">{selectedUser.username || 'N/A'}</p>
+                            <h3 className="text-dark font-semibold">
+                                Username
+                            </h3>
+                            <p className="text-sm">
+                                {selectedUser.username || 'N/A'}
+                            </p>
                         </div>
                         <div>
-                            <h3 className="text-dark text-lg font-semibold">Email</h3>
-                            <p className="text-sm">{selectedUser.email || 'N/A'}</p>
+                            <h3 className="text-dark text-lg font-semibold">
+                                Email
+                            </h3>
+                            <p className="text-sm">
+                                {selectedUser.email || 'N/A'}
+                            </p>
                         </div>
                         <div>
-                            <h3 className="text-dark text-lg font-semibold">Paid RQ</h3>
-                            <p className="text-sm">{selectedUser.paid_rq ? 'Yes' : 'No'}</p>
+                            <h3 className="text-dark text-lg font-semibold">
+                                Paid RQ
+                            </h3>
+                            <p className="text-sm">
+                                {selectedUser.paid_rq ? 'Yes' : 'No'}
+                            </p>
                         </div>
                         <div>
-                            <h3 className="text-dark text-lg font-semibold">Paid CQ</h3>
-                            <p className="text-sm">{selectedUser.paid_cq ? 'Yes' : 'No'}</p>
+                            <h3 className="text-dark text-lg font-semibold">
+                                Paid CQ
+                            </h3>
+                            <p className="text-sm">
+                                {selectedUser.paid_cq ? 'Yes' : 'No'}
+                            </p>
                         </div>
                         <div>
-                            <h3 className="text-dark text-lg font-semibold">Banned</h3>
-                            <p className="text-sm">{selectedUser.banned ? 'Yes' : 'No'}</p>
+                            <h3 className="text-dark text-lg font-semibold">
+                                Banned
+                            </h3>
+                            <p className="text-sm">
+                                {selectedUser.banned ? 'Yes' : 'No'}
+                            </p>
                         </div>
                         <div>
-                            <h3 className="text-dark text-lg font-semibold">Test Completed</h3>
-                            <p className="text-sm">{selectedUser.testCompleted ? 'Yes' : 'No'}</p>
+                            <h3 className="text-dark text-lg font-semibold">
+                                Test Completed
+                            </h3>
+                            <p className="text-sm">
+                                {selectedUser.testCompleted ? 'Yes' : 'No'}
+                            </p>
                         </div>
                         <div>
-                            <h3 className="text-dark text-lg font-semibold">Summed Total</h3>
-                            <p className="text-sm">{selectedUser.summedTotal !== null ? selectedUser.summedTotal : 'N/A'}</p>
+                            <h3 className="text-dark text-lg font-semibold">
+                                Summed Total
+                            </h3>
+                            <p className="text-sm">
+                                {selectedUser.summedTotal !== null
+                                    ? selectedUser.summedTotal
+                                    : 'N/A'}
+                            </p>
                         </div>
                         <div>
-                            <h3 className="text-dark text-lg font-semibold">External User ID</h3>
-                            <p className="text-sm">{selectedUser.externalUserId}</p>
+                            <h3 className="text-dark text-lg font-semibold">
+                                External User ID
+                            </h3>
+                            <p className="text-sm">
+                                {selectedUser.externalUserId}
+                            </p>
                         </div>
                         {selectedUser.testResponse && (
                             <div>
-                                <h3 className="text-dark text-lg font-semibold">Test Response</h3>
+                                <h3 className="text-dark text-lg font-semibold">
+                                    Test Response
+                                </h3>
                                 <p>{selectedUser.testResponse.join(', ')}</p>
                             </div>
                         )}
                         <div className="flex items-center space-x-2">
-                            <h3 className="text-dark text-lg font-semibold">Admin</h3>
+                            <h3 className="text-dark text-lg font-semibold">
+                                Admin
+                            </h3>
                             <div className="flex items-center gap-2">
                                 <div className="flex items-center space-x-3">
                                     <Checkbox
@@ -134,7 +178,8 @@ const UserCard: React.FC<UserCardProps> = ({ selectedUser, closeUserCard, onUpda
                                         </div>
                                     ) : (
                                         <span className="text-sm">
-                                            Current role: {currentRole || 'USER'}
+                                            Current role:{' '}
+                                            {currentRole || 'USER'}
                                         </span>
                                     )}
                                 </div>
@@ -147,4 +192,4 @@ const UserCard: React.FC<UserCardProps> = ({ selectedUser, closeUserCard, onUpda
     )
 }
 
-export default UserCard
+export default AdminUserCard
