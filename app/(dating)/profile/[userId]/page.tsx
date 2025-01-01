@@ -1,4 +1,3 @@
-// app/(dating)/profile/[userId]/page.tsx
 import UserCard from '@/components/(dating)/Profile/UserCard/userCard'
 import PreferencesCard from './preferencesCard'
 import Breadcrumb from '@/components/common/bread-crumb'

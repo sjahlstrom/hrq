@@ -13,7 +13,7 @@ export default function AdminDashboard() {
             <Breadcrumb
                 pageName="Admin Page"
                 minHeight="min-h-[220px]"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
+                description="Various admin dashboard features"
             />
         </div>
     <div className="flex h-screen">

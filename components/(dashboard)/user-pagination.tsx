@@ -61,10 +61,11 @@ export default function UsersPagination({
                     </Button>
                 </li>
             </ul>
-            <div className="mt-2 text-sm text-gray-700">
+            <div className="mt-4 text-sm text-gray-700">
                 Showing {Math.min((currentPage - 1) * 12 + 1, totalItems)} to{' '}
                 {Math.min(currentPage * 12, totalItems)} of {totalItems} results
             </div>
+            <br />
         </nav>
     )
 }

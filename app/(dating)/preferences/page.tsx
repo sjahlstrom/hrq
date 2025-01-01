@@ -58,7 +58,6 @@ export default async function PreferencesPage() {
             <Breadcrumb
                 pageName="Preferences"
                 minHeight="min-h-[240px]"
-
                 description="What are your preferences for your romantic connection?  Help us find your perfect match based on your RQ scores, their scores, and your specific needs."
             />
             <div className="mt-8">

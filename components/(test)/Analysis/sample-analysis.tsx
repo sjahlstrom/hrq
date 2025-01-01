@@ -113,53 +113,6 @@ const SampleAnalysis: React.FC = () => {
         }
     })
 
-    // const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    //     try {
-    //         // Create HTML content from matched questions
-    //         const resultsHTML = matchedQuestions
-    //             .map((question) => `
-    //             <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px;">
-    //                 <h2 style="font-size: 24px; font-weight: 600; color: #1f2937; margin-bottom: 8px;">
-    //                     ${question.question}
-    //                 </h2>
-    //                 <p style="color: #1f2937;">
-    //                     ${question.analysis}
-    //                 </p>
-    //             </div>
-    //         `)
-    //             .join('')
-    //
-    //         const emailBody = `
-    //         <div style="font-family: system-ui, -apple-system, sans-serif;">
-    //             <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 20px;">Your Analysis Results</h1>
-    //             ${resultsHTML}
-    //         </div>
-    //     `
-    //
-    //         const response = await fetch('/api/send-analysis', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({
-    //                 email: values.email,
-    //                 message: emailBody,
-    //             }),
-    //         })
-    //
-    //         const data = await response.json()
-    //
-    //         if (data.success) {
-    //             toast.success("Analysis results have been sent to your email")
-    //             form.reset()
-    //         } else {
-    //             throw new Error(data.error || 'Failed to send email')
-    //         }
-    //     } catch (error) {
-    //         toast.error("Failed to send analysis results. Please try again.")
-    //     }
-    // }
-
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             // Create HTML content from matched questions

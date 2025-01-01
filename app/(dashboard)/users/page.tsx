@@ -70,7 +70,9 @@ export default function Users() {
             <div className="bg-gray-600">
                 <Breadcrumb
                     pageName="Admin Page"
-                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
+                    minHeight="min-h-[200px]"
+
+                    description="Admin user functionality"
                 />
             </div>
 
