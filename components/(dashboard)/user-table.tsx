@@ -142,8 +142,7 @@ export const UserTable: React.FC<UserTableProps> = ({
                 </tbody>
             </table>
             <div className="text-center text-xs text-gray-500 mt-4">
-            Yellow background indicates User has started but not finished
-                the Test
+            Yellow background indicates User has started but not yet finished the Test
             </div>
         </div>
     )

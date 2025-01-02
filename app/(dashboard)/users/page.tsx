@@ -69,7 +69,7 @@ export default function Users() {
         <>
             <div className="bg-gray-600">
                 <Breadcrumb
-                    pageName="Admin Page"
+                    pageName="Users Page"
                     minHeight="min-h-[200px]"
 
                     description="Admin user functionality"

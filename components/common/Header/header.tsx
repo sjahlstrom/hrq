@@ -137,7 +137,7 @@ export default function Header({ headerHeight = 'h-[84px]' }) {
                                                         onClick={() =>
                                                             handleSubmenu(index)
                                                         }
-                                                        className="flex cursor-pointer items-center justify-between py-2 text-base text-white lg:text-hrqColors-sunsetOrange-600 group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
+                                                        className="flex cursor-pointer items-center justify-between py-2 text-base text-white lg:text-red-700 group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0"
                                                     >
                                                         {menuItem.title}
                                                         <span className="pl-3">
