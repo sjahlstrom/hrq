@@ -7,8 +7,7 @@ import lieScale from '@/components/(test)/Analysis/Data/Constants/LieScale'
 
 const typedTestQuestions: TestQuestion[] = testQuestions
 
-const LIES = [38, 45, 52, 57, 69, 79, 91, 102, 109, 125]
-
+const LIES = [37, 44, 51, 56, 68, 78, 90, 101, 108, 124]
 interface Result {
     scale: number
     positions: number[]
@@ -60,7 +59,7 @@ function evaluateResults(answers: number[]): Result[] {
     const evaluatedPositions = new Set<number>()
 
     testQuestions.forEach((q, i) => {
-        if (q.scale !== 64 && !evaluatedPositions.has(q.position)) {
+        if (!evaluatedPositions.has(q.position)) {
             const matches = testQuestions
                 .filter(
                     (item, index) =>

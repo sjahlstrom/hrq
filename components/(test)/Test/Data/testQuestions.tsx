@@ -884,7 +884,7 @@ const testQuestions: TestQuestion[] = [
    {
       question: 'I frequently correct others',
       scale: 40,
-      position: 12,
+      position: 91,
       reverse: true,
       options: { left: 'Never', middle: 'Neutral', right: 'Always' },
    },
