@@ -24,17 +24,21 @@ interface Result {
     analysis: string
 }
 
+interface ChartDataItem {
+    scale: string
+    score: number
+    statement: string
+    tooltipContent: string
+    color: string
+}
+
 interface AnalysisData {
     uniqueResults: Result[]
     totalResults: number
     totalSummedValues: number
     lieAnalysis: string
     totalLie: number
-    chartData: {
-        scale: string
-        score: number
-        statement: string
-    }[]
+    chartData: ChartDataItem[]
 }
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
@@ -128,6 +132,12 @@ export default function TestAnalysis() {
     if (error) return <div>Failed to load</div>
     if (!analysisData) return <div>Loading...</div>
 
+    const enhancedChartData: ChartDataItem[] = analysisData.chartData.map(item => ({
+        ...item,
+        tooltipContent: `${item.scale}: ${item.score}`,
+        color: '#4299E1' // Default color, adjust as needed
+    }))
+
     return (
         <ErrorBoundary
             FallbackComponent={ErrorFallback}
@@ -156,13 +166,12 @@ export default function TestAnalysis() {
                     transition-opacity duration-700 ease-in-out`}
                                 >
                                     <p className="text-gray-800 animate-fade-in">
-                                        {/*Summed Result {result.summedResult} -- Scale: {result.scale} -- Positions: {result.positions.join(', ')} -- Raw: {result.answers} -- Answers: {result.answers.join(', ')} <br /> */}
                                         {result.analysis}
                                         {result.scale === 100
                                             ? ' (100%)'
                                             : result.scale === 0
-                                              ? ' (0%)'
-                                              : ''}
+                                                ? ' (0%)'
+                                                : ''}
                                     </p>
                                 </div>
                             ))}
@@ -177,15 +186,13 @@ export default function TestAnalysis() {
                     />
                     {currentPage === totalPages && analysisData.lieAnalysis && (
                         <>
-                            {/*Your Total Composite Score is {analysisData.totalSummedValues + analysisData.totalLie / 10}*/}
-
                             <FinalAnalysis
                                 lieAnalysis={analysisData.lieAnalysis}
                                 totalSummedValues={
                                     analysisData.totalSummedValues +
                                     analysisData.totalLie / 10
                                 }
-                                chartData={analysisData.chartData}
+                                chartData={enhancedChartData}
                             />
                             <div className="mt-8 flex justify-center">
                                 <Button
