@@ -1,23 +1,13 @@
 'use client';
 
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import ScoreClassificationTable from '@/components/(test)/score-classification-table';
 import { BChart } from '@/components/(test)/Analysis/Charts/bChart';
 import Scales from '@/components/(test)/Analysis/Data/Constants/Scales';
-
-interface ScaleItem {
-    number: number;
-    name: string;
-}
-
-type ScaleArray = ScaleItem[];
-
-interface ChartDataItem {
-    scale: string;
-    score: number;
-    statement: string;
-}
+import findPositionsForScale from '@/components/(test)/Analysis/Charts/positions';
+import { batchSumTestResponses } from '@/lib/actions/users';
+import { Scale, ChartDataItem } from '@/types/chart';
 
 interface FinalAnalysisProps {
     lieAnalysis: string;
@@ -25,7 +15,6 @@ interface FinalAnalysisProps {
     chartData: ChartDataItem[];
 }
 
-const MemoizedBChart = React.memo(BChart);
 const MemoizedScoreClassificationTable = React.memo(ScoreClassificationTable);
 
 const FinalAnalysis: React.FC<FinalAnalysisProps> = ({
@@ -33,7 +22,11 @@ const FinalAnalysis: React.FC<FinalAnalysisProps> = ({
                                                          totalSummedValues,
                                                          chartData,
                                                      }) => {
-    const allScales = useMemo<ScaleArray[]>(
+    const [scaleData, setScaleData] = useState<Record<string, number>>({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const allScales = useMemo<Scale[][]>(
         () => [
             Scales.scales,
             Scales.scales2,
@@ -51,21 +44,71 @@ const FinalAnalysis: React.FC<FinalAnalysisProps> = ({
         []
     );
 
+    useEffect(() => {
+        let mounted = true;
+
+        const fetchAllScaleData = async () => {
+            try {
+                setIsLoading(true);
+                const allPositions = allScales.flatMap(scaleArray =>
+                    scaleArray.flatMap(scale => {
+                        const positions = findPositionsForScale(scale.number);
+                        // Explicitly type the tuple and verify length
+                        if (positions.length === 2) {
+                            const positionTuple: [number, number] = [positions[0], positions[1]];
+                            return [positionTuple];
+                        }
+                        return [];
+                    })
+                );
+
+                const results = await batchSumTestResponses(allPositions);
+                if (mounted) {
+                    setScaleData(results);
+                    setIsLoading(false);
+                }
+            } catch (err) {
+                if (mounted) {
+                    setError(err instanceof Error ? err.message : 'Failed to fetch scale data');
+                    setIsLoading(false);
+                }
+            }
+        };
+
+        fetchAllScaleData();
+
+        return () => {
+            mounted = false;
+        };
+    }, [allScales]);
+
     const renderBChart = useCallback(
-        (scaleItem: ScaleArray, index: number) => (
+        (scaleArray: Scale[], index: number) => (
             <div key={index} className="w-full px-1">
-                <MemoizedBChart scales={scaleItem} />
+                <BChart
+                    scales={scaleArray}
+                    preloadedData={scaleData}
+                    isLoading={isLoading}
+                    error={error}
+                />
             </div>
         ),
-        []
+        [scaleData, isLoading, error]
     );
+
+    if (error) {
+        return (
+            <Card>
+                <CardContent className="p-6">
+                    <p className="text-red-500">Error loading data: {error}</p>
+                </CardContent>
+            </Card>
+        );
+    }
 
     return (
         <>
             <div className="mt-8 space-y-8">
-                {/* Display totalSummedValues */}
-
-
                 <Card>
                     <CardContent className="p-6">
                         <p className="text-gray-700">{lieAnalysis}</p>

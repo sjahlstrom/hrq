@@ -358,3 +358,23 @@ export const clearUserResponseCache = async (userId: string): Promise<void> => {
     }
     await new Promise(resolve => setTimeout(resolve, 0))
 }
+
+export async function batchSumTestResponses(positions: Array<[number, number]>): Promise<Record<string, number>> {
+    try {
+        const results: Record<string, number> = {};
+
+        // Process each position pair
+        for (const [start, end] of positions) {
+            const key = `${start},${end}`;
+            // Sum values between start and end positions
+            // Replace this with your actual database query
+            const sum = 0; // Your actual sum calculation here
+            results[key] = sum;
+        }
+
+        return results;
+    } catch (error) {
+        console.error('Error in batchSumTestResponses:', error);
+        throw new Error('Failed to fetch test responses');
+    }
+}
