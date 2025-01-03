@@ -1,11 +1,7 @@
 import { format } from 'date-fns'
 
-export const formatDate = (date: Date | null) => {
-    if (!date) return 'Not specified'
-    return format(date, 'MMMM dd, yyyy')
-}
-
-export const formatField = (field: string | null) => {
+export const formatField = (field: string | number | null) => {
+    if (typeof field === 'number') return field.toString()
     return toTitleCase(replaceHyphens(field))
 }
 
@@ -19,3 +15,7 @@ export const toTitleCase = (str: string | null): string => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
 }
 
+export const formatDate = (date: Date | null) => {
+    if (!date) return 'Not specified'
+    return format(date, 'MMMM dd, yyyy')
+}

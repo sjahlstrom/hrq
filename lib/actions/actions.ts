@@ -11,6 +11,7 @@ export async function getUserProfile(userId: string) {
                         email: true,
                         username: true,
                         images: true,
+                        summedTotal: true,
                     }
                 }
             }
